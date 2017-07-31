@@ -1,0 +1,52 @@
+#server setting
+server:
+  port: 8100
+  address: localhost
+  context-path: /sso
+  tomcat:
+    uri-encoding: utf-8
+  session:
+    cookie:
+#      domain:
+      http-only: true
+      max-age: 3600000
+  soa: true
+#  context-parameters:
+#    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
+#    logback-expose-webapp-root: true
+#spring mvc setting
+spring:
+  thymeleaf:
+    cache: false
+    suffix: .html
+  mvc:
+    # 指定静态资源处理路径
+    static-path-pattern: /static/**
+    view:
+      suffix: .html
+  redis:
+    host-name: 172.16.225.98
+    port: 6379
+    password: redis123
+    pool:
+      max-total: 300
+      max-wait-millis: 10000
+      max-idle: 100
+      min-idle: 50
+#common setting
+website:
+  # 网站支持
+  support:
+    # 静态资源服务
+    static-resources: http://localhost:8080/static-resources
+  # 单点登录
+  sso:
+    login-url:
+    logout-url:
+    check-url:
+    register-url:
+    forget-url:
+  # 网站请求
+  request:
+    # filter排除
+    filter-exclude: /, /index, *.html
