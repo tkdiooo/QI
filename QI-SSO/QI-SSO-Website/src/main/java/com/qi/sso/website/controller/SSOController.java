@@ -33,6 +33,8 @@ public class SSOController {
         model.put(SSOConstants.LOGING_URL, appConfig.SSO_LOGIN_URL);
         // 登出
         model.put(SSOConstants.LOGOUT_URL, appConfig.SSO_LOGOUT_URL);
+        // title
+        model.put("title", "登录");
         return "index";
     }
 }

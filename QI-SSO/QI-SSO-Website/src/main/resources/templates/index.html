@@ -1,14 +1,200 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<input name="userName" th:value="${loginUrl}" placeholder="账号">
-<input name="userName" th:value="${registerUrl}" placeholder="账号">
-<input name="userName" th:value="${forgetUrl}" placeholder="账号">
-<input name="userName" th:value="${logoutUrl}" placeholder="账号">
-sdsd
+<head th:include="common/layout :: head"></head>
+<!--login-->
+<link rel="stylesheet" th:href="${application.static_resource} + '/static/sso/css/style.css'">
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+<!-- Preloader -->
+<div id="preloader">
+    <div id="load"></div>
+</div>
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" th:href="@{/index}">
+                <h1>ZZL PORTAL</h1>
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#intro">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#service">Service</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Example menu</a></li>
+                        <li><a href="#">Example menu</a></li>
+                        <li><a href="#">Example menu</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Section: intro -->
+<section id="intro" class="intro">
+    <div class="slogan">
+        <h2>WELCOME TO <span class="text_color">ZZL</span> </h2>
+        <h4>WE ARE GROUP OF GENTLEMEN MAKING AWESOME WEB WITH BOOTSTRAP</h4>
+    </div>
+    <div class="page-scroll">
+        <a href="#service" class="btn btn-circle">
+            <i class="fa fa-angle-double-down animated"></i>
+        </a>
+    </div>
+</section>
+
+<!-- Section: about -->
+<section id="about" class="home-section text-center">
+    <div class="heading-about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="wow bounceInDown" data-wow-delay="0.4s">
+                        <div class="section-heading">
+                            <h2>About us</h2>
+                            <i class="fa fa-2x fa-angle-down"></i>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-2 col-lg-offset-5">
+                <hr class="marginbot-50">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 col-md-3">
+                <div class="wow bounceInUp" data-wow-delay="0.2s">
+                    <div class="team boxed-grey">
+                        <div class="inner">
+                            <h5>Anna Hanaceck</h5>
+                            <p class="subtitle">Pixel Crafter</p>
+                            <div class="avatar"><img src="img/team/1.jpg" alt="" class="img-responsive img-circle" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-3">
+                <div class="wow bounceInUp" data-wow-delay="0.5s">
+                    <div class="team boxed-grey">
+                        <div class="inner">
+                            <h5>Maura Daniels</h5>
+                            <p class="subtitle">Ruby on Rails</p>
+                            <div class="avatar"><img src="img/team/2.jpg" alt="" class="img-responsive img-circle" /></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-3">
+                <div class="wow bounceInUp" data-wow-delay="0.8s">
+                    <div class="team boxed-grey">
+                        <div class="inner">
+                            <h5>Jack Briane</h5>
+                            <p class="subtitle">jQuery Ninja</p>
+                            <div class="avatar"><img src="img/team/3.jpg" alt="" class="img-responsive img-circle" /></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-3 col-md-3">
+                <div class="wow bounceInUp" data-wow-delay="1s">
+                    <div class="team boxed-grey">
+                        <div class="inner">
+                            <h5>Tom Petterson</h5>
+                            <p class="subtitle">Typographer</p>
+                            <div class="avatar"><img src="img/team/4.jpg" alt="" class="img-responsive img-circle" /></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Section: about -->
+<!-- /Section: intro -->
+<!--<div class="floor">-->
+<!--&lt;!&ndash; 主要内容 &ndash;&gt;-->
+<!--<div id="main_panel" class="main-panel">-->
+<!--<form id="loginForm" method="post" autocomplete="off">-->
+<!--<div class="form">-->
+<!--<div class="close" title="关闭" onclick="showForm()">-->
+<!--<a href="javascript:void(0)">×</a>-->
+<!--</div>-->
+<!--<div class="title">-->
+<!--<img src="$!property.getResourcePath()/images/portal/login/logo.png" width="60" height="60"-->
+<!--title="$!property.getSystemEnglish()"/>-->
+<!--<span class="logo logo-eff float-right">$!property.getSystemEnglish()</span>-->
+<!--</div>-->
+<!--<input name="from_url" type="hidden" value="$!{from_url}"/>-->
+<!--&lt;!&ndash; 帐号 &ndash;&gt;-->
+<!--<div class="user">-->
+<!--<input type="hidden" name="account"/>-->
+<!--<input type="text" id="account" placeholder="帐号" value="$!account"/>-->
+<!--</div>-->
+<!--<div style="margin: 5px;">&nbsp;</div>-->
+<!--&lt;!&ndash; 密码 &ndash;&gt;-->
+<!--<div class="pass">-->
+<!--<input type="hidden" name="password"/>-->
+<!--<input type="password" id="password" placeholder="密码"/>-->
+<!--</div>-->
+<!--<div class="options">-->
+<!--<input class="ipt-c cursor-pointer" id="rmbUser" name="remember" type="checkbox"-->
+<!--#if($remember)checked#end/><label class="cursor-pointer" for="rmbUser">记住帐号</label>-->
+<!--<input type="button" class="login-button" value="登 录" onclick="login();"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; 分割线 &ndash;&gt;-->
+<!--<div class="ft">-->
+<!--<div class="other">-->
+<!--<a href="#" title="现在注册" target="_blank" class="register">现在注册</a>-->
+<!--<div class="vs"></div>-->
+<!--<a href="#" title="忘记密码" target="_blank" class="ext">忘记密码</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</form>-->
+<!--<div class="widget">-->
+<!--<div id="warning_div" class="highlight corner-all">-->
+<!--<img src="$!property.getResourcePath()/images/portal/login/warning.png"/>-->
+<!--<span id="warning_msg">$!messages</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; 版权 &ndash;&gt;-->
+<!--<div class="bottom align-center" id="bar_bottom">-->
+<!--<a href="javascript:void(0)" onclick="showForm()" class="float-left" title="登录">-->
+<!--<img src="$!property.getResourcePath()/images/portal/icons/start.png" class="cursor-pointer" width="23"-->
+<!--height="23"/>-->
+<!--</a>-->
+<!--<span class="float_right" id="clock">你瞅啥</span>-->
+<!--<span>-->
+<!--版权所有 张麒 未经许可不得复制、转载或摘编，违者必究! &copy; Copyright &copy; 2013.Company-->
+<!--</span>-->
+<!--</div>-->
+<!--&lt;!&ndash; 主题 &ndash;&gt;-->
+<!--<div class="theme" id="theme">-->
+<!--<img src="$!property.getResourcePath()/images/portal/theme/theme_4.jpg" id="themeImg"/>-->
+<!--</div>-->
+<!--</div>-->
+<footer th:include="common/layout :: script">
+</footer>
 </body>
 </html>
