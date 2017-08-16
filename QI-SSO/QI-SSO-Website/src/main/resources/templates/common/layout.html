@@ -6,18 +6,22 @@
     <title th:text="${title}"></title>
     <link rel="stylesheet" th:href="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css'">
     <link rel="stylesheet" th:href="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/css/bootstrapValidator.min.css'">
+    <link rel="stylesheet" th:href="${application.static_resource} + '/static/sso/css/style.css'">
+    <link rel="stylesheet" th:href="${application.static_resource} + '/static/js/nivo-lightbox/css/nivo-lightbox.css'">
+    <link rel="stylesheet" th:href="${application.static_resource} + '/static/js/nivo-lightbox/css/default/default.css'">
 </head>
-<footer th:fragment="script">
+<div th:fragment="script">
     <script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
     <script th:src="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js'"></script>
     <script th:src="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/js/bootstrapValidator.min.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/jquery/jquery.easing.min.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/jquery/jquery.scrollTo.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/other/wow.min.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/nivo-lightbox/nivo-lightbox.min.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/layer/layer.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/base/common.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/base/map.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/base/util.js'"></script>
     <script th:src="${application.static_resource} + '/static/sso/js/custom.js'"></script>
-</footer>
+</div>
 </html>
