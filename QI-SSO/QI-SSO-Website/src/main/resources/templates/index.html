@@ -24,21 +24,21 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#service">Service</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Example menu</a></li>
-                        <li><a href="#">Example menu</a></li>
-                        <li><a href="#">Example menu</a></li>
-                    </ul>
-                </li>
+                <li><a href="javascript:void(0);" onclick="showLogin()">login</a></li>
+                <!--<li class="dropdown">-->
+                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#">Example menu</a></li>-->
+                        <!--<li><a href="#">Example menu</a></li>-->
+                        <!--<li><a href="#">Example menu</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
             </ul>
         </div>
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->
 </nav>
-
 <!-- Section: intro -->
 <section id="intro" class="intro">
     <div class="slogan">
@@ -51,6 +51,7 @@
         </a>
     </div>
 </section>
+<!-- /Section: intro -->
 
 <!-- Section: about -->
 <section id="about" class="home-section text-center">
@@ -124,6 +125,7 @@
         </div>
     </div>
 </section>
+<!-- /Section: about -->
 
 <!-- Section: services -->
 <section id="service" class="home-section text-center bg-gray">
@@ -203,6 +205,8 @@
         </div>
     </div>
 </section>
+<!-- /Section: services -->
+
 <!-- Section: contact -->
 <section id="contact" class="home-section text-center">
     <div class="heading-contact">
@@ -292,6 +296,8 @@
         </div>
     </div>
 </section>
+<!-- /Section: contact -->
+
 <!-- Section: works -->
 <section id="works" class="home-section text-center bg-gray">
     <div class="heading-works marginbot-50">
@@ -361,77 +367,58 @@
     </div>
 </section>
 <!-- /Section: works -->
-<!-- /Section: services -->
-<!-- /Section: about -->
-<!-- /Section: intro -->
-<!--<div class="floor">-->
-<!--&lt;!&ndash; 主要内容 &ndash;&gt;-->
-<!--<div id="main_panel" class="main-panel">-->
-<!--<form id="loginForm" method="post" autocomplete="off">-->
-<!--<div class="form">-->
-<!--<div class="close" title="关闭" onclick="showForm()">-->
-<!--<a href="javascript:void(0)">×</a>-->
-<!--</div>-->
-<!--<div class="title">-->
-<!--<img src="$!property.getResourcePath()/images/portal/login/logo.png" width="60" height="60"-->
-<!--title="$!property.getSystemEnglish()"/>-->
-<!--<span class="logo logo-eff float-right">$!property.getSystemEnglish()</span>-->
-<!--</div>-->
-<!--<input name="from_url" type="hidden" value="$!{from_url}"/>-->
-<!--&lt;!&ndash; 帐号 &ndash;&gt;-->
-<!--<div class="user">-->
-<!--<input type="hidden" name="account"/>-->
-<!--<input type="text" id="account" placeholder="帐号" value="$!account"/>-->
-<!--</div>-->
-<!--<div style="margin: 5px;">&nbsp;</div>-->
-<!--&lt;!&ndash; 密码 &ndash;&gt;-->
-<!--<div class="pass">-->
-<!--<input type="hidden" name="password"/>-->
-<!--<input type="password" id="password" placeholder="密码"/>-->
-<!--</div>-->
-<!--<div class="options">-->
-<!--<input class="ipt-c cursor-pointer" id="rmbUser" name="remember" type="checkbox"-->
-<!--#if($remember)checked#end/><label class="cursor-pointer" for="rmbUser">记住帐号</label>-->
-<!--<input type="button" class="login-button" value="登 录" onclick="login();"/>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; 分割线 &ndash;&gt;-->
-<!--<div class="ft">-->
-<!--<div class="other">-->
-<!--<a href="#" title="现在注册" target="_blank" class="register">现在注册</a>-->
-<!--<div class="vs"></div>-->
-<!--<a href="#" title="忘记密码" target="_blank" class="ext">忘记密码</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</form>-->
-<!--<div class="widget">-->
-<!--<div id="warning_div" class="highlight corner-all">-->
-<!--<img src="$!property.getResourcePath()/images/portal/login/warning.png"/>-->
-<!--<span id="warning_msg">$!messages</span>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; 版权 &ndash;&gt;-->
-<!--<div class="bottom align-center" id="bar_bottom">-->
-<!--<a href="javascript:void(0)" onclick="showForm()" class="float-left" title="登录">-->
-<!--<img src="$!property.getResourcePath()/images/portal/icons/start.png" class="cursor-pointer" width="23"-->
-<!--height="23"/>-->
-<!--</a>-->
-<!--<span class="float_right" id="clock">你瞅啥</span>-->
-<!--<span>-->
-<!--版权所有 张麒 未经许可不得复制、转载或摘编，违者必究! &copy; Copyright &copy; 2013.Company-->
-<!--</span>-->
-<!--</div>-->
-<!--&lt;!&ndash; 主题 &ndash;&gt;-->
-<!--<div class="theme" id="theme">-->
-<!--<img src="$!property.getResourcePath()/images/portal/theme/theme_4.jpg" id="themeImg"/>-->
-<!--</div>-->
-<!--</div>-->
+
+<!-- 主要内容 -->
+<div id="main_panel" class="login-panel">
+    <form id="loginForm" method="post" autocomplete="off">
+        <div class="form">
+            <div class="title">
+                <h2>Sign In</h2>
+            </div>
+            <!-- 帐号 -->
+            <div class="user">
+                <input class="form-control" id="account" name="account" placeholder="account" required="required"/>
+            </div>
+            <!--<div style="margin: 5px;">&nbsp;</div>-->
+            <!-- 密码 -->
+            <div class="pass">
+                <input class="form-control" type="password" id="password" name="password" placeholder="password" required="required"/>
+            </div>
+            <div class="forget">
+                <a href="#" target="_blank" class="ext">forget you password?</a>
+            </div>
+            <div class="options">
+                <input class="ipt-c" id="rmbUser" name="remember" type="checkbox" /><label for="rmbUser">Remember me</label>
+                <input type="button" class="login-button" value="SIGN-IN" onclick="login();"/>
+            </div>
+        </div>
+    </form>
+    <div class="widget">
+        <div id="warning_div" class="highlight corner-all">
+            <img th:src="${application.static_resource} + '/static/sso/images/warning.png'"/>
+            <span id="warning_msg"></span>
+        </div>
+    </div>
+    <div class="register">
+        looking to <a href="#" target="_blank">create an account</a> ?
+    </div>
+</div>
 <footer>
     <div class="container">
         版权所有张麒未经许可不得复制、转载或摘编，违者必究! &copy; Copyright 2017 TK.
     </div>
 </footer>
 <div th:include="common/layout :: script"></div>
+<script>
+    function showLogin() {
+        var opt = {
+            title: false,
+            closeBtn: 0,
+            skin: 'login-model',
+            content: $('#main_panel')
+        };
+        open(opt);
+    }
+</script>
 </body>
 </html>
