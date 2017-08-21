@@ -24,7 +24,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#service">Service</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="javascript:void(0);" onclick="showLogin()">login</a></li>
+                <li><a href="javascript:void(0)" onclick="showLogin()">login</a></li>
                 <!--<li class="dropdown">-->
                     <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
                     <!--<ul class="dropdown-menu">-->
@@ -367,22 +367,197 @@
     </div>
 </section>
 <!-- /Section: works -->
+<div class="container">
+    <div class="row">
+        <!-- form: -->
+        <section>
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="page-header">
+                    <h2>Sign up</h2>
+                </div>
 
+                <form id="defaultForm" method="post" class="form-horizontal" action="target.php">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Full name</label>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" name="firstName" placeholder="First name" />
+                        </div>
+                        <div class="col-lg-4">
+                            <input type="text" class="form-control" name="lastName" placeholder="Last name" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Username</label>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" name="username" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Email address</label>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" name="email" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Password</label>
+                        <div class="col-lg-5">
+                            <input type="password" class="form-control" name="password" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Retype password</label>
+                        <div class="col-lg-5">
+                            <input type="password" class="form-control" name="confirmPassword" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Gender</label>
+                        <div class="col-lg-5">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="gender" value="male" /> Male
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="gender" value="female" /> Female
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="gender" value="other" /> Other
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Birthday</label>
+                        <div class="col-lg-5">
+                            <input type="text" class="form-control" name="birthday" /> (YYYY/MM/DD)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Languages</label>
+                        <div class="col-lg-5">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="english" /> English
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="french" /> French
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="german" /> German
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="russian" /> Russian
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="other" /> Other
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">Programming Languages</label>
+                        <div class="col-lg-5">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="programs[]" value="net" /> .Net
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="programs[]" value="java" /> Java
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="programs[]" value="c" /> C/C++
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="programs[]" value="php" /> PHP
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="programs[]" value="perl" /> Perl
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="programs[]" value="ruby" /> Ruby
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="programs[]" value="python" /> Python
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="programs[]" value="javascript" /> Javascript
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" id="captchaOperation"></label>
+                        <div class="col-lg-2">
+                            <input type="text" class="form-control" name="captcha" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-9 col-lg-offset-3">
+                            <button type="submit" class="btn btn-primary" name="signup" value="Sign up">Sign up</button>
+                            <button type="submit" class="btn btn-primary" name="signup2" value="Sign up 2">Sign up 2</button>
+                            <button type="button" class="btn btn-info" id="validateBtn">Manual validate</button>
+                            <button type="button" class="btn btn-info" id="resetBtn">Reset form</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- :form -->
+    </div>
+</div>
 <!-- 主要内容 -->
 <div id="main_panel" class="login-panel">
-    <form id="loginForm" method="post" autocomplete="off">
-        <div class="form">
-            <div class="title">
-                <h2>Sign In</h2>
-            </div>
+    <div class="form">
+        <div class="title">
+            <h2>Sign In</h2>
+        </div>
+        <form id="loginForm" method="post" class="form-horizontal" autocomplete="off" action="target.php">
             <!-- 帐号 -->
-            <div class="user">
-                <input class="form-control" id="account" name="account" placeholder="account" required="required"/>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <input class="form-control" id="account" name="account" placeholder="account" required="required"/>
+                </div>
             </div>
-            <!--<div style="margin: 5px;">&nbsp;</div>-->
-            <!-- 密码 -->
-            <div class="pass">
-                <input class="form-control" type="password" id="password" name="password" placeholder="password" required="required"/>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <input class="form-control" type="password" id="password" name="password" placeholder="password" required="required"/>
+                </div>
             </div>
             <div class="forget">
                 <a href="#" target="_blank" class="ext">forget you password?</a>
@@ -391,10 +566,10 @@
                 <input class="ipt-c" id="rmbUser" name="remember" type="checkbox" /><label for="rmbUser">Remember me</label>
                 <input type="button" class="login-button" value="SIGN-IN" onclick="login();"/>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
     <div class="widget">
-        <div id="warning_div" class="highlight corner-all">
+        <div class="warn corner-all">
             <img th:src="${application.static_resource} + '/static/sso/images/warning.png'"/>
             <span id="warning_msg"></span>
         </div>
@@ -408,8 +583,149 @@
         版权所有张麒未经许可不得复制、转载或摘编，违者必究! &copy; Copyright 2017 TK.
     </div>
 </footer>
+<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 <div th:include="common/layout :: script"></div>
-<script>
+<script th:inline="javascript">
+    (function ($) {
+        $('#loginForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                account: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The first name is required and cannot be empty'
+                        }
+                    }
+                },
+                lastName: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The last name is required and cannot be empty'
+                        }
+                    }
+                },
+                username: {
+                    message: 'The username is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The username is required and cannot be empty'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: 'The username must be more than 6 and less than 30 characters long'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: 'The username can only consist of alphabetical, number, dot and underscore'
+                        },
+                        remote: {
+                            url: 'remote.php',
+                            message: 'The username is not available'
+                        },
+                        different: {
+                            field: 'password',
+                            message: 'The username and password cannot be the same as each other'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        emailAddress: {
+                            message: 'The input is not a valid email address'
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The password is required and cannot be empty'
+                        },
+                        identical: {
+                            field: 'confirmPassword',
+                            message: 'The password and its confirm are not the same'
+                        },
+                        different: {
+                            field: 'username',
+                            message: 'The password cannot be the same as username'
+                        }
+                    }
+                },
+                confirmPassword: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The confirm password is required and cannot be empty'
+                        },
+                        identical: {
+                            field: 'password',
+                            message: 'The password and its confirm are not the same'
+                        },
+                        different: {
+                            field: 'username',
+                            message: 'The password cannot be the same as username'
+                        }
+                    }
+                },
+                birthday: {
+                    validators: {
+                        date: {
+                            format: 'YYYY/MM/DD',
+                            message: 'The birthday is not valid'
+                        }
+                    }
+                },
+                gender: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The gender is required'
+                        }
+                    }
+                },
+                'languages[]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please specify at least one language you can speak'
+                        }
+                    }
+                },
+                'programs[]': {
+                    validators: {
+                        choice: {
+                            min: 2,
+                            max: 4,
+                            message: 'Please choose 2 - 4 programming languages you are good at'
+                        }
+                    }
+                },
+                captcha: {
+                    validators: {
+                        callback: {
+                            message: 'Wrong answer',
+                            callback: function(value, validator) {
+                                var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
+                                return value == sum;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Validate the form manually
+        $('#validateBtn').click(function() {
+            $('#defaultForm').bootstrapValidator('validate')
+        });
+
+        $('#sdsd').click(function() {
+            $('#defaultForm').data('bootstrapValidator').resetForm(true);
+        });
+    })(jQuery);
+
     function showLogin() {
         var opt = {
             title: false,
@@ -418,6 +734,36 @@
             content: $('#main_panel')
         };
         open(opt);
+    }
+
+    function login() {
+        var formValid = $("#loginForm").data('bootstrapValidator');
+        formValid.validate();
+        if (formValid.isValid()) {
+            var formParams = $("#loginForm").serializeJson();
+            var key = getRSAKey();
+            var _csrf = $('#_csrf');
+            formParams.account = encryptedString(key, formParams.account);
+            formParams.password = encryptedString(key, formParams.password);
+            formParams[_csrf.attr('name')] = _csrf.val();
+            var opt = {
+                handler: function (result) {
+                    if (!result.success) {
+                        $('#warning_msg').text(result.messages.join('<br/>'));
+                        $('.warn').show();
+                    } else {
+                        alert('登录成功');
+                    }
+                }
+            };
+            ajax_action('login', formParams, opt);
+        }
+//        layer.close(layer.index);
+    }
+
+    function getRSAKey() {
+        setMaxDigits([[${Digits}]]);
+        return new RSAKeyPair([[${Exponent}]], "", [[${Modulus}]]);
     }
 </script>
 </body>

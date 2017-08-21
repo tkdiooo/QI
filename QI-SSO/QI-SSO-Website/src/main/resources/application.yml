@@ -10,7 +10,7 @@ server:
 #      domain:
       http-only: true
       max-age: 3600000
-  soa: true
+#  soa: true
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
