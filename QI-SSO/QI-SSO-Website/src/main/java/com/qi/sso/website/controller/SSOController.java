@@ -1,6 +1,7 @@
 package com.qi.sso.website.controller;
 
 import com.qi.sso.common.constants.SSOConstants;
+import com.qi.sso.website.authentication.AuthenticationHelper;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.result.ValidatorResult;
 import com.sfsctech.common.security.rsa.KeyPairModel;
@@ -37,6 +38,9 @@ public class SSOController {
 
     @Autowired
     private AppConfig appConfig;
+
+    @Autowired
+    private AuthenticationHelper helper;
 
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request) {
@@ -88,6 +92,7 @@ public class SSOController {
         String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
         // 验证登录信息，返回用户对象
         boolean bool = true;
+        helper.createCookieHelper(request, response);
 //        result.setSuccess(false);
 //        result.addMessage(I18NConstants.Tips.LoginWrong);
         return result;

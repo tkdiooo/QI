@@ -9,8 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>QI-SSO-Model</artifactId>
+    <artifactId>QI-SSO-Core</artifactId>
     <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-util</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+    </dependencies>
 
 
 </project>

@@ -24,15 +24,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#service">Service</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="javascript:void(0)" onclick="showLogin()">login</a></li>
-                <!--<li class="dropdown">-->
-                    <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>-->
-                    <!--<ul class="dropdown-menu">-->
-                        <!--<li><a href="#">Example menu</a></li>-->
-                        <!--<li><a href="#">Example menu</a></li>-->
-                        <!--<li><a href="#">Example menu</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
+                <li id="login"><a href="javascript:void(0)" onclick="showLogin()">login</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -752,7 +744,18 @@
                         $('#warning_msg').text(result.messages.join('<br/>'));
                         $('.warn').show();
                     } else {
-                        alert('登录成功');
+                        layer.closeAll();
+                        $('#login').remove();
+                        $('.navbar-nav').append('<li class="dropdown">\n' +
+                            '                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>\n' +
+                            '                            <ul class="dropdown-menu">\n' +
+                            '                                <li><a href="#">Example menu</a></li>\n' +
+                            '                                <li><a href="#">Example menu</a></li>\n' +
+                            '                                <li><a href="#">Example menu</a></li>\n' +
+                            '                            </ul>\n' +
+                            '                        </li>');
+
+
                     }
                 }
             };

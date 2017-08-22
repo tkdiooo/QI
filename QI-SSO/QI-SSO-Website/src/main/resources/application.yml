@@ -7,9 +7,13 @@ server:
     uri-encoding: utf-8
   session:
     cookie:
-#      domain:
+      domain:
       http-only: true
+      secure: true
       max-age: 3600000
+      comment:
+      name:
+      path:
 #  soa: true
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf

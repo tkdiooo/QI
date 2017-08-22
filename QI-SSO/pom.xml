@@ -19,6 +19,7 @@
         <module>QI-SSO-Server</module>
         <module>QI-SSO-Model</module>
         <module>QI-SSO-Interface</module>
+        <module>QI-SSO-Core</module>
     </modules>
 
 
