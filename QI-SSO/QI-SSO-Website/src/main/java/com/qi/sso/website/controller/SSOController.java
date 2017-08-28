@@ -92,7 +92,9 @@ public class SSOController {
         String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
         // 验证登录信息，返回用户对象
         boolean bool = true;
-        helper.createCookieHelper(request, response);
+        helper.init(request, response);
+        authData.setSessionID(request.getSession().getId());
+        helper.buildToken(authData);
 //        result.setSuccess(false);
 //        result.addMessage(I18NConstants.Tips.LoginWrong);
         return result;

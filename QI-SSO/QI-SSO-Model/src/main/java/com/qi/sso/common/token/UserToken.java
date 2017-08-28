@@ -27,10 +27,10 @@ public class UserToken implements Serializable {
     //Token串
     private String token;
 
-    //Token 解密Key
+    //Token 加密盐值
     private String token_Key;
 
-    //Token 解密Key 存储的 索引Key
+    //Token 加密盐值的Key
     private String tokenKey_Cache_Key;
 
     //内存过期时间
