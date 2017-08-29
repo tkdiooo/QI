@@ -19,6 +19,12 @@
             <artifactId>common-security</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- sfsctech-common-spring support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-spring</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.qi.sso</groupId>
             <artifactId>QI-SSO-Model</artifactId>

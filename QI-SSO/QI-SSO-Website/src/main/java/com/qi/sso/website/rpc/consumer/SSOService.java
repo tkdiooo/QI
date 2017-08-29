@@ -1,6 +1,5 @@
 package com.qi.sso.website.rpc.consumer;
 
-import com.qi.sso.common.token.UserToken;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.security.jwt.JwtToken;
 import com.sfsctech.security.session.UserAuthData;
@@ -13,17 +12,18 @@ import org.springframework.stereotype.Service;
  * @version Description:
  */
 @Service
-public class LoginService {
+public class SSOService {
 
-    public ActionResult<JwtToken> ssoLogin(final UserAuthData userAuthData) {
+
+    public ActionResult<JwtToken> login(final UserAuthData userAuthData) {
         return null;
     }
 
-    public UserToken ssoCheck(final UserToken userToken) {
+    public ActionResult<JwtToken> check(final JwtToken jt) {
         return null;
     }
 
-    public UserToken ssoLogout(final UserToken userToken) {
+    public ActionResult<JwtToken> logout(final JwtToken jt) {
         return null;
     }
 

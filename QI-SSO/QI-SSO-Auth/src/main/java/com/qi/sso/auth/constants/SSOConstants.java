@@ -1,4 +1,4 @@
-package com.qi.sso.common.constants;
+package com.qi.sso.auth.constants;
 
 /**
  * Class SSOConstants
@@ -29,8 +29,8 @@ public class SSOConstants {
 
     public static final String COOKIE_REMEMBER_LOGIN_ACCOUNT = "sfsc_re_lo_ac";
 
-    public static final String COOKIE_USER_TOKEN_NAME = "uams_tok_na";
-    public static final String COOKIE_USER_TOKEN_KEY_CACHENAME = "uams_tok_cac_na";
+    public static final String COOKIE_TOKEN_NAME = "uams_tok_na";
+    public static final String COOKIE_SALT_CACHE_KEY_NAME = "uams_tok_cac_na";
     // Session参数名称
     public static final String CONST_UAMS_ASSERTION = "const_uams_assertion";
     // SSO验证参数名称

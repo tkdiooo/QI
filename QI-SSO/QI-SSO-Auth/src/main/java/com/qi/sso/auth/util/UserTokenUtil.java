@@ -1,19 +1,16 @@
 package com.qi.sso.auth.util;
 
-import com.qi.sso.common.constants.SSOConstants;
-import com.qi.sso.common.token.UserToken;
+import com.qi.sso.auth.constants.SSOConstants;
 import com.sfsctech.common.cookie.CookieHelper;
-import com.sfsctech.common.cookie.Cookies;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.common.util.ThrowableUtil;
+import com.sfsctech.security.jwt.JwtToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-
-import com.sfsctech.security.jwt.JwtToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Class UserTokenUtil
@@ -31,15 +28,15 @@ public class UserTokenUtil {
      * @param helper CookieHelper
      * @return
      */
-    public static UserToken getUserCookiesToken(CookieHelper helper) {
-        String tokenVal = helper.getCookieValue(SSOConstants.COOKIE_USER_TOKEN_NAME);
-        String tokenKeyCacheKey = helper.getCookieValue(SSOConstants.COOKIE_USER_TOKEN_KEY_CACHENAME);
-        if (StringUtil.isNotBlank(tokenVal) && StringUtil.isNotBlank(tokenKeyCacheKey)) {
+    public static JwtToken getJwtTokenByCookie(CookieHelper helper) {
+        String token = helper.getCookieValue(SSOConstants.COOKIE_TOKEN_NAME);
+        String saltCacheKey = helper.getCookieValue(SSOConstants.COOKIE_SALT_CACHE_KEY_NAME);
+        if (StringUtil.isNotBlank(token) && StringUtil.isNotBlank(saltCacheKey)) {
             try {
-                UserToken userToken = new UserToken();
-                userToken.setToken(URLDecoder.decode(tokenVal, SSOConstants.UTF_8));
-                userToken.setTokenKey_Cache_Key(URLDecoder.decode(tokenKeyCacheKey, SSOConstants.UTF_8));
-                return userToken;
+                JwtToken jt = new JwtToken();
+                jt.setJwt(URLDecoder.decode(token, SSOConstants.UTF_8));
+                jt.setSalt_CacheKey(URLDecoder.decode(saltCacheKey, SSOConstants.UTF_8));
+                return jt;
             } catch (UnsupportedEncodingException e) {
                 clearUserToken(helper);
                 logger.error(ThrowableUtil.getRootMessage(e));
@@ -55,21 +52,21 @@ public class UserTokenUtil {
      * @param jt     JwtToken
      */
     public static void updateToken(CookieHelper helper, JwtToken jt) {
-        updateToken(helper, SSOConstants.COOKIE_USER_TOKEN_NAME, SSOConstants.COOKIE_USER_TOKEN_KEY_CACHENAME, jt);
+        updateToken(helper, SSOConstants.COOKIE_TOKEN_NAME, SSOConstants.COOKIE_SALT_CACHE_KEY_NAME, jt);
     }
 
     /**
      * 根据UserToken更新Cookie
      *
-     * @param helper       CookieHelper
-     * @param tokenKey     COOKIE_USER_TOKEN_NAME
-     * @param tokenSaltKey COOKIE_USER_TOKEN_KEY_CACHENAME
-     * @param jt           JwtToken
+     * @param helper         CookieHelper
+     * @param token_key      COOKIE_TOKEN_NAME
+     * @param salt_cache_key COOKIE_SALT_CACHE_KEY_NAME
+     * @param jt             JwtToken
      */
-    public static void updateToken(CookieHelper helper, String tokenKey, String tokenSaltKey, JwtToken jt) {
+    public static void updateToken(CookieHelper helper, String token_key, String salt_cache_key, JwtToken jt) {
         try {
-            helper.setCookie(tokenKey, URLEncoder.encode(jt.getJwt(), SSOConstants.UTF_8));
-            helper.setCookie(tokenSaltKey, URLEncoder.encode(jt.getSalt_CacheKey(), SSOConstants.UTF_8));
+            helper.setCookie(token_key, URLEncoder.encode(jt.getJwt(), SSOConstants.UTF_8));
+            helper.setCookie(salt_cache_key, URLEncoder.encode(jt.getSalt_CacheKey(), SSOConstants.UTF_8));
             logger.info("set cookies token value [domain:" + helper.getConfig().getDomain() + " Jwt:" + jt.getJwt() + " Salt_CacheKey:" + jt.getSalt_CacheKey() + "]");
         } catch (UnsupportedEncodingException e) {
             clearUserToken(helper);
@@ -83,7 +80,7 @@ public class UserTokenUtil {
      * @param helper CookieHelper
      */
     public static void clearUserToken(CookieHelper helper) {
-        helper.clearCookie(SSOConstants.COOKIE_USER_TOKEN_NAME);
-        helper.clearCookie(SSOConstants.COOKIE_USER_TOKEN_KEY_CACHENAME);
+        helper.clearCookie(SSOConstants.COOKIE_TOKEN_NAME);
+        helper.clearCookie(SSOConstants.COOKIE_SALT_CACHE_KEY_NAME);
     }
 }

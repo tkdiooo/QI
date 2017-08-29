@@ -1,18 +1,19 @@
 package com.qi.sso.website.controller;
 
-import com.qi.sso.common.constants.SSOConstants;
-import com.qi.sso.website.authentication.AuthenticationHelper;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.qi.sso.auth.constants.SSOConstants;
+import com.qi.sso.website.helper.SSOHelper;
+import com.qi.sso.website.rpc.consumer.SSOService;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.result.ValidatorResult;
-import com.sfsctech.common.security.rsa.KeyPairModel;
-import com.sfsctech.common.security.rsa.RSA;
-import com.sfsctech.common.util.HexUtil;
+import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.ValidatorUtil;
+import com.sfsctech.security.jwt.JwtToken;
 import com.sfsctech.security.session.UserAuthData;
-import com.sfsctech.spring.properties.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,42 +38,21 @@ public class SSOController {
     private final Logger logger = LoggerFactory.getLogger(SSOController.class);
 
     @Autowired
-    private AppConfig appConfig;
-
+    private SSOHelper helper;
     @Autowired
-    private AuthenticationHelper helper;
+    private SSOService service;
 
     @GetMapping("index")
-    public String index(ModelMap model, HttpServletRequest request) {
-        // 注册
-        model.put(SSOConstants.REGISTER_URL, appConfig.SSO_REGISTER_URL);
-        // 找回密码
-        model.put(SSOConstants.FORGET_URL, appConfig.SSO_FORGET_URL);
-        // 登录
-        model.put(SSOConstants.LOGING_URL, appConfig.SSO_LOGIN_URL);
-        // 登出
-        model.put(SSOConstants.LOGOUT_URL, appConfig.SSO_LOGOUT_URL);
-        // title
-        model.put("title", "登录");
-        // RSA加密公钥生成
-        KeyPairModel keyPair;
-        if (null != RSA.LOCAL_KEYPAIRMODEL.get(request.getSession().getId())) {
-            keyPair = RSA.LOCAL_KEYPAIRMODEL.get(request.getSession().getId());
-        } else {
-            keyPair = RSA.getKeys();
-            RSA.LOCAL_KEYPAIRMODEL.put(request.getSession().getId(), keyPair);
-        }
-        String Modulus = keyPair.getPublicKey().getModulus().toString(16);
-        String Exponent = keyPair.getPublicKey().getPublicExponent().toString(16);
-        model.put("Digits", Modulus.length());
-        model.put("Modulus", Modulus);
-        model.put("Exponent", Exponent);
+    public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        helper.init(request, response);
+        helper.loginBefore(model);
         return "index";
     }
 
     @PostMapping("login")
     @ResponseBody
     public ActionResult<UserAuthData> login(HttpServletRequest request, HttpServletResponse response) {
+        helper.init(request, response);
         String account = request.getParameter(SSOConstants.LOGIN_ACCOUNT);
         String password = request.getParameter(SSOConstants.LOGIN_PASSWORD);
         ActionResult<UserAuthData> result = new ActionResult<>();
@@ -82,35 +62,33 @@ public class SSOController {
             result.addMessage(I18NConstants.Tips.LoginAuthNotEmpty);
             return result;
         }
-        UserAuthData authData = new UserAuthData(loginDecrypt(request, account), loginDecrypt(request, password));
+        UserAuthData authData = new UserAuthData(helper.decryptAuthData(account), helper.decryptAuthData(password));
         ValidatorResult valid = ValidatorUtil.validate(authData);
         if (valid.hasErrors()) {
             logger.error("数据校验异常：" + result.getMessages());
             throw new VerifyException(I18NConstants.Tips.ExceptionValidator, valid);
         }
-        String remember = request.getParameter(SSOConstants.LOGIN_REMEMBER);
-        String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
-        // 验证登录信息，返回用户对象
-        boolean bool = true;
-        helper.init(request, response);
         authData.setSessionID(request.getSession().getId());
-        helper.buildToken(authData);
-//        result.setSuccess(false);
-//        result.addMessage(I18NConstants.Tips.LoginWrong);
-        return result;
-    }
-
-
-    public static String loginDecrypt(HttpServletRequest request, String result) {
-        KeyPairModel keyPair = RSA.LOCAL_KEYPAIRMODEL.get(request.getSession().getId());
-        if (null != keyPair) {
-            byte[] result_byte = RSA.simpleDecrypt(keyPair.getPrivateKey(), HexUtil.hexStringToBytes(result));
-            if (null != result_byte) {
-                StringBuilder sb = new StringBuilder(new String(result_byte));
-                return sb.reverse().toString();
+        // 验证登录信息，返回用户对象
+        ActionResult<JwtToken> actionResult = service.login(authData);
+        logger.info("用户：" + authData.getAccount() + "登录结果:" + JSON.toJSONString(actionResult, SerializerFeature.WriteEnumUsingToString));
+        // 登录成功
+        if (actionResult.isSuccess()) {
+            String remember = request.getParameter(SSOConstants.LOGIN_REMEMBER);
+            // 记住账号
+            if (StringUtil.isNotBlank(remember)) {
+                // 记录cookie
+                helper.getCookieHelper().setCookie(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT, EncrypterTool.encrypt(EncrypterTool.Security.Des3, account));
+            } else {
+                // 删除cookie
+                helper.getCookieHelper().clearCookie(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
             }
-            RSA.LOCAL_KEYPAIRMODEL.remove(request.getSession().getId());
+            helper.buildToken(actionResult.getResult());
+            String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
+            result.addAttach(SSOConstants.PARAM_FROM_URL, form_url);
         }
-        return "";
+        result.setSuccess(false);
+        result.addMessage(I18NConstants.Tips.LoginWrong);
+        return result;
     }
 }
