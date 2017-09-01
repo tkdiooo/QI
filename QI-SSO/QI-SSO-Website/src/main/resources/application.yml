@@ -14,7 +14,6 @@ server:
       comment:
       name:
       path:
-#  soa: true
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
@@ -54,3 +53,6 @@ website:
   request:
     # filter排除
     filter-exclude: /, /index, *.html
+  # 服务架构
+  session:
+    authentication: soa

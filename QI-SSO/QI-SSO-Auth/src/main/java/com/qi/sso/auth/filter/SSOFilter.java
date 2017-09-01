@@ -35,22 +35,22 @@ public class SSOFilter extends BaseFilter {
             final HttpServletRequest httpRequest = (HttpServletRequest) request;
             String requestURI = httpRequest.getRequestURI();
             boolean bool = SecurityConstants.isExclusion(requestURI);
-            logger.info("SSO登录验证：exclusion：[" + bool + "] request uri：[" + requestURI + "] " + getClass());
+            logger.info("请求路径：[" + requestURI + "]，" + (bool ? "无需" : "需要") + "进行Session验证。");
             if (bool) {
                 chain.doFilter(request, response);
-            }
-            Config config = SpringContextUtil.getBean(Config.class);
-            AppConfig appConfig = SpringContextUtil.getBean(AppConfig.class);
-            // SSO用户登录验证
-            CookieHelper helper = new CookieHelper((HttpServletRequest) request, (HttpServletResponse) response, config);
-            final JwtToken jt = UserTokenUtil.getJwtTokenByCookie(helper);
-            if (null != jt) {
-
             } else {
-                chain.doFilter(request, response);
+                Config config = SpringContextUtil.getBean(Config.class);
+                AppConfig appConfig = SpringContextUtil.getBean(AppConfig.class);
+                // SSO用户登录验证
+                CookieHelper helper = new CookieHelper((HttpServletRequest) request, (HttpServletResponse) response, config);
+                final JwtToken jt = UserTokenUtil.getJwtTokenByCookie(helper);
+//                if (null != jt) {
+//
+//                } else {
+                    chain.doFilter(request, response);
+//                }
             }
         } finally {
-
             SessionHolder.clear();
         }
     }

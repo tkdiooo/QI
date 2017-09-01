@@ -1,4 +1,4 @@
-package com.qi.sso.auth.configurer;
+package com.sfsctech.configurer;
 
 import com.qi.sso.auth.filter.SSOFilter;
 import com.sfsctech.constants.LabelConstants;

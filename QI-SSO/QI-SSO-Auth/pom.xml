@@ -30,5 +30,12 @@
             <artifactId>QI-SSO-Model</artifactId>
             <version>${sso.version}</version>
         </dependency>
+        <!--Spring boot Meta-data-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <version>${spring.boot.version}</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 </project>
