@@ -1,8 +1,8 @@
 package com.qi.sso.website.rpc.consumer;
 
+import com.sfsctech.auth.jwt.JwtToken;
+import com.sfsctech.auth.session.UserAuthData;
 import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.security.jwt.JwtToken;
-import com.sfsctech.security.session.UserAuthData;
 import org.springframework.stereotype.Service;
 
 /**

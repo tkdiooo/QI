@@ -1,8 +1,10 @@
 package com.qi.sso.website.helper;
 
-import com.qi.sso.auth.util.UserTokenUtil;
-import com.qi.sso.auth.constants.SSOConstants;
 import com.qi.sso.website.rpc.consumer.SSOService;
+import com.sfsctech.auth.constants.SSOConstants;
+import com.sfsctech.auth.jwt.JwtToken;
+import com.sfsctech.auth.properties.SSOProperties;
+import com.sfsctech.auth.util.UserTokenUtil;
 import com.sfsctech.common.cookie.Config;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
@@ -11,8 +13,8 @@ import com.sfsctech.common.security.rsa.RSA;
 import com.sfsctech.common.util.HexUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.security.jwt.JwtToken;
 import com.sfsctech.spring.properties.AppConfig;
+import com.sfsctech.spring.properties.WebsiteProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class SSOHelper {
     @Autowired
     private Config config;
     @Autowired
-    private AppConfig appConfig;
+    private SSOProperties properties;
     @Autowired
     private SSOService service;
 
@@ -144,13 +146,13 @@ public class SSOHelper {
      */
     public void loginBefore(ModelMap model) {
         // 注册
-        model.put(SSOConstants.REGISTER_URL, appConfig.SSO_REGISTER_URL);
+        model.put(SSOConstants.REGISTER_URL, properties.getRegisterUrl());
         // 找回密码
-        model.put(SSOConstants.FORGET_URL, appConfig.SSO_FORGET_URL);
+        model.put(SSOConstants.FORGET_URL, properties.getForgetUrl());
         // 登录
-        model.put(SSOConstants.LOGING_URL, appConfig.SSO_LOGIN_URL);
+        model.put(SSOConstants.LOGING_URL, properties.getLoginUrl());
         // 登出
-        model.put(SSOConstants.LOGOUT_URL, appConfig.SSO_LOGOUT_URL);
+        model.put(SSOConstants.LOGOUT_URL, properties.getLogoutUrl());
         // title
         model.put("title", "登录");
         // RSA加密公钥生成

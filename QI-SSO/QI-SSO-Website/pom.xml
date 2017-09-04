@@ -52,14 +52,15 @@
             <artifactId>common-security</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- sfsctech-common-security support-->
         <dependency>
-            <groupId>com.qi.sso</groupId>
-            <artifactId>QI-SSO-Interface</artifactId>
-            <version>${sso.version}</version>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-auth</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qi.sso</groupId>
-            <artifactId>QI-SSO-Auth</artifactId>
+            <artifactId>QI-SSO-Interface</artifactId>
             <version>${sso.version}</version>
         </dependency>
     </dependencies>
