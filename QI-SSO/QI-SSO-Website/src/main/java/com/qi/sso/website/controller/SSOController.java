@@ -1,15 +1,14 @@
 package com.qi.sso.website.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.qi.sso.website.helper.SSOHelper;
 import com.qi.sso.website.rpc.consumer.SSOService;
-import com.sfsctech.auth.constants.SSOConstants;
+import com.sfsctech.auth.constants.AuthConstants;
 import com.sfsctech.auth.jwt.JwtToken;
-import com.sfsctech.auth.session.UserAuthData;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.result.ValidatorResult;
+import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.security.EncrypterTool;
+import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.rpc.result.ActionResult;
@@ -53,8 +52,8 @@ public class SSOController {
     @ResponseBody
     public ActionResult<UserAuthData> login(HttpServletRequest request, HttpServletResponse response) {
         helper.init(request, response);
-        String account = request.getParameter(SSOConstants.LOGIN_ACCOUNT);
-        String password = request.getParameter(SSOConstants.LOGIN_PASSWORD);
+        String account = request.getParameter(AuthConstants.LOGIN_ACCOUNT);
+        String password = request.getParameter(AuthConstants.LOGIN_PASSWORD);
         ActionResult<UserAuthData> result = new ActionResult<>();
         // 用户名或密码为空
         if (StringUtil.isBlank(account) || StringUtil.isBlank(password)) {
@@ -71,21 +70,21 @@ public class SSOController {
         authData.setSessionID(request.getSession().getId());
         // 验证登录信息，返回用户对象
         ActionResult<JwtToken> actionResult = service.login(authData);
-        logger.info("用户：" + authData.getAccount() + "登录结果:" + JSON.toJSONString(actionResult, SerializerFeature.WriteEnumUsingToString));
+        logger.info("用户：" + authData.getAccount() + "登录结果:" + JsonUtil.toJSONString(actionResult));
         // 登录成功
         if (actionResult.isSuccess()) {
-            String remember = request.getParameter(SSOConstants.LOGIN_REMEMBER);
+            String remember = request.getParameter(AuthConstants.LOGIN_REMEMBER);
             // 记住账号
             if (StringUtil.isNotBlank(remember)) {
                 // 记录cookie
-                helper.getCookieHelper().setCookie(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT, EncrypterTool.encrypt(EncrypterTool.Security.Des3, account));
+                helper.getCookieHelper().setCookie(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT, EncrypterTool.encrypt(EncrypterTool.Security.Des3, account));
             } else {
                 // 删除cookie
-                helper.getCookieHelper().clearCookie(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
+                helper.getCookieHelper().clearCookie(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
             }
             helper.buildToken(actionResult.getResult());
-            String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
-            result.addAttach(SSOConstants.PARAM_FROM_URL, form_url);
+            String form_url = request.getParameter(AuthConstants.PARAM_FROM_URL);
+            result.addAttach(AuthConstants.PARAM_FROM_URL, form_url);
         }
         result.setSuccess(false);
         result.addMessage(I18NConstants.Tips.LoginWrong);
