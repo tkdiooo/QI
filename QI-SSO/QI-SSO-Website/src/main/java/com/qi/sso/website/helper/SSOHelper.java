@@ -1,7 +1,7 @@
 package com.qi.sso.website.helper;
 
 import com.qi.sso.website.rpc.consumer.SSOService;
-import com.sfsctech.auth.constants.SSOConstants;
+import com.sfsctech.auth.constants.AuthConstants;
 import com.sfsctech.auth.jwt.JwtToken;
 import com.sfsctech.auth.properties.SSOProperties;
 import com.sfsctech.auth.util.UserTokenUtil;
@@ -13,8 +13,6 @@ import com.sfsctech.common.security.rsa.RSA;
 import com.sfsctech.common.util.HexUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.spring.properties.AppConfig;
-import com.sfsctech.spring.properties.WebsiteProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,13 +144,13 @@ public class SSOHelper {
      */
     public void loginBefore(ModelMap model) {
         // 注册
-        model.put(SSOConstants.REGISTER_URL, properties.getRegisterUrl());
+        model.put(AuthConstants.REGISTER_URL, properties.getRegisterUrl());
         // 找回密码
-        model.put(SSOConstants.FORGET_URL, properties.getForgetUrl());
+        model.put(AuthConstants.FORGET_URL, properties.getForgetUrl());
         // 登录
-        model.put(SSOConstants.LOGING_URL, properties.getLoginUrl());
+        model.put(AuthConstants.LOGING_URL, properties.getLoginUrl());
         // 登出
-        model.put(SSOConstants.LOGOUT_URL, properties.getLogoutUrl());
+        model.put(AuthConstants.LOGOUT_URL, properties.getLogoutUrl());
         // title
         model.put("title", "登录");
         // RSA加密公钥生成
@@ -169,15 +167,15 @@ public class SSOHelper {
         model.put("Modulus", Modulus);
         model.put("Exponent", Exponent);
         // form_url处理
-        String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
+        String form_url = request.getParameter(AuthConstants.PARAM_FROM_URL);
         if (StringUtil.isNotBlank(form_url)) {
-            model.put(SSOConstants.PARAM_FROM_URL, form_url);
+            model.put(AuthConstants.PARAM_FROM_URL, form_url);
         }
         // remember_login_account处理
-        String account = helper.getCookieValue(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
+        String account = helper.getCookieValue(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
         if (StringUtil.isNotBlank(account)) {
-            model.put(SSOConstants.LOGIN_ACCOUNT, EncrypterTool.decrypt(EncrypterTool.Security.Des3, account));
-            model.put(SSOConstants.LOGIN_REMEMBER, "on");
+            model.put(AuthConstants.LOGIN_ACCOUNT, EncrypterTool.decrypt(EncrypterTool.Security.Des3, account));
+            model.put(AuthConstants.LOGIN_REMEMBER, "on");
         }
     }
 
