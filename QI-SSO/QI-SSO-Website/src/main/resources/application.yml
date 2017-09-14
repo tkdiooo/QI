@@ -52,8 +52,6 @@ website:
   # 服务架构
   session:
     authentication: soa
-  filter:
-    session-exclude-path: /index, /login
+    exclude-path: /index, /login
   csrf:
     verify-exclude-path: /index
-    intercept-exclude-path:
