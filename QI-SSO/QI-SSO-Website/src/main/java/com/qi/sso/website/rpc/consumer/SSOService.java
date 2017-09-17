@@ -16,7 +16,7 @@ public class SSOService {
 
 
     public ActionResult<JwtToken> login(final UserAuthData userAuthData) {
-        return null;
+        return new ActionResult<>();
     }
 
     public ActionResult<JwtToken> check(final JwtToken jt) {

@@ -50,11 +50,11 @@ public class SSOController {
 
     @PostMapping("login")
     @ResponseBody
-    public ActionResult<UserAuthData> login(HttpServletRequest request, HttpServletResponse response) {
+    public ActionResult<String> login(HttpServletRequest request, HttpServletResponse response) {
         helper.init(request, response);
         String account = request.getParameter(AuthConstants.LOGIN_ACCOUNT);
         String password = request.getParameter(AuthConstants.LOGIN_PASSWORD);
-        ActionResult<UserAuthData> result = new ActionResult<>();
+        ActionResult<String> result = new ActionResult<>();
         // 用户名或密码为空
         if (StringUtil.isBlank(account) || StringUtil.isBlank(password)) {
             result.setSuccess(false);
@@ -64,30 +64,33 @@ public class SSOController {
         UserAuthData authData = new UserAuthData(helper.decryptAuthData(account), helper.decryptAuthData(password));
         ValidatorResult valid = ValidatorUtil.validate(authData);
         if (valid.hasErrors()) {
-            logger.error("数据校验异常：" + result.getMessages());
+            logger.error("数据校验异常：" + valid.getMessages());
             throw new VerifyException(I18NConstants.Tips.ExceptionValidator, valid);
         }
         authData.setSessionID(request.getSession().getId());
         // 验证登录信息，返回用户对象
         ActionResult<JwtToken> actionResult = service.login(authData);
         logger.info("用户：" + authData.getAccount() + "登录结果:" + JsonUtil.toJSONString(actionResult));
-        // 登录成功
-        if (actionResult.isSuccess()) {
-            String remember = request.getParameter(AuthConstants.LOGIN_REMEMBER);
-            // 记住账号
-            if (StringUtil.isNotBlank(remember)) {
-                // 记录cookie
-                helper.getCookieHelper().setCookie(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT, EncrypterTool.encrypt(EncrypterTool.Security.Des3, account));
-            } else {
-                // 删除cookie
-                helper.getCookieHelper().clearCookie(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
-            }
-            helper.buildToken(actionResult.getResult());
-            String form_url = request.getParameter(AuthConstants.PARAM_FROM_URL);
-            result.addAttach(AuthConstants.PARAM_FROM_URL, form_url);
+        // 登录失败
+        if (!actionResult.isSuccess()) {
+            result.setSuccess(false);
+            result.addMessage(I18NConstants.Tips.LoginWrong);
+            return result;
         }
-        result.setSuccess(false);
-        result.addMessage(I18NConstants.Tips.LoginWrong);
+        // 登录成功
+        String remember = request.getParameter(AuthConstants.LOGIN_REMEMBER);
+        // 记住账号
+        if (StringUtil.isNotBlank(remember)) {
+            // 记录cookie
+            helper.getCookieHelper().setCookie(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT, EncrypterTool.encrypt(EncrypterTool.Security.Aes, authData.getAccount()));
+        } else {
+            // 删除cookie
+            helper.getCookieHelper().clearCookie(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
+        }
+//            helper.buildToken(actionResult.getResult());
+        String form_url = request.getParameter(AuthConstants.PARAM_FROM_URL);
+        if (StringUtil.isNotBlank(form_url)) result.addAttach(AuthConstants.PARAM_FROM_URL, form_url);
+        result.setResult(authData.getAccount());
         return result;
     }
 }

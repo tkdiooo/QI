@@ -152,7 +152,7 @@ public class SSOHelper {
         // 登出
         model.put(AuthConstants.LOGOUT_URL, properties.getLogoutUrl());
         // title
-        model.put("title", "登录");
+        model.put("title", "ZZL FAMILY");
         // RSA加密公钥生成
         KeyPairModel keyPair;
         if (null != RSA.LOCAL_KEYPAIRMODEL.get(request.getSession().getId())) {
@@ -174,7 +174,7 @@ public class SSOHelper {
         // remember_login_account处理
         String account = helper.getCookieValue(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
         if (StringUtil.isNotBlank(account)) {
-            model.put(AuthConstants.LOGIN_ACCOUNT, EncrypterTool.decrypt(EncrypterTool.Security.Des3, account));
+            model.put(AuthConstants.LOGIN_ACCOUNT, EncrypterTool.decrypt(EncrypterTool.Security.Aes, account));
             model.put(AuthConstants.LOGIN_REMEMBER, "on");
         }
     }

@@ -7,13 +7,15 @@ server:
     uri-encoding: utf-8
   session:
     cookie:
-      domain:
+#      domain:
+      # 只能在服务端设置
       http-only: true
-      secure: true
+      # 只能在 HTTPS 连接中被传递
+#      secure: true
       max-age: 3600000
-      comment:
-      name:
-      path:
+#      comment:
+#      name:
+#      path:
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
@@ -42,6 +44,7 @@ website:
   support:
     # 静态资源服务
     static-resources: http://localhost:8080/static-resources
+    welcome-file: /index
   # 单点登录
   sso:
     login-url: www.zzl.com/sso/login
@@ -51,7 +54,7 @@ website:
     forget-url: www.zzl.com/sso/forget
   # 服务架构
   session:
-    authentication: soa
+#    authentication: simple
     exclude-path: /index, /login
   csrf:
     verify-exclude-path: /index

@@ -12,8 +12,8 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" th:href="@{/index}">
-                <h1>ZZL PORTAL</h1>
+            <a class="navbar-brand" th:href="${#httpServletRequest.contextPath}">
+                <h1>zzl family</h1>
             </a>
         </div>
 
@@ -34,8 +34,8 @@
 <!-- Section: intro -->
 <section id="intro" class="intro">
     <div class="slogan">
-        <h2>WELCOME TO <span class="text_color">ZZL</span> </h2>
-        <h4>WE ARE GROUP OF GENTLEMEN MAKING AWESOME WEB WITH BOOTSTRAP</h4>
+        <h2>WELCOME TO <span class="text_color">zzl family</span> </h2>
+        <h4>This is our family platform, here are our dribs and drabs of life</h4>
     </div>
     <div class="page-scroll">
         <a href="#service" class="btn btn-circle">
@@ -749,11 +749,10 @@
                         layer.closeAll();
                         $('#login').remove();
                         $('.navbar-nav').append('<li class="dropdown">\n' +
-                            '                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>\n' +
+                            '                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">' + result.result + '<b class="caret"></b></a>\n' +
                             '                            <ul class="dropdown-menu">\n' +
-                            '                                <li><a href="#">Example menu</a></li>\n' +
-                            '                                <li><a href="#">Example menu</a></li>\n' +
-                            '                                <li><a href="#">Example menu</a></li>\n' +
+                            '                                <li><a href="#">账号设置</a></li>\n' +
+                            '                                <li><a href="#">退出</a></li>\n' +
                             '                            </ul>\n' +
                             '                        </li>');
 
@@ -761,7 +760,7 @@
                     }
                 }
             };
-            ajax_action(/*[[@{/login}]]*/ "", formParams, opt);
+            ajax_action(/*[[@{/login}]]*/ '', formParams, opt);
         }
 //        layer.close(layer.index);
     }
