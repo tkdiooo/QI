@@ -5,7 +5,6 @@ import com.sfsctech.auth.constants.AuthConstants;
 import com.sfsctech.auth.jwt.JwtToken;
 import com.sfsctech.auth.properties.SSOProperties;
 import com.sfsctech.auth.util.UserTokenUtil;
-import com.sfsctech.common.cookie.Config;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.security.rsa.KeyPairModel;
@@ -34,8 +33,6 @@ public class SSOHelper {
     private final Logger logger = LoggerFactory.getLogger(SSOHelper.class);
 
     @Autowired
-    private Config config;
-    @Autowired
     private SSOProperties properties;
     @Autowired
     private SSOService service;
@@ -45,7 +42,7 @@ public class SSOHelper {
     private HttpServletResponse response;
 
     public void init(HttpServletRequest request, HttpServletResponse response) {
-        this.helper = new CookieHelper(request, response, config);
+        this.helper = CookieHelper.getInstance(request, response);
         this.request = request;
         this.response = response;
     }

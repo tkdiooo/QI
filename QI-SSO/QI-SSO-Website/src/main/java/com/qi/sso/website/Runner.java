@@ -1,5 +1,6 @@
 package com.qi.sso.website;
 
+import com.sfsctech.dubbox.properties.DubboConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -14,14 +15,10 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.qi.sso", "com.sfsctech.configurer"})
-public class WebsiteRunner extends SpringBootServletInitializer {
+public class Runner {
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(WebsiteRunner.class);
-    }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(WebsiteRunner.class, args);
+    public static void main(String[] args) {
+        DubboConfig.setServicePackage("com.qi.sso.website.rpc");
+        SpringApplication.run(Runner.class, args);
     }
 }
