@@ -34,28 +34,28 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- sfsctech-common-exception support-->
+        <!-- common-exception support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-exception</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- sfsctech-common-logback support-->
+        <!-- common-logback support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-logback</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- sfsctech-common-security support-->
+        <!-- common-security support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-security</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- sfsctech-common-security support-->
+        <!-- common-dubbox support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-auth</artifactId>
+            <artifactId>common-dubbox</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
@@ -66,13 +66,13 @@
     </dependencies>
 
     <build>
-        <finalName>website-thymeleaf</finalName>
+        <finalName>SSO-Website</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.qi.sso.website.WebsiteRunner</mainClass>
+                    <mainClass>com.qi.sso.website.Runner</mainClass>
                 </configuration>
                 <executions>
                     <execution>
