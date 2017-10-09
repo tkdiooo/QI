@@ -1,6 +1,7 @@
 package com.qi.sso.server.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.dubbo.rpc.RpcContext;
 import com.qi.sso.inf.LoginService;
 import com.sfsctech.auth.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
@@ -17,6 +18,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ActionResult<JwtToken> login(UserAuthData authData) {
+        System.out.println(RpcContext.getContext().getRemoteHost());
         System.out.println(authData.getAccount());
         System.out.println(authData.getPassword());
         return new ActionResult<>();
