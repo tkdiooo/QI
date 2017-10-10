@@ -3,16 +3,16 @@ package com.qi.sso.server.rpc.provider;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.qi.sso.inf.LoginService;
-import com.sfsctech.auth.constants.AuthConstants;
-import com.sfsctech.auth.jwt.JwtConfig;
-import com.sfsctech.auth.jwt.JwtToken;
-import com.sfsctech.auth.util.CacheUtil;
-import com.sfsctech.auth.util.JwtUtil;
+import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.HexUtil;
 import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.constants.SSOConstants;
+import com.sfsctech.dubbox.properties.JwtProperties;
+import com.sfsctech.dubbox.util.CacheUtil;
+import com.sfsctech.dubbox.util.JwtUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
     private CacheFactory cacheFactory;
 
     @Autowired
-    private JwtConfig jwtConfig;
+    private JwtProperties jwtConfig;
 
     @Override
     public ActionResult<JwtToken> login(UserAuthData authData) {
@@ -46,14 +46,14 @@ public class LoginServiceImpl implements LoginService {
 
         // 生成Jwt
         Map<String, Object> claims = new HashMap<>();
-        claims.put(AuthConstants.JWT_USER_AUTH_INFO, authData);
+        claims.put(SSOConstants.JWT_USER_AUTH_INFO, authData);
         String jwt = JwtUtil.generalJwt(claims);
 
         //生成加密盐值，用于解密Token信息
         String salt = HexUtil.getEncryptKey();
         logger.info("用户：" + authData.getAccount() + " 加密盐值[" + salt + "]。");
 
-        String token = EncrypterTool.encrypt(jwt + AuthConstants.SPLIT_FLAG + HexUtil.getHashCode(), salt);
+        String token = EncrypterTool.encrypt(jwt + SSOConstants.SPLIT_FLAG + HexUtil.getHashCode(), salt);
         logger.info("用户：" + authData.getAccount() + " token[" + token + "]。");
 
         String token_CacheKey = CacheUtil.getTokenCacheKey(authData);

@@ -2,7 +2,7 @@ package com.qi.sso.website.rpc.consumer;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qi.sso.inf.LoginService;
-import com.sfsctech.auth.jwt.JwtToken;
+import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.stereotype.Service;

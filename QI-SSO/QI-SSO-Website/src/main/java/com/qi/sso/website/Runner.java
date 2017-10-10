@@ -1,10 +1,8 @@
 package com.qi.sso.website;
 
-import com.sfsctech.dubbox.properties.DubboConfig;
+import com.sfsctech.dubbox.config.DubboConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
