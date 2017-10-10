@@ -1,5 +1,8 @@
 package com.qi.sso.inf;
 
+import com.sfsctech.auth.jwt.JwtToken;
+import com.sfsctech.rpc.result.ActionResult;
+
 /**
  * Class VerifyService
  *
@@ -7,4 +10,6 @@ package com.qi.sso.inf;
  * @version Description:
  */
 public interface VerifyService {
+
+    ActionResult<JwtToken> check(JwtToken jt);
 }

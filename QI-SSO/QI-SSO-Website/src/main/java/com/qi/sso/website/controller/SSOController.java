@@ -87,10 +87,16 @@ public class SSOController {
             // 删除cookie
             helper.getCookieHelper().clearCookie(AuthConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
         }
-//            helper.buildToken(actionResult.getResult());
+        // Jwt Cookie
+        helper.buildToken(actionResult.getResult());
         String form_url = request.getParameter(AuthConstants.PARAM_FROM_URL);
         if (StringUtil.isNotBlank(form_url)) result.addAttach(AuthConstants.PARAM_FROM_URL, form_url);
         result.setResult(authData.getAccount());
         return result;
+    }
+
+    @GetMapping("test")
+    public String test() {
+        return "index";
     }
 }

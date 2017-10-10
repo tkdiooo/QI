@@ -12,7 +12,7 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" th:href="${#httpServletRequest.contextPath}">
+            <a class="navbar-brand" th:href="${#httpServletRequest.contextPath}  + '/test'">
                 <h1>zzl family</h1>
             </a>
         </div>
@@ -575,7 +575,7 @@
         版权所有张麒未经许可不得复制、转载或摘编，违者必究! &copy; Copyright 2017 TK.
     </div>
 </footer>
-<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
 <div th:include="common/layout :: script"></div>
 <script th:inline="javascript">
     (function ($) {
