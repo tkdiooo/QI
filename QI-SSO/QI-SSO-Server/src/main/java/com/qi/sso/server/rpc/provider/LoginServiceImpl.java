@@ -1,14 +1,12 @@
 package com.qi.sso.server.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.alibaba.dubbo.rpc.RpcContext;
 import com.qi.sso.inf.LoginService;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.HexUtil;
-import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.JwtProperties;
 import com.sfsctech.dubbox.util.CacheUtil;
@@ -27,7 +25,7 @@ import java.util.Map;
  * @author 张麒 2017/10/8.
  * @version Description:
  */
-@Service()
+@Service(retries = -1)
 public class LoginServiceImpl implements LoginService {
 
     private final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);

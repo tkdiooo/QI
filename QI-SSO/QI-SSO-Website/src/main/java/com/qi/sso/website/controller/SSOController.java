@@ -2,7 +2,9 @@ package com.qi.sso.website.controller;
 
 import com.qi.sso.website.helper.SSOHelper;
 import com.qi.sso.website.rpc.consumer.SSOService;
+import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.jwt.JwtToken;
+import com.sfsctech.base.result.ValidatorResult;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.JsonUtil;
@@ -10,6 +12,7 @@ import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.rpc.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,23 +50,23 @@ public class SSOController {
 
     @PostMapping("login")
     @ResponseBody
-    public ActionResult<String> login(UserAuthData authData, HttpServletRequest request, HttpServletResponse response) {
+    public ActionResult<String> login(HttpServletRequest request, HttpServletResponse response) {
         helper.init(request, response);
-//        String account = request.getParameter(AuthConstants.LOGIN_ACCOUNT);
-//        String password = request.getParameter(AuthConstants.LOGIN_PASSWORD);
+        String account = request.getParameter(SSOConstants.LOGIN_ACCOUNT);
+        String password = request.getParameter("password");
         ActionResult<String> result = new ActionResult<>();
-//        // 用户名或密码为空
-//        if (StringUtil.isBlank(account) || StringUtil.isBlank(password)) {
-//            result.setSuccess(false);
-//            result.addMessage(I18NConstants.Tips.LoginAuthNotEmpty);
-//            return result;
-//        }
-//        UserAuthData authData = new UserAuthData(helper.decryptAuthData(account), helper.decryptAuthData(password));
-//        ValidatorResult valid = ValidatorUtil.validate(authData);
-//        if (valid.hasErrors()) {
-//            logger.error("数据校验异常：" + valid.getMessages());
-//            throw new VerifyException(I18NConstants.Tips.ExceptionValidator, valid);
-//        }
+        // 用户名或密码为空
+        if (StringUtil.isBlank(account) || StringUtil.isBlank(password)) {
+            result.setSuccess(false);
+            result.addMessage(I18NConstants.Tips.LoginAuthNotEmpty);
+            return result;
+        }
+        UserAuthData authData = new UserAuthData(helper.decryptAuthData(account), helper.decryptAuthData(password));
+        ValidatorResult valid = ValidatorUtil.validate(authData);
+        if (valid.hasErrors()) {
+            logger.error("数据校验异常：" + valid.getMessages());
+            throw new VerifyException(I18NConstants.Tips.ExceptionValidator, valid);
+        }
         authData.setSessionID(request.getSession().getId());
         // 验证登录信息，返回用户对象
         ActionResult<JwtToken> actionResult = service.login(authData);
