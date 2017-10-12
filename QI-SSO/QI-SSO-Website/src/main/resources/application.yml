@@ -57,6 +57,8 @@ dubbo:
     subscribe: true
     #注册中心请求超时时间(毫秒)
     timeout: 2000
+  rpc:
+    service-package: com.qi.sso.website.rpc
 #common setting
 website:
   # 网站支持
