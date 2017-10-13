@@ -10,7 +10,7 @@ import com.sfsctech.common.util.HexUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.SSOProperties;
-import com.sfsctech.dubbox.util.JwtTokenUtil;
+import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +62,7 @@ public class SSOHelper {
      * @param jt JwtToken
      */
     public void buildToken(JwtToken jt) {
-        JwtTokenUtil.updateJwtToken(helper, jt);
+        JwtCookieUtil.updateJwtToken(helper, jt);
     }
 
     /**
@@ -72,14 +72,14 @@ public class SSOHelper {
      * @throws Exception
      */
     public boolean checkToken() throws Exception {
-        JwtToken jt = JwtTokenUtil.getJwtTokenByCookie(helper);
+        JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
         if (jt == null) {
             logger.warn("do not find cookies token!");
             return false;
         }
         ActionResult<JwtToken> result = service.check(jt);
         if (result.isSuccess()) {
-            JwtTokenUtil.updateJwtToken(helper, result.getResult());
+            JwtCookieUtil.updateJwtToken(helper, result.getResult());
             return true;
         }
         return false;
@@ -93,14 +93,14 @@ public class SSOHelper {
      * @throws Exception
      */
     public boolean checkToken(String token_key, String salt_cache_key) throws Exception {
-        JwtToken jt = JwtTokenUtil.getJwtTokenByCookie(helper);
+        JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
         if (jt == null) {
             logger.warn("do not find cookies token!");
             return false;
         }
         ActionResult<JwtToken> result = service.check(jt);
         if (result.isSuccess()) {
-            JwtTokenUtil.updateJwtToken(helper, token_key, salt_cache_key, result.getResult());
+            JwtCookieUtil.updateJwtToken(helper, token_key, salt_cache_key, result.getResult());
             return true;
         }
         return false;
@@ -113,7 +113,7 @@ public class SSOHelper {
      * @throws Exception
      */
     public JwtToken getJwtToken() throws Exception {
-        JwtToken jt = JwtTokenUtil.getJwtTokenByCookie(helper);
+        JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
         if (jt == null) {
             return null;
         }
@@ -127,11 +127,11 @@ public class SSOHelper {
      * @throws Exception
      */
     public void destroyToken() throws Exception {
-        JwtToken jt = JwtTokenUtil.getJwtTokenByCookie(helper);
+        JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
         if (null != jt) {
             service.logout(jt);
         }
-        JwtTokenUtil.clearJwtToken(helper);
+        JwtCookieUtil.clearJwtToken(helper);
     }
 
     /**
