@@ -2,6 +2,7 @@ package com.qi.sso.website.helper;
 
 import com.qi.sso.website.rpc.consumer.SSOService;
 import com.sfsctech.base.jwt.JwtToken;
+import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.security.rsa.KeyPairModel;
@@ -173,6 +174,10 @@ public class SSOHelper {
         if (StringUtil.isNotBlank(account)) {
             model.put(SSOConstants.LOGIN_ACCOUNT, EncrypterTool.decrypt(EncrypterTool.Security.Aes, account));
             model.put(SSOConstants.LOGIN_REMEMBER, "on");
+        }
+        // 用户Session信息
+        if (null != SessionHolder.getSessionInfo().getUserAuthData()) {
+            model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
         }
     }
 

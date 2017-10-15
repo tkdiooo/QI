@@ -5,6 +5,7 @@ import com.qi.sso.website.rpc.consumer.SSOService;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.result.ValidatorResult;
+import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.JsonUtil;
