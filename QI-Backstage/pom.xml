@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.sfsctech.framework</groupId>
+        <artifactId>sfsctech-framework-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.qi.backstage</groupId>
+    <artifactId>QI-Backstage</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>QI-Backstage-Management</module>
+        <module>QI-Backstage-Model</module>
+    </modules>
+
+    <properties>
+        <sfsctech.common.version>1.0.0-SNAPSHOT</sfsctech.common.version>
+        <sso.version>1.0.0-SNAPSHOT</sso.version>
+        <backstage.version>1.0.0-SNAPSHOT</backstage.version>
+    </properties>
+
+</project>

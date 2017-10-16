@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="config/mybatis/generator.properties"/>
+
+    <!-- 指定数据连接驱动jar地址 -->
+    <classPathEntry location="${drive.path}"/>
+
+    <context id="MysqlTables" targetRuntime="MyBatis3">
+        <!-- 注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true"/> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+        <!-- jdbc连接 -->
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}" userId="${jdbc.user}"
+                        password="${jdbc.password}"/>
+
+        <javaModelGenerator targetPackage="${model.package}" targetProject="src/main/java">
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成mapxml文件 -->
+        <sqlMapGenerator targetPackage="${xml.package}" targetProject="src/main/resources">
+            <!-- 是否在当前路径下新加一层schema -->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成mapxml对应mapper，也就是接口dao -->
+        <javaClientGenerator targetPackage="${mapper.package}" targetProject="src/main/java" type="XMLMAPPER" />
+
+
+        <table schema="${db.schema}" tableName="%" enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <!-- 主键生成 -->
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+    </context>
+</generatorConfiguration>
