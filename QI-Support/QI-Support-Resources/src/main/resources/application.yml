@@ -1,0 +1,11 @@
+# Server Settings (ServerProperties)
+server:
+  port: 8080
+  address: localhost
+  tomcat:
+    uri-encoding: utf-8
+# Spring Settings
+spring:
+  # 指定静态资源处理路径，如果是默认/**，404请求不会抛出NoHandlerFoundException
+  mvc:
+    static-path-pattern: /static/**

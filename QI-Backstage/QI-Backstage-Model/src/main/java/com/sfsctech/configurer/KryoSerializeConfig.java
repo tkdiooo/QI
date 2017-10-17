@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component;
 public class KryoSerializeConfig {
 
     static {
-        DubboConstants.addKryoSerializePackage("com.qi.management.model.dto");
+        DubboConstants.addKryoSerializePackage("com.qi.backstage.model.dto");
     }
 }

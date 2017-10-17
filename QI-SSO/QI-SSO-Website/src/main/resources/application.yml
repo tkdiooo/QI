@@ -1,6 +1,6 @@
 #server setting
 server:
-  port: 8100
+  port: 8101
   address: localhost
   context-path: /sso
   tomcat:
@@ -47,8 +47,7 @@ dubbo:
     logger: slf4j
   registry:
     #zookeeper注册中心服务地址
-#    address: zookeeper://172.16.225.98:2181
-    address: zookeeper://192.168.100.103:2181
+    address: zookeeper://172.16.225.98:2181
     #注册中心不存在时，是否报错
     check: false
     #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
@@ -64,7 +63,7 @@ website:
   # 网站支持
   support:
     # 静态资源服务
-    static-resources: http://localhost:8080/static-resources
+    static-resources: http://localhost:8080
     welcome-file: /index
   # 单点登录
   sso:
@@ -73,6 +72,8 @@ website:
     check-url: www.zzl.com/sso/check
     register-url: www.zzl.com/sso/register
     forget-url: www.zzl.com/sso/forget
+    reference:
+      lazy: false
   # 服务架构
   session:
     authentication: sso

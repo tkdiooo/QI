@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <link th:href="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css'" rel="stylesheet">
+    <link th:href="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/css/bootstrapValidator.min.css'" rel="stylesheet">
+    <link th:href="${application.static_resource} + '/static/bower_components/Ionicons/css/ionicons.min.css'" rel="stylesheet">
+    <link th:href="${application.static_resource} + '/static/js/nivo-lightbox/css/default/default.css'" rel="stylesheet">
+    <link th:href="${application.static_resource} + '/static/font-awesome/css/font-awesome.min.css'" rel="stylesheet">
+</head>
+<div th:fragment="script">
+    <script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
+    <script th:src="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js'"></script>
+    <script th:src="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/js/bootstrapValidator.min.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/jquery/jquery.easing.min.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/jquery/jquery.scrollTo.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/other/wow.min.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/nivo-lightbox/nivo-lightbox.min.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/layer/layer.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/base/common.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/base/map.js'"></script>
+    <script th:src="${application.static_resource} + '/static/js/base/util.js'"></script>
+</div>
+</html>
