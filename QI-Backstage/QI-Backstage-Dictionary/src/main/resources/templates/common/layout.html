@@ -2,13 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title th:text="${title}"></title>
     <link th:href="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css'" rel="stylesheet">
-    <link th:href="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/css/bootstrapValidator.min.css'" rel="stylesheet">
-    <link th:href="${application.static_resource} + '/static/bower_components/Ionicons/css/ionicons.min.css'" rel="stylesheet">
-    <link th:href="${application.static_resource} + '/static/js/nivo-lightbox/css/default/default.css'" rel="stylesheet">
     <link th:href="${application.static_resource} + '/static/font-awesome/css/font-awesome.min.css'" rel="stylesheet">
+    <!-- Theme style -->
+    <link th:href="${application.static_resource} + '/static/back-stage/css/AdminLTE.min.css'" rel="stylesheet" >
+    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+    <link th:href="${application.static_resource} + '/static/back-stage/css/skins/_all-skins.min.css'" rel="stylesheet" >
+    <!-- Google Font -->
+    <link th:href="${application.static_resource} + '/static/back-stage/css/font-google.css'" rel="stylesheet" >
 </head>
 <div th:fragment="script">
     <script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
@@ -23,4 +28,5 @@
     <script th:src="${application.static_resource} + '/static/js/base/map.js'"></script>
     <script th:src="${application.static_resource} + '/static/js/base/util.js'"></script>
 </div>
+
 </html>

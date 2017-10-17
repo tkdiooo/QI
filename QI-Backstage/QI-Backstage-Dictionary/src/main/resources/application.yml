@@ -63,7 +63,7 @@ website:
   # 网站支持
   support:
     # 静态资源服务
-#    static-resources: http://localhost:8080
+    static-resources: http://localhost:8080
     welcome-file: /index
   # 单点登录
 #  sso:
@@ -78,6 +78,6 @@ website:
 #  session:
 #    authentication: sso
 #    exclude-path: /index, /login
-#  csrf:
+  csrf:
 #    verify-exclude-path: /index
-#    intercept-exclude-path: /**
+    intercept-exclude-path: /**

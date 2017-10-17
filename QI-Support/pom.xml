@@ -16,7 +16,6 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>QI-Support-Config</module>
         <module>QI-Support-Resources</module>
     </modules>
 
