@@ -81,3 +81,5 @@ website:
   csrf:
 #    verify-exclude-path: /index
     intercept-exclude-path: /**
+    open: true
+    keep-pattern: soa

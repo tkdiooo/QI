@@ -78,6 +78,8 @@ website:
 #  session:
 #    authentication: sso
 #    exclude-path: /index, /login
-  csrf:
-#    verify-exclude-path: /index
-    intercept-exclude-path: /**
+#  csrf:
+#    verify-exclude-path: /**
+#    intercept-exclude-path: /**
+#    open: true
+#    required-verify-path: /index

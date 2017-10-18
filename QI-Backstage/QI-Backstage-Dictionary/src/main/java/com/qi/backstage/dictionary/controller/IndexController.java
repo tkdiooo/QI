@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
 
-
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         return "index";
