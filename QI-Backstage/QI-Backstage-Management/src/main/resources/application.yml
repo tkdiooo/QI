@@ -1,8 +1,8 @@
 #server setting
 server:
-  port: 8202
+  port: 8201
   address: localhost
-  context-path: /dictionary
+  context-path: /management
   tomcat:
     uri-encoding: utf-8
   session:
@@ -17,7 +17,7 @@ server:
 #      name:
 #      path:
 #  context-parameters:
-#    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
+#    logback-config-location: http://localhost:8888/framework/thymeleaf
 #    logback-expose-webapp-root: true
 #spring mvc setting
 spring:

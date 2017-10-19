@@ -34,18 +34,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- mysql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.41</version>
-        </dependency>
-        <!-- sfsctech-common-mybatis support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-mybatis</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
         <!-- common-exception support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
