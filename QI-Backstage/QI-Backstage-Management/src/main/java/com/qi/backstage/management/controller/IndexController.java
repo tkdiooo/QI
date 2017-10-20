@@ -1,5 +1,8 @@
 package com.qi.backstage.management.controller;
 
+import com.qi.backstage.management.service.write.MenuWriteService;
+import com.qi.backstage.model.domain.BaseMenu;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
 
+    @Autowired
+    private MenuWriteService menuWriteService;
+
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        BaseMenu menu = new BaseMenu();
+
+        menuWriteService.save(menu);
         return "index";
     }
 }

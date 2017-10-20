@@ -20,7 +20,7 @@
     </modules>
 
     <properties>
-        <sfsctech.common.version>1.0.0-SNAPSHOT</sfsctech.common.version>
+        <sfsctech.common.version>1.1.0-SNAPSHOT</sfsctech.common.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
