@@ -1,0 +1,85 @@
+#server setting
+server:
+  port: 8082
+  address: localhost
+  context-path: /platform
+  tomcat:
+    uri-encoding: utf-8
+  session:
+    cookie:
+#      domain:
+      # 只能在服务端设置
+      http-only: true
+      # 只能在 HTTPS 连接中被传递
+#      secure: true
+      max-age: 3600000
+#      comment:
+#      name:
+#      path:
+#  context-parameters:
+#    logback-config-location: http://localhost:8888/framework/thymeleaf
+#    logback-expose-webapp-root: true
+#spring mvc setting
+spring:
+  thymeleaf:
+    cache: false
+    suffix: .html
+  mvc:
+    # 指定静态资源处理路径
+    static-path-pattern: /static/**
+    view:
+      suffix: .html
+  redis:
+    host-name: 172.16.225.98
+    port: 6379
+    password: redis123
+    pool:
+      max-total: 300
+      max-wait-millis: 10000
+      max-idle: 100
+      min-idle: 50
+#dubbo setting
+#dubbo:
+#  application:
+#    #服务消费名称信息
+#    name: SSO-Website
+#    #日志适配
+#    logger: slf4j
+#  registry:
+#    #zookeeper注册中心服务地址
+#    address: zookeeper://172.16.225.98:2181
+#    #注册中心不存在时，是否报错
+#    check: false
+#    #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
+#    register: true
+#    #是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
+#    subscribe: true
+#    #注册中心请求超时时间(毫秒)
+#    timeout: 2000
+#  rpc:
+#    service-package: com.qi.sso.website.rpc
+#common setting
+website:
+  # 网站支持
+  support:
+    # 静态资源服务
+    static-resources: http://localhost:8080
+    welcome-file: /index
+  # 单点登录
+#  sso:
+#    login-url: www.zzl.com/sso/login
+#    logout-url: www.zzl.com/sso/logout
+#    check-url: www.zzl.com/sso/check
+#    register-url: www.zzl.com/sso/register
+#    forget-url: www.zzl.com/sso/forget
+#    reference:
+#      lazy: false
+  # 服务架构
+#  session:
+#    authentication: sso
+#    exclude-path: /index, /login
+#  csrf:
+#    verify-exclude-path: /**
+#    intercept-exclude-path: /**
+#    open: true
+#    required-verify-path: /index

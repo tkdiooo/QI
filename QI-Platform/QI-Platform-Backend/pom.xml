@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>QI-Backstage</artifactId>
-        <groupId>com.qi.backstage</groupId>
+        <artifactId>QI-Platform</artifactId>
+        <groupId>com.qi.platform</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>QI-Backstage-Management</artifactId>
+    <artifactId>QI-Platform-Backend</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -52,27 +52,21 @@
             <artifactId>common-security</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- qi-backstage-dao support-->
-        <dependency>
-            <groupId>com.qi.backstage</groupId>
-            <artifactId>QI-Backstage-Dao</artifactId>
-            <version>${backstage.version}</version>
-        </dependency>
         <!--<dependency>-->
-            <!--<groupId>com.qi.sso</groupId>-->
-            <!--<artifactId>QI-SSO-Auth</artifactId>-->
-            <!--<version>${sso.version}</version>-->
+        <!--<groupId>com.qi.sso</groupId>-->
+        <!--<artifactId>QI-SSO-Auth</artifactId>-->
+        <!--<version>${sso.version}</version>-->
         <!--</dependency>-->
     </dependencies>
 
     <build>
-        <finalName>Backstage-Management</finalName>
+        <finalName>Backstage-Dictionary</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.qi.backstage.management.Runner</mainClass>
+                    <mainClass>com.qi.platform.backend.Runner</mainClass>
                 </configuration>
                 <executions>
                     <execution>
@@ -86,5 +80,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
