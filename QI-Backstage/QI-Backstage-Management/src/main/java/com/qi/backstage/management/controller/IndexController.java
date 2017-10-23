@@ -24,9 +24,6 @@ public class IndexController {
 
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        BaseMenu menu = new BaseMenu();
-
-        menuWriteService.save(menu);
         return "index";
     }
 }
