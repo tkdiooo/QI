@@ -1252,6 +1252,9 @@ a:focus {
   -moz-appearance: none;
   appearance: none;
 }
+form .form-group {
+    height: 55px !important;
+}
 .form-group.has-success label {
   color: #00a65a;
 }

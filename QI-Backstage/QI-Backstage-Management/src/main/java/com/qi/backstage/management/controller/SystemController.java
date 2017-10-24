@@ -1,5 +1,6 @@
 package com.qi.backstage.management.controller;
 
+import com.sfsctech.constants.UIConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,15 @@ public class SystemController {
         return "index";
     }
 
+    @GetMapping("add")
+    public String add(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
+        return "system/edit";
+    }
+
     @GetMapping("edit")
     public String edit(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
         return "system/edit";
     }
 }

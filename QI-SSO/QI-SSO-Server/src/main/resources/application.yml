@@ -28,7 +28,7 @@ dubbo:
     logger: slf4j
   registry:
     # zookeeper注册中心服务地址
-    address: zookeeper://172.16.225.98:2181
+    address: zookeeper://192.168.100.103:2181
     # 注册中心不存在时，是否报错
     check: true
     # 是否向此注册中心注册服务，如果设为false，将只订阅，不注册

@@ -7,8 +7,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            General Form Elements
-            <small>Preview</small>
+            系统服务
+            <small th:text="${operation}"></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -24,38 +24,55 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Quick Example</h3>
+                    <h3 class="box-title">基础信息</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form">
+                <form class="form-horizontal">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                   placeholder="Enter email">
+                            <label for="code" class="col-sm-2 control-label">系统编号</label>
+                            <div class="col-xs-3">
+                                <input type="email" class="form-control" id="code" name="code" placeholder="系统编号">
+                            </div>
+                            <label for="type" class="col-sm-2 control-label">系统类型</label>
+                            <div class="col-xs-3">
+                                <input type="email" class="form-control" id="type" name="type" placeholder="Email">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1"
-                                   placeholder="Password">
+                            <label for="namecn" class="col-sm-2 control-label">系统名称</label>
+                            <div class="col-xs-3">
+                                <input type="email" class="form-control" id="namecn" name="namecn" placeholder="Email">
+                            </div>
+                            <label for="nameen" class="col-sm-2 control-label">系统简称</label>
+                            <div class="col-xs-3">
+                                <input type="email" class="form-control" id="nameen" name="nameen" placeholder="Email">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile">
-
-                            <p class="help-block">Example block-level help text here.</p>
+                            <label for="domain" class="col-sm-2 control-label">Domain</label>
+                            <div class="col-xs-3">
+                                <input type="email" class="form-control" id="domain" name="domain" placeholder="Email">
+                            </div>
+                            <label for="contextpath" class="col-sm-2 control-label">ContextPath</label>
+                            <div class="col-xs-3">
+                                <input type="email" class="form-control" id="contextpath" name="contextpath"
+                                       placeholder="Email">
+                            </div>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Check me out
-                            </label>
+                        <div class="form-group">
+                            <label for="homepage" class="col-sm-2 control-label">HomePage</label>
+                            <div class="col-xs-3">
+                                <input type="email" class="form-control" id="homepage" name="homepage" placeholder="Email">
+                            </div>
                         </div>
                     </div>
                     <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary pull-right" style="margin-right: 175px;">提交</button>
+                        <button type="submit" class="btn btn-default pull-right" style="margin-right: 15px;">取消</button>
                     </div>
                 </form>
             </div>
