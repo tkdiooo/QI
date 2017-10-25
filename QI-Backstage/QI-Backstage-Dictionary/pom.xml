@@ -52,6 +52,12 @@
             <artifactId>common-security</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- qi-backstage-dao support-->
+        <dependency>
+            <groupId>com.qi.backstage</groupId>
+            <artifactId>QI-Backstage-Dao</artifactId>
+            <version>${backstage.version}</version>
+        </dependency>
         <!--<dependency>-->
         <!--<groupId>com.qi.sso</groupId>-->
         <!--<artifactId>QI-SSO-Auth</artifactId>-->

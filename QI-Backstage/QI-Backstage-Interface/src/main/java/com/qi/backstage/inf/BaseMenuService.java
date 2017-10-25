@@ -1,6 +1,6 @@
 package com.qi.backstage.inf;
 
-import com.qi.backstage.model.dto.BaseMenuDto;
+import com.qi.backstage.model.dto.MenuDto;
 import com.sfsctech.rpc.result.ActionResult;
 
 /**
@@ -11,6 +11,6 @@ import com.sfsctech.rpc.result.ActionResult;
  */
 public interface BaseMenuService {
 
-    ActionResult<BaseMenuDto> findByCodeSystem(String codeSystem);
+    ActionResult<MenuDto> findByCodeSystem(String codeSystem);
 
 }
