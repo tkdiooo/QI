@@ -60,19 +60,18 @@
 <script th:inline="javascript">
     $(function () {
         matchTable(/*[[@{/query}]]*/ "", '#data_table', [
-            {"sClass": "text-left", "sWidth": "150", "data": "number"},
-            {"sClass": "text-left", "sWidth": "200", "data": "content"},
-            {"sClass": "text-left", "sWidth": "500", "data": "description"},
-            {"sClass": "text-left", "sWidth": "50", "data": "sort"},
+            {sClass: "text-left", sWidth: 150, sScrollY: 40, data: "number"},
+            {sClass: "text-left", sWidth: 200, data: "content", orderable: false},
+            {sClass: "text-left", sWidth: "60%", data: "description", orderable: false},
+            {sClass: "text-left", sWidth: 30, data: "sort"},
             {
-                "sClass": "text-left", "sWidth": "100", "data": function (obj) {
-                    console.info(obj)
-                    return "";
+                sClass: "text-left", sWidth: 50, orderable: false, data: function (obj) {
+                    return obj.statusValue;
                 }
             },
             {
-                "sClass": "text-left", "sWidth": "100%", "data": function (obj) {
-                    return "";
+                sClass: "text-left", sWidth: "100%", orderable: false, data: function (obj) {
+                    return "<button type=\"button\" class=\"btn label dt-btn\">编辑</button><button type=\"button\" class=\"btn label dt-btn\">删除</button>";
                 }
             }
         ], {

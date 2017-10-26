@@ -3,6 +3,7 @@ package com.qi.backstage.dictionary.controller;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.model.domain.BaseDictionary;
+import com.qi.backstage.model.dto.DictionaryDto;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.rpc.result.ActionResult;
@@ -39,9 +40,8 @@ public class IndexController {
 
     @ResponseBody
     @PostMapping("query")
-    public ActionResult<PagingInfo<BaseDictionary>> getData(@RequestBody PagingInfo<BaseDictionary> pagingInfo) {
-        readService.findByPage(pagingInfo);
-        return new ActionResult<>(pagingInfo);
+    public ActionResult<PagingInfo<DictionaryDto>> getData(@RequestBody PagingInfo<DictionaryDto> pagingInfo) {
+        return new ActionResult<>(readService.findByPage(pagingInfo));
     }
 
     @GetMapping("add")

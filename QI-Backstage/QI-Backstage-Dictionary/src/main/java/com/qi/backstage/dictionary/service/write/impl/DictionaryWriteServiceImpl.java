@@ -24,7 +24,7 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
     @Override
     public void save(BaseDictionary dictionary) {
         dictionary.setGuid(UUIDUtil.base58Uuid());
-        dictionary.setStatus(StatusConstants.YesNo.Yes.getCode());
+        dictionary.setStatus(StatusConstants.Status.Valid.getCode());
         dictionary.setSort(NumberUtils.INTEGER_ZERO);
         mapper.insert(dictionary);
     }

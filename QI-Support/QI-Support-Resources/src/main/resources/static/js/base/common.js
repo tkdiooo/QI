@@ -377,12 +377,13 @@ function matchTable(url, container, columns, params, destorys) {
             },
             bDeferRender: false,
             retrieve: true,
-            processing: false,
+            processing: true,
             ajax: function (data, callback, settings) {
                 // 请求参数封装
                 data.condition = params;
                 // 请求设置
                 var opt = {
+                    waiting: false,
                     contentType: 'application/json; charset=utf-8',
                     handler: function (result) {
                         setTimeout(function () {

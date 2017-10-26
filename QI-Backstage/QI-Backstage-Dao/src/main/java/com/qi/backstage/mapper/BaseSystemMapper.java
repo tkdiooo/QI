@@ -1,10 +1,9 @@
 package com.qi.backstage.mapper;
 
-import com.qi.backstage.model.domain.BaseSystem;
-import com.qi.backstage.model.domain.BaseSystemExample;
-
 import java.util.List;
 
+import com.qi.backstage.model.domain.BaseSystem;
+import com.qi.backstage.model.domain.BaseSystemExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface BaseSystemMapper {

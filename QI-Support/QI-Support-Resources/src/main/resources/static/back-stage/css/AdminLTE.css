@@ -5953,3 +5953,23 @@ table.text-center th {
         white-space: normal !important;
     }
 }
+
+/*
+ * Custom: css
+ * -----------
+ */
+.dt-btn {
+    display: none;
+    color: #333;
+    font-weight: 500;
+    border-color: #adadad;
+    margin-right: 10px;
+}
+
+.dt-btn:hover {
+    background-color: #e7e7e7;
+}
+
+.table tbody tr:hover .dt-btn {
+    display: inline-block;
+}
