@@ -1,7 +1,9 @@
 package com.qi.backstage.dictionary.controller;
 
+import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.model.domain.BaseDictionary;
+import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +29,19 @@ public class IndexController {
     @Autowired
     private DictionaryWriteService writeService;
 
+    @Autowired
+    private DictionaryReadService readService;
+
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        return "index";
+        return "dictionary/index";
+    }
+
+    @ResponseBody
+    @PostMapping("query")
+    public ActionResult<PagingInfo<BaseDictionary>> getData(@RequestBody PagingInfo<BaseDictionary> pagingInfo) {
+        readService.findByPage(pagingInfo);
+        return new ActionResult<>(pagingInfo);
     }
 
     @GetMapping("add")

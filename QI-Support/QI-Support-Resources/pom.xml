@@ -97,11 +97,17 @@
             <artifactId>echarts</artifactId>
             <version>3.3.1</version>
         </dependency>
-        <!-- datatables -->
+        <!-- datatables.net -->
         <dependency>
             <groupId>org.webjars.bower</groupId>
-            <artifactId>datatables</artifactId>
-            <version>1.10.13</version>
+            <artifactId>datatables.net</artifactId>
+            <version>1.10.16</version>
+        </dependency>
+        <!-- datatables.net-bs -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables.net-bs</artifactId>
+            <version>1.10.16</version>
         </dependency>
     </dependencies>
 

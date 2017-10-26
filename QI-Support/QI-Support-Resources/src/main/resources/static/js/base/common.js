@@ -348,9 +348,9 @@ function matchTable(url, container, columns, params, destorys) {
         {
             scrollX: true,
             bServerSide: true,
-            ordering: false,
+            bSort: true,
             searching: false, //禁用原生搜索
-            bLengthChange: true,
+            bLengthChange: false, //禁用数据量选择
             renderer: 'bootstrap', //渲染样式：Bootstrap和jquery-ui
             pagingType: 'full_numbers', //分页样式：simple,simple_numbers,full,full_numbers
             language: {
