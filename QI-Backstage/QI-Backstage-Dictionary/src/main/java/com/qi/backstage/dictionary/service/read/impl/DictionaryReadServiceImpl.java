@@ -13,6 +13,7 @@ import com.sfsctech.common.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,22 +29,23 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
     private BaseDictionaryMapper mapper;
 
     @Override
-    public List<BaseDictionary> find(BaseDictionary condition) {
-        BaseDictionaryExample example = new BaseDictionaryExample();
-        BaseDictionaryExample.Criteria criteria = example.createCriteria();
-        return mapper.selectByExample(example);
+    public List<DictionaryDto> findAll() {
+        List<BaseDictionary> result = mapper.selectByExample(new BaseDictionaryExample());
+        List<DictionaryDto> data = new ArrayList<>();
+        result.forEach(dictionary -> data.add(BeanUtil.copyPropertiesNotEmpty(DictionaryDto.class, dictionary)));
+        return data;
     }
 
-    @Override
-    public PagingInfo<DictionaryDto> findByPage(PagingInfo<DictionaryDto> pagingInfo) {
-        PageHelper.startPage(pagingInfo.getPageNum(), pagingInfo.getPageSize());
-        BaseDictionaryExample example = new BaseDictionaryExample();
-        if (ListUtil.isNotEmpty(pagingInfo.getOrder())) {
-            example.setOrderByClause(pagingInfo.getOrderByClause());
-        }
-        PageInfo<BaseDictionary> page = new PageInfo<>(mapper.selectByExample(example));
-        pagingInfo.setRecordsTotal(page.getTotal());
-        page.getList().forEach(dictionary -> pagingInfo.getData().add(BeanUtil.copyPropertiesNotEmpty(DictionaryDto.class, dictionary)));
-        return pagingInfo;
-    }
+//    @Override
+//    public PagingInfo<DictionaryDto> findByPage(PagingInfo<DictionaryDto> pagingInfo) {
+//        PageHelper.startPage(pagingInfo.getPageNum(), pagingInfo.getPageSize());
+//        BaseDictionaryExample example = new BaseDictionaryExample();
+//        if (ListUtil.isNotEmpty(pagingInfo.getOrder())) {
+//            example.setOrderByClause(pagingInfo.getOrderByClause());
+//        }
+//        PageInfo<BaseDictionary> page = new PageInfo<>(mapper.selectByExample(example));
+//        pagingInfo.setRecordsTotal(page.getTotal());
+//        page.getList().forEach(dictionary -> pagingInfo.getData().add(BeanUtil.copyPropertiesNotEmpty(DictionaryDto.class, dictionary)));
+//        return pagingInfo;
+//    }
 }

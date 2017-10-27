@@ -331,75 +331,134 @@ function load_url(url, container, data, opt) {
 
 /**
  * dataTables加载
- * @param url 请求路径
  * @param container: 渲染的容器jQuery.ID
- * @param columns: 列字段处理
- * @param params: 请求参数
+ * @param opt: 设置
+ * @param opt.columns: 列字段处理
+ * @param opt.buttons: 按钮
  * @param destorys: 是否销毁
  */
-function matchTable(url, container, columns, params, destorys) {
+function matchDomTable(container, opt, destorys) {
     if (destorys) {
         if ($.fn.dataTable.isDataTable(container)) {
             $(container).DataTable().destroy();
         }
     }
+    var option = {
+        scrollX: true,
+        bSort: true,
+        searching: true, //原生搜索
+        bLengthChange: false, //禁用数据量选择
+        renderer: 'bootstrap', //渲染样式：Bootstrap和jquery-ui
+        pagingType: 'full_numbers', //分页样式：simple,simple_numbers,full,full_numbers
+        language: {
+            'sProcessing': '处理中...',
+            'sLengthMenu': '显示 _MENU_ 项结果',
+            'sZeroRecords': '没有匹配结果',
+            'bPaginate': true,
+            'bFilter': true,
+            'sInfo': '显示第  _START_ 至  _END_ 项结果，共  _TOTAL_ 项，当前位置  第_PAGE_页',
+            'sInfoEmpty': '显示第 0 至 0 项结果，共 0 项',
+            'sInfoFiltered': '(由  _MAX_ 项结果过滤)',
+            'sInfoPostFix': '',
+            'sSearch': '搜索:',
+            'sUrl': '',
+            'sEmptyTable': '表中数据为空',
+            'sLoadingRecords': '载入中...',
+            'sInfoThousands': ',',
+            'oPaginate': {
+                'sFirst': '首页',
+                'sPrevious': '上页',
+                'sNext': '下页',
+                'sLast': '末页'
+            }
+        },
+        bDeferRender: false,
+        retrieve: true,
+        processing: false,
+        columns: opt.columns
+    };
+    if (opt.buttons) {
+        option['dom'] = 'Bfrtip';
+        option['buttons'] = opt.buttons;
+    }
     //初始化表格
-    return $(container).DataTable(
-        {
-            scrollX: true,
-            bServerSide: true,
-            bSort: true,
-            searching: false, //禁用原生搜索
-            bLengthChange: false, //禁用数据量选择
-            renderer: 'bootstrap', //渲染样式：Bootstrap和jquery-ui
-            pagingType: 'full_numbers', //分页样式：simple,simple_numbers,full,full_numbers
-            language: {
-                'sProcessing': '处理中...',
-                'sLengthMenu': '显示 _MENU_ 项结果',
-                'sZeroRecords': '没有匹配结果',
-                'bPaginate': true,
-                'bFilter': true,
-                'sInfo': '显示第  _START_ 至  _END_ 项结果，共  _TOTAL_ 项，当前位置  第_PAGE_页',
-                'sInfoEmpty': '显示第 0 至 0 项结果，共 0 项',
-                'sInfoFiltered': '(由  _MAX_ 项结果过滤)',
-                'sInfoPostFix': '',
-                'sSearch': '搜索:',
-                'sUrl': '',
-                'sEmptyTable': '表中数据为空',
-                'sLoadingRecords': '载入中...',
-                'sInfoThousands': ',',
-                'oPaginate': {
-                    'sFirst': '首页',
-                    'sPrevious': '上页',
-                    'sNext': '下页',
-                    'sLast': '末页'
+    return $(container).DataTable(option);
+}
+
+/**
+ * dataTables加载
+ * @param url 请求路径
+ * @param container: 渲染的容器jQuery.ID
+ * @param opt: 设置
+ * @param opt.columns: 列字段处理
+ * @param opt.params: 请求参数
+ * @param opt.buttons: 按钮
+ * @param destorys: 是否销毁
+ */
+function matchAjaxTable(url, container, opt, destorys) {
+    if (destorys) {
+        if ($.fn.dataTable.isDataTable(container)) {
+            $(container).DataTable().destroy();
+        }
+    }
+    var options = {
+        scrollX: true,
+        bServerSide: true,
+        bSort: true,
+        searching: false, //禁用原生搜索
+        bLengthChange: false, //禁用数据量选择
+        renderer: 'bootstrap', //渲染样式：Bootstrap和jquery-ui
+        pagingType: 'full_numbers', //分页样式：simple,simple_numbers,full,full_numbers
+        language: {
+            'sProcessing': '处理中...',
+            'sLengthMenu': '显示 _MENU_ 项结果',
+            'sZeroRecords': '没有匹配结果',
+            'bPaginate': true,
+            'bFilter': true,
+            'sInfo': '显示第  _START_ 至  _END_ 项结果，共  _TOTAL_ 项，当前位置  第_PAGE_页',
+            'sInfoEmpty': '显示第 0 至 0 项结果，共 0 项',
+            'sInfoFiltered': '(由  _MAX_ 项结果过滤)',
+            'sInfoPostFix': '',
+            'sSearch': '搜索:',
+            'sUrl': '',
+            'sEmptyTable': '表中数据为空',
+            'sLoadingRecords': '载入中...',
+            'sInfoThousands': ',',
+            'oPaginate': {
+                'sFirst': '首页',
+                'sPrevious': '上页',
+                'sNext': '下页',
+                'sLast': '末页'
+            }
+        },
+        bDeferRender: false,
+        retrieve: true,
+        processing: false,
+        ajax: function (data, callback, settings) {
+            // 请求参数封装
+            data.condition = opt.params;
+            //ajax请求数据
+            ajax_action(url, JSON.stringify(data), {
+                contentType: 'application/json; charset=utf-8',
+                handler: function (result) {
+                    setTimeout(function () {
+                        //封装返回数据
+                        result.result.draw = data.draw;
+                        //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
+                        //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
+                        callback(result.result);
+                    }, 200);
                 }
-            },
-            bDeferRender: false,
-            retrieve: true,
-            processing: true,
-            ajax: function (data, callback, settings) {
-                // 请求参数封装
-                data.condition = params;
-                // 请求设置
-                var opt = {
-                    waiting: false,
-                    contentType: 'application/json; charset=utf-8',
-                    handler: function (result) {
-                        setTimeout(function () {
-                            //封装返回数据
-                            result.result.draw = data.draw;
-                            //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
-                            //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
-                            callback(result.result);
-                        }, 200);
-                    }
-                };
-                //ajax请求数据
-                ajax_action(url, JSON.stringify(data), opt);
-            },
-            columns: columns
-        });
+            });
+        },
+        columns: opt.columns
+    };
+    if (opt.buttons) {
+        option['dom'] = 'Bfrtip';
+        option['buttons'] = opt.buttons;
+    }
+    //初始化表格
+    return $(container).DataTable(options);
 }
 
 function to_url(url) {

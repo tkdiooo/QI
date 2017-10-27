@@ -35,14 +35,15 @@ public class IndexController {
 
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        model.put("data", readService.findAll());
         return "dictionary/index";
     }
 
-    @ResponseBody
-    @PostMapping("query")
-    public ActionResult<PagingInfo<DictionaryDto>> getData(@RequestBody PagingInfo<DictionaryDto> pagingInfo) {
-        return new ActionResult<>(readService.findByPage(pagingInfo));
-    }
+//    @ResponseBody
+//    @PostMapping("query")
+//    public ActionResult<PagingInfo<DictionaryDto>> getData(PagingInfo<DictionaryDto> pagingInfo) {
+//        return new ActionResult<>(readService.findByPage(pagingInfo));
+//    }
 
     @GetMapping("add")
     public String add(ModelMap model, HttpServletRequest request, HttpServletResponse response) {

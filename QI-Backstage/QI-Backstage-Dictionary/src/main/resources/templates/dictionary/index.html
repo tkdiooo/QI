@@ -1,7 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="common/layout :: head"></head>
+<head th:include="common/layout :: DTHead"></head>
 <body>
+<script th:inline="javascript">
+    $(function () {
+        var opt = {
+            columns: [
+                {sClass: "text-left", sWidth: 150, sScrollY: 40},
+                {sClass: "text-left", sWidth: 200, orderable: false},
+                {sClass: "text-left", sWidth: "60%", orderable: false},
+                {sClass: "text-left", sWidth: 30},
+                {sClass: "text-left", sWidth: 50, orderable: false},
+                {sClass: "text-left", sWidth: "100%", orderable: false}
+            ],
+            buttons: [
+                {
+                    text: 'My button',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                },
+                {
+                    text: 'My button',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                },
+                {
+                    extend: 'collection',
+                    text: 'Flag',
+                    buttons: [
+                        { text: 'High priority',   action: function () {  } },
+                        { text: 'Medium priority', action: function () {  } },
+                        { text: 'Low priority',    action: function () {  } }
+                    ],
+                    fade: true
+                }
+            ]
+        };
+        //dt-buttons
+        matchDomTable('#data_table', opt, true);
+    })
+</script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -35,6 +75,25 @@
                                 <th>操作</th>
                             </tr>
                             </thead>
+                            <tbody>
+                            <tr th:each="var, stat : ${data}">
+                                <td th:text="${var.number}"></td>
+                                <td th:text="${var.content}"></td>
+                                <td th:text="${var.description}"></td>
+                                <td th:text="${var.sort}"></td>
+                                <td th:utext="${var.statusValue}"></td>
+                                <td>
+                                    <button type="button" class="btn btn-default btn-sm dt-btn"><i
+                                            class="fa fa-edit"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm dt-btn"><i
+                                            class="fa fa-ban"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm dt-btn"><i
+                                            class="fa fa-check-square-o"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm dt-btn"><i
+                                            class="fa fa-search"></i></button>
+                                </td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                     <!-- /.box-body -->
@@ -55,30 +114,24 @@
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
 </footer>
-
 <div th:include="common/layout :: script"></div>
 <script th:inline="javascript">
     $(function () {
-        matchTable(/*[[@{/query}]]*/ "", '#data_table', [
-            {sClass: "text-left", sWidth: 150, sScrollY: 40, data: "number"},
-            {sClass: "text-left", sWidth: 200, data: "content", orderable: false},
-            {sClass: "text-left", sWidth: "60%", data: "description", orderable: false},
-            {sClass: "text-left", sWidth: 30, data: "sort"},
-            {
-                sClass: "text-left", sWidth: 50, orderable: false, data: function (obj) {
-                    return obj.statusValue;
-                }
-            },
-            {
-                sClass: "text-left", sWidth: "100%", orderable: false, data: function (obj) {
-                    return "<button type=\"button\" class=\"btn label dt-btn\">编辑</button><button type=\"button\" class=\"btn label dt-btn\">删除</button>";
-                }
-            }
-        ], {
-            'number': 'sdssdsdd',
-            'content': 'sdssdsdd'
-        })
+        //显示tooltip
+        $("[data-original-title]").tooltip();
     })
+    // <span th:each="fileList:${affixList}">
+    //     <a href="javascript:;" th:onclick="'javascript:dowloadAffix('+${fileList.guid}+');'" th:text="${fileList.name}+'.'+${fileList.suffix}"></a>
+    //     <del th:onclick="'javascript:fileDel('+${fileList.guid}+',this);'"><i class="fa fa-remove"></i></del><br>
+    // <label>&nbsp;</label>
+    // </span>
+    // <span th:each="fileList:${affixList}">
+    //     <a class="separateFileName" href="javascript:;"
+    // th:onclick="'javascript:dowloadAffix('+${fileList.guid}+');'"
+    // th:text="${fileList.name}+'.'+${fileList.suffix}"></a>
+    //     <del th:onclick="'javascript:fileDel('+${fileList.guid}+',this);'"><i class="fa fa-remove"></i></del><br>
+    // <label>&nbsp;</label>
+    // </span>
 </script>
 </body>
 </html>
