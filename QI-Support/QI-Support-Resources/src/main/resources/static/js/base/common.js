@@ -331,16 +331,16 @@ function load_url(url, container, data, opt) {
 
 /**
  * dataTables加载
- * @param container: 渲染的容器jQuery.ID
  * @param opt: 设置
+ * @param opt.container: 渲染的容器jQuery.ID
  * @param opt.columns: 列字段处理
  * @param opt.buttons: 按钮
  * @param destorys: 是否销毁
  */
-function matchDomTable(container, opt, destorys) {
+function matchDomTable(opt, destorys) {
     if (destorys) {
-        if ($.fn.dataTable.isDataTable(container)) {
-            $(container).DataTable().destroy();
+        if ($.fn.dataTable.isDataTable(opt.container)) {
+            $(opt.container).DataTable().destroy();
         }
     }
     var option = {
@@ -377,12 +377,12 @@ function matchDomTable(container, opt, destorys) {
         processing: false,
         columns: opt.columns
     };
+    var table = $(opt.container).DataTable(option);
     if (opt.buttons) {
-        option['dom'] = 'Bfrtip';
-        option['buttons'] = opt.buttons;
+        matchTableButtons(opt);
     }
     //初始化表格
-    return $(container).DataTable(option);
+    return table;
 }
 
 /**
@@ -459,6 +459,48 @@ function matchAjaxTable(url, container, opt, destorys) {
     }
     //初始化表格
     return $(container).DataTable(options);
+}
+
+function matchTableButtons(opt) {
+    var row = $(opt.container + '_wrapper').children('div:first-child').children('div:first-child');
+    $.each(opt.buttons, function (i, value) {
+        var div = $('<div class="btn-group" data-autorun="' + (i + 1) + '" data-original-title="' + value.title + '"></div>');
+        // 按钮
+        if (value.type === 'button') {
+            var button = $('<button type="button" id="' + value.id + '" class="' + value.class + '"><span class="glyphicon">' + value.text + '</span></button>');
+            button.click(value.action);
+            div.append(button);
+        }
+        // 选择
+        else if (value.type === 'select') {
+            var select = $('<button type="button" id="' + value.id + '" class="' + value.class + '" val="">' + value.text + '</button>' +
+                '<button type="button" class="' + value.class + ' dropdown-toggle" data-toggle="dropdown">' +
+                '<span class="caret"></span><span class="sr-only">' + value.text + '</span></button>');
+            var options = $('<ul class="dropdown-menu" role="menu"></ul>');
+            $.each(value.options, function (j, opt) {
+                var li = $('<li cls="' + opt.class + '" val="' + opt.value + '"><a href="javascript:void(0);">' + opt.text + '</a></li>');
+                li.click(function () {
+                    var btn = $('#' + value.id);
+                    // 获取节点属性
+                    var text = $(this).children().text();
+                    var cls = $(this).attr('cls');
+                    var val = $(this).attr('val');
+                    // 替换节点属性
+                    $(this).children().text(btn.text());
+                    $(this).attr('cls', btn.attr('class'));
+                    $(this).attr('val', btn.attr('val'));
+                    // 设置btn属性
+                    btn.text(text).removeClass().addClass(cls).attr('val', val);
+                    btn.next().removeClass().addClass('dropdown-toggle ' + cls);
+                    invoke(value.action, val);
+                });
+                options.append(li);
+            });
+            div.append(select);
+            div.append(options);
+        }
+        row.append(div);
+    });
 }
 
 function to_url(url) {

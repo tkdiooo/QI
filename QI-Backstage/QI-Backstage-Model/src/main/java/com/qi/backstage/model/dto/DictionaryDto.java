@@ -13,6 +13,10 @@ public class DictionaryDto extends BaseDictionary {
 
     private static final long serialVersionUID = -7182086807817270077L;
 
+    public void setStatusValue(String statusValue) {
+
+    }
+
     public String getStatusValue() {
         if (null != getStatus()) {
             return UIConstants.DataTable.getStatus(super.getStatus());

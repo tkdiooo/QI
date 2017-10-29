@@ -1,19 +1,14 @@
 package com.qi.backstage.dictionary.service.read.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.mapper.BaseDictionaryMapper;
 import com.qi.backstage.model.domain.BaseDictionary;
 import com.qi.backstage.model.domain.BaseDictionaryExample;
 import com.qi.backstage.model.dto.DictionaryDto;
-import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.common.util.BeanUtil;
-import com.sfsctech.common.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,9 +26,7 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
     @Override
     public List<DictionaryDto> findAll() {
         List<BaseDictionary> result = mapper.selectByExample(new BaseDictionaryExample());
-        List<DictionaryDto> data = new ArrayList<>();
-        result.forEach(dictionary -> data.add(BeanUtil.copyPropertiesNotEmpty(DictionaryDto.class, dictionary)));
-        return data;
+        return BeanUtil.copyListForCglib(result, DictionaryDto.class);
     }
 
 //    @Override

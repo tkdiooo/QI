@@ -2654,7 +2654,6 @@ form .form-group {
     background-color: #f4f4f4;
     color: #444;
     border-color: #ddd;
-    margin-right: 15px;
 }
 
 .btn-default:hover,
@@ -2666,7 +2665,6 @@ form .form-group {
 .btn-primary {
     background-color: #3c8dbc;
     border-color: #367fa9;
-    margin-right: 85px;
 }
 
 .btn-primary:hover,
@@ -5961,3 +5959,16 @@ table.text-center th {
 .dt-btn {
     padding: 0px 4.5px !important;
 }
+
+.box-footer .btn-primary {
+    margin-right: 85px;
+}
+
+.box-footer .btn-default {
+    margin-right: 15px;
+}
+
+.dataTables_wrapper .btn-group {
+    margin-right: 5px;
+}
+

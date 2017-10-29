@@ -5,41 +5,45 @@
 <script th:inline="javascript">
     $(function () {
         var opt = {
+            container: '#data_table',
             columns: [
                 {sClass: "text-left", sWidth: 150, sScrollY: 40},
                 {sClass: "text-left", sWidth: 200, orderable: false},
                 {sClass: "text-left", sWidth: "60%", orderable: false},
                 {sClass: "text-left", sWidth: 30},
                 {sClass: "text-left", sWidth: 50, orderable: false},
+                {sClass: "text-left", sWidth: 50, visible: false},
                 {sClass: "text-left", sWidth: "100%", orderable: false}
             ],
             buttons: [
                 {
-                    text: 'My button',
-                    action: function (e, dt, node, config) {
-                        alert('Button activated');
+                    id: 'add_btn',
+                    type: 'button',
+                    text: '新增',
+                    title: '新增字典信息',
+                    class: 'btn btn-primary',
+                    action: function () {
+                        alert(1212)
                     }
-                },
-                {
-                    text: 'My button',
-                    action: function (e, dt, node, config) {
-                        alert('Button activated');
-                    }
-                },
-                {
-                    extend: 'collection',
-                    text: 'Flag',
-                    buttons: [
-                        { text: 'High priority',   action: function () {  } },
-                        { text: 'Medium priority', action: function () {  } },
-                        { text: 'Low priority',    action: function () {  } }
+                }, {
+                    id: 'status_btn',
+                    type: 'select',
+                    text: '状态',
+                    title: '字典状态选择',
+                    class: 'btn btn-default',
+                    options: [
+                        {value: '1', text: '有效', class: 'btn btn-success'},
+                        {value: '0', text: '删除', class: 'btn btn-danger'}
                     ],
-                    fade: true
+                    action: function (data) {
+                        var val = $.fn.dataTable.util.escapeRegex(data);
+                        table.column(5).search(val ? '^' + val + '$' : '', true, false).draw();
+                    }
                 }
             ]
         };
         //dt-buttons
-        matchDomTable('#data_table', opt, true);
+        var table = matchDomTable(opt, true);
     })
 </script>
 <div class="content-wrapper">
@@ -72,6 +76,7 @@
                                 <th>字典描述</th>
                                 <th>排序</th>
                                 <th>状态</th>
+                                <th>状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -82,15 +87,20 @@
                                 <td th:text="${var.description}"></td>
                                 <td th:text="${var.sort}"></td>
                                 <td th:utext="${var.statusValue}"></td>
+                                <td th:utext="${var.status}"></td>
                                 <td>
-                                    <button type="button" class="btn btn-default btn-sm dt-btn"><i
-                                            class="fa fa-edit"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm dt-btn"><i
-                                            class="fa fa-ban"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm dt-btn"><i
-                                            class="fa fa-check-square-o"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm dt-btn"><i
-                                            class="fa fa-search"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm dt-btn">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm dt-btn">
+                                        <i class="fa fa-ban"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm dt-btn">
+                                        <i class="fa fa-check-square-o"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm dt-btn">
+                                        <i class="fa fa-search"></i>
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>
