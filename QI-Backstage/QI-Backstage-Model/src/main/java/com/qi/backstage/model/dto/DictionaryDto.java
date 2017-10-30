@@ -19,7 +19,7 @@ public class DictionaryDto extends BaseDictionary {
 
     public String getStatusValue() {
         if (null != getStatus()) {
-            return UIConstants.DataTable.getStatus(super.getStatus());
+//            return UIConstants.DataTable.getStatus(super.getStatus());
         }
         return "";
     }

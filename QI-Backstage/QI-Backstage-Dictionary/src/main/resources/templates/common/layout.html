@@ -6,37 +6,25 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title th:text="${title}"></title>
+    <!-- bootstrap.css -->
     <link th:href="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css'" rel="stylesheet">
+    <!-- dataTables.css -->
     <link th:href="${application.static_resource} + '/webjars/datatables.net-bs/1.10.16/css/dataTables.bootstrap.css'" rel="stylesheet">
-    <link th:href="${application.static_resource} + '/static/font-awesome/css/font-awesome.min.css'" rel="stylesheet">
-    <!-- AdminLTE style -->
-    <link th:href="${application.static_resource} + '/static/back-stage/css/AdminLTE.css'" rel="stylesheet">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-    <link th:href="${application.static_resource} + '/static/back-stage/css/skins/_all-skins.min.css'" rel="stylesheet">
-    <!-- Google Font -->
-    <link th:href="${application.static_resource} + '/static/back-stage/css/font-google.css'" rel="stylesheet">
-    <script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
-    <script th:src="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js'"></script>
-</head>
-<head th:fragment="DTHead">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title th:text="${title}"></title>
-    <link th:href="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css'" rel="stylesheet">
-    <link th:href="${application.static_resource} + '/webjars/datatables.net-bs/1.10.16/css/dataTables.bootstrap.css'" rel="stylesheet">
-    <link th:href="${application.static_resource} + '/static/font-awesome/css/font-awesome.min.css'" rel="stylesheet">
-    <!-- AdminLTE style -->
-    <link th:href="${application.static_resource} + '/static/back-stage/css/AdminLTE.css'" rel="stylesheet">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-    <link th:href="${application.static_resource} + '/static/back-stage/css/skins/_all-skins.min.css'" rel="stylesheet">
-    <!-- Google Font -->
-    <link th:href="${application.static_resource} + '/static/back-stage/css/font-google.css'" rel="stylesheet">
-    <script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
-    <script th:src="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js'"></script>
-    <!-- jquery.dataTables -->
+    <!-- dataTables.css -->
     <link th:href="${application.static_resource} + '/static/css/datatables/net-buttons/buttons.dataTables.min.css'" rel="stylesheet">
+    <!-- font-awesome.css -->
+    <link th:href="${application.static_resource} + '/static/font-awesome/css/font-awesome.min.css'" rel="stylesheet">
+    <!-- AdminLTE style -->
+    <link th:href="${application.static_resource} + '/static/back-stage/css/AdminLTE.css'" rel="stylesheet">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+    <link th:href="${application.static_resource} + '/static/back-stage/css/skins/_all-skins.min.css'" rel="stylesheet">
+    <!-- font-google.css -->
+    <link th:href="${application.static_resource} + '/static/back-stage/css/font-google.css'" rel="stylesheet">
+    <!-- jquery js -->
+    <script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
+    <!-- bootstrap js -->
+    <script th:src="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js'"></script>
+    <!-- datatables js -->
     <script th:src="${application.static_resource} + '/webjars/datatables.net/1.10.16/js/jquery.dataTables.min.js'"></script>
     <script th:src="${application.static_resource} + '/webjars/datatables.net-bs/1.10.16/js/dataTables.bootstrap.min.js'"></script>
     <script th:src="${application.static_resource} + '/webjars/datatables.net-buttons/1.4.2/js/dataTables.buttons.min.js'"></script>
@@ -366,8 +354,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                    <li class="active"><a href="javascript:void(0);" onclick="show();"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+                    <li><a href="javascript:void(0);" onclick="show1();"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                 </ul>
             </li>
             <li class="treeview">

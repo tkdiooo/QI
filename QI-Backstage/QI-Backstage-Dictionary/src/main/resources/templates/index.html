@@ -203,5 +203,26 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <div th:include="common/layout :: script"></div>
+<script th:inline="javascript">
+    function show() {
+        load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'));
+    }
+    function show1() {
+        load_url(/*[[@{/add}]]*/ "", $('.content-wrapper'));
+
+    }
+    // <span th:each="fileList:${affixList}">
+    //     <a href="javascript:;" th:onclick="'javascript:dowloadAffix('+${fileList.guid}+');'" th:text="${fileList.name}+'.'+${fileList.suffix}"></a>
+    //     <del th:onclick="'javascript:fileDel('+${fileList.guid}+',this);'"><i class="fa fa-remove"></i></del><br>
+    // <label>&nbsp;</label>
+    // </span>
+    // <span th:each="fileList:${affixList}">
+    //     <a class="separateFileName" href="javascript:;"
+    // th:onclick="'javascript:dowloadAffix('+${fileList.guid}+');'"
+    // th:text="${fileList.name}+'.'+${fileList.suffix}"></a>
+    //     <del th:onclick="'javascript:fileDel('+${fileList.guid}+',this);'"><i class="fa fa-remove"></i></del><br>
+    // <label>&nbsp;</label>
+    // </span>
+</script>
 </body>
 </html>

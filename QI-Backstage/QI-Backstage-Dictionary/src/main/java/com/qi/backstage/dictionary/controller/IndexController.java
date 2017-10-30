@@ -1,11 +1,14 @@
 package com.qi.backstage.dictionary.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.model.domain.BaseDictionary;
 import com.qi.backstage.model.dto.DictionaryDto;
 import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
+import com.sfsctech.constants.inf.IEnum;
 import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class IndexController
@@ -36,6 +41,13 @@ public class IndexController {
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         model.put("data", readService.findAll());
+        return "index";
+    }
+
+    @GetMapping("query")
+    public String query(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        model.put("data", readService.findAll());
+        model.put("options", UIConstants.matchOptions(StatusConstants.Status.Valid, StatusConstants.Status.Disable));
         return "dictionary/index";
     }
 
@@ -53,6 +65,7 @@ public class IndexController {
 
     @GetMapping("edit")
     public String edit(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getParameter("guid"));
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
         return "dictionary/edit";
     }

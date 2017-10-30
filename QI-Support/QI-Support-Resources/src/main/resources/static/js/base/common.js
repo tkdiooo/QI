@@ -275,10 +275,11 @@ function ajax_action(url, data, opt) {
  */
 function load_url(url, container, data, opt) {
     var defaults = {
-        type: 'POST',
+        type: 'GET',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType: 'html',
-        waiting: true,
+        waiting: false,
+        effect: true,
         cache: false,
         async: true
     };
@@ -308,11 +309,15 @@ function load_url(url, container, data, opt) {
             if (plugin.settings.waiting) {
                 layer.closeAll();
             }
-            container.css({
-                opacity: '0.0'
-            }).html(data).delay(50).animate({
-                opacity: '1.0'
-            }, 300);
+            if (plugin.settings.effect) {
+                container.css({
+                    opacity: '0.5'
+                }).html(data).delay(50).animate({
+                    opacity: '1.0'
+                }, 300);
+            } else {
+                container.html(data);
+            }
             if (data.attachs) {
                 $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
             }

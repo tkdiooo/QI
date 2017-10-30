@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="common/layout :: DTHead"></head>
 <body>
 <script th:inline="javascript">
     $(function () {
@@ -23,7 +22,7 @@
                     title: '新增字典信息',
                     class: 'btn btn-primary',
                     action: function () {
-                        alert(1212)
+                        load_url(/*[[@{/add}]]*/ "", $('.content-wrapper'));
                     }
                 }, {
                     id: 'status_btn',
@@ -31,10 +30,7 @@
                     text: '状态',
                     title: '字典状态选择',
                     class: 'btn btn-default',
-                    options: [
-                        {value: '1', text: '有效', class: 'btn btn-success'},
-                        {value: '0', text: '删除', class: 'btn btn-danger'}
-                    ],
+                    options: [[${options}]],
                     action: function (data) {
                         var val = $.fn.dataTable.util.escapeRegex(data);
                         table.column(5).search(val ? '^' + val + '$' : '', true, false).draw();
@@ -46,90 +42,84 @@
         var table = matchDomTable(opt, true);
     })
 </script>
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            Data Tables
-            <small>advanced tables</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Tables</a></li>
-            <li class="active">Data tables</li>
-        </ol>
-    </section>
-    <section class="content">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <h3 class="box-title">Data Table With Full Features</h3>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body">
-                        <table id="data_table" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>字典编号</th>
-                                <th>字典内容</th>
-                                <th>字典描述</th>
-                                <th>排序</th>
-                                <th>状态</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="var, stat : ${data}">
-                                <td th:text="${var.number}"></td>
-                                <td th:text="${var.content}"></td>
-                                <td th:text="${var.description}"></td>
-                                <td th:text="${var.sort}"></td>
-                                <td th:utext="${var.statusValue}"></td>
-                                <td th:utext="${var.status}"></td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-sm dt-btn">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-sm dt-btn">
-                                        <i class="fa fa-ban"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-sm dt-btn">
-                                        <i class="fa fa-check-square-o"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-sm dt-btn">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.box-body -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Data Tables
+        <small>advanced tables</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Tables</a></li>
+        <li class="active">Data tables</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Data Table With Full Features</h3>
                 </div>
-                <!-- /.box -->
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="data_table" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>字典编号</th>
+                            <th>字典内容</th>
+                            <th>字典描述</th>
+                            <th>排序</th>
+                            <th>状态</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="var, stat : ${data}">
+                            <td th:text="${var.number}"></td>
+                            <td th:text="${var.content}"></td>
+                            <td th:text="${var.description}"></td>
+                            <td th:text="${var.sort}"></td>
+                            <td th:utext="${var.statusValue}"></td>
+                            <td th:utext="${var.status}"></td>
+                            <td>
+                                <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'edit(\'' + ${var.guid} + '\');'" th:data-original-title="'编辑（' + ${var.content} + '）字典'" data-placement="right">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm dt-btn" th:if="${var.status == 1}" th:data-original-title="'禁用（' + ${var.content} + '）字典'" data-placement="right">
+                                    <i class="fa fa-ban"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm dt-btn" th:if="${var.status == 0}" th:data-original-title="'启用（' + ${var.content} + '）字典'" data-placement="right">
+                                    <i class="fa fa-check-square-o"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm dt-btn" th:data-original-title="'查看（' + ${var.content} + '）子集'" data-placement="right">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
             </div>
-            <!-- /.col -->
+            <!-- /.box -->
         </div>
-        <!-- /.row -->
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.0
+        <!-- /.col -->
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
-</footer>
-<div th:include="common/layout :: script"></div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
 <script th:inline="javascript">
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
-    })
+    });
+
+    function edit(guid) {
+        load_url(/*[[@{/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
+    }
+
     // <span th:each="fileList:${affixList}">
     //     <a href="javascript:;" th:onclick="'javascript:dowloadAffix('+${fileList.guid}+');'" th:text="${fileList.name}+'.'+${fileList.suffix}"></a>
     //     <del th:onclick="'javascript:fileDel('+${fileList.guid}+',this);'"><i class="fa fa-remove"></i></del><br>
