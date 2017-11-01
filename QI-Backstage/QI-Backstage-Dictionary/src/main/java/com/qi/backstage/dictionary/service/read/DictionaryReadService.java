@@ -1,5 +1,6 @@
 package com.qi.backstage.dictionary.service.read;
 
+import com.qi.backstage.model.domain.BaseDictionary;
 import com.qi.backstage.model.dto.DictionaryDto;
 
 import java.util.List;
@@ -12,6 +13,6 @@ import java.util.List;
  */
 public interface DictionaryReadService {
 
-    List<DictionaryDto> findAll();
+    List<DictionaryDto> findAll(BaseDictionary dictionary);
 
 }

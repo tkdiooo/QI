@@ -84,16 +84,24 @@
                             <td th:utext="${var.statusValue}"></td>
                             <td th:utext="${var.status}"></td>
                             <td>
-                                <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'edit(\'' + ${var.guid} + '\');'" th:data-original-title="'编辑（' + ${var.content} + '）字典'" data-placement="right">
+                                <button type="button" class="btn btn-default btn-sm dt-btn"
+                                        th:onclick="'edit(\'' + ${var.guid} + '\');'"
+                                        th:data-original-title="'编辑（' + ${var.content} + '）字典'" data-placement="right">
                                     <i class="fa fa-edit"></i>
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn" th:if="${var.status == 1}" th:data-original-title="'禁用（' + ${var.content} + '）字典'" data-placement="right">
+                                <button type="button" class="btn btn-default btn-sm dt-btn"
+                                        th:onclick="'disable(\'' + ${var.guid} + '\');'" th:if="${var.status == 1}"
+                                        th:data-original-title="'禁用（' + ${var.content} + '）字典'" data-placement="right">
                                     <i class="fa fa-ban"></i>
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn" th:if="${var.status == 0}" th:data-original-title="'启用（' + ${var.content} + '）字典'" data-placement="right">
+                                <button type="button" class="btn btn-default btn-sm dt-btn"
+                                        th:onclick="'valid(\'' + ${var.guid} + '\');'" th:if="${var.status == 0}"
+                                        th:data-original-title="'启用（' + ${var.content} + '）字典'" data-placement="right">
                                     <i class="fa fa-check-square-o"></i>
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn" th:data-original-title="'查看（' + ${var.content} + '）子集'" data-placement="right">
+                                <button type="button" class="btn btn-default btn-sm dt-btn"
+                                        onclick="child(1)"
+                                        th:data-original-title="'查看（' + ${var.content} + '）子集'" data-placement="right">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </td>
@@ -118,6 +126,18 @@
 
     function edit(guid) {
         load_url(/*[[@{/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
+    }
+
+    function disable(guid) {
+
+    }
+
+    function valid(guid) {
+
+    }
+
+    function child(guid) {
+        load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'), {guidparent: guid});
     }
 
     // <span th:each="fileList:${affixList}">

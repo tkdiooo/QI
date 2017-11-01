@@ -6,6 +6,7 @@ import com.qi.backstage.model.domain.BaseDictionary;
 import com.qi.backstage.model.domain.BaseDictionaryExample;
 import com.qi.backstage.model.dto.DictionaryDto;
 import com.sfsctech.common.util.BeanUtil;
+import com.sfsctech.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,12 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
     private BaseDictionaryMapper mapper;
 
     @Override
-    public List<DictionaryDto> findAll() {
-        List<BaseDictionary> result = mapper.selectByExample(new BaseDictionaryExample());
+    public List<DictionaryDto> findAll(BaseDictionary dictionary) {
+        BaseDictionaryExample example = new BaseDictionaryExample();
+        if (StringUtil.isNotBlank(dictionary.getGuidparent())) {
+            example.createCriteria().andGuidparentEqualTo(dictionary.getGuidparent());
+        }
+        List<BaseDictionary> result = mapper.selectByExample(example);
         return BeanUtil.copyListForCglib(result, DictionaryDto.class);
     }
 

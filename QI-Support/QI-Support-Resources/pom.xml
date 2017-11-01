@@ -54,24 +54,56 @@
             <groupId>org.webjars.bower</groupId>
             <artifactId>jquery.maskedinput</artifactId>
             <version>1.4.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- blueimp-file-upload -->
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>blueimp-file-upload</artifactId>
             <version>9.16.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>blueimp-load-image</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>blueimp-canvas-to-blob</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- bootstrap -->
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>bootstrap</artifactId>
             <version>3.3.7</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- bootstrapValidator -->
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>bootstrapValidator</artifactId>
             <version>0.5.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>bootstrap</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- vue -->
         <dependency>

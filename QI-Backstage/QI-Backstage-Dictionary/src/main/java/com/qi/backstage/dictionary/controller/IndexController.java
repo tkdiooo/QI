@@ -40,13 +40,12 @@ public class IndexController {
 
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        model.put("data", readService.findAll());
         return "index";
     }
 
     @GetMapping("query")
-    public String query(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        model.put("data", readService.findAll());
+    public String query(ModelMap model, BaseDictionary dictionary) {
+        model.put("data", readService.findAll(dictionary));
         model.put("options", UIConstants.matchOptions(StatusConstants.Status.Valid, StatusConstants.Status.Disable));
         return "dictionary/index";
     }
