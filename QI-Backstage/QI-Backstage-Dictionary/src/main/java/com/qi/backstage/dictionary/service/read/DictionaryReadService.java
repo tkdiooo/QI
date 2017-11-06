@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface DictionaryReadService {
 
-    List<DictionaryDto> findAll(BaseDictionary dictionary);
+    List<BaseDictionary> findAll(BaseDictionary dictionary);
 
 }

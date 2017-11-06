@@ -1,6 +1,7 @@
 package com.qi.backstage.dictionary.service.write;
 
 import com.qi.backstage.model.domain.BaseDictionary;
+import com.sfsctech.constants.StatusConstants;
 
 /**
  * Class DictionaryWriteService
@@ -11,4 +12,6 @@ import com.qi.backstage.model.domain.BaseDictionary;
 public interface DictionaryWriteService {
 
     void save(BaseDictionary dictionary);
+
+    void changeStatus(String guid, StatusConstants.Status status);
 }

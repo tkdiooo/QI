@@ -3,6 +3,7 @@ package com.qi.backstage.dictionary.service.write.impl;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.mapper.BaseDictionaryMapper;
 import com.qi.backstage.model.domain.BaseDictionary;
+import com.qi.backstage.model.domain.BaseDictionaryExample;
 import com.sfsctech.common.uuid.UUIDUtil;
 import com.sfsctech.constants.StatusConstants;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -27,6 +28,15 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
         dictionary.setStatus(StatusConstants.Status.Valid.getCode());
         dictionary.setSort(NumberUtils.INTEGER_ZERO);
         mapper.insert(dictionary);
+    }
+
+    @Override
+    public void changeStatus(String guid, StatusConstants.Status status) {
+        BaseDictionary dictionary = new BaseDictionary();
+        dictionary.setStatus(status.getCode());
+        BaseDictionaryExample example = new BaseDictionaryExample();
+        example.createCriteria().andGuidEqualTo(guid);
+        mapper.updateByExampleSelective(dictionary, example);
     }
 
 }

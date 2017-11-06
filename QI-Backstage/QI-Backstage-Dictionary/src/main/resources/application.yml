@@ -62,12 +62,14 @@ spring:
     view:
       suffix: .html
   redis:
-    host-name: 172.16.225.98
-    port: 6379
-    password: redis123
+    protocol: single
+    single:
+      host: 172.16.225.98
+      port: 6379
+      password: redis123
     pool:
-      max-total: 300
-      max-wait-millis: 10000
+      max-active: 300
+      max-wait: 10000
       max-idle: 100
       min-idle: 50
 #dubbo setting

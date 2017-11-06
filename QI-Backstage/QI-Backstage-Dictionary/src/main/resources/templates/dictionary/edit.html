@@ -50,8 +50,10 @@
                 <!-- /.box-body -->
                 <input type="hidden" name="guidparent" th:value="${guidparent} ?: '0000000000000000000000'"/>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交">提交</button>
-                    <button type="button" class="btn btn-default pull-right">取消</button>
+                    <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()"
+                            data-original-title="提交">提交
+                    </button>
+                    <button type="button" class="btn btn-default pull-right" onclick="goBack()">取消</button>
                 </div>
             </form>
         </div>
@@ -193,6 +195,9 @@
 //            }
 //        };
         ajax_action(/*[[@{/save}]]*/ "", params);
+    }
+    var goBack = function () {
+        load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'));
     }
 </script>
 </body>

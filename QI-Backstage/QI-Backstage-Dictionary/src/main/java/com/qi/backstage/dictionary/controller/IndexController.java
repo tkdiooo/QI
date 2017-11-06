@@ -1,27 +1,22 @@
 package com.qi.backstage.dictionary.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.model.domain.BaseDictionary;
-import com.qi.backstage.model.dto.DictionaryDto;
-import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.common.ui.BootstrapUtil;
+import com.sfsctech.constants.BootstrapConstants;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
-import com.sfsctech.constants.inf.IEnum;
 import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Class IndexController
@@ -38,6 +33,9 @@ public class IndexController {
     @Autowired
     private DictionaryReadService readService;
 
+    @Autowired
+    private BootstrapUtil bootstrapUtil;
+
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         return "index";
@@ -46,7 +44,8 @@ public class IndexController {
     @GetMapping("query")
     public String query(ModelMap model, BaseDictionary dictionary) {
         model.put("data", readService.findAll(dictionary));
-        model.put("options", UIConstants.matchOptions(StatusConstants.Status.Valid, StatusConstants.Status.Disable));
+        model.put("options", bootstrapUtil.matchOptions("dictionary_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
+        model.put("status", BootstrapConstants.StatusColumns.getColumns());
         return "dictionary/index";
     }
 
@@ -63,8 +62,7 @@ public class IndexController {
     }
 
     @GetMapping("edit")
-    public String edit(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getParameter("guid"));
+    public String edit(ModelMap model, String guid) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
         return "dictionary/edit";
     }
@@ -74,5 +72,19 @@ public class IndexController {
     public ActionResult<BaseDictionary> save(BaseDictionary dictionary) {
         writeService.save(dictionary);
         return new ActionResult<>(dictionary);
+    }
+
+    @ResponseBody
+    @PostMapping("disable")
+    public ActionResult<BaseDictionary> disable(String guid) {
+        writeService.changeStatus(guid, StatusConstants.Status.Disable);
+        return new ActionResult<>();
+    }
+
+    @ResponseBody
+    @PostMapping("valid")
+    public ActionResult<BaseDictionary> valid(String guid) {
+        writeService.changeStatus(guid, StatusConstants.Status.Valid);
+        return new ActionResult<>();
     }
 }

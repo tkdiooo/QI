@@ -81,7 +81,7 @@
                             <td th:text="${var.content}"></td>
                             <td th:text="${var.description}"></td>
                             <td th:text="${var.sort}"></td>
-                            <td th:utext="${var.statusValue}"></td>
+                            <td th:utext="${status.get(var.status)}"></td>
                             <td th:utext="${var.status}"></td>
                             <td>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
@@ -95,7 +95,7 @@
                                     <i class="fa fa-ban"></i>
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'valid(\'' + ${var.guid} + '\');'" th:if="${var.status == 0}"
+                                        th:onclick="'valid(\'' + ${var.guid} + '\');'" th:if="${var.status == 2}"
                                         th:data-original-title="'启用（' + ${var.content} + '）字典'" data-placement="right">
                                     <i class="fa fa-check-square-o"></i>
                                 </button>
@@ -129,29 +129,26 @@
     }
 
     function disable(guid) {
-
+        var opt = {
+            callback: function (result) {
+                load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'));
+            }
+        };
+        ajax_action(/*[[@{/disable}]]*/ "", {guid: guid}, opt);
     }
 
     function valid(guid) {
-
+        var opt = {
+            callback: function (result) {
+                load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'));
+            }
+        };
+        ajax_action(/*[[@{/valid}]]*/ "", {guid: guid}, opt);
     }
 
     function child(guid) {
         load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'), {guidparent: guid});
     }
-
-    // <span th:each="fileList:${affixList}">
-    //     <a href="javascript:;" th:onclick="'javascript:dowloadAffix('+${fileList.guid}+');'" th:text="${fileList.name}+'.'+${fileList.suffix}"></a>
-    //     <del th:onclick="'javascript:fileDel('+${fileList.guid}+',this);'"><i class="fa fa-remove"></i></del><br>
-    // <label>&nbsp;</label>
-    // </span>
-    // <span th:each="fileList:${affixList}">
-    //     <a class="separateFileName" href="javascript:;"
-    // th:onclick="'javascript:dowloadAffix('+${fileList.guid}+');'"
-    // th:text="${fileList.name}+'.'+${fileList.suffix}"></a>
-    //     <del th:onclick="'javascript:fileDel('+${fileList.guid}+',this);'"><i class="fa fa-remove"></i></del><br>
-    // <label>&nbsp;</label>
-    // </span>
 </script>
 </body>
 </html>

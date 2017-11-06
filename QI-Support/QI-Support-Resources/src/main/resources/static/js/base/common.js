@@ -210,7 +210,8 @@ function ajax_action(url, data, opt) {
         waiting: true,
         cache: false,
         async: true,
-        handler: null
+        handler: null,
+        callback: null
     };
     if (url.indexOf('?') !== -1) {
         url += '&ajaxTimeFresh=' + Math.random();
@@ -243,7 +244,13 @@ function ajax_action(url, data, opt) {
             }
             if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
                 invoke(plugin.settings.handler, data);
-            } else {
+            }
+            else if (plugin.settings.callback !== null && plugin.settings.callback !== undefined) {
+                alert(data.messages.join('<br/>'), function () {
+                    invoke(plugin.settings.callback, data);
+                });
+            }
+            else {
                 alert(data.messages.join('<br/>'));
             }
         },

@@ -203,5 +203,10 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <div th:include="common/layout :: script"></div>
+<script th:inline="javascript">
+    function show() {
+        load_url("http://localhost:8202/dictionary/index", $('.content-wrapper'));
+    }
+</script>
 </body>
 </html>
