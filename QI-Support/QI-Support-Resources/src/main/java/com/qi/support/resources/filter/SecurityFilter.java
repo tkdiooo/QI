@@ -29,7 +29,6 @@ public class SecurityFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();
         String ip = HttpUtil.getRequestIP(request);
-        System.out.println(response.getHeader("Access-Control-Allow-Origin"));
         // 跨域请求白名单
         response.setHeader("Access-Control-Allow-Origin", "*");
         filterChain.doFilter(servletRequest, servletResponse);

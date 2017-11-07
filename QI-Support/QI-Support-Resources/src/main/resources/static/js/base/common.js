@@ -258,17 +258,21 @@ function ajax_action(url, data, opt) {
             if (plugin.settings.waiting) {
                 layer.closeAll('loading');
             }
-            var json = JSON.parse(XMLHttpRequest.responseText);
-            if (json.attachs.messages_details) {
-                $.each(json.attachs.messages_details.messages, function (key, value) {
-                    layer.tips(value, '#' + key, {
-                        tipsMore: true, time: 10000
-                    });
-                })
+            if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
+                var json = JSON.parse(XMLHttpRequest.responseText);
+                if (json.attachs.messages_details) {
+                    $.each(json.attachs.messages_details.messages, function (key, value) {
+                        layer.tips(value, '#' + key, {
+                            tipsMore: true, time: 10000
+                        });
+                    })
+                }
+                alert(json.messages.join('<br/>'), function () {
+                    to_url(json.attachs.url);
+                });
+            } else {
+                alert('网络出现错误，请稍后尝试');
             }
-            alert(json.messages.join('<br/>'), function () {
-                to_url(json.attachs.url);
-            });
         }
     });
 }
@@ -333,10 +337,14 @@ function load_url(url, container, data, opt) {
             if (plugin.settings.waiting) {
                 layer.closeAll();
             }
-            var json = JSON.parse(XMLHttpRequest.responseText);
-            alert(json.messages, function () {
-                to_url(json.attachs.url);
-            });
+            if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
+                var json = JSON.parse(XMLHttpRequest.responseText);
+                alert(json.messages.join('<br/>'), function () {
+                    to_url(json.attachs.url);
+                });
+            } else {
+                alert('网络出现错误，请稍后尝试');
+            }
         }
     });
 }

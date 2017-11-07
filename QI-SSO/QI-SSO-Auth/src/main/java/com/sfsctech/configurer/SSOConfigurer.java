@@ -3,7 +3,6 @@ package com.sfsctech.configurer;
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import com.qi.sso.auth.condition.SSOCondition;
 import com.qi.sso.auth.filter.SSOFilter;
 import com.qi.sso.inf.VerifyService;
 import com.sfsctech.constants.LabelConstants;
@@ -12,7 +11,6 @@ import com.sfsctech.spring.properties.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -22,7 +20,6 @@ import org.springframework.context.annotation.Configuration;
  * @version Description:
  */
 @Configuration
-@Conditional(SSOCondition.class)
 public class SSOConfigurer {
 
     @Autowired

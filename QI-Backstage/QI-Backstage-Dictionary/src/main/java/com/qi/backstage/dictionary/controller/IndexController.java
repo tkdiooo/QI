@@ -3,8 +3,9 @@ package com.qi.backstage.dictionary.controller;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.model.domain.BaseDictionary;
-import com.sfsctech.common.ui.BootstrapUtil;
-import com.sfsctech.constants.BootstrapConstants;
+import com.qi.bootstrap.constants.BootstrapConstants;
+import com.qi.bootstrap.util.BootstrapUtil;
+import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.rpc.result.ActionResult;
@@ -33,18 +34,14 @@ public class IndexController {
     @Autowired
     private DictionaryReadService readService;
 
-    @Autowired
-    private BootstrapUtil bootstrapUtil;
-
     @GetMapping("index")
-    public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        return "index";
-    }
-
-    @GetMapping("query")
-    public String query(ModelMap model, BaseDictionary dictionary) {
+    public String index(ModelMap model, BaseDictionary dictionary) {
+        if (StringUtil.isBlank(dictionary.getParent())) {
+            dictionary.setParent("0000000000000000000000");
+        }
         model.put("data", readService.findAll(dictionary));
-        model.put("options", bootstrapUtil.matchOptions("dictionary_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
+        model.put("parent", dictionary.getParent());
+        model.put("options", BootstrapUtil.matchOptions("dictionary_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         return "dictionary/index";
     }
@@ -56,8 +53,9 @@ public class IndexController {
 //    }
 
     @GetMapping("add")
-    public String add(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+    public String add(ModelMap model, String parent) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
+        model.put("model", readService.getByGuid(parent));
         return "dictionary/edit";
     }
 

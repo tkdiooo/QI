@@ -22,7 +22,7 @@
                     title: '新增字典信息',
                     class: 'btn btn-primary',
                     action: function () {
-                        load_url(/*[[@{/add}]]*/ "", $('.content-wrapper'));
+                        load_url([[${application.website_domain}]] + /*[[@{/add}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
                     }
                 }, {
                     id: 'status_btn',
@@ -42,6 +42,7 @@
         var table = matchDomTable(opt, true);
     })
 </script>
+<input type="hidden" id="parent" name="parent" th:value="${parent}"/>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -99,8 +100,7 @@
                                         th:data-original-title="'启用（' + ${var.content} + '）字典'" data-placement="right">
                                     <i class="fa fa-check-square-o"></i>
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        onclick="child(1)"
+                                <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.guid} + '\');'"
                                         th:data-original-title="'查看（' + ${var.content} + '）子集'" data-placement="right">
                                     <i class="fa fa-search"></i>
                                 </button>
@@ -125,29 +125,29 @@
     });
 
     function edit(guid) {
-        load_url(/*[[@{/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
+        load_url([[${application.website_domain}]] + /*[[@{/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
     }
 
     function disable(guid) {
         var opt = {
             callback: function (result) {
-                load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'));
+                load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'));
             }
         };
-        ajax_action(/*[[@{/disable}]]*/ "", {guid: guid}, opt);
+        ajax_action([[${application.website_domain}]] + /*[[@{/disable}]]*/ "", {guid: guid}, opt);
     }
 
     function valid(guid) {
         var opt = {
             callback: function (result) {
-                load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'));
+                load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'));
             }
         };
-        ajax_action(/*[[@{/valid}]]*/ "", {guid: guid}, opt);
+        ajax_action([[${application.website_domain}]] + /*[[@{/valid}]]*/ "", {guid: guid}, opt);
     }
 
     function child(guid) {
-        load_url(/*[[@{/query}]]*/ "", $('.content-wrapper'), {guidparent: guid});
+        load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: guid});
     }
 </script>
 </body>

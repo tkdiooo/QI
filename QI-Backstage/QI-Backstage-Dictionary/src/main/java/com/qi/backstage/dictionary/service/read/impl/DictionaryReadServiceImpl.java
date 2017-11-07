@@ -25,12 +25,17 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
     private BaseDictionaryMapper mapper;
 
     @Override
-    public List<BaseDictionary> findAll(BaseDictionary dictionary) {
+    public List<BaseDictionary> findAll(BaseDictionary model) {
         BaseDictionaryExample example = new BaseDictionaryExample();
-        if (StringUtil.isNotBlank(dictionary.getGuidparent())) {
-            example.createCriteria().andGuidparentEqualTo(dictionary.getGuidparent());
+        if (StringUtil.isNotBlank(model.getParent())) {
+            example.createCriteria().andParentEqualTo(model.getParent());
         }
         return mapper.selectByExample(example);
+    }
+
+    @Override
+    public BaseDictionary getByGuid(String guid) {
+        return mapper.selectByGuid(guid);
     }
 
 //    @Override

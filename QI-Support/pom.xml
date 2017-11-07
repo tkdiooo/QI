@@ -17,6 +17,7 @@
 
     <modules>
         <module>QI-Support-Resources</module>
+        <module>QI-Support-Bootstrap</module>
     </modules>
 
     <properties>

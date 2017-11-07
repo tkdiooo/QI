@@ -7,7 +7,7 @@ server:
     uri-encoding: utf-8
   session:
     cookie:
-#      domain:
+      domain: http://www.zzl.com
       # 只能在服务端设置
       http-only: true
       # 只能在 HTTPS 连接中被传递
@@ -99,6 +99,8 @@ website:
     # 静态资源服务
     static-resources: http://localhost:8080
     welcome-file: /index
+  security:
+    open-ddoc: true
   # 单点登录
 #  sso:
 #    login-url: www.zzl.com/sso/login

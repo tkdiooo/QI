@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface DictionaryReadService {
 
-    List<BaseDictionary> findAll(BaseDictionary dictionary);
+    List<BaseDictionary> findAll(BaseDictionary model);
+
+    BaseDictionary getByGuid(String guid);
 
 }

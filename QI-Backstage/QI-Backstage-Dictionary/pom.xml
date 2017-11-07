@@ -58,6 +58,12 @@
             <artifactId>QI-Backstage-Dao</artifactId>
             <version>${backstage.version}</version>
         </dependency>
+        <!-- qi-backstage-dao support-->
+        <dependency>
+            <groupId>com.qi.support</groupId>
+            <artifactId>QI-Support-Bootstrap</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
         <!--<dependency>-->
         <!--<groupId>com.qi.sso</groupId>-->
         <!--<artifactId>QI-SSO-Auth</artifactId>-->

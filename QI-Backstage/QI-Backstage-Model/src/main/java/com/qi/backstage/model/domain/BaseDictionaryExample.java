@@ -324,73 +324,73 @@ public class BaseDictionaryExample {
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentIsNull() {
-            addCriterion("GuidParent is null");
+        public Criteria andParentIsNull() {
+            addCriterion("Parent is null");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentIsNotNull() {
-            addCriterion("GuidParent is not null");
+        public Criteria andParentIsNotNull() {
+            addCriterion("Parent is not null");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentEqualTo(String value) {
-            addCriterion("GuidParent =", value, "guidparent");
+        public Criteria andParentEqualTo(String value) {
+            addCriterion("Parent =", value, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentNotEqualTo(String value) {
-            addCriterion("GuidParent <>", value, "guidparent");
+        public Criteria andParentNotEqualTo(String value) {
+            addCriterion("Parent <>", value, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentGreaterThan(String value) {
-            addCriterion("GuidParent >", value, "guidparent");
+        public Criteria andParentGreaterThan(String value) {
+            addCriterion("Parent >", value, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentGreaterThanOrEqualTo(String value) {
-            addCriterion("GuidParent >=", value, "guidparent");
+        public Criteria andParentGreaterThanOrEqualTo(String value) {
+            addCriterion("Parent >=", value, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentLessThan(String value) {
-            addCriterion("GuidParent <", value, "guidparent");
+        public Criteria andParentLessThan(String value) {
+            addCriterion("Parent <", value, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentLessThanOrEqualTo(String value) {
-            addCriterion("GuidParent <=", value, "guidparent");
+        public Criteria andParentLessThanOrEqualTo(String value) {
+            addCriterion("Parent <=", value, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentLike(String value) {
-            addCriterion("GuidParent like", value, "guidparent");
+        public Criteria andParentLike(String value) {
+            addCriterion("Parent like", value, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentNotLike(String value) {
-            addCriterion("GuidParent not like", value, "guidparent");
+        public Criteria andParentNotLike(String value) {
+            addCriterion("Parent not like", value, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentIn(List<String> values) {
-            addCriterion("GuidParent in", values, "guidparent");
+        public Criteria andParentIn(List<String> values) {
+            addCriterion("Parent in", values, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentNotIn(List<String> values) {
-            addCriterion("GuidParent not in", values, "guidparent");
+        public Criteria andParentNotIn(List<String> values) {
+            addCriterion("Parent not in", values, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentBetween(String value1, String value2) {
-            addCriterion("GuidParent between", value1, value2, "guidparent");
+        public Criteria andParentBetween(String value1, String value2) {
+            addCriterion("Parent between", value1, value2, "parent");
             return (Criteria) this;
         }
 
-        public Criteria andGuidparentNotBetween(String value1, String value2) {
-            addCriterion("GuidParent not between", value1, value2, "guidparent");
+        public Criteria andParentNotBetween(String value1, String value2) {
+            addCriterion("Parent not between", value1, value2, "parent");
             return (Criteria) this;
         }
 
