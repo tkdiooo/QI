@@ -1,7 +1,6 @@
 package com.qi.backstage.dictionary.service.read;
 
 import com.qi.backstage.model.domain.BaseDictionary;
-import com.qi.backstage.model.dto.DictionaryDto;
 
 import java.util.List;
 

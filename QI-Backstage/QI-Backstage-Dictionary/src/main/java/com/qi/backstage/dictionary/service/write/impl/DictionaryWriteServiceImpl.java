@@ -34,6 +34,10 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
             model.setStatus(StatusConstants.Status.Valid.getCode());
             model.setSort(NumberUtils.INTEGER_ZERO);
             mapper.insert(model);
+        } else {
+            BaseDictionaryExample example = new BaseDictionaryExample();
+            example.createCriteria().andGuidEqualTo(model.getGuid());
+            mapper.updateByExampleSelective(model, example);
         }
     }
 

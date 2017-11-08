@@ -363,13 +363,15 @@ function matchDomTable(opt, destorys) {
             $(opt.container).DataTable().destroy();
         }
     }
-    var option = {
+    var defaults = {
         scrollX: true,
         bSort: true,
         searching: true, //原生搜索
         bLengthChange: false, //禁用数据量选择
         renderer: 'bootstrap', //渲染样式：Bootstrap和jquery-ui
         pagingType: 'full_numbers', //分页样式：simple,simple_numbers,full,full_numbers
+        // dom: "it<'row'p>",
+        // lengthChange: !1,
         language: {
             'sProcessing': '处理中...',
             'sLengthMenu': '显示 _MENU_ 项结果',
@@ -396,8 +398,13 @@ function matchDomTable(opt, destorys) {
         retrieve: true,
         processing: false,
         columns: opt.columns
+        // drawCallback: function (settings) {
+        //     $('#data_table_wrapper').find('.row').attr('style', 'margin-left:0 !important;margin-right:0 !important;');
+        //     $('#data_table_paginate').find('li').find('a').attr('style', 'padding:4px 10px !important;');
+        // }
     };
-    var table = $(opt.container).DataTable(option);
+    var settings = $.extend({}, defaults, opt);
+    var table = $(opt.container).DataTable(settings);
     if (opt.buttons) {
         matchTableButtons(opt);
     }

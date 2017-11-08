@@ -1,8 +1,11 @@
 package com.qi.backstage.dictionary.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.model.domain.BaseDictionary;
+import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.common.util.StringUtil;
@@ -12,12 +15,14 @@ import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class IndexController
@@ -35,13 +40,27 @@ public class IndexController {
     private DictionaryReadService readService;
 
     @GetMapping("index")
-    public String index(ModelMap model, BaseDictionary dictionary) {
+    public String index(ModelMap model, BaseDictionary dictionary, String breadcrumbs) {
+        // 父节点Guid为空
         if (StringUtil.isBlank(dictionary.getParent())) {
             dictionary.setParent("0000000000000000000000");
+        }
+        // 列表面包屑设置
+        List<Breadcrumb> list = new ArrayList<>();
+        if (StringUtil.isBlank(breadcrumbs)) {
+            list.add(new Breadcrumb("Root", "0000000000000000000000", "active"));
+        } else {
+            JSONArray jsonArray = JSON.parseArray(breadcrumbs);
+            for (int i = 0; i < jsonArray.size(); i++) {
+                list.add(jsonArray.getObject(i, Breadcrumb.class));
+            }
+            BaseDictionary dict = readService.getByGuid(dictionary.getParent());
+            list.add(new Breadcrumb(dict.getContent(), dict.getGuid(), "active"));
         }
         model.put("data", readService.findAll(dictionary));
         model.put("parent", dictionary.getParent());
         model.put("options", BootstrapUtil.matchOptions("dictionary_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
+        model.put("breadcrumbs", list);
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         return "dictionary/index";
     }
@@ -53,15 +72,31 @@ public class IndexController {
 //    }
 
     @GetMapping("add")
-    public String add(ModelMap model, String parent) {
+    public String add(ModelMap model, BaseDictionary dictionary) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
-        model.put("model", readService.getByGuid(parent));
+        // 父节点Guid
+        model.put("parent_guid", dictionary.getParent());
+        // 不是跟节点的情况下，获取父节点编号
+        if (!"0000000000000000000000".equals(dictionary.getParent())) {
+            model.put("parent_number", readService.getByGuid(dictionary.getParent()).getNumber());
+        }
+        // 获取所有当前节点数据
+        model.put("data", readService.findAll(dictionary));
         return "dictionary/edit";
     }
 
     @GetMapping("edit")
-    public String edit(ModelMap model, String guid) {
+    public String edit(ModelMap model, BaseDictionary dictionary) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
+        BaseDictionary dict = readService.getByGuid(dictionary.getGuid());
+        // 父节点Guid
+        model.put("parent_guid", dict.getParent());
+        // 不是跟节点的情况下，获取父节点编号
+        if (!"0000000000000000000000".equals(dict.getParent())) {
+            model.put("parent_number", dict.getNumber().substring(5));
+        }
+        dict.setNumber(dict.getNumber().substring(dict.getNumber().length() - 5));
+        model.put("model", dict);
         return "dictionary/edit";
     }
 
