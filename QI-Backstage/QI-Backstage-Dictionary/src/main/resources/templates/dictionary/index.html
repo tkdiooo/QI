@@ -5,6 +5,7 @@
     $(function () {
         var opt = {
             container: '#data_table',
+            order: [3, "asc"],
             columns: [
                 {sClass: "text-left", sWidth: 150, sScrollY: 40},
                 {sClass: "text-left", sWidth: 200, orderable: false},
@@ -43,7 +44,7 @@
     })
 </script>
 <input type="hidden" id="parent" name="parent" th:value="${parent}"/>
-<!-- Content Header (Page header) -->
+<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 <section class="content-header">
     <h1>
         字典信息
@@ -59,16 +60,14 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-primary">
-                <div class="box-header">
+                <div class="box-header" style="padding-bottom: 0 !important;padding-top: 0 !important;">
                     <ol class="breadcrumb" style="margin-bottom: 0 !important; background: transparent;">
                         <li name="breadcrumb" th:each="breadcrumb, stat : ${breadcrumbs}"
                             th:utext="${stat.last} ? ${breadcrumb.text} :
-                            '<a href=\'javascript:void(0);\' onclick=\'goBreadcrumb(this);\'>' + ${breadcrumb.text} + '</a>'"
-                            th:class="${stat.last} ? ${breadcrumb.cls}"
-                            th:code="${breadcrumb.url}"></li>
+                            ${'<a href=javascript:void(0); onclick=child(''' + breadcrumb.url + '''); >' + breadcrumb.text + '</a>'}"
+                            th:class="${stat.last} ? ${breadcrumb.cls}"></li>
                     </ol>
                 </div>
-                <!-- /.box-header -->
                 <div class="box-body">
                     <table id="data_table" class="table table-bordered table-striped">
                         <thead>
@@ -115,15 +114,10 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
         </div>
-        <!-- /.col -->
     </div>
-    <!-- /.row -->
 </section>
-<!-- /.content -->
 <script th:inline="javascript">
     $(function () {
         //显示tooltip
@@ -132,16 +126,6 @@
     
     function goBreadcrumb(bc) {
         var params = {parent: $(bc).parent().attr('code')};
-        var breadcrumbs = [];
-        $(bc).parent().prevAll().each(function () {
-            breadcrumbs.push({
-                text: $(this).text(),
-                url: $(this).attr('code')
-            });
-        });
-        if (breadcrumbs.length > 0) {
-            params['breadcrumbs'] = JSON.stringify(breadcrumbs);
-        }
         load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), params);
     }
 
@@ -168,16 +152,7 @@
     }
 
     function child(guid) {
-        var params = {parent: guid};
-        var breadcrumbs = [];
-        $('li[name="breadcrumb"]').each(function () {
-            breadcrumbs.push({
-                text: $(this).text(),
-                url: $(this).attr('code')
-            });
-        });
-        params['breadcrumbs'] = JSON.stringify(breadcrumbs);
-        load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), params);
+        load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: guid});
     }
 </script>
 </body>

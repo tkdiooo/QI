@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="common/layout :: validator"></head>
-<body>
 <section class="content-header">
     <h1>
         字典信息
@@ -13,7 +12,6 @@
         <li class="active">General Elements</li>
     </ol>
 </section>
-
 <!-- Main content -->
 <section class="content">
     <!-- left column -->
@@ -23,19 +21,18 @@
             <div class="box-header with-border">
                 <h3 class="box-title">基础信息</h3>
             </div>
-            <!-- /.box-header -->
             <!-- form start -->
             <form class="form-horizontal">
                 <div class="box-body">
                     <div class="form-group">
-                    <label for="number" class="col-sm-2 control-label">字典编号</label>
-                    <div class="col-xs-3 input-group">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-info" th:if="${null != parent_number}" th:text="${parent_number}"></button>
+                        <label for="number" class="col-sm-2 control-label">字典编号</label>
+                        <div class="col-xs-3 input-group">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-info" th:if="${null != parent_number}" th:text="${parent_number}"></button>
+                            </div>
+                            <input type="email" class="form-control" id="number" name="number" placeholder="请输入字典编号" th:value="${model} ? ${model.number}">
                         </div>
-                        <input type="email" class="form-control" id="number" name="number" placeholder="请输入字典编号" th:value="${model} ? ${model.number}">
                     </div>
-                </div>
                     <div class="form-group">
                         <label for="content" class="col-sm-2 control-label">字典内容</label>
                         <div class="col-xs-3 input-group">
@@ -49,9 +46,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.box-body -->
                 <input type="hidden" id="parent" name="parent" th:value="${parent_guid} ?: '0000000000000000000000'"/>
-                <input type="hidden" name="guid" th:value="${model} ? ${model.guid}"/>
+                <input type="hidden" id="guid" name="guid" th:value="${model} ? ${model.guid}"/>
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交">提交
                     </button>
@@ -59,80 +55,46 @@
                 </div>
             </form>
         </div>
-        <!-- /.box -->
     </div>
-    <div class="col-md-3 right-column">
-        <!-- TO DO List -->
-        <div class="box box-primary">
-            <div class="box-header">
-                <i class="ion ion-clipboard"></i>
-                <h3 class="box-title">To Do List</h3>
-                <div class="box-tools pull-right">
-                </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                <ul class="todo-list">
-                    <li th:each="var: ${data}">
-                        <!-- drag handle -->
-                        <span class="handle">
-                            <i class="fa fa-ellipsis-v"></i>
-                            <i class="fa fa-ellipsis-v"></i>
-                        </span>
-                        <!-- todo text -->
-                        <span class="text" th:text="${var.content}"></span>
-                        <!-- General tools such as edit or delete-->
-                        <div class="tools">
-                            <i class="fa fa-edit"></i>
-                            <i class="fa fa-trash-o"></i>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer clearfix no-border">
-                &nbsp;
-            </div>
-        </div>
-        <!-- /.box -->
-    </div>
+    <div class="col-md-3 right-column"></div>
 </section>
-<!-- /.content -->
 <script th:inline="javascript">
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
-        $( ".todo-list").height(win.height - 280).sortable({
-            update: function (event, ui) {
-                    var param = '';
-                    $(this).find('li').each(function (i) {
-                        if (i != 0) param += '#';
-                        param += $(this).attr('id') + ',' + i;
-                    });
-                    alert(param);
-                    var formParams = {'sortable': param}
-                    var opt = {contentType: "application/x-www-form-urlencoded", waiting: false};
-                    // ajax_action("#springUrl("/menu/sortable.ajax")", formParams, opt, function (data) {
-                    //     if (!data.success) {
-                    //         alert(data.messages);
-                    //     }
-                    // });
-                }}
-        ).disableSelection();
+        load_url([[${application.website_domain}]] + /*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('#parent').val()});
     });
     var editSubmit = function () {
         var params = $(".form-horizontal").serializeJson();
-       var opt = {
-           callback: function (result) {
-               $(".form-horizontal")[0].reset();
-           }
-       };
+        var opt = {
+            callback: function (result) {
+                $(".form-horizontal")[0].reset();
+            }
+        };
         ajax_action([[${application.website_domain}]] + /*[[@{/save}]]*/ "", params, opt);
     };
     var goBack = function () {
         load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
     };
+    var sort = function () {
+        var params = '';
+        $(this).find('li').each(function (i) {
+            if (i !== 0) params += '#';
+            params += $(this).attr('id') + ',' + i;
+        });
+        ajax_action([[${application.website_domain}]] + /*[[@{/sort}]]*/ "", {sortable: params});
+    }
+    var load = function (guid) {
+        var opt = {
+            waiting: false,
+            handler: function (result) {
+                $('#guid').val(result.result.guid);
+                $('#number').val(result.result.number.substring(result.result.number.length - 5));
+                $('#content').val(result.result.content);
+                $('#description').val(result.result.description);
+            }
+        };
+        ajax_action([[${application.website_domain}]] + /*[[@{/load}]]*/ "", {guid: guid}, opt);
+    }
 </script>
-</body>
 </html>

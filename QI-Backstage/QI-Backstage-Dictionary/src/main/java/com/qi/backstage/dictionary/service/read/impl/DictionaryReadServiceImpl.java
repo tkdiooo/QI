@@ -30,6 +30,7 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
         if (StringUtil.isNotBlank(model.getParent())) {
             example.createCriteria().andParentEqualTo(model.getParent());
         }
+        example.setOrderByClause("sort asc");
         return mapper.selectByExample(example);
     }
 

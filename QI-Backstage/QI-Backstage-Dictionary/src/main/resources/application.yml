@@ -101,6 +101,10 @@ website:
     welcome-file: /index
   security:
     open-ddoc: true
+    open-csrf: true
+    csrf:
+      keep-pattern: cache
+      verify-exclude-path: /index
   # 单点登录
 #  sso:
 #    login-url: www.zzl.com/sso/login
@@ -114,8 +118,3 @@ website:
 #  session:
 #    authentication: sso
 #    exclude-path: /index, /login
-#  csrf:
-#    verify-exclude-path: /**
-#    intercept-exclude-path: /**
-#    open: true
-#    required-verify-path: /index

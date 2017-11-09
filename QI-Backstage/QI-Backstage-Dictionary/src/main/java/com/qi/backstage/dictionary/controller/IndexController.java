@@ -3,11 +3,13 @@ package com.qi.backstage.dictionary.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
+import com.qi.backstage.dictionary.service.transactional.DictionaryTransactionalService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.model.domain.BaseDictionary;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
+import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
@@ -19,10 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Class IndexController
@@ -39,23 +38,32 @@ public class IndexController {
     @Autowired
     private DictionaryReadService readService;
 
+    @Autowired
+    private DictionaryTransactionalService transactionalService;
+
+    @Autowired
+    private CacheFactory factory;
+
     @GetMapping("index")
-    public String index(ModelMap model, BaseDictionary dictionary, String breadcrumbs) {
+    public String index(ModelMap model, BaseDictionary dictionary) {
         // 父节点Guid为空
         if (StringUtil.isBlank(dictionary.getParent())) {
             dictionary.setParent("0000000000000000000000");
         }
         // 列表面包屑设置
-        List<Breadcrumb> list = new ArrayList<>();
-        if (StringUtil.isBlank(breadcrumbs)) {
-            list.add(new Breadcrumb("Root", "0000000000000000000000", "active"));
-        } else {
-            JSONArray jsonArray = JSON.parseArray(breadcrumbs);
-            for (int i = 0; i < jsonArray.size(); i++) {
-                list.add(jsonArray.getObject(i, Breadcrumb.class));
+        List<Breadcrumb> list = factory.getList(dictionary.getParent());
+        // 缓存为空
+        if (list == null) {
+            // 根节点为空，设置根节点
+            if ("0000000000000000000000".equals(dictionary.getParent())) {
+                list = new ArrayList<>();
+                list.add(new Breadcrumb("Root", "0000000000000000000000", "active"));
+            } else {
+                BaseDictionary dict = readService.getByGuid(dictionary.getParent());
+                list = factory.getList(dict.getParent());
+                list.add(new Breadcrumb(dict.getContent(), dict.getGuid(), "active"));
             }
-            BaseDictionary dict = readService.getByGuid(dictionary.getParent());
-            list.add(new Breadcrumb(dict.getContent(), dict.getGuid(), "active"));
+            factory.getCacheClient().put(dictionary.getParent(), list);
         }
         model.put("data", readService.findAll(dictionary));
         model.put("parent", dictionary.getParent());
@@ -80,8 +88,6 @@ public class IndexController {
         if (!"0000000000000000000000".equals(dictionary.getParent())) {
             model.put("parent_number", readService.getByGuid(dictionary.getParent()).getNumber());
         }
-        // 获取所有当前节点数据
-        model.put("data", readService.findAll(dictionary));
         return "dictionary/edit";
     }
 
@@ -119,5 +125,25 @@ public class IndexController {
     public ActionResult<BaseDictionary> valid(String guid) {
         writeService.changeStatus(guid, StatusConstants.Status.Valid);
         return new ActionResult<>();
+    }
+
+    @GetMapping("ordering")
+    public String ordering(ModelMap model, BaseDictionary dictionary) {
+        // 获取所有当前节点数据
+        model.put("data", readService.findAll(dictionary));
+        return "dictionary/sort";
+    }
+
+    @ResponseBody
+    @PostMapping("sort")
+    public ActionResult<String> sort(String sortable) {
+        transactionalService.sort(sortable);
+        return new ActionResult<>();
+    }
+
+    @ResponseBody
+    @PostMapping("load")
+    public ActionResult<BaseDictionary> load(String guid) {
+        return new ActionResult<>(readService.getByGuid(guid));
     }
 }
