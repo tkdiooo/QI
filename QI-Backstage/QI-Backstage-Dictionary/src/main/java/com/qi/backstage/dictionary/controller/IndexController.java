@@ -10,6 +10,9 @@ import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.common.cookie.CookieHelper;
+import com.sfsctech.common.security.EncrypterTool;
+import com.sfsctech.common.util.RandomUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -45,7 +49,15 @@ public class IndexController {
     private CacheFactory factory;
 
     @GetMapping("index")
-    public String index(ModelMap model, BaseDictionary dictionary) {
+    public String index(ModelMap model, BaseDictionary dictionary, HttpServletRequest request, HttpServletResponse response) {
+        for (String s : response.getHeaderNames()) {
+            System.out.println(response.getHeader(s));
+        }
+        CookieHelper helper = CookieHelper.getInstance(request, response);
+        helper.setCookie("_csrf", EncrypterTool.encrypt(EncrypterTool.Security.Aes, RandomUtil.getUUID()));
+        System.out.println(helper.getCookie("_csrf"));
+//        Cookie cookie = new Cookie("_csrf", EncrypterTool.encrypt(EncrypterTool.Security.Aes, "asdasdad"));
+//        response.addCookie(cookie);
         // 父节点Guid为空
         if (StringUtil.isBlank(dictionary.getParent())) {
             dictionary.setParent("0000000000000000000000");

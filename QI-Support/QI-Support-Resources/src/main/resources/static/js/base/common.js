@@ -218,6 +218,8 @@ function ajax_action(url, data, opt) {
     } else {
         url += '?ajaxTimeFresh=' + Math.random();
     }
+    data[$('#_csrf').attr('name')] = $('#_csrf').val();
+    console.info(data)
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
     $.ajax({
@@ -228,6 +230,10 @@ function ajax_action(url, data, opt) {
         contentType: plugin.settings.contentType,
         cache: plugin.settings.cache,
         async: plugin.settings.async,
+        crossDomain: true,
+        xhrFields: {
+            withCredentials: true
+        },
         beforeSend: function () {
             if (plugin.settings.waiting) {
                 layer.load(2, {
@@ -299,6 +305,9 @@ function load_url(url, container, data, opt) {
     } else {
         url += '?ajaxTimeFresh=' + Math.random();
     }
+    if (data) {
+        data[$('#_csrf').attr('name')] = $('#_csrf').val();
+    }
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
     $.ajax({
@@ -309,6 +318,10 @@ function load_url(url, container, data, opt) {
         contentType: plugin.settings.contentType,
         cache: plugin.settings.cache,
         async: plugin.settings.async,
+        crossDomain: true,
+        xhrFields: {
+            withCredentials: true
+        },
         beforeSend: function () {
             if (plugin.settings.waiting) {
                 layer.load(2, {

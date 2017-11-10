@@ -7,7 +7,7 @@ server:
     uri-encoding: utf-8
   session:
     cookie:
-      domain: http://www.zzl.com
+      domain: zzl.com
       # 只能在服务端设置
       http-only: true
       # 只能在 HTTPS 连接中被传递
@@ -101,10 +101,10 @@ website:
     welcome-file: /index
   security:
     open-ddoc: true
-    open-csrf: true
-    csrf:
-      keep-pattern: cache
-      verify-exclude-path: /index
+#    open-csrf: true
+#    csrf:
+#      keep-pattern: cache
+#      verify-exclude-path: /index
   # 单点登录
 #  sso:
 #    login-url: www.zzl.com/sso/login
