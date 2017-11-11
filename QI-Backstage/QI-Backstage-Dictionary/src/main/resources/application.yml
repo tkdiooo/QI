@@ -23,7 +23,7 @@ server:
 spring:
   druid-datasource:
     master:
-      url: jdbc:mysql://localhost:3306/qi_base?useUnicode=true&characterEncoding=utf-8
+      url: jdbc:mysql://192.168.100.103:3306/qi_base?useUnicode=true&characterEncoding=utf-8
       username: root
       password: 123456
       driver-class-name: com.mysql.jdbc.Driver
