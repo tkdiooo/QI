@@ -20,7 +20,7 @@ public class SecurityFilter implements Filter {
     public final Logger logger = LoggerFactory.getLogger("logger.filter");
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override

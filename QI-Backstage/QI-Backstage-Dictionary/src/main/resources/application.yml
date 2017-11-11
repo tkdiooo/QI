@@ -7,7 +7,7 @@ server:
     uri-encoding: utf-8
   session:
     cookie:
-#      domain:
+      domain: zzl.com
       # 只能在服务端设置
       http-only: true
       # 只能在 HTTPS 连接中被传递
@@ -62,12 +62,14 @@ spring:
     view:
       suffix: .html
   redis:
-    host-name: 172.16.225.98
-    port: 6379
-    password: redis123
+    protocol: single
+    single:
+      host: 172.16.225.98
+      port: 6379
+      password: redis123
     pool:
-      max-total: 300
-      max-wait-millis: 10000
+      max-active: 300
+      max-wait: 10000
       max-idle: 100
       min-idle: 50
 #dubbo setting
@@ -97,6 +99,12 @@ website:
     # 静态资源服务
     static-resources: http://localhost:8080
     welcome-file: /index
+  security:
+    open-ddoc: true
+#    open-csrf: true
+#    csrf:
+#      keep-pattern: cache
+#      verify-exclude-path: /index
   # 单点登录
 #  sso:
 #    login-url: www.zzl.com/sso/login
@@ -110,8 +118,3 @@ website:
 #  session:
 #    authentication: sso
 #    exclude-path: /index, /login
-#  csrf:
-#    verify-exclude-path: /**
-#    intercept-exclude-path: /**
-#    open: true
-#    required-verify-path: /index
