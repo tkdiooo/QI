@@ -49,15 +49,7 @@ public class IndexController {
     private CacheFactory factory;
 
     @GetMapping("index")
-    public String index(ModelMap model, BaseDictionary dictionary, HttpServletRequest request, HttpServletResponse response) {
-        for (String s : response.getHeaderNames()) {
-            System.out.println(response.getHeader(s));
-        }
-        CookieHelper helper = CookieHelper.getInstance(request, response);
-        helper.setCookie("_csrf", EncrypterTool.encrypt(EncrypterTool.Security.Aes, RandomUtil.getUUID()));
-        System.out.println(helper.getCookie("_csrf"));
-//        Cookie cookie = new Cookie("_csrf", EncrypterTool.encrypt(EncrypterTool.Security.Aes, "asdasdad"));
-//        response.addCookie(cookie);
+    public String index(ModelMap model, BaseDictionary dictionary) {
         // 父节点Guid为空
         if (StringUtil.isBlank(dictionary.getParent())) {
             dictionary.setParent("0000000000000000000000");

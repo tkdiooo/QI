@@ -318,10 +318,10 @@ function load_url(url, container, data, opt) {
         contentType: plugin.settings.contentType,
         cache: plugin.settings.cache,
         async: plugin.settings.async,
-        crossDomain: true,
-        xhrFields: {
-            withCredentials: true
-        },
+        // crossDomain: true,
+        // xhrFields: {
+        //     withCredentials: true
+        // },
         beforeSend: function () {
             if (plugin.settings.waiting) {
                 layer.load(2, {

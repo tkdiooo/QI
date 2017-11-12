@@ -16,6 +16,7 @@
     <modules>
         <module>QI-Platform-Backend</module>
         <module>QI-Platform-Frontend</module>
+        <module>QI-Backend-Template</module>
     </modules>
     <packaging>pom</packaging>
 

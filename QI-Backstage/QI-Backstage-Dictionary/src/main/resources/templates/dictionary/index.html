@@ -1,159 +1,168 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
-<script th:inline="javascript">
-    $(function () {
-        var opt = {
-            container: '#data_table',
-            order: [3, "asc"],
-            columns: [
-                {sClass: "text-left", sWidth: 150, sScrollY: 40},
-                {sClass: "text-left", sWidth: 200, orderable: false},
-                {sClass: "text-left", sWidth: "60%", orderable: false},
-                {sClass: "text-left", sWidth: 30},
-                {sClass: "text-left", sWidth: 50, orderable: false},
-                {sClass: "text-left", sWidth: 50, visible: false},
-                {sClass: "text-left", sWidth: "100%", orderable: false}
-            ],
-            buttons: [
-                {
-                    id: 'add_btn',
-                    type: 'button',
-                    text: '新增',
-                    title: '新增字典信息',
-                    class: 'btn btn-primary',
-                    action: function () {
-                        load_url([[${application.website_domain}]] + /*[[@{/add}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+<head th:include="common/layout :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header th:replace="common/layout :: header"></header>
+    <aside th:replace="common/layout :: sidebar"></aside>
+    <script th:inline="javascript">
+        $(function () {
+            var opt = {
+                container: '#data_table',
+                order: [3, "asc"],
+                columns: [
+                    {sClass: "text-left", sWidth: 150, sScrollY: 40},
+                    {sClass: "text-left", sWidth: 200, orderable: false},
+                    {sClass: "text-left", sWidth: "60%", orderable: false},
+                    {sClass: "text-left", sWidth: 30},
+                    {sClass: "text-left", sWidth: 50, orderable: false},
+                    {sClass: "text-left", sWidth: 50, visible: false},
+                    {sClass: "text-left", sWidth: "100%", orderable: false}
+                ],
+                buttons: [
+                    {
+                        id: 'add_btn',
+                        type: 'button',
+                        text: '新增',
+                        title: '新增字典信息',
+                        class: 'btn btn-primary',
+                        action: function () {
+                            load_url([[${application.website_domain}]] + /*[[@{/add}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                        }
+                    }, {
+                        id: 'status_btn',
+                        type: 'select',
+                        text: '状态',
+                        title: '字典状态选择',
+                        class: 'btn btn-default',
+                        options: [[${options}]],
+                        action: function (data) {
+                            var val = $.fn.dataTable.util.escapeRegex(data);
+                            table.column(5).search(val ? '^' + val + '$' : '', true, false).draw();
+                        }
                     }
-                }, {
-                    id: 'status_btn',
-                    type: 'select',
-                    text: '状态',
-                    title: '字典状态选择',
-                    class: 'btn btn-default',
-                    options: [[${options}]],
-                    action: function (data) {
-                        var val = $.fn.dataTable.util.escapeRegex(data);
-                        table.column(5).search(val ? '^' + val + '$' : '', true, false).draw();
-                    }
-                }
-            ]
-        };
-        //dt-buttons
-        var table = matchDomTable(opt, true);
-    })
-</script>
-<input type="hidden" id="parent" name="parent" th:value="${parent}"/>
-<!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
-<section class="content-header">
-    <h1>
-        字典信息
-        <small>列表</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-    </ol>
-</section>
-<section class="content">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-primary">
-                <div class="box-header" style="padding-bottom: 0 !important;padding-top: 0 !important;">
-                    <ol class="breadcrumb" style="margin-bottom: 0 !important; background: transparent;">
-                        <li name="breadcrumb" th:each="breadcrumb, stat : ${breadcrumbs}"
-                            th:utext="${stat.last} ? ${breadcrumb.text} :
-                            ${'<a href=javascript:void(0); onclick=child(''' + breadcrumb.url + '''); >' + breadcrumb.text + '</a>'}"
-                            th:class="${stat.last} ? ${breadcrumb.cls}"></li>
-                    </ol>
-                </div>
-                <div class="box-body">
-                    <table id="data_table" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>字典编号</th>
-                            <th>字典内容</th>
-                            <th>字典描述</th>
-                            <th>排序</th>
-                            <th>状态</th>
-                            <th>状态</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="var, stat : ${data}">
-                            <td th:text="${var.number}"></td>
-                            <td th:text="${var.content}"></td>
-                            <td th:text="${var.description}"></td>
-                            <td th:text="${var.sort}"></td>
-                            <td th:utext="${status.get(var.status)}"></td>
-                            <td th:utext="${var.status}"></td>
-                            <td>
-                                <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'edit(\'' + ${var.guid} + '\');'"
-                                        th:data-original-title="'编辑（' + ${var.content} + '）字典'" data-placement="right">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'disable(\'' + ${var.guid} + '\');'" th:if="${var.status == 1}"
-                                        th:data-original-title="'禁用（' + ${var.content} + '）字典'" data-placement="right">
-                                    <i class="fa fa-ban"></i>
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'valid(\'' + ${var.guid} + '\');'" th:if="${var.status == 2}"
-                                        th:data-original-title="'启用（' + ${var.content} + '）字典'" data-placement="right">
-                                    <i class="fa fa-check-square-o"></i>
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.guid} + '\');'"
-                                        th:data-original-title="'查看（' + ${var.content} + '）子集'" data-placement="right">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                ]
+            };
+            //dt-buttons
+            var table = matchDomTable(opt, true);
+        })
+    </script>
+    <input type="hidden" id="parent" name="parent" th:value="${parent}"/>
+    <!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                字典信息
+                <small>列表</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="#">Tables</a></li>
+                <li class="active">Data tables</li>
+            </ol>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header" style="padding-bottom: 0 !important;padding-top: 0 !important;">
+                            <ol class="breadcrumb" style="margin-bottom: 0 !important; background: transparent;">
+                                <li name="breadcrumb" th:each="breadcrumb, stat : ${breadcrumbs}"
+                                    th:utext="${stat.last} ? ${breadcrumb.text} :
+                                    ${'<a href=javascript:void(0); onclick=child(''' + breadcrumb.url + '''); >' + breadcrumb.text + '</a>'}"
+                                    th:class="${stat.last} ? ${breadcrumb.cls}"></li>
+                            </ol>
+                        </div>
+                        <div class="box-body">
+                            <table id="data_table" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>字典编号</th>
+                                    <th>字典内容</th>
+                                    <th>字典描述</th>
+                                    <th>排序</th>
+                                    <th>状态</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="var, stat : ${data}">
+                                    <td th:text="${var.number}"></td>
+                                    <td th:text="${var.content}"></td>
+                                    <td th:text="${var.description}"></td>
+                                    <td th:text="${var.sort}"></td>
+                                    <td th:utext="${status.get(var.status)}"></td>
+                                    <td th:utext="${var.status}"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-default btn-sm dt-btn"
+                                                th:onclick="'edit(\'' + ${var.guid} + '\');'"
+                                                th:data-original-title="'编辑（' + ${var.content} + '）字典'" data-placement="right">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-sm dt-btn"
+                                                th:onclick="'disable(\'' + ${var.guid} + '\');'" th:if="${var.status == 1}"
+                                                th:data-original-title="'禁用（' + ${var.content} + '）字典'" data-placement="right">
+                                            <i class="fa fa-ban"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-sm dt-btn"
+                                                th:onclick="'valid(\'' + ${var.guid} + '\');'" th:if="${var.status == 2}"
+                                                th:data-original-title="'启用（' + ${var.content} + '）字典'" data-placement="right">
+                                            <i class="fa fa-check-square-o"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.guid} + '\');'"
+                                                th:data-original-title="'查看（' + ${var.content} + '）子集'" data-placement="right">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
-</section>
-<script th:inline="javascript">
-    $(function () {
-        //显示tooltip
-        $("[data-original-title]").tooltip();
-    });
-    
-    function goBreadcrumb(bc) {
-        var params = {parent: $(bc).parent().attr('code')};
-        load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), params);
-    }
+    <script th:inline="javascript">
+        $(function () {
+            //显示tooltip
+            $("[data-original-title]").tooltip();
+        });
 
-    function edit(guid) {
-        load_url([[${application.website_domain}]] + /*[[@{/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
-    }
+        function goBreadcrumb(bc) {
+            var params = {parent: $(bc).parent().attr('code')};
+            load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), params);
+        }
 
-    function disable(guid) {
-        var opt = {
-            callback: function (result) {
-                load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
-            }
-        };
-        ajax_action([[${application.website_domain}]] + /*[[@{/disable}]]*/ "", {guid: guid}, opt);
-    }
+        function edit(guid) {
+            load_url([[${application.website_domain}]] + /*[[@{/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
+        }
 
-    function valid(guid) {
-        var opt = {
-            callback: function (result) {
-                load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
-            }
-        };
-        ajax_action([[${application.website_domain}]] + /*[[@{/valid}]]*/ "", {guid: guid}, opt);
-    }
+        function disable(guid) {
+            var opt = {
+                callback: function (result) {
+                    load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                }
+            };
+            ajax_action([[${application.website_domain}]] + /*[[@{/disable}]]*/ "", {guid: guid}, opt);
+        }
 
-    function child(guid) {
-        load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: guid});
-    }
-</script>
+        function valid(guid) {
+            var opt = {
+                callback: function (result) {
+                    load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                }
+            };
+            ajax_action([[${application.website_domain}]] + /*[[@{/valid}]]*/ "", {guid: guid}, opt);
+        }
+
+        function child(guid) {
+            load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: guid});
+        }
+    </script>
+</div>
 </body>
 </html>
