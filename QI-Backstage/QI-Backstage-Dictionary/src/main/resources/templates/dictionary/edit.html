@@ -62,7 +62,7 @@
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
-        load_url([[${application.website_domain}]] + /*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('#parent').val()});
+        load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('#parent').val()});
     });
     var editSubmit = function () {
         var params = $(".form-horizontal").serializeJson();
@@ -71,10 +71,10 @@
                 $(".form-horizontal")[0].reset();
             }
         };
-        ajax_action([[${application.website_domain}]] + /*[[@{/save}]]*/ "", params, opt);
+        ajax_action(/*[[@{/save}]]*/ "", params, opt);
     };
     var goBack = function () {
-        load_url([[${application.website_domain}]] + /*[[@{/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
     };
     var sort = function () {
         var params = '';
@@ -82,7 +82,7 @@
             if (i !== 0) params += '#';
             params += $(this).attr('id') + ',' + i;
         });
-        ajax_action([[${application.website_domain}]] + /*[[@{/sort}]]*/ "", {sortable: params});
+        ajax_action(/*[[@{/sort}]]*/ "", {sortable: params});
     }
     var load = function (guid) {
         var opt = {
@@ -94,7 +94,7 @@
                 $('#description').val(result.result.description);
             }
         };
-        ajax_action([[${application.website_domain}]] + /*[[@{/load}]]*/ "", {guid: guid}, opt);
+        ajax_action(/*[[@{/load}]]*/ "", {guid: guid}, opt);
     }
 </script>
 </html>

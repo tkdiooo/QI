@@ -7,12 +7,12 @@ server:
     uri-encoding: utf-8
   session:
     cookie:
-      domain: zzl.com
+      domain: www.zzl.com
       # 只能在服务端设置
       http-only: true
       # 只能在 HTTPS 连接中被传递
 #      secure: true
-      max-age: 3600000
+      max-age: 1800
 #      comment:
 #      name:
 #      path:
@@ -23,7 +23,7 @@ server:
 spring:
   druid-datasource:
     master:
-      url: jdbc:mysql://192.168.100.103:3306/qi_base?useUnicode=true&characterEncoding=utf-8
+      url: jdbc:mysql://localhost:3306/qi_base?useUnicode=true&characterEncoding=utf-8
       username: root
       password: 123456
       driver-class-name: com.mysql.jdbc.Driver
@@ -101,10 +101,12 @@ website:
     welcome-file: /index
   security:
     open-ddoc: true
-#    open-csrf: true
-#    csrf:
-#      keep-pattern: cache
-#      verify-exclude-path: /index
+    ddos:
+      access-control-allow-origin: www.zzl.com
+    open-csrf: true
+    csrf:
+      keep-pattern: cache
+      verify-exclude-path: /index
   # 单点登录
 #  sso:
 #    login-url: www.zzl.com/sso/login

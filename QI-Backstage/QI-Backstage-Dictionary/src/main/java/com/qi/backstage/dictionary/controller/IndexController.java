@@ -49,7 +49,12 @@ public class IndexController {
     private CacheFactory factory;
 
     @GetMapping("index")
-    public String index(ModelMap model, BaseDictionary dictionary) {
+    public String index() {
+        return "index";
+    }
+
+    @GetMapping("grid")
+    public String grid(ModelMap model, BaseDictionary dictionary) {
         // 父节点Guid为空
         if (StringUtil.isBlank(dictionary.getParent())) {
             dictionary.setParent("0000000000000000000000");

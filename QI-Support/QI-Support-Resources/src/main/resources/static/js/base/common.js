@@ -218,8 +218,7 @@ function ajax_action(url, data, opt) {
     } else {
         url += '?ajaxTimeFresh=' + Math.random();
     }
-    data[$('#_csrf').attr('name')] = $('#_csrf').val();
-    console.info(data)
+    data = setCSRF(data);
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
     $.ajax({
@@ -305,9 +304,7 @@ function load_url(url, container, data, opt) {
     } else {
         url += '?ajaxTimeFresh=' + Math.random();
     }
-    if (data) {
-        data[$('#_csrf').attr('name')] = $('#_csrf').val();
-    }
+    data = setCSRF(data);
     var plugin = this;
     plugin.settings = $.extend({}, defaults, opt);
     $.ajax({
@@ -329,7 +326,12 @@ function load_url(url, container, data, opt) {
                 });
             }
         },
-        success: function (data) {
+        success: function (data, textStatus, request) {
+            var _csrf = request.getResponseHeader('_csrf');
+            if (_csrf) {
+                _csrf = JSON.parse(_csrf);
+                $('#_csrf').val(_csrf.token).attr('name', _csrf.parameterName);
+            }
             if (plugin.settings.waiting) {
                 layer.closeAll();
             }
@@ -341,9 +343,6 @@ function load_url(url, container, data, opt) {
                 }, 300);
             } else {
                 container.html(data);
-            }
-            if (data.attachs) {
-                $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
             }
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
@@ -549,4 +548,15 @@ function to_url(url) {
     } else {
         window.location.href = url;
     }
+}
+
+function setCSRF(data) {
+    var csrf = $('#_csrf');
+    if (csrf.length > 0) {
+        if (data === undefined) {
+            data = {};
+        }
+        data[csrf.attr('name')] = csrf.val();
+    }
+    return data;
 }
