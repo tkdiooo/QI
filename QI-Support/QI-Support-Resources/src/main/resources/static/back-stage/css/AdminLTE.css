@@ -5980,3 +5980,7 @@ table.text-center th {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
+
+.fullWidth {
+    width: 100% !important;
+}

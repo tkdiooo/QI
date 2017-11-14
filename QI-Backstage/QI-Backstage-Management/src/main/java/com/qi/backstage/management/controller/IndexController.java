@@ -1,11 +1,8 @@
 package com.qi.backstage.management.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Class IndexController
@@ -14,10 +11,11 @@ import javax.servlet.http.HttpServletResponse;
  * @version Description:
  */
 @Controller
+@RequestMapping("management")
 public class IndexController {
 
     @GetMapping("index")
-    public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+    public String index() {
         return "index";
     }
 }

@@ -2,12 +2,11 @@
 server:
   port: 8201
   address: localhost
-  context-path: /management
   tomcat:
     uri-encoding: utf-8
   session:
     cookie:
-#      domain:
+      domain: www.zzl.com
       # 只能在服务端设置
       http-only: true
       # 只能在 HTTPS 连接中被传递
@@ -21,6 +20,38 @@ server:
 #    logback-expose-webapp-root: true
 #spring mvc setting
 spring:
+  druid-datasource:
+    master:
+      url: jdbc:mysql://localhost:3306/qi_base?useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 初始化大小
+      initialSize: 5
+      # 最小
+      minIdle: 5
+      # 最大
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j,log4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
   thymeleaf:
     cache: false
     suffix: .html
@@ -30,12 +61,14 @@ spring:
     view:
       suffix: .html
   redis:
-    host-name: 172.16.225.98
-    port: 6379
-    password: redis123
+    protocol: single
+    single:
+      host: 172.16.225.98
+      port: 6379
+      password: redis123
     pool:
-      max-total: 300
-      max-wait-millis: 10000
+      max-active: 300
+      max-wait: 10000
       max-idle: 100
       min-idle: 50
 #dubbo setting
@@ -65,6 +98,14 @@ website:
     # 静态资源服务
     static-resources: http://localhost:8080
     welcome-file: /index
+  security:
+#    open-ddoc: true
+#    ddos:
+#      access-control-allow-origin: www.zzl.com
+#    open-csrf: true
+#    csrf:
+#      keep-pattern: cache
+#      verify-exclude-path: /management/index
   # 单点登录
 #  sso:
 #    login-url: www.zzl.com/sso/login
@@ -78,8 +119,3 @@ website:
 #  session:
 #    authentication: sso
 #    exclude-path: /index, /login
-#  csrf:
-#    verify-exclude-path: /**
-#    intercept-exclude-path: /**
-#    open: true
-#    required-verify-path: /index

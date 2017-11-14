@@ -11,7 +11,7 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin th:onclick="'load(\'' + ${var.guid} + '\')'"-->
+        <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
         <ul class="todo-list">
             <li th:each="var: ${data}" th:id="${var.guid}" style="cursor: move;">
                 <!-- drag handle -->
@@ -19,7 +19,10 @@
                     <i class="fa fa-ellipsis-v"></i>
                     <i class="fa fa-ellipsis-v"></i>
                 </span>
-                <span class="text" style="cursor: pointer;" th:text="${var.content}"></span>
+                <span class="text" th:text="${var.content}"></span>
+                <div class="tools">
+                    <i class="fa fa-edit" th:onclick="'load(\'' + ${var.guid} + '\')'"></i>
+                </div>
             </li>
         </ul>
     </div>

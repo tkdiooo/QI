@@ -52,13 +52,13 @@
             <artifactId>common-security</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- qi-backstage-dao support-->
+        <!-- QI-Backstage-Dao support-->
         <dependency>
             <groupId>com.qi.backstage</groupId>
             <artifactId>QI-Backstage-Dao</artifactId>
             <version>${backstage.version}</version>
         </dependency>
-        <!-- qi-backstage-dao support-->
+        <!-- QI-Support-Bootstrap support-->
         <dependency>
             <groupId>com.qi.support</groupId>
             <artifactId>QI-Support-Bootstrap</artifactId>

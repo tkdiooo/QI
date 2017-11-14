@@ -1,5 +1,9 @@
 package com.qi.backstage.management.controller;
 
+import com.qi.backstage.model.domain.BaseSystem;
+import com.qi.bootstrap.constants.BootstrapConstants;
+import com.qi.bootstrap.util.BootstrapUtil;
+import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,9 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("system")
 public class SystemController {
 
-    @GetMapping("index")
-    public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        return "index";
+    @GetMapping("grid")
+    public String grid(ModelMap model, BaseSystem system) {
+        model.put("status", BootstrapConstants.StatusColumns.getColumns());
+        model.put("options", BootstrapUtil.matchOptions("system_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
+        return "system/index";
     }
 
     @GetMapping("add")

@@ -1,7 +1,5 @@
 package com.qi.backstage.dictionary.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.transactional.DictionaryTransactionalService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
@@ -10,9 +8,6 @@ import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.common.cookie.CookieHelper;
-import com.sfsctech.common.security.EncrypterTool;
-import com.sfsctech.common.util.RandomUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
@@ -20,12 +15,12 @@ import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class IndexController

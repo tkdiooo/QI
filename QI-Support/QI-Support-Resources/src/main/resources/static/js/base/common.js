@@ -229,10 +229,10 @@ function ajax_action(url, data, opt) {
         contentType: plugin.settings.contentType,
         cache: plugin.settings.cache,
         async: plugin.settings.async,
-        crossDomain: true,
-        xhrFields: {
-            withCredentials: true
-        },
+        // crossDomain: true,
+        // xhrFields: {
+        //     withCredentials: true
+        // },
         beforeSend: function () {
             if (plugin.settings.waiting) {
                 layer.load(2, {
@@ -380,6 +380,7 @@ function matchDomTable(opt, destorys) {
         bSort: true,
         searching: true, //原生搜索
         bLengthChange: false, //禁用数据量选择
+        autoColumnSizing: true, // 表头宽度自适应
         renderer: 'bootstrap', //渲染样式：Bootstrap和jquery-ui
         pagingType: 'full_numbers', //分页样式：simple,simple_numbers,full,full_numbers
         // dom: "it<'row'p>",
@@ -417,8 +418,11 @@ function matchDomTable(opt, destorys) {
     };
     var settings = $.extend({}, defaults, opt);
     var table = $(opt.container).DataTable(settings);
-    if (opt.buttons) {
-        matchTableButtons(opt);
+    if (settings.buttons) {
+        matchTableButtons(settings);
+    }
+    if (settings.autoColumnSizing) {
+        $(opt.container + '_wrapper').find('.dataTables_scrollHeadInner').addClass('fullWidth').find('.table-bordered').addClass('fullWidth');
     }
     //初始化表格
     return table;
