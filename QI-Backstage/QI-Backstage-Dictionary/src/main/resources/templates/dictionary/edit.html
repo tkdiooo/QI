@@ -61,6 +61,47 @@
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
+        $('.form-horizontal').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                number: {
+                    validators: {
+                        notEmpty: {
+                            message: '字典编号不能为空'
+                        },
+                        // remote: {
+                        //     url: 'remote.php',
+                        //     message: 'The username is not available'
+                        // },
+                        stringLength: {
+                            min: 5,
+                            max: 5,
+                            message: '字典编号长度必须是5位'
+                        },
+                        regexp: {//匹配规则
+                            regexp: /^[0-9]+$/,
+                            message: '字典编号只能输入数字'
+                        }
+                    }
+                },
+                content: {
+                    validators: {
+                        notEmpty: {
+                            message: '字典内容不能为空'
+                        },
+                        stringLength: {
+                            max: 20,
+                            message: '字典内容长度不能超过20位'
+                        }
+                    }
+                }
+            }
+        });
         load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('#parent').val()});
     });
     var editSubmit = function () {
