@@ -523,19 +523,7 @@ function matchTableButtons(opt) {
             $.each(value.options, function (j, opt) {
                 var li = $('<li cls="' + opt.class + '" val="' + opt.value + '"><a href="javascript:void(0);">' + opt.text + '</a></li>');
                 li.click(function () {
-                    var btn = $('#' + value.id);
-                    // 获取节点属性
-                    var text = $(this).children().text();
-                    var cls = $(this).attr('cls');
-                    var val = $(this).attr('val');
-                    // 替换节点属性
-                    $(this).children().text(btn.text());
-                    $(this).attr('cls', btn.attr('class'));
-                    $(this).attr('val', btn.attr('val'));
-                    // 设置btn属性
-                    btn.text(text).removeClass().addClass(cls).attr('val', val);
-                    btn.next().removeClass().addClass('dropdown-toggle ' + cls);
-                    invoke(value.action, val);
+                    selectChange(this, value);
                 });
                 options.append(li);
             });
@@ -544,6 +532,25 @@ function matchTableButtons(opt) {
         }
         row.append(div);
     });
+}
+
+function selectChange(obj, opt) {
+    var btn = $('#' + opt.id);
+    // 获取节点属性
+    var text = $(obj).children().text();
+    var cls = $(obj).attr('cls');
+    var val = $(obj).attr('val');
+    // 替换节点属性
+    if (undefined === cls) {
+        cls = btn.attr('class');
+    }
+    $(obj).children().text(btn.text());
+    $(obj).attr('cls', btn.attr('class'));
+    $(obj).attr('val', btn.attr('val'));
+    // 设置btn属性
+    btn.text(text).removeClass().addClass(cls).attr('val', val);
+    btn.next().removeClass().addClass('dropdown-toggle ' + cls);
+    invoke(opt.action, val);
 }
 
 function to_url(url) {

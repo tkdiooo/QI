@@ -15,7 +15,7 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <div th:include="common/layout :: script"></div>
-<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
 <script th:inline="javascript">
     function go() {
         load_url(/*[[@{/system/grid}]]*/ "", $('.content-wrapper'));

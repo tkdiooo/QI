@@ -5984,3 +5984,7 @@ table.text-center th {
 .fullWidth {
     width: 100% !important;
 }
+
+.left-float {
+    float: left !important;
+}

@@ -7,6 +7,7 @@ import com.qi.backstage.model.domain.BaseDictionaryExample;
 import com.qi.backstage.model.dto.DictionaryDto;
 import com.sfsctech.common.util.BeanUtil;
 import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.constants.LabelConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,13 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
     @Override
     public List<BaseDictionary> findAll(BaseDictionary model) {
         BaseDictionaryExample example = new BaseDictionaryExample();
+        BaseDictionaryExample.Criteria criteria = example.createCriteria();
         if (StringUtil.isNotBlank(model.getParent())) {
-            example.createCriteria().andParentEqualTo(model.getParent());
+            criteria.andParentEqualTo(model.getParent());
+        }
+        if (StringUtil.isNotBlank(model.getNumber())) {
+            criteria.andNumberLike(model.getNumber() + LabelConstants.PERCENT);
+            criteria.andNumberNotEqualTo(model.getNumber());
         }
         example.setOrderByClause("sort asc");
         return mapper.selectByExample(example);

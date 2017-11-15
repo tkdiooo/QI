@@ -46,6 +46,12 @@
             <artifactId>common-logback</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- common-dubbox support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-dubbox</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- common-security support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
@@ -56,6 +62,12 @@
         <dependency>
             <groupId>com.qi.backstage</groupId>
             <artifactId>QI-Backstage-Dao</artifactId>
+            <version>${backstage.version}</version>
+        </dependency>
+        <!-- QI-Backstage-Interface support-->
+        <dependency>
+            <groupId>com.qi.backstage</groupId>
+            <artifactId>QI-Backstage-Interface</artifactId>
             <version>${backstage.version}</version>
         </dependency>
         <!-- QI-Support-Bootstrap support-->

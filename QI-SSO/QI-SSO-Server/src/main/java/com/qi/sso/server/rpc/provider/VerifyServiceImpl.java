@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service(retries = -1)
 public class VerifyServiceImpl implements VerifyService {
 
-    private final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(VerifyServiceImpl.class);
 
     @Autowired
     private CacheFactory cacheFactory;

@@ -72,25 +72,32 @@ spring:
       max-idle: 100
       min-idle: 50
 #dubbo setting
-#dubbo:
-#  application:
-#    #服务消费名称信息
-#    name: SSO-Website
-#    #日志适配
-#    logger: slf4j
-#  registry:
-#    #zookeeper注册中心服务地址
-#    address: zookeeper://172.16.225.98:2181
-#    #注册中心不存在时，是否报错
-#    check: false
-#    #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
-#    register: true
-#    #是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
-#    subscribe: true
-#    #注册中心请求超时时间(毫秒)
-#    timeout: 2000
-#  rpc:
-#    service-package: com.qi.sso.website.rpc
+dubbo:
+  application:
+    # 服务提供者名称信息
+    name: BS-Management
+    # 日志适配
+    logger: slf4j
+  registry:
+    # zookeeper注册中心服务地址
+    address: zookeeper://172.16.225.98:2181
+    # 注册中心不存在时，是否报错
+    check: true
+    # 是否向此注册中心注册服务，如果设为false，将只订阅，不注册
+    register: true
+    # 是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
+    subscribe: true
+    # 注册中心请求超时时间(毫秒)
+    timeout: 2000
+  protocol:
+    # 通信协议，默认dubbo
+    name: dubbo
+    # 协议端口，默认20880
+    port: 20880
+    # 是否使用kryo序列化
+    kryo: true
+  rpc:
+    service-package: com.qi.backstage.management.rpc
 #common setting
 website:
   # 网站支持
@@ -98,7 +105,7 @@ website:
     # 静态资源服务
     static-resources: http://localhost:8080
     welcome-file: /index
-  security:
+#  security:
 #    open-ddoc: true
 #    ddos:
 #      access-control-allow-origin: www.zzl.com

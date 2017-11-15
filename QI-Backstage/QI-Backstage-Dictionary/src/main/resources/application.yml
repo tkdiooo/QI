@@ -21,6 +21,38 @@ server:
 #    logback-expose-webapp-root: true
 #spring mvc setting
 spring:
+  druid-datasource:
+    master:
+      url: jdbc:mysql://localhost:3306/qi_base?useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      # 初始化大小
+      initialSize: 5
+      # 最小
+      minIdle: 5
+      # 最大
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j,log4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 合并多个DruidDataSource的监控数据
+      useGlobalDataSourceStat: true
   thymeleaf:
     cache: false
     suffix: .html
@@ -41,25 +73,32 @@ spring:
       max-idle: 100
       min-idle: 50
 #dubbo setting
-#dubbo:
-#  application:
-#    #服务消费名称信息
-#    name: SSO-Website
-#    #日志适配
-#    logger: slf4j
-#  registry:
-#    #zookeeper注册中心服务地址
-#    address: zookeeper://172.16.225.98:2181
-#    #注册中心不存在时，是否报错
-#    check: false
-#    #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
-#    register: true
-#    #是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
-#    subscribe: true
-#    #注册中心请求超时时间(毫秒)
-#    timeout: 2000
-#  rpc:
-#    service-package: com.qi.sso.website.rpc
+dubbo:
+  application:
+    # 服务提供者名称信息
+    name: BS-Dictionary
+    # 日志适配
+    logger: slf4j
+  registry:
+    # zookeeper注册中心服务地址
+    address: zookeeper://172.16.225.98:2181
+    # 注册中心不存在时，是否报错
+    check: true
+    # 是否向此注册中心注册服务，如果设为false，将只订阅，不注册
+    register: true
+    # 是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
+    subscribe: true
+    # 注册中心请求超时时间(毫秒)
+    timeout: 2000
+  protocol:
+    # 通信协议，默认dubbo
+    name: dubbo
+    # 协议端口，默认20880
+    port: 20880
+    # 是否使用kryo序列化
+    kryo: true
+  rpc:
+    service-package: com.qi.backstage.dictionary.rpc
 #common setting
 website:
   # 网站支持
@@ -73,7 +112,6 @@ website:
       access-control-allow-origin: www.zzl.com
     open-csrf: true
     csrf:
-      keep-pattern: cache
       verify-exclude-path: /index
   # 单点登录
 #  sso:
