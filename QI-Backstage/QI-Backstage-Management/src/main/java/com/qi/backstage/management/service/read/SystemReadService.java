@@ -2,6 +2,8 @@ package com.qi.backstage.management.service.read;
 
 import com.qi.backstage.model.domain.BaseSystem;
 
+import java.util.List;
+
 /**
  * Class SystemReadService
  *
@@ -9,6 +11,8 @@ import com.qi.backstage.model.domain.BaseSystem;
  * @version Description:
  */
 public interface SystemReadService {
+
+    List<BaseSystem> findAll(BaseSystem system);
 
     BaseSystem getByGuid(String guid);
 }

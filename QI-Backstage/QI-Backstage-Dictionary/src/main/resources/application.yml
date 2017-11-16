@@ -110,7 +110,7 @@ website:
     open-ddoc: true
     ddos:
       access-control-allow-origin: www.zzl.com
-    open-csrf: true
+#    open-csrf: true
     csrf:
       verify-exclude-path: /index
   # 单点登录

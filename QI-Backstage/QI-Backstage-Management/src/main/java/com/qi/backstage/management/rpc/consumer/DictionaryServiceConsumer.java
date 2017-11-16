@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Class DictionaryServiceConsumer
@@ -30,8 +31,10 @@ public class DictionaryServiceConsumer {
 
     private final Logger logger = LoggerFactory.getLogger(DictionaryServiceConsumer.class);
 
+    private static final String SYSTEM_TYPE_OPTIONS = "system_type_options";
     private static final String SYSTEM_ADD_OPTIONS = "system_add_options";
     private static final String SYSTEM_ADD_DEFAULT_OPTIONS = "system_add_default_options";
+    private static final String SYSTEM_TYPE_CLOUMNS = "system_type_cloumns";
 
     @Reference
     private DictionaryService service;
@@ -39,18 +42,41 @@ public class DictionaryServiceConsumer {
     @Autowired
     private CacheFactory factory;
 
-    public List<Map<String, Object>> findChildByNumber(String number) {
-        List<Map<String, Object>> options = factory.getList(SYSTEM_ADD_OPTIONS);
+    public List<DictionaryDto> findChildByNumber(String number) {
+        List<DictionaryDto> options = factory.getList(SYSTEM_TYPE_OPTIONS);
         if (null == options) {
             ActionResult<List<DictionaryDto>> result = service.findChildByNumber(number);
-            if (result.isSuccess()) {
-                options = BootstrapUtil.matchOptions(SYSTEM_ADD_OPTIONS, result.getResult(), "number", "content");
-            } else {
+            if (!result.isSuccess()) {
                 logger.error(JsonUtil.toJSONString(result.getStatus()));
                 logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+            } else {
+                options = result.getResult();
+                factory.getCacheClient().put(SYSTEM_TYPE_OPTIONS, options);
+            }
+        }
+        return options;
+    }
+
+    public List<Map<String, Object>> getSystemTypeOptions(String number) {
+        List<Map<String, Object>> options = factory.getList(SYSTEM_ADD_OPTIONS);
+        if (null == options) {
+            List<DictionaryDto> list = findChildByNumber(number);
+            if (null != list) {
+                options = BootstrapUtil.matchOptions(SYSTEM_ADD_OPTIONS, list, "number", "content");
+            } else {
                 options = BootstrapUtil.matchOptions(SYSTEM_ADD_DEFAULT_OPTIONS, CommonConstants.SystemType.Default);
             }
         }
         return options;
+    }
+
+    public Map<String, String> getSystemTypeCloumns(String number) {
+        Map<String, String> cloumns = factory.get(SYSTEM_TYPE_CLOUMNS);
+        if (null == cloumns) {
+            List<DictionaryDto> list = findChildByNumber(number);
+            cloumns = list.stream().collect(Collectors.toMap(DictionaryDto::getNumber, DictionaryDto::getContent));
+            factory.getCacheClient().put(SYSTEM_TYPE_CLOUMNS, cloumns);
+        }
+        return cloumns;
     }
 }

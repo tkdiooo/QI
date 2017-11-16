@@ -27,7 +27,7 @@
                     <div class="form-group">
                         <label for="number" class="col-sm-2 control-label">系统编号</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="number" name="number" placeholder="请输入系统编号" th:value="${model} ? ${model.number}">
+                            <input type="email" class="form-control" id="code" name="code" placeholder="请输入系统编号" th:value="${model} ? ${model.code}">
                         </div>
                         <label for="type_sel" class="col-sm-2 control-label">系统类型</label>
                         <div class="col-xs-3 input-group left-float">
@@ -46,30 +46,31 @@
                     <div class="form-group">
                         <label for="namecn" class="col-sm-2 control-label">系统名称</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="namecn" name="namecn" placeholder="请输入系统名称">
+                            <input type="email" class="form-control" id="namecn" name="namecn" placeholder="请输入系统名称" th:value="${model} ? ${model.namecn}">
                         </div>
                         <label for="nameen" class="col-sm-2 control-label">系统简称</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="nameen" name="nameen" placeholder="请输入系统简称">
+                            <input type="email" class="form-control" id="nameen" name="nameen" placeholder="请输入系统简称" th:value="${model} ? ${model.nameen}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="domain" class="col-sm-2 control-label">Domain</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="domain" name="domain" placeholder="请输入系统域名">
+                            <input type="email" class="form-control" id="domain" name="domain" placeholder="请输入系统域名" th:value="${model} ? ${model.domain}">
                         </div>
                         <label for="contextpath" class="col-sm-2 control-label">ContextPath</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="contextpath" name="contextpath" placeholder="请输入系统上下文">
+                            <input type="email" class="form-control" id="contextpath" name="contextpath" placeholder="请输入系统上下文" th:value="${model} ? ${model.contextpath}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="homepage" class="col-sm-2 control-label">HomePage</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="homepage" name="homepage" placeholder="请输入系统首页">
+                            <input type="email" class="form-control" id="homepage" name="homepage" placeholder="请输入系统首页" th:value="${model} ? ${model.homepage}">
                         </div>
                     </div>
                 </div>
+                <input type="hidden" id="guid" name="guid" th:value="${model} ? ${model.guid}"/>
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交表单">提交</button>
                     <button type="button" class="btn btn-default pull-right" onclick="goBack()" data-original-title="取消返回">取消</button>
@@ -95,14 +96,12 @@
     var editSubmit = function () {
         var params = $(".form-horizontal").serializeJson();
         var opt = {
-            callback: function (result) {
-                $(".form-horizontal")[0].reset();
-            }
+            callback: goBack
         };
-        ajax_action(/*[[@{/save}]]*/ "", params, opt);
+        ajax_action(/*[[@{/system/save}]]*/ "", params, opt);
     };
     var goBack = function () {
-        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+        load_url(/*[[@{/system/grid}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
     };
     var sort = function () {
         var params = '';
