@@ -84,21 +84,21 @@ public class IndexController {
 //    }
 
     @GetMapping("add")
-    public String add(ModelMap model, BaseDictionary dictionary) {
+    public String add(ModelMap model, String parent) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
         // 父节点Guid
-        model.put("parent_guid", dictionary.getParent());
+        model.put("parent_guid", parent);
         // 不是跟节点的情况下，获取父节点编号
-        if (!"0000000000000000000000".equals(dictionary.getParent())) {
-            model.put("parent_number", readService.getByGuid(dictionary.getParent()).getNumber());
+        if (!"0000000000000000000000".equals(parent)) {
+            model.put("parent_number", readService.getByGuid(parent).getNumber());
         }
         return "dictionary/edit";
     }
 
     @GetMapping("edit")
-    public String edit(ModelMap model, BaseDictionary dictionary) {
+    public String edit(ModelMap model, String guid) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
-        BaseDictionary dict = readService.getByGuid(dictionary.getGuid());
+        BaseDictionary dict = readService.getByGuid(guid);
         // 父节点Guid
         model.put("parent_guid", dict.getParent());
         // 不是跟节点的情况下，获取父节点编号

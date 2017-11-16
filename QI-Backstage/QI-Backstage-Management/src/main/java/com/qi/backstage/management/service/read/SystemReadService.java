@@ -1,5 +1,7 @@
 package com.qi.backstage.management.service.read;
 
+import com.qi.backstage.model.domain.BaseSystem;
+
 /**
  * Class SystemReadService
  *
@@ -7,4 +9,6 @@ package com.qi.backstage.management.service.read;
  * @version Description:
  */
 public interface SystemReadService {
+
+    BaseSystem getByGuid(String guid);
 }

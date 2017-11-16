@@ -1,6 +1,7 @@
 package com.qi.backstage.management.service.write;
 
 import com.qi.backstage.model.domain.BaseSystem;
+import com.sfsctech.constants.StatusConstants;
 
 /**
  * Class SystemWriteService
@@ -12,4 +13,5 @@ public interface SystemWriteService {
 
     void save(BaseSystem entity);
 
+    void changeStatus(String guid, StatusConstants.Status status);
 }

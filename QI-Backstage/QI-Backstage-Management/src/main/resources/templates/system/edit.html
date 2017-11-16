@@ -35,7 +35,7 @@
                                 <button type="button" id="type_btn" class="btn btn-warning dropdown-toggle" th:val="${defaultSel.value}" th:text="${defaultSel.text}"></button>
                                 <button type="button" id="type_sel" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li th:each="var : ${options}" th:val="${var.value}" onclick="choose(this);">
+                                    <li th:each="var : ${options}" th:if="${var.value != defaultSel.value}" th:val="${var.value}" onclick="choose(this);">
                                         <a href="javascript:void(0);" th:text="${var.text}"></a>
                                     </li>
                                 </ul>
