@@ -7,6 +7,7 @@ import com.qi.backstage.model.domain.BaseMenuExample;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.common.uuid.UUIDUtil;
 import com.sfsctech.constants.StatusConstants;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class MenuWriteServiceImpl implements MenuWriteService {
         if (StringUtil.isBlank(model.getGuid())) {
             model.setGuid(UUIDUtil.base58Uuid());
             model.setStatus(StatusConstants.Status.Valid.getCode());
+            model.setSort(NumberUtils.INTEGER_ZERO);
             mapper.insert(model);
         } else {
             BaseMenuExample example = new BaseMenuExample();

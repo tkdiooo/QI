@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class MenuController
@@ -56,14 +57,25 @@ public class MenuController {
     @GetMapping("add")
     public String add(ModelMap model) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
+        List<Map<String, Object>> options = BootstrapUtil.matchOptions("", systemReadService.findAll(new BaseSystem()), "code", "namecn");
+        model.put("defaultSel", options.get(0));
+        model.put("options", options);
         return "menu/edit";
     }
 
     @GetMapping("edit")
     public String edit(ModelMap model, String guid) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
+        List<Map<String, Object>> options = BootstrapUtil.matchOptions("", systemReadService.findAll(new BaseSystem()), "code", "namecn");
+        model.put("options", options);
         BaseMenu menu = readService.getByGuid(guid);
         model.put("model", menu);
+        for (Map<String, Object> option : options) {
+            if (option.get("value").equals(menu.getSystem())) {
+                model.put("defaultSel", option);
+                break;
+            }
+        }
         return "menu/edit";
     }
 
