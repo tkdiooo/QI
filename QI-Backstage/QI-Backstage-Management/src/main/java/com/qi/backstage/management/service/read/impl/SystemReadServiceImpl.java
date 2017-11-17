@@ -26,15 +26,6 @@ public class SystemReadServiceImpl implements SystemReadService {
     @Override
     public List<BaseSystem> findAll(BaseSystem system) {
         BaseSystemExample example = new BaseSystemExample();
-//        BaseSystemExample.Criteria criteria = example.createCriteria();
-//        if (StringUtil.isNotBlank(model.getParent())) {
-//            criteria.andParentEqualTo(model.getParent());
-//        }
-//        if (StringUtil.isNotBlank(model.getNumber())) {
-//            criteria.andNumberLike(model.getNumber() + LabelConstants.PERCENT);
-//            criteria.andNumberNotEqualTo(model.getNumber());
-//        }
-//        example.setOrderByClause("sort asc");
         return mapper.selectByExample(example);
     }
 
@@ -42,5 +33,4 @@ public class SystemReadServiceImpl implements SystemReadService {
     public BaseSystem getByGuid(String guid) {
         return mapper.selectByGuid(guid);
     }
-
 }

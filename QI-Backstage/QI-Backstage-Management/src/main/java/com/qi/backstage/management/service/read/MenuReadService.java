@@ -1,5 +1,9 @@
 package com.qi.backstage.management.service.read;
 
+import com.qi.backstage.model.domain.BaseMenu;
+
+import java.util.List;
+
 /**
  * Class MenuReadService
  *
@@ -7,4 +11,8 @@ package com.qi.backstage.management.service.read;
  * @version Description:
  */
 public interface MenuReadService {
+
+    List<BaseMenu> findAll(BaseMenu model);
+
+    BaseMenu getByGuid(String guid);
 }

@@ -3,6 +3,10 @@ package com.qi.backstage.management.service.write.impl;
 import com.qi.backstage.management.service.write.MenuWriteService;
 import com.qi.backstage.mapper.BaseMenuMapper;
 import com.qi.backstage.model.domain.BaseMenu;
+import com.qi.backstage.model.domain.BaseMenuExample;
+import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.common.uuid.UUIDUtil;
+import com.sfsctech.constants.StatusConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +23,24 @@ public class MenuWriteServiceImpl implements MenuWriteService {
     private BaseMenuMapper mapper;
 
     @Override
-    public void save(BaseMenu menu) {
-        mapper.insert(menu);
+    public void save(BaseMenu model) {
+        if (StringUtil.isBlank(model.getGuid())) {
+            model.setGuid(UUIDUtil.base58Uuid());
+            model.setStatus(StatusConstants.Status.Valid.getCode());
+            mapper.insert(model);
+        } else {
+            BaseMenuExample example = new BaseMenuExample();
+            example.createCriteria().andGuidEqualTo(model.getGuid());
+            mapper.updateByExampleSelective(model, example);
+        }
+    }
+
+    @Override
+    public void changeStatus(String guid, StatusConstants.Status status) {
+        BaseMenu model = new BaseMenu();
+        model.setStatus(status.getCode());
+        BaseMenuExample example = new BaseMenuExample();
+        example.createCriteria().andGuidEqualTo(guid);
+        mapper.updateByExampleSelective(model, example);
     }
 }

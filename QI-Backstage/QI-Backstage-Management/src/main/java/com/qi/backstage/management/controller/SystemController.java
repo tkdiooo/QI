@@ -40,8 +40,8 @@ public class SystemController {
     @Autowired
     private SystemWriteService writeService;
 
-    @GetMapping("grid")
-    public String grid(ModelMap model, BaseSystem system) {
+    @GetMapping("index")
+    public String index(ModelMap model, BaseSystem system) {
         model.put("data", readService.findAll(system));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("options", BootstrapUtil.matchOptions("system_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));

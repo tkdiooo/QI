@@ -1,6 +1,7 @@
 package com.qi.backstage.management.service.write;
 
 import com.qi.backstage.model.domain.BaseMenu;
+import com.sfsctech.constants.StatusConstants;
 
 /**
  * Class MenuWriteService
@@ -10,6 +11,7 @@ import com.qi.backstage.model.domain.BaseMenu;
  */
 public interface MenuWriteService {
 
-    void save(BaseMenu menu);
+    void save(BaseMenu model);
 
+    void changeStatus(String guid, StatusConstants.Status status);
 }
