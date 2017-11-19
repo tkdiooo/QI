@@ -1,5 +1,6 @@
 package com.qi.backstage.dictionary.controller;
 
+import com.qi.backstage.dictionary.common.constants.CommonConstants;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.transactional.DictionaryTransactionalService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
@@ -52,20 +53,20 @@ public class IndexController {
     public String grid(ModelMap model, BaseDictionary dictionary) {
         // 父节点Guid为空
         if (StringUtil.isBlank(dictionary.getParent())) {
-            dictionary.setParent("0000000000000000000000");
+            dictionary.setParent(CommonConstants.ROOT_GUID);
         }
         // 列表面包屑设置
         List<Breadcrumb> list = factory.getList(dictionary.getParent());
         // 缓存为空
         if (list == null) {
             // 根节点为空，设置根节点
-            if ("0000000000000000000000".equals(dictionary.getParent())) {
+            if (CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
                 list = new ArrayList<>();
-                list.add(new Breadcrumb("Root", "0000000000000000000000", "active"));
+                list.add(new Breadcrumb(CommonConstants.ROOT_NAME, CommonConstants.ROOT_GUID, CommonConstants.ROOT_CLASS));
             } else {
                 BaseDictionary dict = readService.getByGuid(dictionary.getParent());
                 list = factory.getList(dict.getParent());
-                list.add(new Breadcrumb(dict.getContent(), dict.getGuid(), "active"));
+                list.add(new Breadcrumb(dict.getContent(), dict.getGuid(), CommonConstants.ROOT_CLASS));
             }
             factory.getCacheClient().put(dictionary.getParent(), list);
         }
@@ -89,7 +90,7 @@ public class IndexController {
         // 父节点Guid
         model.put("parent_guid", parent);
         // 不是跟节点的情况下，获取父节点编号
-        if (!"0000000000000000000000".equals(parent)) {
+        if (!CommonConstants.ROOT_GUID.equals(parent)) {
             model.put("parent_number", readService.getByGuid(parent).getNumber());
         }
         return "dictionary/edit";
@@ -102,7 +103,7 @@ public class IndexController {
         // 父节点Guid
         model.put("parent_guid", dict.getParent());
         // 不是跟节点的情况下，获取父节点编号
-        if (!"0000000000000000000000".equals(dict.getParent())) {
+        if (!CommonConstants.ROOT_GUID.equals(dict.getParent())) {
             model.put("parent_number", dict.getNumber().substring(5));
         }
         dict.setNumber(dict.getNumber().substring(dict.getNumber().length() - 5));

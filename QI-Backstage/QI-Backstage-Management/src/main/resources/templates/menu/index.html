@@ -24,7 +24,10 @@
                     title: '新增菜单信息',
                     class: 'btn btn-primary',
                     action: function () {
-                        load_url(/*[[@{/menu/add}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                        load_url(/*[[@{/menu/add}]]*/ "", $('.content-wrapper'), {
+                            system: [[${system}]],
+                            parent: [[${parent}]]
+                        });
                     }
                 }, {
                     id: 'status_btn',
@@ -58,29 +61,14 @@
 </section>
 <section class="content">
     <div class="row">
-        <div class="col-xs-2">
-            <!-- TO DO List -->
-            <div class="box box-primary">
-                <div class="box-header">
-                    <i class="ion ion-clipboard"></i>
-                    <h3 class="box-title">系统列表</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                    <ul class="todo-list">
-                        <li th:each="var: ${systems}" th:id="${var.guid}" th:onclick="'load(\'' + ${var.guid} + '\')'" style="cursor: pointer;">
-                            <span class="text" th:text="${var.namecn}" style="color: #367fa9"></span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-10 left-column">
+        <div class="col-xs-12">
             <div class="box box-primary">
                 <div class="box-header" style="padding-bottom: 0 !important;padding-top: 0 !important;">
                     <ol class="breadcrumb" style="margin-bottom: 0 !important; background: transparent;">
-                        &nbsp;
+                        <li name="breadcrumb" th:each="breadcrumb, stat : ${breadcrumbs}"
+                            th:utext="${stat.last} ? ${breadcrumb.text} :
+                                    ${'<a href=''' + breadcrumb.url + '''>' + breadcrumb.text + '</a>'}"
+                            th:class="${stat.last} ? ${breadcrumb.cls}"></li>
                     </ol>
                 </div>
                 <div class="box-body">
@@ -165,7 +153,7 @@
     }
 
     function child(guid) {
-        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {parent: guid});
+        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {guid: guid, system: [[${system}]]});
     }
 </script>
 </body>

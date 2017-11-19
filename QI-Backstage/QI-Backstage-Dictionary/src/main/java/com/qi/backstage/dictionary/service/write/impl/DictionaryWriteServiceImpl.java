@@ -1,5 +1,6 @@
 package com.qi.backstage.dictionary.service.write.impl;
 
+import com.qi.backstage.dictionary.common.constants.CommonConstants;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.mapper.BaseDictionaryMapper;
 import com.qi.backstage.model.domain.BaseDictionary;
@@ -25,7 +26,7 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
 
     @Override
     public void save(BaseDictionary model) {
-        if (!model.getParent().equals("0000000000000000000000")) {
+        if (!model.getParent().equals(CommonConstants.ROOT_GUID)) {
             mapper.selectByGuid(model.getParent());
             model.setNumber(mapper.selectByGuid(model.getParent()).getNumber() + model.getNumber());
         }

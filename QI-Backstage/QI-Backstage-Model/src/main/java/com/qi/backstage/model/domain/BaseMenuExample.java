@@ -324,6 +324,76 @@ public class BaseMenuExample {
             return (Criteria) this;
         }
 
+        public Criteria andParentIsNull() {
+            addCriterion("Parent is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIsNotNull() {
+            addCriterion("Parent is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentEqualTo(String value) {
+            addCriterion("Parent =", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentNotEqualTo(String value) {
+            addCriterion("Parent <>", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentGreaterThan(String value) {
+            addCriterion("Parent >", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentGreaterThanOrEqualTo(String value) {
+            addCriterion("Parent >=", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentLessThan(String value) {
+            addCriterion("Parent <", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentLessThanOrEqualTo(String value) {
+            addCriterion("Parent <=", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentLike(String value) {
+            addCriterion("Parent like", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentNotLike(String value) {
+            addCriterion("Parent not like", value, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIn(List<String> values) {
+            addCriterion("Parent in", values, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentNotIn(List<String> values) {
+            addCriterion("Parent not in", values, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentBetween(String value1, String value2) {
+            addCriterion("Parent between", value1, value2, "parent");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentNotBetween(String value1, String value2) {
+            addCriterion("Parent not between", value1, value2, "parent");
+            return (Criteria) this;
+        }
+
         public Criteria andSystemIsNull() {
             addCriterion("System is null");
             return (Criteria) this;
@@ -801,6 +871,66 @@ public class BaseMenuExample {
 
         public Criteria andSortNotBetween(Integer value1, Integer value2) {
             addCriterion("Sort not between", value1, value2, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafIsNull() {
+            addCriterion("isLeaf is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafIsNotNull() {
+            addCriterion("isLeaf is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafEqualTo(Boolean value) {
+            addCriterion("isLeaf =", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafNotEqualTo(Boolean value) {
+            addCriterion("isLeaf <>", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafGreaterThan(Boolean value) {
+            addCriterion("isLeaf >", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("isLeaf >=", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafLessThan(Boolean value) {
+            addCriterion("isLeaf <", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafLessThanOrEqualTo(Boolean value) {
+            addCriterion("isLeaf <=", value, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafIn(List<Boolean> values) {
+            addCriterion("isLeaf in", values, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafNotIn(List<Boolean> values) {
+            addCriterion("isLeaf not in", values, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafBetween(Boolean value1, Boolean value2) {
+            addCriterion("isLeaf between", value1, value2, "isleaf");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsleafNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("isLeaf not between", value1, value2, "isleaf");
             return (Criteria) this;
         }
 
