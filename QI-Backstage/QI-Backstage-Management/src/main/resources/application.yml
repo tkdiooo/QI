@@ -93,7 +93,7 @@ dubbo:
     # 通信协议，默认dubbo
     name: dubbo
     # 协议端口，默认20880
-    port: 20880
+    port: 20881
     # 是否使用kryo序列化
     kryo: true
   rpc:

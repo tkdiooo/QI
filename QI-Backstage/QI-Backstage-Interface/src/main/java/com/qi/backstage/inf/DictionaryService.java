@@ -15,5 +15,5 @@ public interface DictionaryService {
 
     ActionResult<DictionaryDto> getByGuid(String guid);
 
-    ActionResult<List<DictionaryDto>> findChildByNumber(String number);
+    ActionResult<DictionaryDto> findChildByNumber(String number);
 }

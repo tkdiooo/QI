@@ -2,6 +2,8 @@ package com.qi.backstage.model.dto;
 
 import com.qi.backstage.model.domain.BaseMenu;
 
+import java.util.List;
+
 /**
  * Class BaseMenuDto
  *
@@ -12,4 +14,23 @@ public class MenuDto extends BaseMenu {
 
     private static final long serialVersionUID = -5252560452584476498L;
 
+    private String domain;
+
+    private List<MenuDto> child;
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public List<MenuDto> getChild() {
+        return child;
+    }
+
+    public void setChild(List<MenuDto> child) {
+        this.child = child;
+    }
 }

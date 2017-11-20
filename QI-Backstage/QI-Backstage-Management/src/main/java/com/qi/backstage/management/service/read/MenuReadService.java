@@ -1,6 +1,7 @@
 package com.qi.backstage.management.service.read;
 
 import com.qi.backstage.model.domain.BaseMenu;
+import com.qi.backstage.model.dto.MenuDto;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface MenuReadService {
     List<BaseMenu> findAll(BaseMenu model);
 
     BaseMenu getByGuid(String guid);
+
+    List<MenuDto> findBySystem(String system, String parent);
 }

@@ -68,6 +68,7 @@
                     </div>
                 </div>
                 <input type="hidden" id="guid" name="guid" th:value="${model} ? ${model.guid}"/>
+                <input type="hidden" id="isleaf" name="isleaf" th:value="${defaultSel.value != '0000000000000000000000'} ? 'false' : 'true'"/>
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交表单">提交</button>
                     <button type="button" class="btn btn-default pull-right" onclick="goBack()" data-original-title="取消返回">取消</button>

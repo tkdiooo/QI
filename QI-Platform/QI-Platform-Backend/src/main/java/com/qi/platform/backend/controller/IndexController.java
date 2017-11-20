@@ -1,14 +1,15 @@
 package com.qi.platform.backend.controller;
 
-import com.sfsctech.common.cookie.CookieHelper;
-import com.sfsctech.common.security.EncrypterTool;
-import com.sfsctech.common.util.RandomUtil;
+import com.qi.backstage.model.dto.MenuDto;
+import com.qi.platform.backend.rpc.consumer.MenuServiceConsumer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Class IndexController
@@ -19,10 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
 
+    @Autowired
+    private MenuServiceConsumer menuServiceConsumer;
+
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        CookieHelper helper = CookieHelper.getInstance(request, response);
-        helper.setCookie("_csrf", EncrypterTool.encrypt(EncrypterTool.Security.Aes, RandomUtil.getUUID()));
+        List<MenuDto> list = menuServiceConsumer.findSystemMenuBySystem("backstage.management", "1.0");
+        model.put("menus", list);
         return "index";
     }
 }

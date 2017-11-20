@@ -55,8 +55,8 @@ public class DictionaryServiceProvider implements DictionaryService {
     }
 
     @Override
-    public ActionResult<List<DictionaryDto>> findChildByNumber(String number) {
-        ActionResult<List<DictionaryDto>> result = new ActionResult<>();
+    public ActionResult<DictionaryDto> findChildByNumber(String number) {
+        ActionResult<DictionaryDto> result = new ActionResult<>();
         try {
             BaseDictionary model = new BaseDictionary();
             model.setNumber(number);
@@ -68,7 +68,7 @@ public class DictionaryServiceProvider implements DictionaryService {
                 logger.warn(JsonUtil.toJSONString(result.getStatus()));
                 logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             }
-            result.setResult(BeanUtil.copyListForCglib(list, DictionaryDto.class));
+            result.setDataSet(BeanUtil.copyListForCglib(list, DictionaryDto.class));
         } catch (Exception e) {
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Server_Error);

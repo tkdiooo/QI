@@ -1,7 +1,6 @@
 package com.qi.backstage.management.rpc.consumer;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSON;
 import com.qi.backstage.inf.DictionaryService;
 import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.model.dto.DictionaryDto;
@@ -11,6 +10,7 @@ import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.rpc.util.RpcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +45,9 @@ public class DictionaryServiceConsumer {
     public List<DictionaryDto> findChildByNumber(String number) {
         List<DictionaryDto> options = factory.getList(SYSTEM_TYPE_OPTIONS);
         if (null == options) {
-            ActionResult<List<DictionaryDto>> result = service.findChildByNumber(number);
-            if (!result.isSuccess()) {
-                logger.error(JsonUtil.toJSONString(result.getStatus()));
-                logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
-            } else {
-                options = result.getResult();
+            ActionResult<DictionaryDto> result = service.findChildByNumber(number);
+            if (RpcUtil.logPrint(result, logger)) {
+                options = result.getDataSet();
                 factory.getCacheClient().put(SYSTEM_TYPE_OPTIONS, options);
             }
         }

@@ -131,7 +131,7 @@
     });
 
     function edit(guid) {
-        load_url(/*[[@{/menu/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
+        load_url(/*[[@{/menu/edit}]]*/ "", $('.content-wrapper'), {guid: guid, system: [[${system}]]});
     }
 
     function disable(guid) {

@@ -105,18 +105,22 @@ public class MenuController {
     }
 
     @GetMapping("edit")
-    public String edit(ModelMap model, String guid) {
+    public String edit(ModelMap model, BaseMenu menu) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
-        List<Map<String, Object>> options = BootstrapUtil.matchOptions("", systemReadService.findAll(new BaseSystem()), "code", "namecn");
-        model.put("options", options);
-        BaseMenu menu = readService.getByGuid(guid);
+        // 获取系统信息
+        model.put("system", systemReadService.getByGuid(menu.getSystem()));
+        menu = readService.getByGuid(menu.getGuid());
         model.put("model", menu);
-        for (Map<String, Object> option : options) {
-            if (option.get("value").equals(menu.getSystem())) {
-                model.put("defaultSel", option);
-                break;
-            }
+        Map<String, Object> defaultSel = new HashMap<>();
+        if (menu.getParent().equals(CommonConstants.ROOT_GUID)) {
+            defaultSel.put("text", CommonConstants.ROOT_NAME);
+            defaultSel.put("value", CommonConstants.ROOT_GUID);
+        } else {
+            menu = readService.getByGuid(menu.getParent());
+            defaultSel.put("text", menu.getName());
+            defaultSel.put("value", menu.getGuid());
         }
+        model.put("defaultSel", defaultSel);
         return "menu/edit";
     }
 
