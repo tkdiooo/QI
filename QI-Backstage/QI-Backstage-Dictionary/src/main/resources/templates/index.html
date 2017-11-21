@@ -2,24 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="common/layout :: head"></head>
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-    <header th:replace="common/layout :: header"></header>
-    <aside th:replace="common/layout :: sidebar"></aside>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-
-    </div>
-    <!-- /.content-wrapper -->
-    <footer th:replace="common/layout :: footer"></footer>
-    <!-- 右侧浮动栏 - 背景 -->
-    <div class="control-sidebar-bg"></div>
+<div class="content-wrapper left-margin">
 </div>
-<div th:include="common/layout :: script"></div>
-<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
 <script th:inline="javascript">
-    function go() {
+    $(function () {
         load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'));
-    }
+    });
 </script>
 </body>
 </html>

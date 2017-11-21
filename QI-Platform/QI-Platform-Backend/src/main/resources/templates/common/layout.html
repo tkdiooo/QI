@@ -8,10 +8,6 @@
     <title th:text="${title}"></title>
     <!-- bootstrap.css -->
     <link th:href="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css'" rel="stylesheet">
-    <!-- dataTables.css -->
-    <link th:href="${application.static_resource} + '/webjars/datatables.net-bs/1.10.16/css/dataTables.bootstrap.css'" rel="stylesheet">
-    <!-- dataTables.css -->
-    <link th:href="${application.static_resource} + '/static/css/datatables/net-buttons/buttons.dataTables.min.css'" rel="stylesheet">
     <!-- font-awesome.css -->
     <link th:href="${application.static_resource} + '/static/font-awesome/css/font-awesome.min.css'" rel="stylesheet">
     <!-- AdminLTE style -->
@@ -20,22 +16,27 @@
     <link th:href="${application.static_resource} + '/static/back-stage/css/skins/_all-skins.min.css'" rel="stylesheet">
     <!-- font-google.css -->
     <link th:href="${application.static_resource} + '/static/back-stage/css/font-google.css'" rel="stylesheet">
-    <!-- jquery js -->
-    <script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
-    <!-- bootstrap js -->
-    <script th:src="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js'"></script>
-    <!-- datatables js -->
-    <script th:src="${application.static_resource} + '/webjars/datatables.net/1.10.16/js/jquery.dataTables.min.js'"></script>
-    <script th:src="${application.static_resource} + '/webjars/datatables.net-bs/1.10.16/js/dataTables.bootstrap.min.js'"></script>
-    <script th:src="${application.static_resource} + '/webjars/datatables.net-buttons/1.4.2/js/dataTables.buttons.min.js'"></script>
-    <script th:src="${application.static_resource} + '/webjars/datatables.net-buttons/1.4.2/js/buttons.html5.min.js'"></script>
-    <script th:src="${application.static_resource} + '/webjars/jquery-ui/1.12.1/jquery-ui.min.js'"></script>
 </head>
 <div th:fragment="validator">
     <link th:href="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/css/bootstrapValidator.min.css'" rel="stylesheet">
     <script th:src="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/js/bootstrapValidator.min.js'"></script>
 </div>
+<div th:fragment="datatables">
+    <!-- dataTables.css -->
+    <link th:href="${application.static_resource} + '/webjars/datatables.net-bs/1.10.16/css/dataTables.bootstrap.css'" rel="stylesheet">
+    <!-- dataTables.css -->
+    <link th:href="${application.static_resource} + '/static/css/datatables/net-buttons/buttons.dataTables.min.css'" rel="stylesheet">
+    <script th:src="${application.static_resource} + '/webjars/datatables.net/1.10.16/js/jquery.dataTables.min.js'"></script>
+    <script th:src="${application.static_resource} + '/webjars/datatables.net-bs/1.10.16/js/dataTables.bootstrap.min.js'"></script>
+    <script th:src="${application.static_resource} + '/webjars/datatables.net-buttons/1.4.2/js/dataTables.buttons.min.js'"></script>
+    <script th:src="${application.static_resource} + '/webjars/datatables.net-buttons/1.4.2/js/buttons.html5.min.js'"></script>
+</div>
 <div th:fragment="script">
+    <!-- jquery js -->
+    <script th:src="${application.static_resource} + '/webjars/jquery/1.10.2/jquery.min.js'"></script>
+    <script th:src="${application.static_resource} + '/webjars/jquery-ui/1.12.1/jquery-ui.min.js'"></script>
+    <!-- bootstrap js -->
+    <script th:src="${application.static_resource} + '/webjars/bootstrap/3.3.7/dist/js/bootstrap.min.js'"></script>
     <!-- FastClick -->
     <script th:src="${application.static_resource} + '/static/js/other/fastclick.js'"></script>
     <script th:src="${application.static_resource} + '/static/back-stage/js/adminlte.min.js'"></script>
@@ -346,7 +347,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="active" th:each="c : ${var.child}">
-                        <a th:href="${var.domain} + ${c.controller} + ${c.mapping}" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}"></a>
+                        <a th:href="'http://' + ${var.domain} + ${c.controller} + ${c.mapping}" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}" target="myFrame"></a>
                     </li>
                 </ul>
             </li>

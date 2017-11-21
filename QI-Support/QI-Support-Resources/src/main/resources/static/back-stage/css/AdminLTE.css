@@ -5988,3 +5988,7 @@ table.text-center th {
 .left-float {
     float: left !important;
 }
+
+.left-margin {
+    margin-left: 0 !important;
+}

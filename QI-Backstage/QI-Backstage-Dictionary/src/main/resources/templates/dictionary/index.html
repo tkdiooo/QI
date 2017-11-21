@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
 <script th:inline="javascript">
     $(function () {
         var opt = {
@@ -69,7 +68,7 @@
                     </ol>
                 </div>
                 <div class="box-body">
-                    <table id="data_table" class="table table-bordered table-striped">
+                    <table id="data_table" class="table table-bordered table-striped" width="100%">
                         <thead>
                         <tr>
                             <th>字典编号</th>
@@ -155,5 +154,4 @@
         load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: guid});
     }
 </script>
-</body>
 </html>

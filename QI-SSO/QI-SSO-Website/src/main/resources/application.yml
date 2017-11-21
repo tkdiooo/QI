@@ -30,15 +30,16 @@ spring:
     view:
       suffix: .html
   redis:
-    host-name: 172.16.225.98
-    port: 6379
-    password: redis123
+    protocol: single
+    single:
+      host: 172.16.225.98
+      port: 6379
+      password: redis123
     pool:
-      max-total: 300
-      max-wait-millis: 10000
+      max-active: 300
+      max-wait: 10000
       max-idle: 100
       min-idle: 50
-#dubbo setting
 dubbo:
   application:
     #服务消费名称信息
@@ -47,7 +48,7 @@ dubbo:
     logger: slf4j
   registry:
     #zookeeper注册中心服务地址
-    address: zookeeper://192.168.100.103:2181
+    address: zookeeper://172.16.225.98:2181
     #注册中心不存在时，是否报错
     check: false
     #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
@@ -76,10 +77,9 @@ website:
       lazy: false
   # 服务架构
   session:
-    authentication: sso
     exclude-path: /index, /login
-  csrf:
+#  csrf:
 #    verify-exclude-path: /index
-    intercept-exclude-path: /**
-    open: true
-    keep-pattern: soa
+#    intercept-exclude-path: /**
+#    open: true
+#    keep-pattern: soa

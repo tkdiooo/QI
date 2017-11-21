@@ -1,5 +1,6 @@
 package com.qi.backstage.dictionary.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qi.backstage.dictionary.common.constants.CommonConstants;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.transactional.DictionaryTransactionalService;
@@ -9,7 +10,9 @@ import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.common.util.ThrowableUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.rpc.result.ActionResult;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,5 +155,14 @@ public class IndexController {
     @PostMapping("load")
     public ActionResult<BaseDictionary> load(String guid) {
         return new ActionResult<>(readService.getByGuid(guid));
+    }
+
+    @ResponseBody
+    @PostMapping("exist")
+    public JSONObject exist(String number) {
+        System.out.println(number);
+        JSONObject json = new JSONObject();
+        json.put("valid", false);
+        return json;
     }
 }
