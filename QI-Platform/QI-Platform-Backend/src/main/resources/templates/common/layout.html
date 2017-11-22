@@ -338,7 +338,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active treeview" th:each="var : ${menus}">
+            <li class="treeview" th:each="var : ${menus}">
                 <a href="javascript:void(0);">
                     <i class="fa fa-dashboard"></i> <span th:text="${var.name}"></span>
                     <span class="pull-right-container">
@@ -346,8 +346,8 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active" th:each="c : ${var.child}">
-                        <a th:href="'http://' + ${var.domain} + ${c.controller} + ${c.mapping}" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}" target="myFrame"></a>
+                    <li th:each="c : ${var.child}">
+                        <a th:id="${c.guid}" th:href="'http://' + ${var.domain} + ${c.controller} + ${c.mapping}" onclick="menuChange(this.id)" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}" target="myFrame"></a>
                     </li>
                 </ul>
             </li>

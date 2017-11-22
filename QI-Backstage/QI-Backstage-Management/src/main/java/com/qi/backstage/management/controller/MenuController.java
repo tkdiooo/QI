@@ -53,20 +53,8 @@ public class MenuController {
         // 系统信息GUID
         model.put("system", menu.getSystem());
         List<Breadcrumb> list;
-        // 系统信息页面进入
-        if (StringUtil.isBlank(menu.getGuid())) {
-            // 列表面包屑设置
-            list = factory.getList(menu.getSystem());
-            // 缓存为空
-            if (list == null) {
-                // 获取ROOT节点
-                list = factory.getList(CommonConstants.CACHE_SYSTEM_ROOT);
-                // 获取系统信息
-                BaseSystem system = systemReadService.getByGuid(menu.getSystem());
-                list.add(new Breadcrumb(system.getNamecn(), menu.getGuid(), CommonConstants.ROOT_CLASS));
-                factory.getCacheClient().put(system.getGuid(), list);
-            }
-        } else {
+        // 菜单的Guid不为空，并且不是ROOT。则是二级菜单导航请求
+        if (StringUtil.isNotBlank(menu.getGuid()) && !CommonConstants.ROOT_GUID.equals(menu.getGuid())) {
             // 列表面包屑设置
             list = factory.getList(menu.getGuid());
             // 缓存为空
@@ -74,8 +62,27 @@ public class MenuController {
                 // 获取系统信息节点
                 list = factory.getList(menu.getSystem());
                 menu = readService.getByGuid(menu.getGuid());
-                list.add(new Breadcrumb(menu.getName() + "菜单", menu.getGuid(), CommonConstants.ROOT_CLASS));
+                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", menu.getGuid());
+                list.add(breadcrumb);
                 factory.getCacheClient().put(menu.getGuid(), list);
+            }
+        }
+        // 系统级菜单导航请求
+        else {
+            menu.setGuid(CommonConstants.ROOT_GUID);
+            // 根据系统Guid获取面包屑
+            list = factory.getList(menu.getSystem());
+            // 缓存为空，添加当前菜单节点
+            if (list == null) {
+                // 获取ROOT节点
+                list = factory.getList(CommonConstants.CACHE_SYSTEM_ROOT);
+                // 获取系统信息
+                BaseSystem system = systemReadService.getByGuid(menu.getSystem());
+                Breadcrumb breadcrumb = new Breadcrumb(system.getNamecn(), "/menu/index", CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
+                list.add(breadcrumb);
+                factory.getCacheClient().put(system.getGuid(), list);
             }
         }
         model.put("breadcrumbs", list);
@@ -92,13 +99,14 @@ public class MenuController {
         // 获取系统信息
         model.put("system", systemReadService.getByGuid(menu.getSystem()));
         Map<String, Object> defaultSel = new HashMap<>();
-        if (StringUtil.isBlank(menu.getParent())) {
+        if (CommonConstants.ROOT_GUID.equals(menu.getParent())) {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
             defaultSel.put("value", CommonConstants.ROOT_GUID);
         } else {
             menu = readService.getByGuid(menu.getParent());
             defaultSel.put("text", menu.getName());
             defaultSel.put("value", menu.getGuid());
+            model.put("guid", menu.getGuid());
         }
         model.put("defaultSel", defaultSel);
         return "menu/edit";
@@ -116,9 +124,10 @@ public class MenuController {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
             defaultSel.put("value", CommonConstants.ROOT_GUID);
         } else {
-            menu = readService.getByGuid(menu.getParent());
-            defaultSel.put("text", menu.getName());
-            defaultSel.put("value", menu.getGuid());
+            BaseMenu parent = readService.getByGuid(menu.getParent());
+            defaultSel.put("text", parent.getName());
+            defaultSel.put("value", parent.getGuid());
+            model.put("guid", menu.getGuid());
         }
         model.put("defaultSel", defaultSel);
         return "menu/edit";

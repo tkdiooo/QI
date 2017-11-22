@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="common/layout :: validator"></head>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -103,6 +102,5 @@
     var goBack = function () {
         load_url(/*[[@{/system/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
     };
-
 </script>
 </html>

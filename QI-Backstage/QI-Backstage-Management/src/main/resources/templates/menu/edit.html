@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="common/layout :: validator"></head>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -99,8 +98,10 @@
         ajax_action(/*[[@{/menu/save}]]*/ "", params, opt);
     };
     var goBack = function () {
-        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {
+            guid: $('#parent').val(),
+            system: [[${system.guid}]]
+        });
     };
-
 </script>
 </html>

@@ -16,6 +16,11 @@
 </div>
 <div th:include="common/layout :: script"></div>
 <script th:inline="javascript">
+    // active menu-open
+    function menuChange(code) {
+        $('.sidebar-menu').find('.treeview').find('.treeview-menu').find('li').removeClass('active');
+        $('#' + code).parent().addClass('active');
+    }
     function autoHeight() {
         $('iframe[name="myFrame"]')[0].height = win.height - 106;
     }

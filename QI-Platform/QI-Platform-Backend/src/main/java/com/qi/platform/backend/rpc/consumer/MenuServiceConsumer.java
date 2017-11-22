@@ -36,6 +36,7 @@ public class MenuServiceConsumer {
 
     public List<MenuDto> findSystemMenuBySystem(String system, String version) {
         String cache_key = system + LabelConstants.POUND + version;
+        factory.getCacheClient().remove(cache_key);
         List<MenuDto> list = factory.getList(cache_key);
         if (null == list) {
             ActionResult<MenuDto> result = service.findBySystem(system);

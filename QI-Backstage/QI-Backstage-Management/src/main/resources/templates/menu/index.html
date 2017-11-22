@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
 <script th:inline="javascript">
     $(function () {
         var opt = {
@@ -67,7 +66,7 @@
                     <ol class="breadcrumb" style="margin-bottom: 0 !important; background: transparent;">
                         <li name="breadcrumb" th:each="breadcrumb, stat : ${breadcrumbs}"
                             th:utext="${stat.last} ? ${breadcrumb.text} :
-                                    ${'<a href=''' + breadcrumb.url + '''>' + breadcrumb.text + '</a>'}"
+                                |<a href=javascript:void(0); onclick=breadcrumb('${breadcrumb.url}','${breadcrumb.params['guid']}');>${breadcrumb.text}</a>|"
                             th:class="${stat.last} ? ${breadcrumb.cls}"></li>
                     </ol>
                 </div>
@@ -110,8 +109,14 @@
                                         th:data-original-title="'启用' + ${var.name} + ''" data-placement="right">
                                     <i class="fa fa-check-square-o"></i>
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.guid} + '\');'"
-                                        th:data-original-title="'查看' + ${var.name} + '菜单'" data-placement="right">
+                                <button type="button" class="btn btn-default btn-sm dt-btn"
+                                        th:onclick="'child(\'' + ${var.guid} + '\');'" th:if="${var.isleaf}"
+                                        th:data-original-title="'查看' + ${var.name} + '子菜单'" data-placement="right">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm dt-btn"
+                                        th:onclick="'button(\'' + ${var.guid} + '\');'" th:if="${!var.isleaf}"
+                                        th:data-original-title="'查看' + ${var.name} + '菜单按钮'" data-placement="right">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </td>
@@ -137,7 +142,10 @@
     function disable(guid) {
         var opt = {
             callback: function (result) {
-                load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {
+                    guid: [[${parent}]],
+                    system: [[${system}]]
+                });
             }
         };
         ajax_action(/*[[@{/menu/disable}]]*/ "", {guid: guid}, opt);
@@ -146,7 +154,10 @@
     function valid(guid) {
         var opt = {
             callback: function (result) {
-                load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {
+                    guid: [[${parent}]],
+                    system: [[${system}]]
+                });
             }
         };
         ajax_action(/*[[@{/menu/valid}]]*/ "", {guid: guid}, opt);
@@ -155,6 +166,9 @@
     function child(guid) {
         load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {guid: guid, system: [[${system}]]});
     }
+
+    function breadcrumb(url, guid) {
+        load_url(ctx + url, $('.content-wrapper'), {guid: guid, system: [[${system}]]});
+    }
 </script>
-</body>
 </html>

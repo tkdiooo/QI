@@ -1,6 +1,6 @@
 #server setting
 server:
-  port: 8202
+  port: 8201
   address: localhost
   context-path: /dictionary
   tomcat:

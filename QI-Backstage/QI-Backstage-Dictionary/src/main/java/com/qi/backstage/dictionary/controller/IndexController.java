@@ -62,12 +62,16 @@ public class IndexController {
         if (list == null) {
             // 根节点为空，设置根节点
             if (CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
+                Breadcrumb breadcrumb = new Breadcrumb(CommonConstants.ROOT_NAME, CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
                 list = new ArrayList<>();
-                list.add(new Breadcrumb(CommonConstants.ROOT_NAME, CommonConstants.ROOT_GUID, CommonConstants.ROOT_CLASS));
+                list.add(breadcrumb);
             } else {
                 BaseDictionary dict = readService.getByGuid(dictionary.getParent());
+                Breadcrumb breadcrumb = new Breadcrumb(dict.getContent(), CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", dict.getGuid());
                 list = factory.getList(dict.getParent());
-                list.add(new Breadcrumb(dict.getContent(), dict.getGuid(), CommonConstants.ROOT_CLASS));
+                list.add(breadcrumb);
             }
             factory.getCacheClient().put(dictionary.getParent(), list);
         }

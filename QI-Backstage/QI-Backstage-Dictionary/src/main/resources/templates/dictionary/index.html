@@ -63,7 +63,7 @@
                     <ol class="breadcrumb" style="margin-bottom: 0 !important; background: transparent;">
                         <li name="breadcrumb" th:each="breadcrumb, stat : ${breadcrumbs}"
                             th:utext="${stat.last} ? ${breadcrumb.text} :
-                                    ${'<a href=javascript:void(0); onclick=child(''' + breadcrumb.url + '''); >' + breadcrumb.text + '</a>'}"
+                                |<a href=javascript:void(0); onclick=child('${breadcrumb.params['guid']}'); >${breadcrumb.text}</a>|"
                             th:class="${stat.last} ? ${breadcrumb.cls}"></li>
                     </ol>
                 </div>

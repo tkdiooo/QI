@@ -1,5 +1,8 @@
 package com.qi.bootstrap.breadcrumb;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class Breadcrumb
  *
@@ -10,10 +13,16 @@ public class Breadcrumb {
 
     private String text;
     private String url;
+    private Map<String, String> params = new HashMap<>();
     private String cls;
 
     public Breadcrumb() {
 
+    }
+
+    public Breadcrumb(String text, String cls) {
+        this.text = text;
+        this.cls = cls;
     }
 
     public Breadcrumb(String text, String url, String cls) {
@@ -21,6 +30,7 @@ public class Breadcrumb {
         this.url = url;
         this.cls = cls;
     }
+
 
     public String getText() {
         return text;
@@ -36,6 +46,18 @@ public class Breadcrumb {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Map<String, String> getParams() {
+        return params;
+    }
+
+    public void setParams(Map<String, String> params) {
+        this.params = params;
+    }
+
+    public void addParams(String key, String value) {
+        this.params.put(key, value);
     }
 
     public String getCls() {

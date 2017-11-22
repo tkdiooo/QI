@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="common/layout :: head"></head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="content-wrapper left-margin">
-</div>
-<!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
 <script th:inline="javascript">
+    var ctx = /*[[@{/}]]*/ "";
     $(function () {
         load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'));
     });
 </script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="content-wrapper left-margin">
+</div>
+<!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
 </body>
 </html>

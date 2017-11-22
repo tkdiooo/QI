@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
 <script th:inline="javascript">
     $(function () {
         var opt = {
@@ -64,8 +63,7 @@
                 <div class="box-header" style="padding-bottom: 0 !important;padding-top: 0 !important;">
                     <ol class="breadcrumb" style="margin-bottom: 0 !important; background: transparent;">
                         <li name="breadcrumb" th:each="breadcrumb, stat : ${breadcrumbs}"
-                            th:utext="${stat.last} ? ${breadcrumb.text} :
-                                    ${'<a href=javascript:void(0); onclick=child(''' + breadcrumb.url + '''); >' + breadcrumb.text + '</a>'}"
+                            th:utext="${breadcrumb.text}"
                             th:class="${stat.last} ? ${breadcrumb.cls}"></li>
                     </ol>
                 </div>
@@ -155,5 +153,4 @@
         load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {system: guid});
     }
 </script>
-</body>
 </html>

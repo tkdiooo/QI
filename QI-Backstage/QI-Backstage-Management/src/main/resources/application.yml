@@ -1,7 +1,8 @@
 #server setting
 server:
-  port: 8201
+  port: 8202
   address: localhost
+  context-path: /management
   tomcat:
     uri-encoding: utf-8
   session:
