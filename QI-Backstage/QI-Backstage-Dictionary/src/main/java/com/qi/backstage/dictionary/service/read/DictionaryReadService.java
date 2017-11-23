@@ -16,4 +16,5 @@ public interface DictionaryReadService {
 
     BaseDictionary getByGuid(String guid);
 
+    boolean numberIsExist(String number);
 }

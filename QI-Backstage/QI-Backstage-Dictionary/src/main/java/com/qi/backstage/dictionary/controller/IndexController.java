@@ -160,9 +160,8 @@ public class IndexController {
     @ResponseBody
     @PostMapping("exist")
     public JSONObject exist(String number) {
-        System.out.println(number);
         JSONObject json = new JSONObject();
-        json.put("valid", false);
+        json.put("valid", readService.numberIsExist(number));
         return json;
     }
 }

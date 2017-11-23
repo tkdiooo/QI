@@ -1,8 +1,7 @@
-package com.qi.sso.server;
+package com.qi.platform.frontend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -12,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @version Description:
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.qi.sso.server", "com.sfsctech.configurer"})
-public class Runner extends SpringBootServletInitializer {
+@ComponentScan(basePackages = {"com.qi.platform.frontend", "com.sfsctech.configurer"})
+public class Runner {
 
     public static void main(String[] args) {
         SpringApplication.run(Runner.class, args);

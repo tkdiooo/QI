@@ -10,6 +10,81 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>QI-Platform-Frontend</artifactId>
+    <packaging>jar</packaging>
 
+    <dependencies>
+        <!-- Spring boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- spring-cloud-config-client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+        <!-- Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- common-exception support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-logback support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-logback</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-security support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-security</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-dubbox support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-dubbox</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.sso</groupId>
+            <artifactId>QI-SSO-Auth</artifactId>
+            <version>${sso.version}</version>
+        </dependency>
+    </dependencies>
 
+    <build>
+        <finalName>SSO-Website</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.qi.platform.frontend.Runner</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                repackage
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
 </project>

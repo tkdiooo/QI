@@ -45,6 +45,13 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
         return mapper.selectByGuid(guid);
     }
 
+    @Override
+    public boolean numberIsExist(String number) {
+        BaseDictionaryExample example = new BaseDictionaryExample();
+        example.createCriteria().andNumberEqualTo(number);
+        return mapper.selectByExample(example).size() == 0;
+    }
+
 //    @Override
 //    public PagingInfo<DictionaryDto> findByPage(PagingInfo<DictionaryDto> pagingInfo) {
 //        PageHelper.startPage(pagingInfo.getPageNum(), pagingInfo.getPageSize());

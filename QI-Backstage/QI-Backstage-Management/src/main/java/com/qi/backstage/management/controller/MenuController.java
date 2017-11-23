@@ -3,7 +3,9 @@ package com.qi.backstage.management.controller;
 import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.management.service.read.MenuReadService;
 import com.qi.backstage.management.service.read.SystemReadService;
+import com.qi.backstage.management.service.transactional.MenuTransactionalService;
 import com.qi.backstage.management.service.write.MenuWriteService;
+import com.qi.backstage.model.domain.BaseDictionary;
 import com.qi.backstage.model.domain.BaseMenu;
 import com.qi.backstage.model.domain.BaseSystem;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
@@ -44,6 +46,9 @@ public class MenuController {
 
     @Autowired
     private MenuWriteService writeService;
+
+    @Autowired
+    private MenuTransactionalService transactionalService;
 
     @Autowired
     private CacheFactory factory;
@@ -152,5 +157,25 @@ public class MenuController {
     public ActionResult<BaseMenu> valid(String guid) {
         writeService.changeStatus(guid, StatusConstants.Status.Valid);
         return new ActionResult<>();
+    }
+
+    @GetMapping("ordering")
+    public String ordering(ModelMap model, BaseMenu menu) {
+        // 获取所有当前节点数据
+        model.put("data", readService.findAll(menu));
+        return "menu/sort";
+    }
+
+    @ResponseBody
+    @PostMapping("sort")
+    public ActionResult<String> sort(String sortable) {
+        transactionalService.sort(sortable);
+        return new ActionResult<>();
+    }
+
+    @ResponseBody
+    @PostMapping("load")
+    public ActionResult<BaseMenu> load(String guid) {
+        return new ActionResult<>(readService.getByGuid(guid));
     }
 }

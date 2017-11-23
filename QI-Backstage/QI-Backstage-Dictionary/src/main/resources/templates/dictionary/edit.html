@@ -60,6 +60,7 @@
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
+        load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('#parent').val()});
         $('.form-horizontal').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -78,10 +79,11 @@
                             max: 5,
                             message: '字典编号长度必须是5位'
                         },
+                        threshold: 5,
                         remote: {
                             url: /*[[@{/exist}]]*/ "",
                             message: '字典编号已存在',//提示消息
-                            delay: 2000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                            delay: 1000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
                             type: 'POST'// 请求方式
                         },
                         regexp: {//匹配规则
@@ -102,8 +104,7 @@
                     }
                 }
             }
-    });
-        load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('#parent').val()});
+        });
     });
     var editSubmit = function () {
         var form = $(".form-horizontal");

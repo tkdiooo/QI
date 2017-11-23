@@ -29,4 +29,9 @@ public class IndexController {
         model.put("menus", list);
         return "index";
     }
+
+    @GetMapping("main")
+    public String main() {
+        return "main";
+    }
 }

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @version Description:
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.qi.sso", "com.sfsctech.configurer"})
+@ComponentScan(basePackages = {"com.qi.sso.website", "com.sfsctech.configurer"})
 public class Runner {
 
     public static void main(String[] args) {

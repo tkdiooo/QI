@@ -235,14 +235,12 @@ function ajax_action(url, data, opt) {
         // },
         beforeSend: function () {
             if (plugin.settings.waiting) {
-                layer.load(2, {
-                    shade: [0.8, '#393D49']
-                });
+                showWaiting();
             }
         },
         success: function (data, textStatus, request) {
             if (plugin.settings.waiting) {
-                layer.closeAll('loading');
+                closeWaiting();
             }
             if (data.attachs) {
                 $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
@@ -261,7 +259,7 @@ function ajax_action(url, data, opt) {
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
             if (plugin.settings.waiting) {
-                layer.closeAll('loading');
+                closeWaiting();
             }
             if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
                 var json = JSON.parse(XMLHttpRequest.responseText);
@@ -294,7 +292,7 @@ function load_url(url, container, data, opt) {
         type: 'GET',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         dataType: 'html',
-        waiting: false,
+        waiting: true,
         effect: true,
         cache: false,
         async: true
@@ -321,9 +319,7 @@ function load_url(url, container, data, opt) {
         // },
         beforeSend: function () {
             if (plugin.settings.waiting) {
-                layer.load(2, {
-                    shade: [0.8, '#393D49']
-                });
+                showWaiting();
             }
         },
         success: function (data, textStatus, request) {
@@ -333,7 +329,7 @@ function load_url(url, container, data, opt) {
                 $('#_csrf').val(_csrf.token).attr('name', _csrf.parameterName);
             }
             if (plugin.settings.waiting) {
-                layer.closeAll();
+                closeWaiting();
             }
             if (plugin.settings.effect) {
                 container.css({
@@ -347,7 +343,7 @@ function load_url(url, container, data, opt) {
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
             if (plugin.settings.waiting) {
-                layer.closeAll();
+                closeWaiting();
             }
             if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
                 var json = JSON.parse(XMLHttpRequest.responseText);
@@ -355,7 +351,7 @@ function load_url(url, container, data, opt) {
                     to_url(json.attachs.url);
                 });
             } else {
-                alert('网络出现错误，请稍后尝试');
+                alert('网络异常，请稍后尝试');
             }
         }
     });
@@ -570,4 +566,14 @@ function setCSRF(data) {
         data[csrf.attr('name')] = csrf.val();
     }
     return data;
+}
+
+function showWaiting() {
+    if (self !== top) parent.layer.load(2);
+    else layer.load(2);
+}
+
+function closeWaiting() {
+    if (self !== top) parent.layer.closeAll('loading');
+    else layer.closeAll('loading');
 }

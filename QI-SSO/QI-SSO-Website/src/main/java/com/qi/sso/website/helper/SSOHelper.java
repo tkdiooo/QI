@@ -141,16 +141,16 @@ public class SSOHelper {
      * @param model ModelMap
      */
     public void loginBefore(ModelMap model) {
-        // 注册
-        model.put(SSOConstants.REGISTER_URL, properties.getRegisterUrl());
-        // 找回密码
-        model.put(SSOConstants.FORGET_URL, properties.getForgetUrl());
-        // 登录
-        model.put(SSOConstants.LOGING_URL, properties.getLoginUrl());
-        // 登出
-        model.put(SSOConstants.LOGOUT_URL, properties.getLogoutUrl());
-        // title
-        model.put("title", "ZZL FAMILY");
+//        // 注册
+//        model.put(SSOConstants.REGISTER_URL, properties.getRegisterUrl());
+//        // 找回密码
+//        model.put(SSOConstants.FORGET_URL, properties.getForgetUrl());
+//        // 登录
+//        model.put(SSOConstants.LOGING_URL, properties.getLoginUrl());
+//        // 登出
+//        model.put(SSOConstants.LOGOUT_URL, properties.getLogoutUrl());
+//        // title
+//        model.put("title", "ZZL FAMILY");
         // RSA加密公钥生成
         KeyPairModel keyPair;
         if (null != RSA.LOCAL_KEYPAIRMODEL.get(request.getSession().getId())) {
@@ -165,10 +165,10 @@ public class SSOHelper {
         model.put("Modulus", Modulus);
         model.put("Exponent", Exponent);
         // form_url处理
-        String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
-        if (StringUtil.isNotBlank(form_url)) {
-            model.put(SSOConstants.PARAM_FROM_URL, form_url);
-        }
+//        String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
+//        if (StringUtil.isNotBlank(form_url)) {
+//            model.put(SSOConstants.PARAM_FROM_URL, form_url);
+//        }
         // remember_login_account处理
         String account = helper.getCookieValue(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
         if (StringUtil.isNotBlank(account)) {
@@ -176,9 +176,9 @@ public class SSOHelper {
             model.put(SSOConstants.LOGIN_REMEMBER, "on");
         }
         // 用户Session信息
-        if (null != SessionHolder.getSessionInfo().getUserAuthData()) {
-            model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
-        }
+//        if (null != SessionHolder.getSessionInfo().getUserAuthData()) {
+//            model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
+//        }
     }
 
     /**

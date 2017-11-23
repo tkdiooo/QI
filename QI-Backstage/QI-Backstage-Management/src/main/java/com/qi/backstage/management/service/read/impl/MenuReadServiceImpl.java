@@ -36,9 +36,6 @@ public class MenuReadServiceImpl implements MenuReadService {
         if (StringUtil.isNotBlank(model.getGuid())) {
             criteria.andParentEqualTo(model.getGuid());
         }
-//        else {
-//            criteria.andParentEqualTo(CommonConstants.ROOT_GUID);
-//        }
         return mapper.selectByExample(example);
     }
 

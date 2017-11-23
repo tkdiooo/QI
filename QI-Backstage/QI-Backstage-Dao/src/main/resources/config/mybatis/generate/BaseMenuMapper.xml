@@ -332,9 +332,6 @@
         -->
         update base_menu
         <set>
-            <if test="guid != null">
-                Guid = #{guid,jdbcType=CHAR},
-            </if>
             <if test="parent != null">
                 Parent = #{parent,jdbcType=CHAR},
             </if>
@@ -366,7 +363,7 @@
                 Status = #{status,jdbcType=INTEGER},
             </if>
         </set>
-        where ID = #{id,jdbcType=BIGINT}
+        where Guid = #{guid,jdbcType=CHAR}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.qi.backstage.model.domain.BaseMenu">
         <!--

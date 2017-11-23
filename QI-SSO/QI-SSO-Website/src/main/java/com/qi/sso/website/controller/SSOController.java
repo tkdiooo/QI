@@ -46,7 +46,7 @@ public class SSOController {
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         helper.init(request, response);
         helper.loginBefore(model);
-        return "index";
+        return "login";
     }
 
     @PostMapping("login")

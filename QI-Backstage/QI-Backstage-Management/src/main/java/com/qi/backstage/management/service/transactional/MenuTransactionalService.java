@@ -7,4 +7,7 @@ package com.qi.backstage.management.service.transactional;
  * @version Description:
  */
 public interface MenuTransactionalService {
+
+    void sort(String sortable);
+
 }

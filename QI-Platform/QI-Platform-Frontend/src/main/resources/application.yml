@@ -1,8 +1,8 @@
 #server setting
 server:
-  port: 8082
+  port: 8081
   address: localhost
-  context-path: /platform
+  context-path: /portal
   tomcat:
     uri-encoding: utf-8
   session:
@@ -17,7 +17,7 @@ server:
 #      name:
 #      path:
 #  context-parameters:
-#    logback-config-location: http://localhost:8888/framework/thymeleaf
+#    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
 #spring mvc setting
 spring:
@@ -40,11 +40,10 @@ spring:
       max-wait: 10000
       max-idle: 100
       min-idle: 50
-#dubbo setting
 dubbo:
   application:
     #服务消费名称信息
-    name: Backend-Platform
+    name: SSO-Website
     #日志适配
     logger: slf4j
   registry:
@@ -59,7 +58,7 @@ dubbo:
     #注册中心请求超时时间(毫秒)
     timeout: 2000
   rpc:
-    service-package: com.qi.platform.backend.rpc
+    service-package: com.qi.platform.frontend.rpc
 #common setting
 website:
   # 网站支持
@@ -68,20 +67,19 @@ website:
     static-resources: http://localhost:8080
     welcome-file: /index
   # 单点登录
-#  sso:
-#    login-url: www.zzl.com/sso/login
-#    logout-url: www.zzl.com/sso/logout
-#    check-url: www.zzl.com/sso/check
-#    register-url: www.zzl.com/sso/register
-#    forget-url: www.zzl.com/sso/forget
-#    reference:
-#      lazy: false
+  sso:
+    login-url: www.zzl.com/sso/index
+    logout-url: www.zzl.com/sso/logout
+    check-url: www.zzl.com/sso/check
+    register-url: www.zzl.com/sso/register
+    forget-url: www.zzl.com/sso/forget
+    reference:
+      lazy: false
   # 服务架构
-#  session:
-#    authentication: sso
-#    exclude-path: /index, /login
+  session:
+    exclude-path: /index, /login
 #  csrf:
-#    verify-exclude-path: /**
+#    verify-exclude-path: /index
 #    intercept-exclude-path: /**
 #    open: true
-#    required-verify-path: /index
+#    keep-pattern: soa

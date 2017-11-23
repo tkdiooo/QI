@@ -42,21 +42,21 @@
                     <div class="form-group">
                         <label for="code" class="col-sm-2 control-label">菜单编号</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="code" name="code" placeholder="请输入菜单编号" th:value="${model} ? ${model.code}">
+                            <input type="text" class="form-control" id="code" name="code" placeholder="请输入菜单编号" th:value="${model} ? ${model.code}">
                         </div>
                         <label for="name" class="col-sm-2 control-label">菜单名称</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="name" name="name" placeholder="请输入菜单名称" th:value="${model} ? ${model.name}">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="请输入菜单名称" th:value="${model} ? ${model.name}">
                         </div>
                     </div>
                     <div class="form-group" th:if="${defaultSel.value != '0000000000000000000000'}">
                         <label for="controller" class="col-sm-2 control-label">Controller映射</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="controller" name="controller" placeholder="请输入Controller映射" th:value="${model} ? ${model.controller}">
+                            <input type="text" class="form-control" id="controller" name="controller" placeholder="请输入Controller映射" th:value="${model} ? ${model.controller}">
                         </div>
                         <label for="mapping" class="col-sm-2 control-label">Mapping映射</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="email" class="form-control" id="mapping" name="mapping" placeholder="请输入Mapping映射" th:value="${model} ? ${model.mapping}">
+                            <input type="text" class="form-control" id="mapping" name="mapping" placeholder="请输入Mapping映射" th:value="${model} ? ${model.mapping}">
                         </div>
                     </div>
                     <div class="form-group" style="height: 125px !important;">
@@ -75,11 +75,13 @@
             </form>
         </div>
     </div>
+    <div class="col-md-3 right-column"></div>
 </section>
 <script th:inline="javascript">
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
+        load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
     });
     var choose = function (obj) {
         var opt = {
@@ -93,7 +95,10 @@
     var editSubmit = function () {
         var params = $(".form-horizontal").serializeJson();
         var opt = {
-            callback: goBack
+            callback: function (result) {
+                $(".form-horizontal")[0].reset();
+                load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+            }
         };
         ajax_action(/*[[@{/menu/save}]]*/ "", params, opt);
     };
@@ -103,5 +108,29 @@
             system: [[${system.guid}]]
         });
     };
+    var sort = function () {
+        var params = '';
+        $(this).find('li').each(function (i) {
+            if (i !== 0) params += '#';
+            params += $(this).attr('id') + ',' + i;
+        });
+        ajax_action(/*[[@{/menu/sort}]]*/ "", {sortable: params});
+    }
+    var load = function (guid) {
+        var opt = {
+            waiting: false,
+            handler: function (result) {
+                $('#guid').val(result.result.guid);
+                $('#code').val(result.result.code);
+                $('#name').val(result.result.name);
+                $('#description').val(result.result.description);
+                if (!result.result.isleaf) {
+                    $('#controller').val(result.result.controller);
+                    $('#mapping').val(result.result.mapping);
+                }
+            }
+        };
+        ajax_action(/*[[@{/menu/load}]]*/ "", {guid: guid}, opt);
+    }
 </script>
 </html>

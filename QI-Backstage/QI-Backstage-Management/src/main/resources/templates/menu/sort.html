@@ -18,7 +18,7 @@
                     <i class="fa fa-ellipsis-v"></i>
                     <i class="fa fa-ellipsis-v"></i>
                 </span>
-                <span class="text" th:text="${var.content}"></span>
+                <span class="text" th:text="${var.name}"></span>
                 <div class="tools">
                     <i class="fa fa-edit" th:onclick="'load(\'' + ${var.guid} + '\')'"></i>
                 </div>
@@ -28,7 +28,7 @@
     <!-- /.box-body -->
     <div class="box-footer clearfix no-border">
         <button type="button" class="btn btn-default pull-right" onclick="addItem();">
-            <i class="fa fa-plus"></i>添加字典
+            <i class="fa fa-plus"></i>添加菜单
         </button>
     </div>
 </div>
