@@ -46,7 +46,7 @@ public class SSOController {
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         helper.init(request, response);
         helper.loginBefore(model);
-        return "login";
+        return "index";
     }
 
     @PostMapping("login")
@@ -90,9 +90,9 @@ public class SSOController {
         }
         // Jwt Cookie
         helper.buildToken(actionResult.getResult());
-        String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
-        if (StringUtil.isNotBlank(form_url)) result.addAttach(SSOConstants.PARAM_FROM_URL, form_url);
-        result.setResult(authData.getAccount());
+        String form_url = helper.getCookieHelper().getCookieValue(SSOConstants.PARAM_FROM_URL);
+        if (StringUtil.isNotBlank(form_url))
+            result.addAttach(SSOConstants.PARAM_FROM_URL, EncrypterTool.decrypt(EncrypterTool.Security.Aes, form_url));
         return result;
     }
 

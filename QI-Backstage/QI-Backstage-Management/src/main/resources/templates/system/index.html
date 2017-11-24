@@ -96,21 +96,21 @@
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
                                         th:onclick="'edit(\'' + ${var.guid} + '\');'"
                                         th:data-original-title="'编辑' + ${var.namecn} + ''" data-placement="right">
-                                    <i class="fa fa-edit"></i>
+                                    <span class="fa fa-edit"></span>编辑
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
                                         th:onclick="'disable(\'' + ${var.guid} + '\');'" th:if="${var.status == 1}"
                                         th:data-original-title="'禁用' + ${var.namecn} + ''" data-placement="right">
-                                    <i class="fa fa-ban"></i>
+                                    <span class="fa fa-ban"></span>禁用
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
                                         th:onclick="'valid(\'' + ${var.guid} + '\');'" th:if="${var.status == 2}"
                                         th:data-original-title="'启用' + ${var.namecn} + ''" data-placement="right">
-                                    <i class="fa fa-check-square-o"></i>
+                                    <span class="fa fa-check-square-o"></span>启用
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.guid} + '\');'"
                                         th:data-original-title="'查看' + ${var.namecn} + '菜单'" data-placement="right">
-                                    <i class="fa fa-search"></i>
+                                    <span class="fa fa-search"></span>查看
                                 </button>
                             </td>
                         </tr>

@@ -68,13 +68,14 @@ website:
     welcome-file: /index
   # 单点登录
   sso:
-    login-url: www.zzl.com/sso/login
-    logout-url: www.zzl.com/sso/logout
-    check-url: www.zzl.com/sso/check
-    register-url: www.zzl.com/sso/register
-    forget-url: www.zzl.com/sso/forget
-    reference:
-      lazy: false
+#    login-url: www.zzl.com/sso/login
+#    logout-url: www.zzl.com/sso/logout
+#    check-url: www.zzl.com/sso/check
+    register-url: http://www.zzl.com/sso/register
+    forget-url: http://www.zzl.com/sso/forget
+    portal-url: http://www.zzl.com/portal/index
+#    reference:
+#      lazy: false
   # 服务架构
   session:
     exclude-path: /index, /login

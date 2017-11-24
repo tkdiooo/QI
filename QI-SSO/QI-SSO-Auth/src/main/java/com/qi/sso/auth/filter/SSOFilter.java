@@ -13,7 +13,6 @@ import com.sfsctech.common.util.HttpUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.common.util.ResponseUtil;
 import com.sfsctech.common.util.SpringContextUtil;
-import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
@@ -21,7 +20,6 @@ import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.dubbox.util.JwtUtil;
 import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.spring.properties.AppConfig;
 import io.jsonwebtoken.Claims;
 
 import javax.servlet.FilterChain;
@@ -32,8 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class SSOFilter

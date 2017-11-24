@@ -1,5 +1,4 @@
 (function ($) {
-
     new WOW().init();
 
     jQuery(window).load(function () {
@@ -7,7 +6,6 @@
         jQuery("#load").delay(100).fadeOut("slow");
         navbar();
     });
-
 
     //jQuery to collapse the navbar on scroll
     $(window).scroll(function () {
@@ -41,7 +39,6 @@
             event.preventDefault();
         });
     });
-
 
     //nivo lightbox
     $('.gallery-item a').nivoLightbox({

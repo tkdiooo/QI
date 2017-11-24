@@ -5992,3 +5992,7 @@ table.text-center th {
 .left-margin {
     margin-left: 0 !important;
 }
+
+.btn span {
+    margin-right: 1px;
+}

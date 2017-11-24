@@ -165,10 +165,11 @@ public class SSOHelper {
         model.put("Modulus", Modulus);
         model.put("Exponent", Exponent);
         // form_url处理
-//        String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
-//        if (StringUtil.isNotBlank(form_url)) {
-//            model.put(SSOConstants.PARAM_FROM_URL, form_url);
-//        }
+        String form_url = request.getHeader("Referer");
+        if (StringUtil.isBlank(form_url)) {
+            form_url = properties.getPortalUrl();
+        }
+        helper.setCookie(SSOConstants.PARAM_FROM_URL, EncrypterTool.encrypt(EncrypterTool.Security.Aes, form_url));
         // remember_login_account处理
         String account = helper.getCookieValue(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
         if (StringUtil.isNotBlank(account)) {
