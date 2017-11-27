@@ -16,9 +16,9 @@ server:
 #      comment:
 #      name:
 #      path:
-#  context-parameters:
-#    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
-#    logback-expose-webapp-root: true
+  context-parameters:
+    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
+    logback-expose-webapp-root: true
 #spring mvc setting
 spring:
   thymeleaf:
