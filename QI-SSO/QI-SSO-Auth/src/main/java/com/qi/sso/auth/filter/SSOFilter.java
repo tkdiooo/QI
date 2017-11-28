@@ -1,18 +1,14 @@
 package com.qi.sso.auth.filter;
 
-import com.alibaba.dubbo.config.ReferenceConfig;
 import com.qi.sso.auth.util.CacheKeyUtil;
-import com.qi.sso.inf.VerifyService;
+import com.qi.sso.auth.util.SingletonUtil;
 import com.sfsctech.base.filter.BaseFilter;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.base.session.SessionInfo;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
-import com.sfsctech.common.util.HttpUtil;
-import com.sfsctech.common.util.ListUtil;
-import com.sfsctech.common.util.ResponseUtil;
-import com.sfsctech.common.util.SpringContextUtil;
+import com.sfsctech.common.util.*;
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
@@ -57,26 +53,33 @@ public class SSOFilter extends BaseFilter {
             CookieHelper helper = CookieHelper.getInstance(request, response);
             final JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
             if (null != jt) {
-                VerifyService service = (VerifyService) SpringContextUtil.getBean(ReferenceConfig.class).get();
-                // 校验jwt信息
-                ActionResult<JwtToken> result = service.check(jt);
-                // 校验成功
-                if (result.isSuccess()) {
-                    Claims claims = JwtUtil.parseJWT(result.getResult().getJwt());
-                    // 设置UserAuthData
-                    session.setUserAuthData(CacheKeyUtil.getUserAuthData(claims));
-                    // 设置Session attribute
-                    session.setAttribute(CacheKeyUtil.getSessionAttribute(claims));
-                    // 设置RoleInfo
+                try {
+                    ActionResult<JwtToken> result = SingletonUtil.getVerifyService().simpleCheck(jt);
+                    // 校验成功
+                    if (result.isSuccess()) {
+                        String token = EncrypterTool.encrypt(result.getResult().getJwt(), result.getResult().getSalt());
+                        Claims claims = JwtUtil.parseJWT(token);
+                        // 设置UserAuthData
+                        SessionHolder.getSessionInfo().setUserAuthData(CacheKeyUtil.getUserAuthData(claims));
+                        // 设置Session attribute
+                        SessionHolder.getSessionInfo().setAttribute(CacheKeyUtil.getSessionAttribute(claims));
+                        // 设置RoleInfo
 
-                    // 更新token
-                    JwtCookieUtil.updateJwtToken(helper, result.getResult());
-                    chain.doFilter(request, response);
+                        // 更新token
+                        JwtCookieUtil.updateJwtToken(helper, result.getResult());
+                        chain.doFilter(request, response);
+                        return;
+                    } else {
+                        logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                    }
+                } catch (Exception e) {
+                    logger.error(ThrowableUtil.getRootMessage(e));
                 }
-                // 校验失败
-                else {
-                    logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
-                }
+            }
+            if (null != SingletonUtil.getWebsiteProperties().getSession().getRequiredExcludePath() && ExcludesConstants.isExclusion(requestURI, SingletonUtil.getWebsiteProperties().getSession().getRequiredExcludePath())) {
+                logger.info("required path：" + requestURI);
+                chain.doFilter(request, response);
+                return;
             }
             //to login page
             String form_url = HttpUtil.getFullUrl(request);

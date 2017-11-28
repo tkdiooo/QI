@@ -11,5 +11,19 @@ import com.sfsctech.rpc.result.ActionResult;
  */
 public interface VerifyService {
 
-    ActionResult<JwtToken> check(JwtToken jt);
+    /**
+     * 简单校验：只校验token是否存在
+     *
+     * @param jt JwtToken
+     * @return ActionResult<JwtToken>
+     */
+    ActionResult<JwtToken> simpleCheck(JwtToken jt);
+
+    /**
+     * 复杂检验：校验token包含的数据，以及更新数据版本
+     *
+     * @param jt JwtToken
+     * @return ActionResult<JwtToken>
+     */
+    ActionResult<JwtToken> complexCheck(JwtToken jt);
 }

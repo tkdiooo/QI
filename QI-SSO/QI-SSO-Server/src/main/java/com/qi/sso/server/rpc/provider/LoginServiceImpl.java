@@ -6,8 +6,10 @@ import com.qi.sso.inf.LoginService;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.HexUtil;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.JwtProperties;
 import com.sfsctech.dubbox.util.JwtUtil;
@@ -31,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
     private final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     @Autowired
-    private CacheFactory cacheFactory;
+    private CacheFactory<IRedisService<String, Object>> factory;
 
     @Autowired
     private JwtProperties jwtConfig;
@@ -46,18 +48,20 @@ public class LoginServiceImpl implements LoginService {
         Map<String, Object> claims = new HashMap<>();
         claims.put(SSOConstants.JWT_USER_AUTH_INFO, authData);
         String jwt = JwtUtil.generalJwt(claims);
-
+        logger.info("用户：" + authData.getAccount() + "，生成的jwt[" + jwt + "]。");
         //生成加密盐值，用于加密JwtToken信息
         String salt = HexUtil.getEncryptKey();
-        logger.info("用户：" + authData.getAccount() + " 加密盐值[" + salt + "]。");
+        logger.info("用户：" + authData.getAccount() + "，生成的加密盐值[" + salt + "]。");
         // 加密JwtToken
         String token = EncrypterTool.encrypt(jwt, salt);
-        logger.info("用户：" + authData.getAccount() + " token[" + token + "]。");
+        logger.info("用户：" + authData.getAccount() + "，生成的token[" + token + "]。");
 
         String salt_CacheKey = CacheKeyUtil.getSaltCacheKey();
-        logger.info("用户：" + authData.getAccount() + " 生成salt_CacheKey[" + salt_CacheKey + "]。");
+        logger.info("用户：" + authData.getAccount() + "，生成的salt_CacheKey[" + salt_CacheKey + "]。");
         // 缓存salt
-        cacheFactory.getCacheClient().putTimeOut(salt_CacheKey, salt, jwtConfig.getExpiration().intValue());
+        factory.getCacheClient().putTimeOut(salt_CacheKey, salt, jwtConfig.getExpiration().intValue());
+        // 缓存token
+        factory.getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtConfig.getExpiration().intValue());
 
         jwtToken.setJwt(token);
         jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3, salt_CacheKey));

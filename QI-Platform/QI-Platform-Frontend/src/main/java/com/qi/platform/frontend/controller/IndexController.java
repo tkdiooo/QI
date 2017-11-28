@@ -10,9 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * Class IndexController
  *
@@ -27,21 +24,20 @@ public class IndexController {
     @Autowired
     private SSOProperties properties;
 
+
     @GetMapping("index")
-    public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        // 登录
-        model.put(SSOConstants.LOGING_URL, properties.getLoginUrl());
+    public String index(ModelMap model) {
         // title
         model.put("title", "FAMILY ZZL");
-        // form_url处理
-//        String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
-//        if (StringUtil.isNotBlank(form_url)) {
-//            model.put(SSOConstants.PARAM_FROM_URL, form_url);
-//        }
-        // 用户Session信息
-        if (null != SessionHolder.getSessionInfo().getUserAuthData()) {
-            model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
-        }
         return "index";
+    }
+
+    @GetMapping("user")
+    public String user(ModelMap model) {
+        // 登录页面
+        model.put(SSOConstants.LOGING_URL, properties.getLoginUrl());
+        // 用户session信息
+        model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
+        return "user";
     }
 }

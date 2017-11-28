@@ -12,6 +12,7 @@ import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
@@ -51,7 +52,7 @@ public class MenuController {
     private MenuTransactionalService transactionalService;
 
     @Autowired
-    private CacheFactory factory;
+    private CacheFactory<IRedisService<String, Object>> factory;
 
     @GetMapping("index")
     public String index(ModelMap model, BaseMenu menu) {

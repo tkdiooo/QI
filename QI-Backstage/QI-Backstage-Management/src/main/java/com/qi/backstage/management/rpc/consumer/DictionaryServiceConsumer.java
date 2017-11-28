@@ -6,6 +6,7 @@ import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.model.dto.DictionaryDto;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.constants.LabelConstants;
@@ -40,7 +41,7 @@ public class DictionaryServiceConsumer {
     private DictionaryService service;
 
     @Autowired
-    private CacheFactory factory;
+    private CacheFactory<IRedisService<String, Object>> factory;
 
     public List<DictionaryDto> findChildByNumber(String number) {
         List<DictionaryDto> options = factory.getList(SYSTEM_TYPE_OPTIONS);

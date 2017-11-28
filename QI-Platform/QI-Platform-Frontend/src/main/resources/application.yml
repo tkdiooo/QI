@@ -7,7 +7,7 @@ server:
     uri-encoding: utf-8
   session:
     cookie:
-#      domain:
+      domain: www.zzl.com
       # 只能在服务端设置
       http-only: true
       # 只能在 HTTPS 连接中被传递
@@ -15,7 +15,7 @@ server:
       max-age: 1800
 #      comment:
 #      name:
-#      path:
+      path: /
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
@@ -77,7 +77,8 @@ website:
       lazy: false
   # 服务架构
   session:
-    exclude-path: /index, /login
+    exclude-path: /index
+    required-exclude-path: /user
 #  csrf:
 #    verify-exclude-path: /index
 #    intercept-exclude-path: /**

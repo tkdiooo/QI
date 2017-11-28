@@ -2,11 +2,9 @@ package com.qi.platform.backend.rpc.consumer;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qi.backstage.inf.BaseMenuService;
-import com.qi.backstage.model.dto.DictionaryDto;
 import com.qi.backstage.model.dto.MenuDto;
 import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.common.util.JsonUtil;
-import com.sfsctech.common.util.ListUtil;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.RpcUtil;
@@ -32,7 +30,7 @@ public class MenuServiceConsumer {
     private BaseMenuService service;
 
     @Autowired
-    private CacheFactory factory;
+    private CacheFactory<IRedisService<String, Object>> factory;
 
     public List<MenuDto> findSystemMenuBySystem(String system, String version) {
         String cache_key = system + LabelConstants.POUND + version;

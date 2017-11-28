@@ -9,6 +9,7 @@ import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
@@ -45,7 +46,7 @@ public class SystemController {
     private SystemWriteService writeService;
 
     @Autowired
-    private CacheFactory factory;
+    private CacheFactory<IRedisService<String, Object>> factory;
 
     @GetMapping("index")
     public String index(ModelMap model, BaseSystem system) {

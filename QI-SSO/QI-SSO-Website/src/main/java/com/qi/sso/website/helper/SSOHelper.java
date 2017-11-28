@@ -176,10 +176,6 @@ public class SSOHelper {
             model.put(SSOConstants.LOGIN_ACCOUNT, EncrypterTool.decrypt(EncrypterTool.Security.Aes, account));
             model.put(SSOConstants.LOGIN_REMEMBER, "on");
         }
-        // 用户Session信息
-//        if (null != SessionHolder.getSessionInfo().getUserAuthData()) {
-//            model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
-//        }
     }
 
     /**

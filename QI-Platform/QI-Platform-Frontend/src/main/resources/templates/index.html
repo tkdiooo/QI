@@ -12,11 +12,10 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" th:href="${#httpServletRequest.contextPath}  + '/test'">
+            <a class="navbar-brand" th:href="${#httpServletRequest.contextPath}  + '/index'">
                 <h1>family zzl</h1>
             </a>
         </div>
-
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
             <ul class="nav navbar-nav">
@@ -541,8 +540,8 @@
 <!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
 <div th:include="common/layout :: script"></div>
 <script th:inline="javascript">
-    (function ($) {
-
+    (function () {
+        load_url(/*[[@{/user}]]*/ "", $('.collapse'));
     })(jQuery);
 
 </script>

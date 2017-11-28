@@ -59,7 +59,7 @@ public class SSOController {
         // 用户名或密码为空
         if (StringUtil.isBlank(account) || StringUtil.isBlank(password)) {
             result.setSuccess(false);
-            result.addMessage(I18NConstants.Tips.LoginAuthNotEmpty);
+            result.setMessage(I18NConstants.Tips.LoginAuthNotEmpty);
             return result;
         }
         UserAuthData authData = new UserAuthData(helper.decryptAuthData(account), helper.decryptAuthData(password));
@@ -75,7 +75,7 @@ public class SSOController {
         // 登录失败
         if (!actionResult.isSuccess()) {
             result.setSuccess(false);
-            result.addMessage(I18NConstants.Tips.LoginWrong);
+            result.setMessage(I18NConstants.Tips.LoginWrong);
             return result;
         }
         // 登录成功
@@ -94,10 +94,5 @@ public class SSOController {
         if (StringUtil.isNotBlank(form_url))
             result.addAttach(SSOConstants.PARAM_FROM_URL, EncrypterTool.decrypt(EncrypterTool.Security.Aes, form_url));
         return result;
-    }
-
-    @GetMapping("test")
-    public String test() {
-        return "index";
     }
 }
