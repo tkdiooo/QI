@@ -36,6 +36,8 @@ public class IndexController {
     public String user(ModelMap model) {
         // 登录页面
         model.put(SSOConstants.LOGING_URL, properties.getLoginUrl());
+        // 登出页面
+        model.put(SSOConstants.LOGOUT_URL, properties.getLogoutUrl());
         // 用户session信息
         model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
         return "user";

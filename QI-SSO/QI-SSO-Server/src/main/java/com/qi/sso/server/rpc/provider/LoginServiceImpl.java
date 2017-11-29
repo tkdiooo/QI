@@ -70,4 +70,9 @@ public class LoginServiceImpl implements LoginService {
         return result;
     }
 
+    @Override
+    public ActionResult<JwtToken> logout(JwtToken jt) {
+        return null;
+    }
+
 }

@@ -19,7 +19,6 @@ public class SSOService {
     @Reference
     private LoginService loginService;
 
-
     public ActionResult<JwtToken> login(final UserAuthData authData) {
         return loginService.login(authData);
     }
@@ -29,7 +28,7 @@ public class SSOService {
     }
 
     public ActionResult<JwtToken> logout(final JwtToken jt) {
-        return null;
+        return loginService.logout(jt);
     }
 
 }

@@ -57,7 +57,7 @@ public class SSOFilter extends BaseFilter {
                     ActionResult<JwtToken> result = SingletonUtil.getVerifyService().simpleCheck(jt);
                     // 校验成功
                     if (result.isSuccess()) {
-                        String token = EncrypterTool.encrypt(result.getResult().getJwt(), result.getResult().getSalt());
+                        String token = EncrypterTool.decrypt(result.getResult().getJwt(), result.getResult().getSalt());
                         Claims claims = JwtUtil.parseJWT(token);
                         // 设置UserAuthData
                         SessionHolder.getSessionInfo().setUserAuthData(CacheKeyUtil.getUserAuthData(claims));

@@ -8,6 +8,7 @@ import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.security.rsa.KeyPairModel;
 import com.sfsctech.common.security.rsa.RSA;
 import com.sfsctech.common.util.HexUtil;
+import com.sfsctech.common.util.NumberUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.SSOProperties;
@@ -127,11 +128,7 @@ public class SSOHelper {
      *
      * @throws Exception
      */
-    public void destroyToken() throws Exception {
-        JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
-        if (null != jt) {
-            service.logout(jt);
-        }
+    public void destroyToken() {
         JwtCookieUtil.clearJwtToken(helper);
     }
 
@@ -145,10 +142,6 @@ public class SSOHelper {
 //        model.put(SSOConstants.REGISTER_URL, properties.getRegisterUrl());
 //        // 找回密码
 //        model.put(SSOConstants.FORGET_URL, properties.getForgetUrl());
-//        // 登录
-//        model.put(SSOConstants.LOGING_URL, properties.getLoginUrl());
-//        // 登出
-//        model.put(SSOConstants.LOGOUT_URL, properties.getLogoutUrl());
 //        // title
 //        model.put("title", "ZZL FAMILY");
         // RSA加密公钥生成
@@ -169,7 +162,7 @@ public class SSOHelper {
         if (StringUtil.isBlank(form_url)) {
             form_url = properties.getPortalUrl();
         }
-        helper.setCookie(SSOConstants.PARAM_FROM_URL, EncrypterTool.encrypt(EncrypterTool.Security.Aes, form_url));
+        helper.setCookie(SSOConstants.PARAM_FROM_URL, EncrypterTool.encrypt(EncrypterTool.Security.Aes, form_url), NumberUtil.INTEGER_MINUS_ONE);
         // remember_login_account处理
         String account = helper.getCookieValue(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
         if (StringUtil.isNotBlank(account)) {
@@ -195,5 +188,13 @@ public class SSOHelper {
             RSA.LOCAL_KEYPAIRMODEL.remove(request.getSession().getId());
         }
         return "";
+    }
+
+    public void setPortalUrl(ActionResult<String> result) {
+        String form_url = helper.getCookieValue(SSOConstants.PARAM_FROM_URL);
+        if (StringUtil.isNotBlank(form_url))
+            result.addAttach(SSOConstants.PARAM_FROM_URL, EncrypterTool.decrypt(EncrypterTool.Security.Aes, form_url));
+        else
+            result.addAttach(SSOConstants.PARAM_FROM_URL, properties.getPortalUrl());
     }
 }

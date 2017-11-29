@@ -55,7 +55,7 @@
         looking to <a href="#" target="_blank">create an account</a> ?
     </div>
 </div>
-<!--<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 <div th:include="common/layout :: script"></div>
 <script th:inline="javascript">
     (function () {
@@ -118,6 +118,7 @@
             formParams[_csrf.attr('name')] = _csrf.val();
             var opt = {
                 handler: function (result) {
+                    console.info(result)
                     if (!result.success) {
                         $('#warning_msg').text(result.messages.join('<br/>'));
                         $('.warn').show();

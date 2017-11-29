@@ -6,12 +6,14 @@ import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.result.ValidatorResult;
 import com.sfsctech.base.session.SessionHolder;
+import com.sfsctech.base.session.SessionInfo;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.SSOConstants;
+import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.ValidatorUtil;
 import org.slf4j.Logger;
@@ -70,10 +72,10 @@ public class SSOController {
         }
         authData.setSessionID(request.getSession().getId());
         // 验证登录信息，返回用户对象
-        ActionResult<JwtToken> actionResult = service.login(authData);
-        logger.info("用户：" + authData.getAccount() + "登录结果:" + JsonUtil.toJSONString(actionResult));
+        ActionResult<JwtToken> jwtResult = service.login(authData);
+        logger.info("用户：" + authData.getAccount() + "登录结果:" + JsonUtil.toJSONString(jwtResult));
         // 登录失败
-        if (!actionResult.isSuccess()) {
+        if (!jwtResult.isSuccess()) {
             result.setSuccess(false);
             result.setMessage(I18NConstants.Tips.LoginWrong);
             return result;
@@ -89,10 +91,28 @@ public class SSOController {
             helper.getCookieHelper().clearCookie(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
         }
         // Jwt Cookie
-        helper.buildToken(actionResult.getResult());
-        String form_url = helper.getCookieHelper().getCookieValue(SSOConstants.PARAM_FROM_URL);
-        if (StringUtil.isNotBlank(form_url))
-            result.addAttach(SSOConstants.PARAM_FROM_URL, EncrypterTool.decrypt(EncrypterTool.Security.Aes, form_url));
+        helper.buildToken(jwtResult.getResult());
+        helper.setPortalUrl(result);
+        return result;
+    }
+
+    @PostMapping("logout")
+    @ResponseBody
+    public ActionResult<String> logout(HttpServletRequest request, HttpServletResponse response) {
+        SessionInfo sessionInfo = SessionHolder.getSessionInfo();
+        logger.info("用户:" + sessionInfo.getUserAuthData().getAccount() + ",注销登录");
+        helper.init(request, response);
+        logger.info("用户:" + sessionInfo.getUserAuthData().getAccount() + ",销毁token");
+        helper.destroyToken();
+        ActionResult<String> result = new ActionResult<>();
+        JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper.getCookieHelper());
+        if (null != jt) {
+            ActionResult<JwtToken> jwtResult = service.logout(jt);
+            logger.info("用户：" + sessionInfo.getUserAuthData().getAccount() + ",注销结果:" + JsonUtil.toJSONString(jwtResult));
+        } else {
+            logger.warn("用户：" + sessionInfo.getUserAuthData().getAccount() + ",注销错误：Cookie信息丢失");
+        }
+        helper.setPortalUrl(result);
         return result;
     }
 }
