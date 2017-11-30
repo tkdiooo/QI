@@ -5,6 +5,7 @@ import com.qi.sso.inf.LoginService;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.rpc.result.ActionResult;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,8 +28,9 @@ public class SSOService {
         return null;
     }
 
-    public ActionResult<JwtToken> logout(final JwtToken jt) {
-        return loginService.logout(jt);
+    @Async
+    public void logout(final JwtToken jt) {
+        loginService.logout(jt);
     }
 
 }

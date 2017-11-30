@@ -81,37 +81,12 @@ public class SSOFilter extends BaseFilter {
                 chain.doFilter(request, response);
                 return;
             }
-            //to login page
-            String form_url = HttpUtil.getFullUrl(request);
-            // 嵌套form_url处理
-//            if (form_url.contains(SSOConstants.PARAM_FROM_URL)) {
-//                form_url = form_url.substring(form_url.indexOf(SSOConstants.PARAM_FROM_URL + "="), form_url.length());
-//            }
-            Boolean ajax = false;
-            // 如果是Ajax请求，获取上一步的请求路径
-            if (HttpUtil.isAjaxRequest(request)) {
-                form_url = request.getHeader("Referer");
-                ajax = true;
-            }
-            PrintWriter out = response.getWriter();
-            // 跳转单点登录首页
-            SSOProperties properties = SpringContextUtil.getBean(SSOProperties.class);
-            final String loginUrl = properties.getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
             ResponseUtil.setNoCacheHeaders(response);
             // Ajax请求
-            if (ajax) {
-
-            }
-//            else if (request.getHeader("x-requested-with") != null && request.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) {
-//                Map<String, String> map = new HashMap<>();
-//                map.put(SSOConstants.PARAM_FROM_URL, properties.getLoginUrl());
-//                map.put("sessionState", SSOConstants.SESSION_TIME_OUT);
-//                ResponseUtil.writeJson(map, response);
-//            } else if (SSOConstants.IS_IFRAME) {
-//                out.write("<script>window.parent.location.href='" + loginUrl + "';</script>");
-//            }
-            else {
-                response.sendRedirect(loginUrl);
+            if (HttpUtil.isAjaxRequest(request)) {
+                response.getWriter().write("<script>window.parent.location.href='" + SingletonUtil.getSSOProperties().getLoginUrl() + "';</script>");
+            } else {
+                response.sendRedirect(SingletonUtil.getSSOProperties().getLoginUrl());
             }
         } finally {
             SessionHolder.clear();

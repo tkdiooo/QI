@@ -3,6 +3,7 @@ package com.qi.sso.auth.util;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.qi.sso.inf.VerifyService;
 import com.sfsctech.common.util.SpringContextUtil;
+import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.spring.properties.WebsiteProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,5 +38,16 @@ public class SingletonUtil {
                     websiteProperties = SpringContextUtil.getBean(WebsiteProperties.class);
             }
         return websiteProperties;
+    }
+
+    private static SSOProperties ssoProperties;
+
+    public static SSOProperties getSSOProperties() {
+        if (null == ssoProperties)
+            synchronized (WebsiteProperties.class) {
+                if (null == ssoProperties)
+                    ssoProperties = SpringContextUtil.getBean(SSOProperties.class);
+            }
+        return ssoProperties;
     }
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.util.HexUtil;
 import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
 import io.jsonwebtoken.Claims;
 import org.apache.catalina.User;
@@ -28,7 +29,7 @@ public class CacheKeyUtil {
      * 据用户鉴权数据生成salt缓存的key
      */
     public static String getSaltCacheKey() {
-        return HexUtil.getEncryptKey() + SSOConstants.SPLIT_FLAG + CACHE_API_KEY;
+        return HexUtil.getEncryptKey() + LabelConstants.DOUBLE_POUND + CACHE_API_KEY;
     }
 
     @SuppressWarnings("unchecked")
@@ -39,7 +40,7 @@ public class CacheKeyUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static Map<String, Object> getSessionAttribute(Claims claims){
+    public static Map<String, Object> getSessionAttribute(Claims claims) {
         return (Map) claims.get(SSOConstants.JWT_SESSION_ATTRIBUTE);
     }
 }

@@ -78,7 +78,7 @@ public class VerifyServiceImpl implements VerifyService {
         }
         long loginedTimeStamp = System.currentTimeMillis() - factory.getCacheClient().ttl(salt_CacheKey + LabelConstants.POUND + salt);
         // 如果离超时间还有一半左右，重新生成Jwt
-        if (jwtConfig.getExpiration() > 0 && loginedTimeStamp >= (jwtConfig.getExpiration() / 2)) {
+        if (jwtConfig.getExpiration() > 0 && loginedTimeStamp <= (jwtConfig.getExpiration() / 2)) {
             // 解密Jwt
             token = EncrypterTool.decrypt(jwtToken.getJwt(), salt);
             // 获取jwt Claims
@@ -133,7 +133,7 @@ public class VerifyServiceImpl implements VerifyService {
             // 获取jwt剩余时间
             long loginedTimeStamp = System.currentTimeMillis() - Long.valueOf(claims.get("iat").toString());
             // 如果离超时间还有一半左右，重新生成Jwt
-            if (jwtConfig.getExpiration() > 0 && loginedTimeStamp >= (jwtConfig.getExpiration() / 2)) {
+            if (jwtConfig.getExpiration() > 0 && loginedTimeStamp <= (jwtConfig.getExpiration() / 2)) {
                 this.refreshJwt(claims, authData, salt_CacheKey, jwtToken);
             }
         } catch (Exception e) {

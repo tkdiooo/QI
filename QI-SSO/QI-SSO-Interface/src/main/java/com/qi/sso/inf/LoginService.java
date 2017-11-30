@@ -14,5 +14,5 @@ public interface LoginService {
 
     ActionResult<JwtToken> login(UserAuthData authData);
 
-    ActionResult<JwtToken> logout(JwtToken jt);
+    void logout(JwtToken jt);
 }

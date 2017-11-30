@@ -13,6 +13,7 @@ import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.SSOConstants;
+import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.ValidatorUtil;
@@ -43,6 +44,8 @@ public class SSOController {
     private SSOHelper helper;
     @Autowired
     private SSOService service;
+    @Autowired
+    private SSOProperties properties;
 
     @GetMapping("index")
     public String index(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
@@ -96,23 +99,19 @@ public class SSOController {
         return result;
     }
 
-    @PostMapping("logout")
-    @ResponseBody
-    public ActionResult<String> logout(HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping("logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         SessionInfo sessionInfo = SessionHolder.getSessionInfo();
         logger.info("用户:" + sessionInfo.getUserAuthData().getAccount() + ",注销登录");
         helper.init(request, response);
         logger.info("用户:" + sessionInfo.getUserAuthData().getAccount() + ",销毁token");
         helper.destroyToken();
-        ActionResult<String> result = new ActionResult<>();
         JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper.getCookieHelper());
-        if (null != jt) {
-            ActionResult<JwtToken> jwtResult = service.logout(jt);
-            logger.info("用户：" + sessionInfo.getUserAuthData().getAccount() + ",注销结果:" + JsonUtil.toJSONString(jwtResult));
-        } else {
+        if (null == jt) {
             logger.warn("用户：" + sessionInfo.getUserAuthData().getAccount() + ",注销错误：Cookie信息丢失");
+        } else {
+            service.logout(jt);
         }
-        helper.setPortalUrl(result);
-        return result;
+        return "redirect:" + properties.getPortalUrl();
     }
 }

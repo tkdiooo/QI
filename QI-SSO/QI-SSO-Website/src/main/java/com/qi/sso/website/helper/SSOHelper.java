@@ -73,7 +73,7 @@ public class SSOHelper {
      * @return Boolean
      * @throws Exception
      */
-    public boolean checkToken() throws Exception {
+    public boolean checkToken() {
         JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
         if (jt == null) {
             logger.warn("do not find cookies token!");
@@ -94,7 +94,7 @@ public class SSOHelper {
      * @param salt_cache_key salt_cache_key
      * @throws Exception
      */
-    public boolean checkToken(String token_key, String salt_cache_key) throws Exception {
+    public boolean checkToken(String token_key, String salt_cache_key) {
         JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
         if (jt == null) {
             logger.warn("do not find cookies token!");
@@ -114,7 +114,7 @@ public class SSOHelper {
      * @return UserToken
      * @throws Exception
      */
-    public JwtToken getJwtToken() throws Exception {
+    public JwtToken getJwtToken() {
         JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
         if (jt == null) {
             return null;
@@ -192,9 +192,10 @@ public class SSOHelper {
 
     public void setPortalUrl(ActionResult<String> result) {
         String form_url = helper.getCookieValue(SSOConstants.PARAM_FROM_URL);
-        if (StringUtil.isNotBlank(form_url))
-            result.addAttach(SSOConstants.PARAM_FROM_URL, EncrypterTool.decrypt(EncrypterTool.Security.Aes, form_url));
-        else
+        if (StringUtil.isNotBlank(form_url) && !(form_url = EncrypterTool.decrypt(EncrypterTool.Security.Aes, form_url)).equals(properties.getLoginUrl())) {
+            result.addAttach(SSOConstants.PARAM_FROM_URL, form_url);
+        } else {
             result.addAttach(SSOConstants.PARAM_FROM_URL, properties.getPortalUrl());
+        }
     }
 }

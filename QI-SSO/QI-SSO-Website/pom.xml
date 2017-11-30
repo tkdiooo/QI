@@ -60,7 +60,7 @@
         </dependency>
         <dependency>
             <groupId>com.qi.sso</groupId>
-            <artifactId>QI-SSO-Interface</artifactId>
+            <artifactId>QI-SSO-Auth</artifactId>
             <version>${sso.version}</version>
         </dependency>
     </dependencies>
