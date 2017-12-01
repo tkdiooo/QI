@@ -13,8 +13,6 @@ server:
       # 只能在 HTTPS 连接中被传递
 #      secure: true
       max-age: 1800
-#      comment:
-#      name:
       path: /
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
@@ -66,10 +64,15 @@ website:
     # 静态资源服务
     static-resources: http://localhost:8080
     welcome-file: /index
+  jwt:
+    expiration: 1800000
   # 单点登录
   sso:
     login-url: http://www.zzl.com/sso/index
     logout-url: http://www.zzl.com/sso/logout
+    auth:
+      way: Simple
+      protocol: Rpc
   # 服务架构
   session:
     exclude-path: /index

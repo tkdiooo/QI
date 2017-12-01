@@ -2,6 +2,9 @@ package com.qi.sso.auth.util;
 
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.qi.sso.inf.VerifyService;
+import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.inf.ICacheService;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.SpringContextUtil;
 import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.spring.properties.WebsiteProperties;
@@ -49,5 +52,17 @@ public class SingletonUtil {
                     ssoProperties = SpringContextUtil.getBean(SSOProperties.class);
             }
         return ssoProperties;
+    }
+
+    private static CacheFactory<IRedisService<String, Object>> factory;
+
+    @SuppressWarnings("unchecked")
+    public static CacheFactory<IRedisService<String, Object>> getCacheFactory() {
+        if (null == factory)
+            synchronized (WebsiteProperties.class) {
+                if (null == factory)
+                    factory = SpringContextUtil.getBean(CacheFactory.class);
+            }
+        return factory;
     }
 }

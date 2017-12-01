@@ -12,7 +12,6 @@ import com.sfsctech.common.util.*;
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
-import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.dubbox.util.JwtUtil;
 import com.sfsctech.rpc.result.ActionResult;
@@ -25,7 +24,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Map;
 
 /**
  * Class SSOFilter
@@ -38,49 +37,70 @@ public class SSOFilter extends BaseFilter {
     @Override
     public void doHandler(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         try {
-            SessionInfo session = new SessionInfo();
-            SessionHolder.setSessionInfo(session);
+            // SSO用户登录验证
             final HttpServletRequest request = (HttpServletRequest) servletRequest;
             final HttpServletResponse response = (HttpServletResponse) servletResponse;
-            String requestURI = request.getRequestURI();
-            logger.info("Request path：" + requestURI);
-            if (ExcludesConstants.isExclusion(requestURI, excludesPattern)) {
-                logger.info("Don't need to intercept the path：" + requestURI);
-                chain.doFilter(request, response);
-                return;
-            }
-            // SSO用户登录验证
+            // JwtToken信息
             CookieHelper helper = CookieHelper.getInstance(request, response);
-            final JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
+            JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
+            // 生成SessionInfo
+            SessionInfo session = new SessionInfo();
+            SessionHolder.setSessionInfo(session);
+            // 设置Session attribute
             if (null != jt) {
-                try {
-                    ActionResult<JwtToken> result = SingletonUtil.getVerifyService().simpleCheck(jt);
+                Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
+                if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
+            }
+            try {
+                // 判断请求路径
+                String requestURI = request.getRequestURI();
+                logger.info("Request path：" + requestURI);
+                // 无需校验的路径
+                if (ExcludesConstants.isExclusion(requestURI, excludesPattern)) {
+                    logger.info("Don't need to intercept the path：" + requestURI);
+                    chain.doFilter(request, response);
+                    return;
+                }
+                // Session认证校验
+                if (null != jt) {
+                    ActionResult<JwtToken> result;
+                    if (SingletonUtil.getSSOProperties().getAuth().getWay().equals(SSOConstants.AuthWay.Simple)) {
+                        result = SingletonUtil.getVerifyService().simpleVerify(jt);
+                    } else {
+                        result = SingletonUtil.getVerifyService().complexVerify(jt);
+                    }
                     // 校验成功
                     if (result.isSuccess()) {
-                        String token = EncrypterTool.decrypt(result.getResult().getJwt(), result.getResult().getSalt());
+                        jt = result.getResult();
+                        String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
                         Claims claims = JwtUtil.parseJWT(token);
                         // 设置UserAuthData
                         SessionHolder.getSessionInfo().setUserAuthData(CacheKeyUtil.getUserAuthData(claims));
-                        // 设置Session attribute
-                        SessionHolder.getSessionInfo().setAttribute(CacheKeyUtil.getSessionAttribute(claims));
                         // 设置RoleInfo
 
                         // 更新token
-                        JwtCookieUtil.updateJwtToken(helper, result.getResult());
+                        JwtCookieUtil.updateJwtToken(helper, jt);
                         chain.doFilter(request, response);
                         return;
                     } else {
                         logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
                     }
-                } catch (Exception e) {
-                    logger.error(ThrowableUtil.getRootMessage(e));
+                }
+                // 强制排除的请求路径，无论当前请求路径是否已登录，都通过
+                if (null != SingletonUtil.getWebsiteProperties().getSession().getRequiredExcludePath() && ExcludesConstants.isExclusion(requestURI, SingletonUtil.getWebsiteProperties().getSession().getRequiredExcludePath())) {
+                    logger.info("required path：" + requestURI);
+                    chain.doFilter(request, response);
+                    return;
+                }
+            } catch (Exception e) {
+                logger.error(ThrowableUtil.getRootMessage(e));
+            } finally {
+                // 更新Session attribute
+                if (null != jt && MapUtil.isNotEmpty(SessionHolder.getSessionInfo().getAttribute())) {
+                    SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), JwtUtil.config.getExpiration().intValue());
                 }
             }
-            if (null != SingletonUtil.getWebsiteProperties().getSession().getRequiredExcludePath() && ExcludesConstants.isExclusion(requestURI, SingletonUtil.getWebsiteProperties().getSession().getRequiredExcludePath())) {
-                logger.info("required path：" + requestURI);
-                chain.doFilter(request, response);
-                return;
-            }
+            // 登录超时处理
             ResponseUtil.setNoCacheHeaders(response);
             // Ajax请求
             if (HttpUtil.isAjaxRequest(request)) {

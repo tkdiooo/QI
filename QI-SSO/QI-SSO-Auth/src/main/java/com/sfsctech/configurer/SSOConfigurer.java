@@ -1,6 +1,7 @@
 package com.sfsctech.configurer;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
+import com.alibaba.dubbo.config.MethodConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.qi.sso.auth.filter.SSOFilter;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class SSOConfigurer
@@ -52,6 +56,12 @@ public class SSOConfigurer {
         config.setTimeout(properties.getReference().getTimeout());
         config.setApplication(applicationConfig);
         config.setRegistry(registryConfig);
+        List<MethodConfig> methods = new ArrayList<>();
+        MethodConfig methodConfig = new MethodConfig();
+        methodConfig.setAsync(true);
+        methodConfig.setName("updateSession");
+        methods.add(methodConfig);
+        config.setMethods(methods);
         return config;
     }
 }

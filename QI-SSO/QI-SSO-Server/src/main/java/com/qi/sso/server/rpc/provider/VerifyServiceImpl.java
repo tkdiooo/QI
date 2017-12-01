@@ -13,6 +13,7 @@ import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.HexUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.common.util.ThrowableUtil;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.dubbox.properties.JwtProperties;
@@ -39,12 +40,12 @@ public class VerifyServiceImpl implements VerifyService {
     private JwtProperties jwtConfig;
 
     @Override
-    public ActionResult<JwtToken> simpleCheck(JwtToken jwtToken) {
-        ActionResult<JwtToken> result = new ActionResult<>(jwtToken);
+    public ActionResult<JwtToken> simpleVerify(JwtToken jt) {
+        ActionResult<JwtToken> result = new ActionResult<>(jt);
         // 解密salt_CacheKey
-        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jwtToken.getSalt_CacheKey());
+        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
-            VerifyUtil.saltCacheKey(result, jwtToken.getSalt_CacheKey());
+            VerifyUtil.saltCacheKey(result, jt.getSalt_CacheKey());
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             return result;
         }
@@ -56,7 +57,7 @@ public class VerifyServiceImpl implements VerifyService {
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             return result;
         }
-        jwtToken.setSalt(salt);
+        jt.setSalt(salt);
         logger.info("用户校验：salt[" + salt + "]。");
 
         // 从缓存中获取token信息
@@ -69,36 +70,37 @@ public class VerifyServiceImpl implements VerifyService {
             return result;
         }
 
-        if (!token.equals(jwtToken.getJwt())) {
+        if (!token.equals(jt.getJwt())) {
             result.setMessage("用户校验失败 :用户token信息不匹配！");
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);
             return result;
         }
-        long loginedTimeStamp = System.currentTimeMillis() - factory.getCacheClient().ttl(salt_CacheKey + LabelConstants.POUND + salt);
+
         // 如果离超时间还有一半左右，重新生成Jwt
+        long loginedTimeStamp = System.currentTimeMillis() - factory.getCacheClient().ttl(salt_CacheKey + LabelConstants.POUND + salt);
         if (jwtConfig.getExpiration() > 0 && loginedTimeStamp <= (jwtConfig.getExpiration() / 2)) {
             // 解密Jwt
-            token = EncrypterTool.decrypt(jwtToken.getJwt(), salt);
+            token = EncrypterTool.decrypt(jt.getJwt(), salt);
             // 获取jwt Claims
             Claims claims = JwtUtil.parseJWT(token);
             // 获取authData
             UserAuthData authData = CacheKeyUtil.getUserAuthData(claims);
             // TODO 处理登录用户权限等功能
 
-            this.refreshJwt(claims, authData, salt_CacheKey, jwtToken);
+            this.refreshJwt(claims, authData, salt_CacheKey, jt);
         }
         return result;
     }
 
     @Override
-    public ActionResult<JwtToken> complexCheck(JwtToken jwtToken) {
-        ActionResult<JwtToken> result = new ActionResult<>(jwtToken);
+    public ActionResult<JwtToken> complexVerify(JwtToken jt) {
+        ActionResult<JwtToken> result = new ActionResult<>(jt);
         // 解密salt_CacheKey
-        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jwtToken.getSalt_CacheKey());
+        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
-            VerifyUtil.saltCacheKey(result, jwtToken.getSalt_CacheKey());
+            VerifyUtil.saltCacheKey(result, jt.getSalt_CacheKey());
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             return result;
         }
@@ -110,13 +112,13 @@ public class VerifyServiceImpl implements VerifyService {
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             return result;
         }
-        jwtToken.setSalt(salt);
+        jt.setSalt(salt);
         logger.info("用户校验：salt[" + salt + "]。");
 
         // 解密Jwt
-        String token = EncrypterTool.decrypt(jwtToken.getJwt(), salt);
+        String token = EncrypterTool.decrypt(jt.getJwt(), salt);
         if (StringUtil.isBlank(token)) {
-            result.setMessage("用户校验失败 :JwtToken无法解密[" + jwtToken.getJwt() + "]。");
+            result.setMessage("用户校验失败 :JwtToken无法解密[" + jt.getJwt() + "]。");
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);
@@ -134,10 +136,10 @@ public class VerifyServiceImpl implements VerifyService {
             long loginedTimeStamp = System.currentTimeMillis() - Long.valueOf(claims.get("iat").toString());
             // 如果离超时间还有一半左右，重新生成Jwt
             if (jwtConfig.getExpiration() > 0 && loginedTimeStamp <= (jwtConfig.getExpiration() / 2)) {
-                this.refreshJwt(claims, authData, salt_CacheKey, jwtToken);
+                this.refreshJwt(claims, authData, salt_CacheKey, jt);
             }
         } catch (Exception e) {
-            result.setMessage(e.getMessage());
+            result.setMessage(ThrowableUtil.getRootMessage(e));
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA), e);
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);

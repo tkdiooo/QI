@@ -3,16 +3,10 @@ package com.qi.sso.auth.util;
 import com.alibaba.fastjson.JSONObject;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.common.util.HexUtil;
-import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
 import io.jsonwebtoken.Claims;
-import org.apache.catalina.User;
-import org.apache.catalina.ssi.SSIFsize;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +26,12 @@ public class CacheKeyUtil {
         return HexUtil.getEncryptKey() + LabelConstants.DOUBLE_POUND + CACHE_API_KEY;
     }
 
+    /**
+     * 获取用户鉴权数据
+     *
+     * @param claims Jwt Claims
+     * @return UserAuthData
+     */
     @SuppressWarnings("unchecked")
     public static UserAuthData getUserAuthData(Claims claims) {
         JSONObject jo = new JSONObject();
@@ -39,8 +39,14 @@ public class CacheKeyUtil {
         return JSONObject.parseObject(jo.toJSONString(), UserAuthData.class);
     }
 
+    /**
+     * 获取用户权限数据
+     *
+     * @param claims Jwt Claims
+     * @return UserAuthData
+     */
     @SuppressWarnings("unchecked")
-    public static Map<String, Object> getSessionAttribute(Claims claims) {
-        return (Map) claims.get(SSOConstants.JWT_SESSION_ATTRIBUTE);
+    public static Map<String, Object> getUserPermitData(Claims claims) {
+        return (Map) claims.get(SSOConstants.JWT_PERMIT_ATTRIBUTE);
     }
 }

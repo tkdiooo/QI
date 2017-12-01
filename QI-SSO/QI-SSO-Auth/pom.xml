@@ -19,6 +19,12 @@
             <artifactId>common-dubbox</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- common-cache support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.qi.sso</groupId>
             <artifactId>QI-SSO-Interface</artifactId>
