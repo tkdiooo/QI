@@ -36,33 +36,25 @@ public class SSOFilter extends BaseFilter {
 
     @Override
     public void doHandler(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        // 生成SessionInfo
+        SessionInfo session = new SessionInfo();
+        SessionHolder.setSessionInfo(session);
         try {
-            // SSO用户登录验证
             final HttpServletRequest request = (HttpServletRequest) servletRequest;
             final HttpServletResponse response = (HttpServletResponse) servletResponse;
-            // JwtToken信息
-            CookieHelper helper = CookieHelper.getInstance(request, response);
-            JwtToken jt = JwtCookieUtil.getJwtTokenByCookie(helper);
-            // 生成SessionInfo
-            SessionInfo session = new SessionInfo();
-            SessionHolder.setSessionInfo(session);
-            // 设置Session attribute
-            if (null != jt) {
-                Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
-                if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
-            }
+            // 请求路径
+            String requestURI = request.getRequestURI();
+            logger.info("Request path：" + requestURI);
+            JwtToken jt = null;
             try {
-                // 判断请求路径
-                String requestURI = request.getRequestURI();
-                logger.info("Request path：" + requestURI);
-                // 无需校验的路径
-                if (ExcludesConstants.isExclusion(requestURI, excludesPattern)) {
-                    logger.info("Don't need to intercept the path：" + requestURI);
-                    chain.doFilter(request, response);
-                    return;
-                }
-                // Session认证校验
+                // JwtToken信息
+                CookieHelper helper = CookieHelper.getInstance(request, response);
+                jt = JwtCookieUtil.getJwtTokenByCookie(helper);
                 if (null != jt) {
+                    // 设置Session attribute
+                    Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
+                    if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
+                    // Jwt 认证校验
                     ActionResult<JwtToken> result;
                     if (SingletonUtil.getSSOProperties().getAuth().getWay().equals(SSOConstants.AuthWay.Simple)) {
                         result = SingletonUtil.getVerifyService().simpleVerify(jt);
@@ -82,13 +74,15 @@ public class SSOFilter extends BaseFilter {
                         JwtCookieUtil.updateJwtToken(helper, jt);
                         chain.doFilter(request, response);
                         return;
-                    } else {
-                        logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                    }
+                    // 校验失败
+                    else {
+                        logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
                     }
                 }
-                // 强制排除的请求路径，无论当前请求路径是否已登录，都通过
-                if (null != SingletonUtil.getWebsiteProperties().getSession().getRequiredExcludePath() && ExcludesConstants.isExclusion(requestURI, SingletonUtil.getWebsiteProperties().getSession().getRequiredExcludePath())) {
-                    logger.info("required path：" + requestURI);
+                // 请求路径是无需校验的路径
+                if (ExcludesConstants.isExclusion(requestURI, excludesPattern)) {
+                    logger.info("Don't need to intercept the path：" + requestURI);
                     chain.doFilter(request, response);
                     return;
                 }
