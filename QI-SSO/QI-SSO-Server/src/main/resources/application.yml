@@ -53,4 +53,5 @@ website:
   jwt:
     subject: Single Sign-on
     issuer: SSO-Server
-    expiration: 1800000
+#    expiration: 1800000
+    expiration: 60000

@@ -93,11 +93,11 @@ public class SSOFilter extends BaseFilter {
                     return;
                 }
             } catch (Exception e) {
-                logger.error(ThrowableUtil.getRootMessage(e));
+                logger.error(ThrowableUtil.getRootMessage(e), e);
             } finally {
                 // 更新Session attribute
                 if (null != jt && MapUtil.isNotEmpty(SessionHolder.getSessionInfo().getAttribute())) {
-                    SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), JwtUtil.config.getExpiration().intValue());
+                    SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), SingletonUtil.getAuthProperties().getExpiration());
                 }
             }
             // 登录超时处理

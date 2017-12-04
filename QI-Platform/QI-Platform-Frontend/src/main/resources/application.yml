@@ -41,7 +41,7 @@ spring:
 dubbo:
   application:
     #服务消费名称信息
-    name: SSO-Website
+    name: Frontend-Platform
     #日志适配
     logger: slf4j
   registry:
@@ -64,8 +64,6 @@ website:
     # 静态资源服务
     static-resources: http://localhost:8080
     welcome-file: /index
-  jwt:
-    expiration: 1800000
   # 单点登录
   sso:
     login-url: http://www.zzl.com/sso/index

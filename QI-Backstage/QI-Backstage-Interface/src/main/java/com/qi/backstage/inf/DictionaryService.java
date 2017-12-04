@@ -3,8 +3,6 @@ package com.qi.backstage.inf;
 import com.qi.backstage.model.dto.DictionaryDto;
 import com.sfsctech.rpc.result.ActionResult;
 
-import java.util.List;
-
 /**
  * Class DictionaryService
  *

@@ -13,9 +13,7 @@ server:
       # 只能在 HTTPS 连接中被传递
 #      secure: true
       max-age: 1800
-#      comment:
-#      name:
-#      path:
+      path: /
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
@@ -106,23 +104,21 @@ website:
     # 静态资源服务
     static-resources: http://localhost:8080
     welcome-file: /index
-  security:
-    open-ddoc: true
-    ddos:
-      access-control-allow-origin: www.zzl.com
-#    open-csrf: true
-    csrf:
-      verify-exclude-path: /index
   # 单点登录
-#  sso:
-#    login-url: www.zzl.com/sso/login
-#    logout-url: www.zzl.com/sso/logout
-#    check-url: www.zzl.com/sso/check
-#    register-url: www.zzl.com/sso/register
-#    forget-url: www.zzl.com/sso/forget
-#    reference:
-#      lazy: false
+  sso:
+    login-url: http://www.zzl.com/sso/index
+    logout-url: http://www.zzl.com/sso/logout
+    auth:
+      way: Simple
+      protocol: Rpc
   # 服务架构
 #  session:
 #    authentication: sso
 #    exclude-path: /index, /login
+#  security:
+#    open-ddoc: true
+#    ddos:
+#      access-control-allow-origin: www.zzl.com
+##    open-csrf: true
+#    csrf:
+#      verify-exclude-path: /index
