@@ -13,12 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- sfsctech-common-rpc support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-rpc</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.qi.sso</groupId>
             <artifactId>QI-SSO-Model</artifactId>

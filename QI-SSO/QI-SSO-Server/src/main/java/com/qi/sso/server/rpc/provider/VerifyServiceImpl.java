@@ -164,9 +164,9 @@ public class VerifyServiceImpl implements VerifyService {
         salt_CacheKey = CacheKeyUtil.getSaltCacheKey();
         logger.info("用户：" + authData.getAccount() + "，生成新的salt_CacheKey[" + salt_CacheKey + "]。");
         // 缓存salt
-        factory.getCacheClient().putTimeOut(salt_CacheKey, salt, jwtConfig.getExpiration().intValue());
+        factory.getCacheClient().putTimeOut(salt_CacheKey, salt, jwtConfig.getExpiration().intValue() / 1000);
         // 缓存token
-        factory.getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtConfig.getExpiration().intValue());
+        factory.getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtConfig.getExpiration().intValue() / 1000);
         jwtToken.setJwt(token);
         jwtToken.setSalt(salt);
         jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3, salt_CacheKey));

@@ -2,6 +2,7 @@ package com.qi.sso.auth.filter;
 
 import com.qi.sso.auth.util.CacheKeyUtil;
 import com.qi.sso.auth.util.SingletonUtil;
+import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.filter.BaseFilter;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.SessionHolder;
@@ -12,6 +13,7 @@ import com.sfsctech.common.util.*;
 import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
+import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.dubbox.util.JwtUtil;
 import com.sfsctech.rpc.result.ActionResult;
@@ -45,10 +47,10 @@ public class SSOFilter extends BaseFilter {
             // 请求路径
             String requestURI = request.getRequestURI();
             logger.info("Request path：" + requestURI);
+            // JwtToken信息
+            CookieHelper helper = CookieHelper.getInstance(request, response);
             JwtToken jt = null;
             try {
-                // JwtToken信息
-                CookieHelper helper = CookieHelper.getInstance(request, response);
                 jt = JwtCookieUtil.getJwtTokenByCookie(helper);
                 if (null != jt) {
                     // 设置Session attribute
@@ -56,7 +58,7 @@ public class SSOFilter extends BaseFilter {
                     if (null != attribute) SessionHolder.getSessionInfo().setAttribute(attribute);
                     // Jwt 认证校验
                     ActionResult<JwtToken> result;
-                    if (SingletonUtil.getSSOProperties().getAuth().getWay().equals(SSOConstants.AuthWay.Simple)) {
+                    if (SingletonUtil.getSSOProperties().getAuth().getWay().equals(SSOProperties.AuthWay.Simple)) {
                         result = SingletonUtil.getVerifyService().simpleVerify(jt);
                     } else {
                         result = SingletonUtil.getVerifyService().complexVerify(jt);
@@ -65,15 +67,20 @@ public class SSOFilter extends BaseFilter {
                     if (result.isSuccess()) {
                         jt = result.getResult();
                         String token = EncrypterTool.decrypt(jt.getJwt(), jt.getSalt());
-                        Claims claims = JwtUtil.parseJWT(token);
-                        // 设置UserAuthData
-                        SessionHolder.getSessionInfo().setUserAuthData(CacheKeyUtil.getUserAuthData(claims));
-                        // 设置RoleInfo
+                        try {
+                            Claims claims = JwtUtil.parseJWT(token);
+                            // 设置UserAuthData
+                            SessionHolder.getSessionInfo().setUserAuthData(CacheKeyUtil.getUserAuthData(claims));
+                            // 设置RoleInfo
 
-                        // 更新token
-                        JwtCookieUtil.updateJwtToken(helper, jt);
-                        chain.doFilter(request, response);
-                        return;
+                            // 更新token
+                            JwtCookieUtil.updateJwtToken(helper, jt);
+                            chain.doFilter(request, response);
+                            return;
+                        } catch (BizException e) {
+                            JwtCookieUtil.clearJwtToken(helper);
+                            logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                        }
                     }
                     // 校验失败
                     else {
@@ -94,13 +101,19 @@ public class SSOFilter extends BaseFilter {
                     SingletonUtil.getCacheFactory().getCacheClient().putTimeOut(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt(), SessionHolder.getSessionInfo().getAttribute(), SingletonUtil.getAuthProperties().getExpiration());
                 }
             }
+            String form_url = request.getHeader("Referer");
+            if (SingletonUtil.getSSOProperties().getPortalUrl().contains(requestURI) || StringUtil.isBlank(form_url)) {
+                form_url = SingletonUtil.getSSOProperties().getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, SingletonUtil.getSSOProperties().getPortalUrl());
+            } else {
+                form_url = SingletonUtil.getSSOProperties().getLoginUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
+            }
             // 登录超时处理
             ResponseUtil.setNoCacheHeaders(response);
             // Ajax请求
             if (HttpUtil.isAjaxRequest(request)) {
-                response.getWriter().write("<script>window.parent.location.href='" + SingletonUtil.getSSOProperties().getLoginUrl() + "';</script>");
+                response.getWriter().write("<script>window.parent.location.href='" + form_url + "';</script>");
             } else {
-                response.sendRedirect(SingletonUtil.getSSOProperties().getLoginUrl());
+                response.sendRedirect(form_url);
             }
         } finally {
             SessionHolder.clear();

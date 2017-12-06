@@ -51,6 +51,7 @@ public class SSOConfigurer {
         config.setInterface(VerifyService.class);
         config.setId(VerifyService.class.getSimpleName());
         config.setLazy(properties.getReference().isLazy());
+        config.setInit(true);
         config.setVersion(properties.getReference().getVersion());
         config.setTimeout(properties.getReference().getTimeout());
         config.setApplication(applicationConfig);

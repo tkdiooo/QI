@@ -158,11 +158,11 @@ public class SSOHelper {
         model.put("Modulus", Modulus);
         model.put("Exponent", Exponent);
         // form_url处理
-        String form_url = request.getHeader("Referer");
+        String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
         if (StringUtil.isBlank(form_url)) {
-            form_url = properties.getPortalUrl();
+            form_url = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, properties.getPortalUrl());
         }
-        helper.setCookie(SSOConstants.PARAM_FROM_URL, EncrypterTool.encrypt(EncrypterTool.Security.Aes, form_url), NumberUtil.INTEGER_MINUS_ONE);
+        helper.setCookie(SSOConstants.PARAM_FROM_URL, form_url, NumberUtil.INTEGER_MINUS_ONE);
         // remember_login_account处理
         String account = helper.getCookieValue(SSOConstants.COOKIE_REMEMBER_LOGIN_ACCOUNT);
         if (StringUtil.isNotBlank(account)) {
@@ -192,7 +192,7 @@ public class SSOHelper {
 
     public void setPortalUrl(ActionResult<String> result) {
         String form_url = helper.getCookieValue(SSOConstants.PARAM_FROM_URL);
-        if (StringUtil.isNotBlank(form_url) && !(form_url = EncrypterTool.decrypt(EncrypterTool.Security.Aes, form_url)).equals(properties.getLoginUrl())) {
+        if (StringUtil.isNotBlank(form_url) && !(form_url = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECB, form_url)).equals(properties.getLoginUrl())) {
             result.addAttach(SSOConstants.PARAM_FROM_URL, form_url);
         } else {
             result.addAttach(SSOConstants.PARAM_FROM_URL, properties.getPortalUrl());

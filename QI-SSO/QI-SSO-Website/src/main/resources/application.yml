@@ -12,6 +12,7 @@ server:
       http-only: true
       # 只能在 HTTPS 连接中被传递
 #      secure: true
+      # cookie保持时间(秒) 30分钟
       max-age: 1800
       path: /
 #  context-parameters:
@@ -28,7 +29,7 @@ spring:
     view:
       suffix: .html
   redis:
-    protocol: single
+    protocol: Single
     single:
       host: 172.16.225.98
       port: 6379

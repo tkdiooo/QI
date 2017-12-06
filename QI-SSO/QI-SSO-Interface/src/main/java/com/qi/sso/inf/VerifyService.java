@@ -1,7 +1,6 @@
 package com.qi.sso.inf;
 
 import com.sfsctech.base.jwt.JwtToken;
-import com.sfsctech.base.session.SessionInfo;
 import com.sfsctech.rpc.result.ActionResult;
 
 /**

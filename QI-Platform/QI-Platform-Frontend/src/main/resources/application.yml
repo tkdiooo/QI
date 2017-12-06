@@ -28,7 +28,7 @@ spring:
     view:
       suffix: .html
   redis:
-    protocol: single
+    protocol: Single
     single:
       host: 172.16.225.98
       port: 6379
@@ -73,8 +73,7 @@ website:
       protocol: Rpc
   # 服务架构
   session:
-    exclude-path: /index
-    required-exclude-path: /user
+    exclude-path: /index, /user
 #  csrf:
 #    verify-exclude-path: /index
 #    intercept-exclude-path: /**

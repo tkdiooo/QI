@@ -60,7 +60,7 @@ spring:
     view:
       suffix: .html
   redis:
-    protocol: single
+    protocol: Single
     single:
       host: 172.16.225.98
       port: 6379
@@ -89,12 +89,11 @@ dubbo:
     # 注册中心请求超时时间(毫秒)
     timeout: 2000
   protocol:
-    # 通信协议，默认dubbo
-    name: dubbo
-    # 协议端口，默认20880
-    port: 20880
-    # 是否使用kryo序列化
-    kryo: true
+    optimizer: Kryo
+    config: Single
+    single:
+      port: 20880
+      name: dubbo
   rpc:
     service-package: com.qi.backstage.dictionary.rpc
 #common setting
@@ -108,6 +107,7 @@ website:
   sso:
     login-url: http://www.zzl.com/sso/index
     logout-url: http://www.zzl.com/sso/logout
+    portal-url: http://www.zzl.com/platform/index
     auth:
       way: Simple
       protocol: Rpc

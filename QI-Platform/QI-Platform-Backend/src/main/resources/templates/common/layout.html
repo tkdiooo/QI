@@ -347,7 +347,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li th:each="c : ${var.child}">
-                        <a th:id="${c.guid}" th:href="'http://' + ${var.domain} + ${c.controller} + ${c.mapping}" onclick="menuChange(this.id)" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}" target="myFrame"></a>
+                        <a th:id="${c.guid}" th:href="'http://' + ${var.domain} + ${c.controller} + ${c.mapping} + '?ajaxTimeFresh=' + ${#calendars.createNow().getTimeInMillis()}" onclick="menuChange(this.id)" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}" target="myFrame"></a>
                     </li>
                 </ul>
             </li>
