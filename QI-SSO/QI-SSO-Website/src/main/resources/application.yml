@@ -78,7 +78,7 @@ website:
   session:
     exclude-path: /index, /login
   security:
-    open-csrf: true
     csrf:
+      open: true
       intercept-exclude-path:  /logout
       verify-exclude-path: /index

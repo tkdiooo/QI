@@ -1,8 +1,8 @@
 package com.qi.sso.website.helper;
 
 import com.qi.sso.website.rpc.consumer.SSOService;
+import com.sfsctech.auth.util.JwtCookieUtil;
 import com.sfsctech.base.jwt.JwtToken;
-import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.security.rsa.KeyPairModel;
@@ -12,7 +12,6 @@ import com.sfsctech.common.util.NumberUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.SSOProperties;
-import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

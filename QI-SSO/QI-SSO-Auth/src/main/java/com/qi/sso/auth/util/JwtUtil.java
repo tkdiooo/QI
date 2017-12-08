@@ -19,12 +19,10 @@ import java.util.Map;
  */
 public class JwtUtil {
 
-    private static final String salt = "08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z";
-
     public static JwtProperties config = SpringContextUtil.getBean(JwtProperties.class);
 
     private static Key getKey() {
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(salt);
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary("08ud7g974Gw5f54skr21w43Jw3wqW08247EH76z");
         return new SecretKeySpec(apiKeySecretBytes, SignatureAlgorithm.HS256.getJcaName());
     }
 

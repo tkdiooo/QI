@@ -1,6 +1,7 @@
 package com.qi.sso.auth.filter;
 
 import com.qi.sso.auth.util.CacheKeyUtil;
+import com.qi.sso.auth.util.JwtUtil;
 import com.qi.sso.auth.util.SingletonUtil;
 import com.sfsctech.base.exception.BizException;
 import com.sfsctech.base.filter.BaseFilter;
@@ -15,7 +16,6 @@ import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.dubbox.util.JwtCookieUtil;
-import com.sfsctech.dubbox.util.JwtUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import io.jsonwebtoken.Claims;
 

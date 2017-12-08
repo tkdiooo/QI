@@ -1,10 +1,10 @@
 package com.qi.sso.server.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.qi.sso.auth.util.CacheKeyUtil;
-import com.qi.sso.auth.util.JwtUtil;
-import com.qi.sso.inf.VerifyService;
 import com.qi.sso.server.util.VerifyUtil;
+import com.sfsctech.auth.inf.VerifyService;
+import com.sfsctech.auth.util.CacheKeyUtil;
+import com.sfsctech.auth.util.JwtUtil;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.cache.CacheFactory;

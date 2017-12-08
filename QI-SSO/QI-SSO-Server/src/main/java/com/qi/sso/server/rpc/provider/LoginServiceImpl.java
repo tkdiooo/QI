@@ -1,21 +1,19 @@
 package com.qi.sso.server.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.qi.sso.auth.util.CacheKeyUtil;
-import com.qi.sso.inf.LoginService;
-import com.qi.sso.server.util.VerifyUtil;
+import com.sfsctech.auth.inf.LoginService;
+import com.sfsctech.auth.util.CacheKeyUtil;
+import com.sfsctech.auth.util.JwtUtil;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.HexUtil;
-import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.JwtProperties;
-import com.sfsctech.dubbox.util.JwtUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

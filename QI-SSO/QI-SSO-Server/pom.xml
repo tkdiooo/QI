@@ -47,16 +47,11 @@
             <artifactId>common-logback</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- common-dubbox support-->
+        <!-- common-auth support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-dubbox</artifactId>
+            <artifactId>common-auth</artifactId>
             <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.qi.sso</groupId>
-            <artifactId>QI-SSO-Auth</artifactId>
-            <version>${sso.version}</version>
         </dependency>
     </dependencies>
 

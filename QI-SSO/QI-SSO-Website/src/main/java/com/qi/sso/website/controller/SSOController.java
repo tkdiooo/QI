@@ -2,6 +2,7 @@ package com.qi.sso.website.controller;
 
 import com.qi.sso.website.helper.SSOHelper;
 import com.qi.sso.website.rpc.consumer.SSOService;
+import com.sfsctech.auth.util.JwtCookieUtil;
 import com.sfsctech.base.exception.VerifyException;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.result.ValidatorResult;
@@ -14,7 +15,6 @@ import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.I18NConstants;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.SSOProperties;
-import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.ValidatorUtil;
 import org.slf4j.Logger;
