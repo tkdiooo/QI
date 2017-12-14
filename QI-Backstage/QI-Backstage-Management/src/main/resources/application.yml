@@ -89,12 +89,11 @@ dubbo:
     # 注册中心请求超时时间(毫秒)
     timeout: 2000
   protocol:
-    # 通信协议，默认dubbo
-    name: dubbo
-    # 协议端口，默认20880
-    port: 20881
-    # 是否使用kryo序列化
-    kryo: true
+    optimizer: Kryo
+    config: Single
+    single:
+      port: 20881
+      name: dubbo
   rpc:
     service-package: com.qi.backstage.management.rpc
 #common setting
