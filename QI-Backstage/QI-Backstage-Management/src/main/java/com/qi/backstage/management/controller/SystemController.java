@@ -10,7 +10,6 @@ import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.rpc.result.ActionResult;

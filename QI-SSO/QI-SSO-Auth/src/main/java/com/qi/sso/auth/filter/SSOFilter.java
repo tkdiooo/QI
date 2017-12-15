@@ -15,7 +15,6 @@ import com.sfsctech.constants.ExcludesConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.SSOProperties;
-import com.sfsctech.dubbox.util.JwtCookieUtil;
 import com.sfsctech.rpc.result.ActionResult;
 import io.jsonwebtoken.Claims;
 
@@ -51,7 +50,7 @@ public class SSOFilter extends BaseFilter {
             CookieHelper helper = CookieHelper.getInstance(request, response);
             JwtToken jt = null;
             try {
-                jt = JwtCookieUtil.getJwtTokenByCookie(helper);
+//                jt = JwtCookieUtil.getJwtTokenByCookie(helper);
                 if (null != jt) {
                     // 设置Session attribute
                     Map<String, Object> attribute = SingletonUtil.getCacheFactory().get(jt.getSalt_CacheKey() + LabelConstants.DOUBLE_POUND + jt.getSalt());
@@ -74,11 +73,11 @@ public class SSOFilter extends BaseFilter {
                             // 设置RoleInfo
 
                             // 更新token
-                            JwtCookieUtil.updateJwtToken(helper, jt);
+//                            JwtCookieUtil.updateJwtToken(helper, jt);
                             chain.doFilter(request, response);
                             return;
                         } catch (BizException e) {
-                            JwtCookieUtil.clearJwtToken(helper);
+//                            JwtCookieUtil.clearJwtToken(helper);
                             logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
                         }
                     }

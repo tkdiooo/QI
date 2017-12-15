@@ -11,7 +11,7 @@ import com.sfsctech.rpc.result.ActionResult;
  */
 public interface DictionaryService {
 
-    ActionResult<DictionaryDto> getByGuid(String guid);
+//    ActionResult<DictionaryDto> getByGuid(String guid);
 
     ActionResult<DictionaryDto> findChildByNumber(String number);
 }

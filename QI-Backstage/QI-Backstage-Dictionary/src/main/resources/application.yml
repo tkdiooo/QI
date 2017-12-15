@@ -112,7 +112,8 @@ website:
       way: Simple
       protocol: Rpc
   # 服务架构
-#  session:
+  session:
+    exclude-path: /rest/**
 #    authentication: sso
 #    exclude-path: /index, /login
 #  security:

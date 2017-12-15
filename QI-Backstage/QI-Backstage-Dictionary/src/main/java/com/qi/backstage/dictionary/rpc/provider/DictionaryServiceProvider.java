@@ -33,7 +33,7 @@ public class DictionaryServiceProvider implements DictionaryService {
     @Autowired
     private DictionaryReadService readService;
 
-    @Override
+//    @Override
     public ActionResult<DictionaryDto> getByGuid(String guid) {
         ActionResult<DictionaryDto> result = new ActionResult<>();
         try {
