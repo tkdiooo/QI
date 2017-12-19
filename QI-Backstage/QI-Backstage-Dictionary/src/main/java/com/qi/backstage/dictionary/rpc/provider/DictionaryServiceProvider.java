@@ -40,14 +40,14 @@ public class DictionaryServiceProvider implements DictionaryService {
             BaseDictionary model = readService.getByGuid(guid);
             if (null == model) {
                 result.setSuccess(false);
-                result.setStatus(RpcConstants.Status.Server_Error);
+                result.setStatus(RpcConstants.Status.ServerError);
                 result.setMessage(I18NConstants.Tips.EmptyObject, "GUID：" + guid + "获取");
                 logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             }
             result.setResult(BeanUtil.copyBeanForCglib(result, DictionaryDto.class));
         } catch (Exception e) {
             result.setSuccess(false);
-            result.setStatus(RpcConstants.Status.Server_Error);
+            result.setStatus(RpcConstants.Status.ServerError);
             result.setMessage(ThrowableUtil.getRootMessage(e));
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
         }
@@ -71,7 +71,7 @@ public class DictionaryServiceProvider implements DictionaryService {
             result.setDataSet(BeanUtil.copyListForCglib(list, DictionaryDto.class));
         } catch (Exception e) {
             result.setSuccess(false);
-            result.setStatus(RpcConstants.Status.Server_Error);
+            result.setStatus(RpcConstants.Status.ServerError);
             result.setMessage(ThrowableUtil.getRootMessage(e));
             logger.warn(JsonUtil.toJSONString(result.getStatus()));
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));

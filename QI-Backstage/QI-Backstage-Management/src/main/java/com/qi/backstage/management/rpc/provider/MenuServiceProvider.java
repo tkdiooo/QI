@@ -47,7 +47,7 @@ public class MenuServiceProvider implements BaseMenuService {
             result.setDataSet(list);
         } catch (Exception e) {
             result.setSuccess(false);
-            result.setStatus(RpcConstants.Status.Server_Error);
+            result.setStatus(RpcConstants.Status.ServerError);
             result.setMessage(ThrowableUtil.getRootMessage(e));
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
         }

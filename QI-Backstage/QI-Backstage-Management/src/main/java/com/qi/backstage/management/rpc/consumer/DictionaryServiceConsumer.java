@@ -1,5 +1,6 @@
 package com.qi.backstage.management.rpc.consumer;
 
+import com.google.common.reflect.TypeToken;
 import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.model.dto.DictionaryDto;
 import com.qi.bootstrap.util.BootstrapUtil;
@@ -7,6 +8,7 @@ import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.http.ResponseContent;
 import com.sfsctech.common.http.synch.HttpHelper;
+import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.RpcUtil;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,13 +42,12 @@ public class DictionaryServiceConsumer {
     private CacheFactory<IRedisService<String, Object>> factory;
 
     public List<DictionaryDto> findChildByNumber(String number) {
-        factory.getCacheClient().remove(SYSTEM_TYPE_OPTIONS);
         List<DictionaryDto> options = factory.getList(SYSTEM_TYPE_OPTIONS);
         if (null == options) {
             ResponseContent rc = HttpHelper.getUrlRespContent("http://www.zzl.com/dictionary/rest/" + number);
             try {
-                System.out.println(rc.getUTFContent());
-                ActionResult<DictionaryDto> result = RpcUtil.parseActionResult("{\"attachs\":{\"_csrf\":{\"parameterName\":\"KT__7jneScau7JFxmq5kjw\",\"token\":\"Dvo46H1b42XJddXVAXet7B\"}},\"dataSet\":[{\"content\":\"前端网站\",\"description\":\"\",\"guid\":\"BkQpsuqP77zR1N2piEXiaQ\",\"id\":20,\"number\":\"0001500001\",\"parent\":\"NVA29rgUnbVFkCqwSTd2U1\",\"sort\":0,\"status\":1},{\"content\":\"后台管理\",\"description\":\"\",\"guid\":\"BMqrsGueGfWwqoqjxVkyHF\",\"id\":21,\"number\":\"0001500002\",\"parent\":\"NVA29rgUnbVFkCqwSTd2U1\",\"sort\":0,\"status\":1},{\"content\":\"前端业务\",\"description\":\"\",\"guid\":\"BKHZekP87RjPpAiDygCwxa\",\"id\":22,\"number\":\"0001500003\",\"parent\":\"NVA29rgUnbVFkCqwSTd2U1\",\"sort\":0,\"status\":1},{\"content\":\"后台业务\",\"description\":\"\",\"guid\":\"8YPaR5HFzJUgd2oQMW6zZ3\",\"id\":23,\"number\":\"0001500004\",\"parent\":\"NVA29rgUnbVFkCqwSTd2U1\",\"sort\":0,\"status\":1}],\"messages\":[\"操作成功\"],\"result\":null,\"success\":true}");
+                ActionResult<DictionaryDto> result = RpcUtil.parseActionResult(rc.getUTFContent(), RpcConstants.Status.Successful, new TypeToken<ActionResult<DictionaryDto>>() {
+                }.getType());
                 if (null != result && RpcUtil.logPrint(result, logger)) {
                     options = result.getDataSet();
                     factory.getCacheClient().put(SYSTEM_TYPE_OPTIONS, options);
@@ -71,7 +73,6 @@ public class DictionaryServiceConsumer {
     }
 
     public Map<String, String> getSystemTypeCloumns(String number) {
-        factory.getCacheClient().remove(SYSTEM_TYPE_CLOUMNS);
         Map<String, String> cloumns = factory.get(SYSTEM_TYPE_CLOUMNS);
         if (null == cloumns) {
             List<DictionaryDto> list = findChildByNumber(number);
