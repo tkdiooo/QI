@@ -6,8 +6,6 @@ import com.qi.backstage.model.dto.DictionaryDto;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.http.ResponseContent;
-import com.sfsctech.common.http.synch.HttpHelper;
 import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.RpcUtil;
@@ -15,9 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,19 +38,18 @@ public class DictionaryServiceConsumer {
     @Autowired
     private CacheFactory<IRedisService<String, Object>> factory;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     public List<DictionaryDto> findChildByNumber(String number) {
         List<DictionaryDto> options = factory.getList(SYSTEM_TYPE_OPTIONS);
         if (null == options) {
-            ResponseContent rc = HttpHelper.getUrlRespContent("http://www.zzl.com/dictionary/rest/" + number);
-            try {
-                ActionResult<DictionaryDto> result = RpcUtil.parseActionResult(rc.getUTFContent(), RpcConstants.Status.Successful, new TypeToken<ActionResult<DictionaryDto>>() {
-                }.getType());
-                if (null != result && RpcUtil.logPrint(result, logger)) {
-                    options = result.getDataSet();
-                    factory.getCacheClient().put(SYSTEM_TYPE_OPTIONS, options);
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            String responseContent = restTemplate.getForObject("http://www.zzl.com/dictionary/rest/" + number, String.class);
+            ActionResult<DictionaryDto> result = RpcUtil.parseActionResult(responseContent, RpcConstants.Status.Successful, new TypeToken<ActionResult<DictionaryDto>>() {
+            }.getType());
+            if (null != result && RpcUtil.logPrint(result, logger)) {
+                options = result.getDataSet();
+                factory.getCacheClient().putTimeOut(SYSTEM_TYPE_OPTIONS, options, 1000 * 60 * 30);
             }
         }
         return options;
@@ -77,7 +73,7 @@ public class DictionaryServiceConsumer {
         if (null == cloumns) {
             List<DictionaryDto> list = findChildByNumber(number);
             cloumns = list.stream().collect(Collectors.toMap(DictionaryDto::getNumber, DictionaryDto::getContent));
-            factory.getCacheClient().put(SYSTEM_TYPE_CLOUMNS, cloumns);
+            factory.getCacheClient().putTimeOut(SYSTEM_TYPE_CLOUMNS, cloumns, 1000 * 60 * 30);
         }
         return cloumns;
     }
