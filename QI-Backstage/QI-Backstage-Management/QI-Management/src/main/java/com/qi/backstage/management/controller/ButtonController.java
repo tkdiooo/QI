@@ -1,9 +1,9 @@
 package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
-import com.qi.backstage.management.service.read.MenuReadService;
 import com.qi.backstage.management.model.domain.BaseButton;
 import com.qi.backstage.management.model.domain.BaseMenu;
+import com.qi.backstage.management.service.read.MenuReadService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
@@ -11,11 +11,15 @@ import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
+import com.sfsctech.constants.UIConstants;
+import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -77,6 +81,60 @@ public class ButtonController {
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("small", "按钮列表");
         model.put("options", BootstrapUtil.matchOptions("button_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
-        return "menu/index";
+        return "button/index";
+    }
+
+    @GetMapping("add")
+    public String add(ModelMap model, BaseButton button) {
+        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
+        // 获取系统信息
+//        model.put("system", systemReadService.getByGuid(menu.getSystem()));
+//        Map<String, Object> defaultSel = new HashMap<>();
+//        if (CommonConstants.ROOT_GUID.equals(menu.getParent())) {
+//            defaultSel.put("text", CommonConstants.ROOT_NAME);
+//            defaultSel.put("value", CommonConstants.ROOT_GUID);
+//        } else {
+//            menu = readService.getByGuid(menu.getParent());
+//            defaultSel.put("text", menu.getName());
+//            defaultSel.put("value", menu.getGuid());
+//            model.put("guid", menu.getGuid());
+//        }
+//        model.put("defaultSel", defaultSel);
+        return "button/edit";
+    }
+
+    @GetMapping("edit")
+    public String edit(ModelMap model, BaseButton menu) {
+        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
+        // 获取系统信息
+//        model.put("system", systemReadService.getByGuid(menu.getSystem()));
+//        menu = readService.getByGuid(menu.getGuid());
+//        model.put("model", menu);
+//        Map<String, Object> defaultSel = new HashMap<>();
+//        if (menu.getParent().equals(CommonConstants.ROOT_GUID)) {
+//            defaultSel.put("text", CommonConstants.ROOT_NAME);
+//            defaultSel.put("value", CommonConstants.ROOT_GUID);
+//        } else {
+//            BaseMenu parent = readService.getByGuid(menu.getParent());
+//            defaultSel.put("text", parent.getName());
+//            defaultSel.put("value", parent.getGuid());
+//            model.put("guid", menu.getGuid());
+//        }
+//        model.put("defaultSel", defaultSel);
+        return "button/edit";
+    }
+
+    @ResponseBody
+    @PostMapping("save")
+    public ActionResult<BaseButton> save(BaseButton menu) {
+//        writeService.save(menu);
+        return new ActionResult<>(menu);
+    }
+
+    @ResponseBody
+    @PostMapping("disable")
+    public ActionResult<BaseButton> disable(String guid) {
+//        writeService.changeStatus(guid, StatusConstants.Status.Disable);
+        return new ActionResult<>();
     }
 }
