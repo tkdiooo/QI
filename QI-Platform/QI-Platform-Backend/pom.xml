@@ -65,8 +65,8 @@
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.qi.backstage</groupId>
-            <artifactId>QI-Backstage-Interface</artifactId>
+            <groupId>com.qi.backstage.management</groupId>
+            <artifactId>QI-Management-Interface</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        系统服务
+        <small th:text="${operation}"></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Forms</a></li>
+        <li class="active">General Elements</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- left column -->
+    <div class="col-md-9 left-column">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <form class="form-horizontal">
+                <div class="box-header with-border">
+                    <h3 class="box-title">基础信息</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">系统信息</label>
+                        <div class="col-xs-3 input-group left-float">
+                            <div class="btn-group" data-autorun="2">
+                                <button type="button" class="btn btn-warning dropdown-toggle" th:text="${system} ? ${system.namecn}" style="cursor: default !important;"></button>
+                            </div>
+                            <input type="hidden" id="system" name="system" th:value="${system} ? ${system.code} : '默认'">
+                        </div>
+                        <label class="col-sm-2 control-label">上级菜单</label>
+                        <div class="col-xs-3 input-group left-float">
+                            <div class="btn-group" data-autorun="2" data-original-title="上级菜单选择">
+                                <button type="button" class="btn btn-warning dropdown-toggle" th:text="${defaultSel} ? ${defaultSel.text} : 'Root'" style="cursor: default !important;"></button>
+                            </div>
+                            <input type="hidden" id="parent" name="parent" th:value="${defaultSel} ? ${defaultSel.value} : '0000000000000000000000'">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="code" class="col-sm-2 control-label">菜单编号</label>
+                        <div class="col-xs-3 input-group left-float">
+                            <input type="text" class="form-control" id="code" name="code" placeholder="请输入菜单编号" th:value="${model} ? ${model.code}">
+                        </div>
+                        <label for="name" class="col-sm-2 control-label">菜单名称</label>
+                        <div class="col-xs-3 input-group left-float">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="请输入菜单名称" th:value="${model} ? ${model.name}">
+                        </div>
+                    </div>
+                    <div class="form-group" th:if="${defaultSel.value != '0000000000000000000000'}">
+                        <label for="controller" class="col-sm-2 control-label">Controller映射</label>
+                        <div class="col-xs-3 input-group left-float">
+                            <input type="text" class="form-control" id="controller" name="controller" placeholder="请输入Controller映射" th:value="${model} ? ${model.controller}">
+                        </div>
+                        <label for="mapping" class="col-sm-2 control-label">Mapping映射</label>
+                        <div class="col-xs-3 input-group left-float">
+                            <input type="text" class="form-control" id="mapping" name="mapping" placeholder="请输入Mapping映射" th:value="${model} ? ${model.mapping}">
+                        </div>
+                    </div>
+                    <div class="form-group" style="height: 125px !important;">
+                        <label for="description" class="col-sm-2 control-label">菜单描述</label>
+                        <div class="col-xs-7 input-group">
+                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="请输入菜单描述" th:value="${model} ? ${model.description}"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="guid" name="guid" th:value="${model} ? ${model.guid}"/>
+                <input type="hidden" id="isleaf" name="isleaf" th:value="${defaultSel.value != '0000000000000000000000'} ? 'false' : 'true'"/>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交表单">提交</button>
+                    <button type="button" class="btn btn-default pull-right" onclick="goBack()" data-original-title="取消返回">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-3 right-column"></div>
+</section>
+<script th:inline="javascript">
+    $(function () {
+        //显示tooltip
+        $("[data-original-title]").tooltip();
+        load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+    });
+    var choose = function (obj) {
+        var opt = {
+            id: 'type_btn',
+            action: function (data) {
+                $('#system').val(data);
+            }
+        };
+        selectChange(obj, opt);
+    };
+    var editSubmit = function () {
+        var params = $(".form-horizontal").serializeJson();
+        var opt = {
+            callback: function (result) {
+                $(".form-horizontal")[0].reset();
+                load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+            }
+        };
+        ajax_action(/*[[@{/menu/save}]]*/ "", params, opt);
+    };
+    var goBack = function () {
+        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {
+            guid: $('#parent').val(),
+            system: [[${system.guid}]]
+        });
+    };
+    var sort = function () {
+        var params = '';
+        $(this).find('li').each(function (i) {
+            if (i !== 0) params += '#';
+            params += $(this).attr('id') + ',' + i;
+        });
+        ajax_action(/*[[@{/menu/sort}]]*/ "", {sortable: params});
+    }
+    var load = function (guid) {
+        var opt = {
+            waiting: false,
+            handler: function (result) {
+                $('#guid').val(result.result.guid);
+                $('#code').val(result.result.code);
+                $('#name').val(result.result.name);
+                $('#description').val(result.result.description);
+                if (!result.result.isleaf) {
+                    $('#controller').val(result.result.controller);
+                    $('#mapping').val(result.result.mapping);
+                }
+            }
+        };
+        ajax_action(/*[[@{/menu/load}]]*/ "", {guid: guid}, opt);
+    }
+</script>
+</html>

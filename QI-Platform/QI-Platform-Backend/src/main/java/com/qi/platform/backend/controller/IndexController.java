@@ -1,6 +1,6 @@
 package com.qi.platform.backend.controller;
 
-import com.qi.backstage.model.dto.MenuDto;
+import com.qi.backstage.management.model.dto.MenuDto;
 import com.qi.platform.backend.rpc.consumer.MenuServiceConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

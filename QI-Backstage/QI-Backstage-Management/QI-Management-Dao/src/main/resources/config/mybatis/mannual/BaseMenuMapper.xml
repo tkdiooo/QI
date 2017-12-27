@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qi.backstage.management.mapper.BaseMenuMapper">
+    <resultMap id="ChildResultMap" type="com.qi.backstage.management.model.dto.MenuDto" extends="BaseResultMap">
+        <result column="Domain" jdbcType="VARCHAR" property="domain"/>
+        <!-- 一对多 -->
+        <collection property="child" ofType="com.qi.backstage.management.model.dto.MenuDto">
+            <id column="cID" jdbcType="BIGINT" property="id"/>
+            <result column="cGuid" jdbcType="CHAR" property="guid"/>
+            <result column="cParent" jdbcType="CHAR" property="parent"/>
+            <result column="cSystem" jdbcType="VARCHAR" property="system"/>
+            <result column="cCode" jdbcType="VARCHAR" property="code"/>
+            <result column="cName" jdbcType="VARCHAR" property="name"/>
+            <result column="cController" jdbcType="VARCHAR" property="controller"/>
+            <result column="cMapping" jdbcType="VARCHAR" property="mapping"/>
+            <result column="cDescription" jdbcType="VARCHAR" property="description"/>
+            <result column="cSort" jdbcType="INTEGER" property="sort"/>
+            <result column="cIsLeaf" jdbcType="BIT" property="isleaf"/>
+            <result column="cStatus" jdbcType="INTEGER" property="status"/>
+        </collection>
+    </resultMap>
+
+    <select id="findBySystem" resultMap="ChildResultMap" parameterType="java.util.Map">
+    SELECT
+        B.*, S.Domain,
+        C.ID AS cID,
+        C.Guid AS cGuid,
+        C.Parent AS cParent,
+        C.System AS cSystem,
+        C.`Code` AS cCode,
+        C.`Name` AS cName,
+        C.Controller AS cController,
+        C.Mapping AS cMapping,
+        C.Description AS cDescription,
+        C.Sort AS cSort,
+        C.isLeaf AS cIsLeaf,
+        C.`Status` AS cStatus
+    FROM
+        base_menu B
+    LEFT JOIN base_system S ON B.System = S.`Code`
+    LEFT JOIN base_menu C ON B.Guid = C.Parent
+    WHERE
+        B.System = #{system,jdbcType=VARCHAR}
+    AND B.Parent = #{parent,jdbcType=VARCHAR}
+    ORDER BY
+        B.Sort,
+        C.Sort
+    </select>
+</mapper>

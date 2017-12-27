@@ -1,8 +1,8 @@
 package com.qi.platform.backend.rpc.consumer;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.qi.backstage.inf.BaseMenuService;
-import com.qi.backstage.model.dto.MenuDto;
+import com.qi.backstage.management.inf.BaseMenuService;
+import com.qi.backstage.management.model.dto.MenuDto;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.constants.LabelConstants;

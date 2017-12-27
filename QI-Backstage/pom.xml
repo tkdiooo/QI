@@ -16,17 +16,13 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>QI-Backstage-Management</module>
-        <module>QI-Backstage-Model</module>
         <module>QI-Backstage-Dictionary</module>
-        <module>QI-Backstage-Dao</module>
-        <module>QI-Backstage-Interface</module>
+        <module>QI-Backstage-Management</module>
     </modules>
 
     <properties>
         <sfsctech.common.version>1.1.0-SNAPSHOT</sfsctech.common.version>
         <sso.version>1.0.0-SNAPSHOT</sso.version>
-        <backstage.version>1.0.0-SNAPSHOT</backstage.version>
     </properties>
 
 </project>

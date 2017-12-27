@@ -9,101 +9,20 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.qi.backstage.dictionary</groupId>
     <artifactId>QI-Backstage-Dictionary</artifactId>
-    <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <!-- Spring boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- spring-cloud-config-client -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-client</artifactId>
-        </dependency>
-        <!-- Thymeleaf -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <!-- Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- common-exception support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-exception</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-logback support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-logback</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-dubbox support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-dubbox</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-security support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-security</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-auth support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-auth</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- QI-Backstage-Dao support -->
-        <dependency>
-            <groupId>com.qi.backstage</groupId>
-            <artifactId>QI-Backstage-Dao</artifactId>
-            <version>${backstage.version}</version>
-        </dependency>
-        <!-- QI-Backstage-Interface support -->
-        <dependency>
-            <groupId>com.qi.backstage</groupId>
-            <artifactId>QI-Backstage-Interface</artifactId>
-            <version>${backstage.version}</version>
-        </dependency>
-        <!-- QI-Support-Bootstrap support -->
-        <dependency>
-            <groupId>com.qi.support</groupId>
-            <artifactId>QI-Support-Bootstrap</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <properties>
+        <dictionary.version>1.0.0-SNAPSHOT</dictionary.version>
+    </properties>
 
-    <build>
-        <finalName>Backstage-Dictionary</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.qi.backstage.dictionary.Runner</mainClass>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>
-                                repackage
-                            </goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <modules>
+        <module>QI-Dictionary</module>
+        <module>QI-Dictionary-Interface</module>
+        <module>QI-Dictionary-Model</module>
+        <module>QI-Dictionary-Dao</module>
+    </modules>
 
 </project>
