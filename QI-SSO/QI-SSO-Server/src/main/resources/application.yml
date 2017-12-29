@@ -4,7 +4,20 @@ server:
   address: localhost
   context-path: /sso-server
   tomcat:
+    # 解析含有中文名的文件的url
     uri-encoding: utf-8
+    # 最大连接数
+    max-connections: 1000
+    # 最大线程数，即最大并发数。
+    max-threads: 500
+    # 最小备用线程数
+    min-spare-threads: 20
+    # 线程数达到maxThreads后，后续请求会被放入一个等待队列，acceptCount是这个队列的大小
+    accept-count: 100
+    # tomcat连接器
+    connector: org.apache.coyote.http11.Http11NioProtocol
+    # tomcat优化
+    optimize: true
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
