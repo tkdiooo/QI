@@ -8,8 +8,7 @@
             columns: [
                 {sClass: "text-left", sWidth: 150, orderable: false},
                 {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 100, orderable: false},
+                {sClass: "text-left", sWidth: 250, orderable: false},
                 {sClass: "text-left", sWidth: 100, orderable: false},
                 {sClass: "text-left", sWidth: 50, orderable: false},
                 {sClass: "text-left", sWidth: 50, visible: false},
@@ -76,8 +75,7 @@
                         <tr>
                             <th>菜单编号</th>
                             <th>菜单名称</th>
-                            <th>Controller映射</th>
-                            <th>Mapping映射</th>
+                            <th>菜单URL</th>
                             <th>排序</th>
                             <th>状态</th>
                             <th>状态(隐藏)</th>
@@ -88,8 +86,7 @@
                         <tr th:each="var, stat : ${data}">
                             <td th:text="${var.code}"></td>
                             <td th:text="${var.name}"></td>
-                            <td th:text="${var.controller}"></td>
-                            <td th:text="${var.mapping}"></td>
+                            <td th:text="${var.url}"></td>
                             <td th:text="${var.sort}"></td>
                             <td th:utext="${status.get(var.status)}"></td>
                             <td th:utext="${var.status}"></td>
@@ -168,7 +165,7 @@
     }
 
     function button(guid) {
-        load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {menu: guid});
+        load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {menu: guid, system: [[${system}]]});
     }
 
     function breadcrumb(url, guid) {

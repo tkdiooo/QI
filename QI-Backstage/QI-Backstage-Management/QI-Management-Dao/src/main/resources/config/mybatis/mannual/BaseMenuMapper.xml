@@ -11,8 +11,7 @@
             <result column="cSystem" jdbcType="VARCHAR" property="system"/>
             <result column="cCode" jdbcType="VARCHAR" property="code"/>
             <result column="cName" jdbcType="VARCHAR" property="name"/>
-            <result column="cController" jdbcType="VARCHAR" property="controller"/>
-            <result column="cMapping" jdbcType="VARCHAR" property="mapping"/>
+            <result column="cUrl" jdbcType="VARCHAR" property="url"/>
             <result column="cDescription" jdbcType="VARCHAR" property="description"/>
             <result column="cSort" jdbcType="INTEGER" property="sort"/>
             <result column="cIsLeaf" jdbcType="BIT" property="isleaf"/>
@@ -29,8 +28,7 @@
         C.System AS cSystem,
         C.`Code` AS cCode,
         C.`Name` AS cName,
-        C.Controller AS cController,
-        C.Mapping AS cMapping,
+        C.Url AS cUrl,
         C.Description AS cDescription,
         C.Sort AS cSort,
         C.isLeaf AS cIsLeaf,

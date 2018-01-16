@@ -9,8 +9,7 @@
                 {sClass: "text-left", sWidth: 150, orderable: false},
                 {sClass: "text-left", sWidth: 150, orderable: false},
                 {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 100, orderable: false},
+                {sClass: "text-left", sWidth: 250, orderable: false},
                 {sClass: "text-left", sWidth: 100, orderable: false},
                 {sClass: "text-left", sWidth: 50, orderable: false},
                 {sClass: "text-left", sWidth: 50, visible: false},
@@ -74,8 +73,7 @@
                             <th>系统编号</th>
                             <th>系统名称</th>
                             <th>系统域名</th>
-                            <th>系统上下文</th>
-                            <th>系统首页</th>
+                            <th>系统URL</th>
                             <th>系统类型</th>
                             <th>状态</th>
                             <th>状态(隐藏)</th>
@@ -87,8 +85,7 @@
                             <td th:text="${var.code}"></td>
                             <td th:text="${var.namecn}"></td>
                             <td th:text="${var.domain}"></td>
-                            <td th:text="${var.contextpath}"></td>
-                            <td th:text="${var.homepage}"></td>
+                            <td th:text="${var.url}"></td>
                             <td th:text="${type.get(var.type)}"></td>
                             <td th:utext="${status.get(var.status)}"></td>
                             <td th:utext="${var.status}"></td>

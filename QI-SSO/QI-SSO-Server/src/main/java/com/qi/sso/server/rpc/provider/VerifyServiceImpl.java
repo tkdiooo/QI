@@ -78,9 +78,10 @@ public class VerifyServiceImpl implements VerifyService {
             return result;
         }
 
+        // 会话保持剩余时间（秒）
+        long loginedTimeStamp = factory.getCacheClient().ttl(salt_CacheKey + LabelConstants.POUND + salt);
         // 如果离超时间还有一半左右，重新生成Jwt
-        long loginedTimeStamp = System.currentTimeMillis() - factory.getCacheClient().ttl(salt_CacheKey + LabelConstants.POUND + salt);
-        if (jwtConfig.getExpiration() > 0 && loginedTimeStamp <= (jwtConfig.getExpiration() / 2)) {
+        if (jwtConfig.getExpiration() > 0 && ((loginedTimeStamp * 1000) <= (jwtConfig.getExpiration() / 2))) {
             // 解密Jwt
             token = EncrypterTool.decrypt(jt.getJwt(), salt);
             // 获取jwt Claims
@@ -132,10 +133,10 @@ public class VerifyServiceImpl implements VerifyService {
             UserAuthData authData = CacheKeyUtil.getUserAuthData(claims);
             // TODO 处理登录用户权限等功能
 
-            // 获取jwt剩余时间
-            long loginedTimeStamp = System.currentTimeMillis() - Long.valueOf(claims.get("iat").toString());
+            // 获取jwt存在时间
+            long loginedTimeStamp = System.currentTimeMillis() / 1000 - Long.valueOf(claims.get("iat").toString());
             // 如果离超时间还有一半左右，重新生成Jwt
-            if (jwtConfig.getExpiration() > 0 && loginedTimeStamp <= (jwtConfig.getExpiration() / 2)) {
+            if (jwtConfig.getExpiration() > 0 && (jwtConfig.getExpiration() / 2) <= loginedTimeStamp) {
                 this.refreshJwt(claims, authData, salt_CacheKey, jt);
             }
         } catch (Exception e) {

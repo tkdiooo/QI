@@ -79,18 +79,23 @@ public class MenuController {
             menu.setGuid(CommonConstants.ROOT_GUID);
             // 根据系统Guid获取面包屑
             list = factory.getList(menu.getSystem());
-            // 获取系统信息
-            BaseSystem system = systemReadService.getByGuid(menu.getSystem());
-            model.put("header", system.getNamecn());
+            String header;
             // 缓存为空，添加当前菜单节点
             if (list == null) {
+                // 获取系统信息
+                BaseSystem system = systemReadService.getByGuid(menu.getSystem());
                 // 获取ROOT节点
                 list = factory.getList(CommonConstants.CACHE_SYSTEM_ROOT);
                 Breadcrumb breadcrumb = new Breadcrumb(system.getNamecn(), "/menu/index", CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
                 list.add(breadcrumb);
                 factory.getCacheClient().put(system.getGuid(), list);
+                header = system.getNamecn();
+            } else {
+                Breadcrumb breadcrumb = list.get(list.size() - 1);
+                header = breadcrumb.getText();
             }
+            model.put("header", header);
         }
         model.put("breadcrumbs", list);
         model.put("parent", menu.getGuid());

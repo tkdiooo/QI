@@ -604,143 +604,73 @@ public class BaseMenuExample {
             return (Criteria) this;
         }
 
-        public Criteria andControllerIsNull() {
-            addCriterion("Controller is null");
+        public Criteria andUrlIsNull() {
+            addCriterion("Url is null");
             return (Criteria) this;
         }
 
-        public Criteria andControllerIsNotNull() {
-            addCriterion("Controller is not null");
+        public Criteria andUrlIsNotNull() {
+            addCriterion("Url is not null");
             return (Criteria) this;
         }
 
-        public Criteria andControllerEqualTo(String value) {
-            addCriterion("Controller =", value, "controller");
+        public Criteria andUrlEqualTo(String value) {
+            addCriterion("Url =", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerNotEqualTo(String value) {
-            addCriterion("Controller <>", value, "controller");
+        public Criteria andUrlNotEqualTo(String value) {
+            addCriterion("Url <>", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerGreaterThan(String value) {
-            addCriterion("Controller >", value, "controller");
+        public Criteria andUrlGreaterThan(String value) {
+            addCriterion("Url >", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerGreaterThanOrEqualTo(String value) {
-            addCriterion("Controller >=", value, "controller");
+        public Criteria andUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("Url >=", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerLessThan(String value) {
-            addCriterion("Controller <", value, "controller");
+        public Criteria andUrlLessThan(String value) {
+            addCriterion("Url <", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerLessThanOrEqualTo(String value) {
-            addCriterion("Controller <=", value, "controller");
+        public Criteria andUrlLessThanOrEqualTo(String value) {
+            addCriterion("Url <=", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerLike(String value) {
-            addCriterion("Controller like", value, "controller");
+        public Criteria andUrlLike(String value) {
+            addCriterion("Url like", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerNotLike(String value) {
-            addCriterion("Controller not like", value, "controller");
+        public Criteria andUrlNotLike(String value) {
+            addCriterion("Url not like", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerIn(List<String> values) {
-            addCriterion("Controller in", values, "controller");
+        public Criteria andUrlIn(List<String> values) {
+            addCriterion("Url in", values, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerNotIn(List<String> values) {
-            addCriterion("Controller not in", values, "controller");
+        public Criteria andUrlNotIn(List<String> values) {
+            addCriterion("Url not in", values, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerBetween(String value1, String value2) {
-            addCriterion("Controller between", value1, value2, "controller");
+        public Criteria andUrlBetween(String value1, String value2) {
+            addCriterion("Url between", value1, value2, "url");
             return (Criteria) this;
         }
 
-        public Criteria andControllerNotBetween(String value1, String value2) {
-            addCriterion("Controller not between", value1, value2, "controller");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingIsNull() {
-            addCriterion("Mapping is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingIsNotNull() {
-            addCriterion("Mapping is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingEqualTo(String value) {
-            addCriterion("Mapping =", value, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingNotEqualTo(String value) {
-            addCriterion("Mapping <>", value, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingGreaterThan(String value) {
-            addCriterion("Mapping >", value, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingGreaterThanOrEqualTo(String value) {
-            addCriterion("Mapping >=", value, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingLessThan(String value) {
-            addCriterion("Mapping <", value, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingLessThanOrEqualTo(String value) {
-            addCriterion("Mapping <=", value, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingLike(String value) {
-            addCriterion("Mapping like", value, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingNotLike(String value) {
-            addCriterion("Mapping not like", value, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingIn(List<String> values) {
-            addCriterion("Mapping in", values, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingNotIn(List<String> values) {
-            addCriterion("Mapping not in", values, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingBetween(String value1, String value2) {
-            addCriterion("Mapping between", value1, value2, "mapping");
-            return (Criteria) this;
-        }
-
-        public Criteria andMappingNotBetween(String value1, String value2) {
-            addCriterion("Mapping not between", value1, value2, "mapping");
+        public Criteria andUrlNotBetween(String value1, String value2) {
+            addCriterion("Url not between", value1, value2, "url");
             return (Criteria) this;
         }
 

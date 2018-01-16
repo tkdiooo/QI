@@ -2,9 +2,7 @@ package com.qi.backstage.management.mapper;
 
 import com.qi.backstage.management.model.domain.BaseButton;
 import com.qi.backstage.management.model.domain.BaseButtonExample;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface BaseButtonMapper {

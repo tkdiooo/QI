@@ -604,143 +604,73 @@ public class BaseSystemExample {
             return (Criteria) this;
         }
 
-        public Criteria andContextpathIsNull() {
-            addCriterion("ContextPath is null");
+        public Criteria andUrlIsNull() {
+            addCriterion("Url is null");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathIsNotNull() {
-            addCriterion("ContextPath is not null");
+        public Criteria andUrlIsNotNull() {
+            addCriterion("Url is not null");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathEqualTo(String value) {
-            addCriterion("ContextPath =", value, "contextpath");
+        public Criteria andUrlEqualTo(String value) {
+            addCriterion("Url =", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathNotEqualTo(String value) {
-            addCriterion("ContextPath <>", value, "contextpath");
+        public Criteria andUrlNotEqualTo(String value) {
+            addCriterion("Url <>", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathGreaterThan(String value) {
-            addCriterion("ContextPath >", value, "contextpath");
+        public Criteria andUrlGreaterThan(String value) {
+            addCriterion("Url >", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathGreaterThanOrEqualTo(String value) {
-            addCriterion("ContextPath >=", value, "contextpath");
+        public Criteria andUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("Url >=", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathLessThan(String value) {
-            addCriterion("ContextPath <", value, "contextpath");
+        public Criteria andUrlLessThan(String value) {
+            addCriterion("Url <", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathLessThanOrEqualTo(String value) {
-            addCriterion("ContextPath <=", value, "contextpath");
+        public Criteria andUrlLessThanOrEqualTo(String value) {
+            addCriterion("Url <=", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathLike(String value) {
-            addCriterion("ContextPath like", value, "contextpath");
+        public Criteria andUrlLike(String value) {
+            addCriterion("Url like", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathNotLike(String value) {
-            addCriterion("ContextPath not like", value, "contextpath");
+        public Criteria andUrlNotLike(String value) {
+            addCriterion("Url not like", value, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathIn(List<String> values) {
-            addCriterion("ContextPath in", values, "contextpath");
+        public Criteria andUrlIn(List<String> values) {
+            addCriterion("Url in", values, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathNotIn(List<String> values) {
-            addCriterion("ContextPath not in", values, "contextpath");
+        public Criteria andUrlNotIn(List<String> values) {
+            addCriterion("Url not in", values, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathBetween(String value1, String value2) {
-            addCriterion("ContextPath between", value1, value2, "contextpath");
+        public Criteria andUrlBetween(String value1, String value2) {
+            addCriterion("Url between", value1, value2, "url");
             return (Criteria) this;
         }
 
-        public Criteria andContextpathNotBetween(String value1, String value2) {
-            addCriterion("ContextPath not between", value1, value2, "contextpath");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageIsNull() {
-            addCriterion("HomePage is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageIsNotNull() {
-            addCriterion("HomePage is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageEqualTo(String value) {
-            addCriterion("HomePage =", value, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageNotEqualTo(String value) {
-            addCriterion("HomePage <>", value, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageGreaterThan(String value) {
-            addCriterion("HomePage >", value, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageGreaterThanOrEqualTo(String value) {
-            addCriterion("HomePage >=", value, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageLessThan(String value) {
-            addCriterion("HomePage <", value, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageLessThanOrEqualTo(String value) {
-            addCriterion("HomePage <=", value, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageLike(String value) {
-            addCriterion("HomePage like", value, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageNotLike(String value) {
-            addCriterion("HomePage not like", value, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageIn(List<String> values) {
-            addCriterion("HomePage in", values, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageNotIn(List<String> values) {
-            addCriterion("HomePage not in", values, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageBetween(String value1, String value2) {
-            addCriterion("HomePage between", value1, value2, "homepage");
-            return (Criteria) this;
-        }
-
-        public Criteria andHomepageNotBetween(String value1, String value2) {
-            addCriterion("HomePage not between", value1, value2, "homepage");
+        public Criteria andUrlNotBetween(String value1, String value2) {
+            addCriterion("Url not between", value1, value2, "url");
             return (Criteria) this;
         }
 

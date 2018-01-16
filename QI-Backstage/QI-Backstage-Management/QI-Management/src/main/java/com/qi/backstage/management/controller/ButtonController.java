@@ -40,7 +40,9 @@ public class ButtonController {
     private CacheFactory<IRedisService<String, Object>> factory;
 
     @GetMapping("index")
-    public String index(ModelMap model, BaseButton button) {
+    public String index(ModelMap model, BaseButton button, String system) {
+        // 系统信息GUID
+        model.put("system", system);
         // 菜单GUID
         model.put("menu", button.getMenu());
         List<Breadcrumb> list;
@@ -63,17 +65,22 @@ public class ButtonController {
         else {
             // 根据系统Guid获取面包屑
             list = factory.getList(button.getMenu());
-            // 获取菜单信息
-            BaseMenu menu = readService.getByGuid(button.getMenu());
-            model.put("header", menu.getName() + "菜单");
+            String header;
             // 缓存为空，添加当前菜单节点
             if (list == null) {
+                // 获取菜单信息
+                BaseMenu menu = readService.getByGuid(button.getMenu());
                 list = factory.getList(menu.getParent());
                 Breadcrumb breadcrumb = new Breadcrumb(menu.getName(), "/menu/index", CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", menu.getGuid());
                 list.add(breadcrumb);
                 factory.getCacheClient().put(menu.getGuid(), list);
+                header = menu.getName() + "菜单";
+            } else {
+                Breadcrumb breadcrumb = list.get(list.size() - 1);
+                header = breadcrumb.getText() + "菜单";
             }
+            model.put("header", header);
         }
         model.put("breadcrumbs", list);
         model.put("parent", button.getMenu());
