@@ -1,6 +1,7 @@
 package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
+import com.qi.backstage.management.common.util.BreadcrumbUtil;
 import com.qi.backstage.management.model.domain.BaseButton;
 import com.qi.backstage.management.model.domain.BaseMenu;
 import com.qi.backstage.management.service.read.MenuReadService;
@@ -34,7 +35,7 @@ import java.util.List;
 public class ButtonController {
 
     @Autowired
-    private MenuReadService readService;
+    private MenuReadService menuReadService;
 
     @Autowired
     private CacheFactory<IRedisService<String, Object>> factory;
@@ -49,42 +50,29 @@ public class ButtonController {
         // 按钮的Guid不为空，则是二级菜单导航请求
         if (StringUtil.isNotBlank(button.getGuid())) {
             // 列表面包屑设置
-            list = factory.getList(button.getGuid());
-            // 缓存为空
-            if (list == null) {
-                // 获取系统信息节点
-//                list = factory.getList(menu.getSystem());
-//                menu = readService.getByGuid(menu.getGuid());
-//                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
-//                breadcrumb.addParams("guid", menu.getGuid());
-//                list.add(breadcrumb);
-//                factory.getCacheClient().put(menu.getGuid(), list);
-            }
+            list = BreadcrumbUtil.buildBreadcrumb(() -> {
+                // 获取菜单信息
+                BaseMenu menu = menuReadService.getByGuid(button.getMenu());
+                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", menu.getGuid());
+                return breadcrumb;
+            }, button.getGuid(), button.getParent());
         }
         // 菜单导航请求
         else {
             // 根据系统Guid获取面包屑
-            list = factory.getList(button.getMenu());
-            String header;
-            // 缓存为空，添加当前菜单节点
-            if (list == null) {
+            list = BreadcrumbUtil.buildBreadcrumb(() -> {
                 // 获取菜单信息
-                BaseMenu menu = readService.getByGuid(button.getMenu());
-                list = factory.getList(menu.getParent());
-                Breadcrumb breadcrumb = new Breadcrumb(menu.getName(), "/menu/index", CommonConstants.ROOT_CLASS);
+                BaseMenu menu = menuReadService.getByGuid(button.getMenu());
+                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", menu.getGuid());
-                list.add(breadcrumb);
-                factory.getCacheClient().put(menu.getGuid(), list);
-                header = menu.getName() + "菜单";
-            } else {
-                Breadcrumb breadcrumb = list.get(list.size() - 1);
-                header = breadcrumb.getText() + "菜单";
-            }
-            model.put("header", header);
+                return breadcrumb;
+            }, button.getMenu(), button.getParent());
         }
+        model.put("header", list.get(list.size() - 1).getText());
         model.put("breadcrumbs", list);
         model.put("parent", button.getMenu());
-//        model.put("data", readService.findAll(menu));
+//        model.put("data", menuReadService.findAll(menu));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("small", "按钮列表");
         model.put("options", BootstrapUtil.matchOptions("button_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
@@ -101,7 +89,7 @@ public class ButtonController {
 //            defaultSel.put("text", CommonConstants.ROOT_NAME);
 //            defaultSel.put("value", CommonConstants.ROOT_GUID);
 //        } else {
-//            menu = readService.getByGuid(menu.getParent());
+//            menu = menuReadService.getByGuid(menu.getParent());
 //            defaultSel.put("text", menu.getName());
 //            defaultSel.put("value", menu.getGuid());
 //            model.put("guid", menu.getGuid());
@@ -115,14 +103,14 @@ public class ButtonController {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
         // 获取系统信息
 //        model.put("system", systemReadService.getByGuid(menu.getSystem()));
-//        menu = readService.getByGuid(menu.getGuid());
+//        menu = menuReadService.getByGuid(menu.getGuid());
 //        model.put("model", menu);
 //        Map<String, Object> defaultSel = new HashMap<>();
 //        if (menu.getParent().equals(CommonConstants.ROOT_GUID)) {
 //            defaultSel.put("text", CommonConstants.ROOT_NAME);
 //            defaultSel.put("value", CommonConstants.ROOT_GUID);
 //        } else {
-//            BaseMenu parent = readService.getByGuid(menu.getParent());
+//            BaseMenu parent = menuReadService.getByGuid(menu.getParent());
 //            defaultSel.put("text", parent.getName());
 //            defaultSel.put("value", parent.getGuid());
 //            model.put("guid", menu.getGuid());

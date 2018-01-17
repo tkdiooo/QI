@@ -1,15 +1,14 @@
 package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
+import com.qi.backstage.management.common.util.BreadcrumbUtil;
+import com.qi.backstage.management.model.domain.BaseSystem;
 import com.qi.backstage.management.rpc.consumer.DictionaryServiceConsumer;
 import com.qi.backstage.management.service.read.SystemReadService;
 import com.qi.backstage.management.service.write.SystemWriteService;
-import com.qi.backstage.management.model.domain.BaseSystem;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.rpc.result.ActionResult;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,20 +42,10 @@ public class SystemController {
     @Autowired
     private SystemWriteService writeService;
 
-    @Autowired
-    private CacheFactory<IRedisService<String, Object>> factory;
-
     @GetMapping("index")
     public String index(ModelMap model, BaseSystem system) {
         // 列表面包屑设置
-        List<Breadcrumb> list = factory.getList(CommonConstants.CACHE_SYSTEM_ROOT);
-        // 缓存为空
-        if (list == null) {
-            list = new ArrayList<>();
-            list.add(new Breadcrumb(CommonConstants.ROOT_NAME, "/system/index", CommonConstants.ROOT_CLASS));
-            factory.getCacheClient().put(CommonConstants.CACHE_SYSTEM_ROOT, list);
-        }
-        model.put("breadcrumbs", list);
+        model.put("breadcrumbs", BreadcrumbUtil.buildBreadcrumb(() -> new Breadcrumb(CommonConstants.ROOT_NAME, "/system/index", CommonConstants.ROOT_CLASS), CommonConstants.CACHE_SYSTEM_ROOT));
         model.put("data", readService.findAll(system));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("options", BootstrapUtil.matchOptions("system_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));

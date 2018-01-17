@@ -60,9 +60,9 @@ public class LoginServiceImpl implements LoginService {
         String salt_CacheKey = CacheKeyUtil.getSaltCacheKey();
         logger.info("用户：" + authData.getAccount() + "，生成的salt_CacheKey[" + salt_CacheKey + "]。");
         // 缓存salt
-        factory.getCacheClient().putTimeOut(salt_CacheKey, salt, jwtConfig.getExpiration().intValue() / 1000);
+        factory.getCacheClient().putTimeOut(salt_CacheKey, salt, jwtConfig.getExpiration().intValue());
         // 缓存token
-        factory.getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtConfig.getExpiration().intValue() / 1000);
+        factory.getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtConfig.getExpiration().intValue());
 
         jwtToken.setJwt(token);
         jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3, salt_CacheKey));

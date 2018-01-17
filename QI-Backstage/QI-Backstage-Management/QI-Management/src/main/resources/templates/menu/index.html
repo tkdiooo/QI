@@ -112,7 +112,8 @@
                                     <span class="fa fa-search"></span>查看
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'button(\'' + ${var.guid} + '\');'" th:if="${!var.isleaf}"
+                                        th:onclick="'button(\'' + ${var.guid} + '\',\'' + ${var.parent} + '\');'"
+                                        th:if="${!var.isleaf}"
                                         th:data-original-title="'查看' + ${var.name} + '菜单按钮'" data-placement="right">
                                     <span class="fa fa-search"></span>查看
                                 </button>
@@ -164,8 +165,12 @@
         load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {guid: guid, system: [[${system}]]});
     }
 
-    function button(guid) {
-        load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {menu: guid, system: [[${system}]]});
+    function button(guid, parent) {
+        load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
+            menu: guid,
+            parent: parent,
+            system: [[${system}]]
+        });
     }
 
     function breadcrumb(url, guid) {

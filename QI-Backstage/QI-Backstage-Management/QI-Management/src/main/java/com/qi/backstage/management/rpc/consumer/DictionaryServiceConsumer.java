@@ -6,6 +6,7 @@ import com.qi.backstage.dictionary.model.dto.DictionaryDto;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
+import com.sfsctech.constants.CacheConstants;
 import com.sfsctech.constants.RpcConstants;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.RpcUtil;
@@ -49,7 +50,7 @@ public class DictionaryServiceConsumer {
             }.getType());
             if (null != result && RpcUtil.logPrint(result, logger)) {
                 options = result.getDataSet();
-                factory.getCacheClient().putTimeOut(SYSTEM_TYPE_OPTIONS, options, 1000 * 60 * 30);
+                factory.getCacheClient().putTimeOut(SYSTEM_TYPE_OPTIONS, options, CacheConstants.MilliSecond.Minutes30.getContent());
             }
         }
         return options;
@@ -73,7 +74,7 @@ public class DictionaryServiceConsumer {
         if (null == cloumns) {
             List<DictionaryDto> list = findChildByNumber(number);
             cloumns = list.stream().collect(Collectors.toMap(DictionaryDto::getNumber, DictionaryDto::getContent));
-            factory.getCacheClient().putTimeOut(SYSTEM_TYPE_CLOUMNS, cloumns, 1000 * 60 * 30);
+            factory.getCacheClient().putTimeOut(SYSTEM_TYPE_CLOUMNS, cloumns, CacheConstants.MilliSecond.Minutes30.getContent());
         }
         return cloumns;
     }

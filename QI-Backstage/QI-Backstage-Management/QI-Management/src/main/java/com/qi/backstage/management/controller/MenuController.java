@@ -1,17 +1,16 @@
 package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
+import com.qi.backstage.management.common.util.BreadcrumbUtil;
+import com.qi.backstage.management.model.domain.BaseMenu;
+import com.qi.backstage.management.model.domain.BaseSystem;
 import com.qi.backstage.management.service.read.MenuReadService;
 import com.qi.backstage.management.service.read.SystemReadService;
 import com.qi.backstage.management.service.transactional.MenuTransactionalService;
 import com.qi.backstage.management.service.write.MenuWriteService;
-import com.qi.backstage.management.model.domain.BaseMenu;
-import com.qi.backstage.management.model.domain.BaseSystem;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
@@ -50,9 +49,6 @@ public class MenuController {
     @Autowired
     private MenuTransactionalService transactionalService;
 
-    @Autowired
-    private CacheFactory<IRedisService<String, Object>> factory;
-
     @GetMapping("index")
     public String index(ModelMap model, BaseMenu menu) {
         // 系统信息GUID
@@ -61,42 +57,26 @@ public class MenuController {
         // 菜单的Guid不为空，并且不是ROOT。则是二级菜单导航请求
         if (StringUtil.isNotBlank(menu.getGuid()) && !CommonConstants.ROOT_GUID.equals(menu.getGuid())) {
             // 列表面包屑设置
-            list = factory.getList(menu.getGuid());
-            menu = readService.getByGuid(menu.getGuid());
-            model.put("header", menu.getName() + "菜单");
-            // 缓存为空
-            if (list == null) {
-                // 获取系统信息节点
-                list = factory.getList(menu.getSystem());
-                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
-                breadcrumb.addParams("guid", menu.getGuid());
-                list.add(breadcrumb);
-                factory.getCacheClient().put(menu.getGuid(), list);
-            }
+            String menuGuid = menu.getGuid();
+            list = BreadcrumbUtil.buildBreadcrumb(() -> {
+                BaseMenu innerMenu = readService.getByGuid(menuGuid);
+                return new Breadcrumb(innerMenu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
+            }, menu.getGuid(), menu.getSystem());
         }
         // 系统级菜单导航请求
         else {
             menu.setGuid(CommonConstants.ROOT_GUID);
+            String systemCode = menu.getSystem();
             // 根据系统Guid获取面包屑
-            list = factory.getList(menu.getSystem());
-            String header;
-            // 缓存为空，添加当前菜单节点
-            if (list == null) {
+            list = BreadcrumbUtil.buildBreadcrumb(() -> {
                 // 获取系统信息
-                BaseSystem system = systemReadService.getByGuid(menu.getSystem());
-                // 获取ROOT节点
-                list = factory.getList(CommonConstants.CACHE_SYSTEM_ROOT);
+                BaseSystem system = systemReadService.getByGuid(systemCode);
                 Breadcrumb breadcrumb = new Breadcrumb(system.getNamecn(), "/menu/index", CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
-                list.add(breadcrumb);
-                factory.getCacheClient().put(system.getGuid(), list);
-                header = system.getNamecn();
-            } else {
-                Breadcrumb breadcrumb = list.get(list.size() - 1);
-                header = breadcrumb.getText();
-            }
-            model.put("header", header);
+                return breadcrumb;
+            }, systemCode, CommonConstants.CACHE_SYSTEM_ROOT);
         }
+        model.put("header", list.get(list.size() - 1).getText());
         model.put("breadcrumbs", list);
         model.put("parent", menu.getGuid());
         model.put("data", readService.findAll(menu));
