@@ -86,6 +86,7 @@ website:
     auth:
       way: Complex
       protocol: Rpc
+      item-type: Platform
   # 服务架构
 #  session:
 #    authentication: sso

@@ -10,6 +10,7 @@ import com.sfsctech.common.security.rsa.RSA;
 import com.sfsctech.common.util.HexUtil;
 import com.sfsctech.common.util.NumberUtil;
 import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.SSOConstants;
 import com.sfsctech.dubbox.properties.SSOProperties;
 import com.sfsctech.rpc.result.ActionResult;
@@ -192,7 +193,14 @@ public class SSOHelper {
     public void setPortalUrl(ActionResult<String> result) {
         String form_url = helper.getCookieValue(SSOConstants.PARAM_FROM_URL);
         if (StringUtil.isNotBlank(form_url) && !(form_url = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECB, form_url)).equals(properties.getLoginUrl())) {
-            result.addAttach(SSOConstants.PARAM_FROM_URL, form_url);
+            helper.clearCookie(SSOConstants.PARAM_FROM_URL);
+            if (form_url.contains(SSOConstants.PARAM_FROM_URL)) {
+                String[] urls = form_url.split(LabelConstants.BACK_SLASH + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL);
+                result.addAttach(SSOConstants.PARAM_FROM_URL, urls[0]);
+                helper.setCookie(SSOConstants.PARAM_FROM_URL, EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, urls[1]), NumberUtil.INTEGER_MINUS_ONE);
+            } else {
+                result.addAttach(SSOConstants.PARAM_FROM_URL, form_url);
+            }
         } else {
             result.addAttach(SSOConstants.PARAM_FROM_URL, properties.getPortalUrl());
         }

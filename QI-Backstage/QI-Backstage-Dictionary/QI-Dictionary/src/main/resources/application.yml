@@ -124,6 +124,7 @@ website:
     auth:
       way: Simple
       protocol: Rpc
+      item-type: Server
   # 服务架构
   session:
     exclude-path: /rest/**

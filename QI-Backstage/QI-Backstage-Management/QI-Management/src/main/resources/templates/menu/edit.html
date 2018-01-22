@@ -50,14 +50,14 @@
                         </div>
                     </div>
                     <div class="form-group" th:if="${defaultSel.value != '0000000000000000000000'}">
-                        <label for="controller" class="col-sm-2 control-label">Controller映射</label>
+                        <label for="url" class="col-sm-2 control-label">Controller映射</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="text" class="form-control" id="controller" name="controller" placeholder="请输入Controller映射" th:value="${model} ? ${model.controller}">
+                            <input type="text" class="form-control" id="url" name="url" placeholder="请输入Controller路径" th:value="${model} ? ${model.url}">
                         </div>
-                        <label for="mapping" class="col-sm-2 control-label">Mapping映射</label>
-                        <div class="col-xs-3 input-group left-float">
-                            <input type="text" class="form-control" id="mapping" name="mapping" placeholder="请输入Mapping映射" th:value="${model} ? ${model.mapping}">
-                        </div>
+                        <!--<label for="mapping" class="col-sm-2 control-label">Mapping映射</label>-->
+                        <!--<div class="col-xs-3 input-group left-float">-->
+                            <!--<input type="text" class="form-control" id="mapping" name="mapping" placeholder="请输入Mapping映射" th:value="${model} ? ${model.mapping}">-->
+                        <!--</div>-->
                     </div>
                     <div class="form-group" style="height: 125px !important;">
                         <label for="description" class="col-sm-2 control-label">菜单描述</label>

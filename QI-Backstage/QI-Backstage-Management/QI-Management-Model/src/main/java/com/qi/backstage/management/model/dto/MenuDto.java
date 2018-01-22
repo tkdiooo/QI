@@ -14,9 +14,19 @@ public class MenuDto extends BaseMenu {
 
     private static final long serialVersionUID = -5252560452584476498L;
 
+    private boolean choose;
+
     private String domain;
 
     private List<MenuDto> child;
+
+    public boolean getChoose() {
+        return choose;
+    }
+
+    public void setChoose(boolean choose) {
+        this.choose = choose;
+    }
 
     public String getDomain() {
         return domain;
