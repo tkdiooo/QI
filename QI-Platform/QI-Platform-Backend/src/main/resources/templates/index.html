@@ -7,7 +7,7 @@
     <aside th:replace="common/layout :: sidebar"></aside>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <iframe name="myFrame" th:src="${url != null} ? ${url} : @{/main}" allowTransparency="true" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" width="100%"></iframe>
+        <iframe name="myFrame" th:src="${url != null} ? ${url} : @{/main} + '?' + ${#dates.createNow().getTime()} " allowTransparency="true" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" width="100%"></iframe>
     </div>
     <!-- /.content-wrapper -->
     <footer th:replace="common/layout :: footer"></footer>

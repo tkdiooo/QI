@@ -34,17 +34,30 @@ $.fn.serializeString = function () {
  * @param data
  */
 window.alert = function (msg, callback, data) {
-    layer.msg(msg, {
-        time: 0,
-        shade: [0.8, '#393D49'],
-        area: '300px',
-        btnAlign: 'c',
-        btn: ['确认']
-        , yes: function (index) {
-            layer.close(index);
-            invoke(callback, data);
-        }
-    });
+    if (self !== top)
+        parent.layer.msg(msg, {
+            time: 0,
+            shade: [0.8, '#393D49'],
+            area: '300px',
+            btnAlign: 'c',
+            btn: ['确认']
+            , yes: function (index) {
+                parent.layer.close(index);
+                invoke(callback, data);
+            }
+        });
+    else
+        layer.msg(msg, {
+            time: 0,
+            shade: [0.8, '#393D49'],
+            area: '300px',
+            btnAlign: 'c',
+            btn: ['确认']
+            , yes: function (index) {
+                layer.close(index);
+                invoke(callback, data);
+            }
+        });
 };
 /**
  * 重写window.confirm方法，用layer控件替换

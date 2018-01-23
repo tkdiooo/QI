@@ -29,7 +29,7 @@ public class BootstrapConstants {
 
         Success(1, "<span class='label label-success'>" + StatusConstants.Status.getValueByKey(1) + "</span>"),
 
-        Default(2, "<span class='label label-default'>" + StatusConstants.Status.getValueByKey(2) + "</span>"),
+        Default(2, "<span class='label label-info'>" + StatusConstants.Status.getValueByKey(2) + "</span>"),
 
         Warning(3, "<span class='label label-warning'>" + StatusConstants.Status.getValueByKey(3) + "</span>");
 

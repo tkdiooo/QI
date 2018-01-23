@@ -28,13 +28,13 @@
                 }, {
                     id: 'status_btn',
                     type: 'select',
-                    text: '状态',
+                    text: '所有状态',
                     title: '系统状态选择',
                     class: 'btn btn-default',
                     options: [[${options}]],
                     action: function (data) {
                         var val = $.fn.dataTable.util.escapeRegex(data);
-                        table.column(7).search(val ? '^' + val + '$' : '', true, false).draw();
+                        table.column(6).search(val ? '^' + val + '$' : '', true, false).draw();
                     }
                 }
             ]
