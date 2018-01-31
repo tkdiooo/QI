@@ -5,6 +5,8 @@ import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.dictionary.mapper.BaseDictionaryMapper;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
+import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.common.uuid.UUIDUtil;
 import com.sfsctech.constants.StatusConstants;
@@ -23,6 +25,8 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
 
     @Autowired
     private BaseDictionaryMapper mapper;
+    @Autowired
+    private CacheFactory<IRedisService<String, Object>> factory;
 
     @Override
     public void save(BaseDictionary model) {
@@ -40,6 +44,7 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
             example.createCriteria().andGuidEqualTo(model.getGuid());
             mapper.updateByExampleSelective(model, example);
         }
+        factory.getCacheClient().remove(model.getGuid());
     }
 
     @Override

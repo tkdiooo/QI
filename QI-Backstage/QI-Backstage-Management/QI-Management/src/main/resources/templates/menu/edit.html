@@ -33,7 +33,7 @@
                         </div>
                         <label class="col-sm-2 control-label">上级菜单</label>
                         <div class="col-xs-3 input-group left-float">
-                            <div class="btn-group" data-autorun="2" data-original-title="上级菜单选择">
+                            <div class="btn-group" data-autorun="2" data-original-title="上级菜单">
                                 <button type="button" class="btn btn-warning dropdown-toggle" th:text="${defaultSel} ? ${defaultSel.text} : 'Root'" style="cursor: default !important;"></button>
                             </div>
                             <input type="hidden" id="parent" name="parent" th:value="${defaultSel} ? ${defaultSel.value} : '0000000000000000000000'">
@@ -50,9 +50,9 @@
                         </div>
                     </div>
                     <div class="form-group" th:if="${defaultSel.value != '0000000000000000000000'}">
-                        <label for="url" class="col-sm-2 control-label">Controller映射</label>
+                        <label for="url" class="col-sm-2 control-label">菜单Url</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="text" class="form-control" id="url" name="url" placeholder="请输入Controller路径" th:value="${model} ? ${model.url}">
+                            <input type="text" class="form-control" id="url" name="url" placeholder="请输入菜单Url" th:value="${model} ? ${model.url}">
                         </div>
                         <!--<label for="mapping" class="col-sm-2 control-label">Mapping映射</label>-->
                         <!--<div class="col-xs-3 input-group left-float">-->

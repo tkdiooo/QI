@@ -160,9 +160,9 @@ public class IndexController {
 
     @ResponseBody
     @PostMapping("exist")
-    public JSONObject exist(String number) {
+    public JSONObject exist(BaseDictionary dictionary) {
         JSONObject json = new JSONObject();
-        json.put("valid", readService.numberIsExist(number));
+        json.put("valid", readService.numberIsExist(dictionary.getGuid(), dictionary.getParent() + dictionary.getNumber()));
         return json;
     }
 }

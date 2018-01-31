@@ -26,14 +26,14 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">菜单信息</label>
                         <div class="col-xs-3 input-group left-float">
-                            <div class="btn-group" data-autorun="2">
-                                <button type="button" class="btn btn-warning dropdown-toggle" th:text="${system} ? ${system.namecn}" style="cursor: default !important;"></button>
+                            <div class="btn-group" data-autorun="2" data-original-title="菜单信息">
+                                <button type="button" class="btn btn-warning dropdown-toggle" th:text="${menu} ? ${menu.name}" style="cursor: default !important;"></button>
                             </div>
-                            <input type="hidden" id="system" name="system" th:value="${system} ? ${system.code} : '默认'">
+                            <input type="hidden" id="menu" name="menu" th:value="${menu} ? ${menu.code} : '默认'">
                         </div>
                         <label class="col-sm-2 control-label">上级按钮</label>
                         <div class="col-xs-3 input-group left-float">
-                            <div class="btn-group" data-autorun="2" data-original-title="上级菜单选择">
+                            <div class="btn-group" data-autorun="2" data-original-title="上级按钮">
                                 <button type="button" class="btn btn-warning dropdown-toggle" th:text="${defaultSel} ? ${defaultSel.text} : 'Root'" style="cursor: default !important;"></button>
                             </div>
                             <input type="hidden" id="parent" name="parent" th:value="${defaultSel} ? ${defaultSel.value} : '0000000000000000000000'">
@@ -49,21 +49,25 @@
                             <input type="text" class="form-control" id="name" name="name" placeholder="请输入菜单名称" th:value="${model} ? ${model.name}">
                         </div>
                     </div>
-                    <div class="form-group" th:if="${defaultSel.value != '0000000000000000000000'}">
-                        <label for="controller" class="col-sm-2 control-label">按钮类型</label>
+                    <div class="form-group">
+                        <label for="url" class="col-sm-2 control-label">按钮Url</label>
                         <div class="col-xs-3 input-group left-float">
-                            <input type="text" class="form-control" id="controller" name="controller" placeholder="请输入Controller映射" th:value="${model} ? ${model.controller}">
+                            <input type="text" class="form-control" id="url" name="url" placeholder="请输入按钮Url" th:value="${model} ? ${model.url}">
                         </div>
+                        <label for="controller" class="col-sm-2 control-label">按钮类型</label>
+                        <!--<div class="col-xs-3 input-group left-float">-->
+                            <!--<input type="text" class="form-control" id="controller" name="controller" placeholder="请输入Controller映射" th:value="${model} ? ${model.controller}">-->
+                        <!--</div>-->
                     </div>
                     <div class="form-group" style="height: 125px !important;">
-                        <label for="description" class="col-sm-2 control-label">菜单描述</label>
+                        <label for="description" class="col-sm-2 control-label">按钮描述</label>
                         <div class="col-xs-7 input-group">
-                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="请输入菜单描述" th:value="${model} ? ${model.description}"></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="请输入按钮描述" th:value="${model} ? ${model.description}"></textarea>
                         </div>
                     </div>
                 </div>
                 <input type="hidden" id="guid" name="guid" th:value="${model} ? ${model.guid}"/>
-                <input type="hidden" id="isleaf" name="isleaf" th:value="${defaultSel.value != '0000000000000000000000'} ? 'false' : 'true'"/>
+                <!--<input type="hidden" id="isleaf" name="isleaf" th:value="${defaultSel.value != '0000000000000000000000'} ? 'false' : 'true'"/>-->
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交表单">提交</button>
                     <button type="button" class="btn btn-default pull-right" onclick="goBack()" data-original-title="取消返回">取消</button>
@@ -77,7 +81,7 @@
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
-        load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+        // load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
     });
     var choose = function (obj) {
         var opt = {
@@ -93,15 +97,15 @@
         var opt = {
             callback: function (result) {
                 $(".form-horizontal")[0].reset();
-                load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+                load_url(/*[[@{/button/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
             }
         };
-        ajax_action(/*[[@{/menu/save}]]*/ "", params, opt);
+        ajax_action(/*[[@{/button/save}]]*/ "", params, opt);
     };
     var goBack = function () {
-        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {
-            guid: $('#parent').val(),
-            system: [[${system.guid}]]
+        load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
+            menu: [[${menu.guid}]],
+            system: [[${system}]]
         });
     };
     var sort = function () {
@@ -110,7 +114,7 @@
             if (i !== 0) params += '#';
             params += $(this).attr('id') + ',' + i;
         });
-        ajax_action(/*[[@{/menu/sort}]]*/ "", {sortable: params});
+        ajax_action(/*[[@{/button/sort}]]*/ "", {sortable: params});
     }
     var load = function (guid) {
         var opt = {
@@ -126,7 +130,7 @@
                 }
             }
         };
-        ajax_action(/*[[@{/menu/load}]]*/ "", {guid: guid}, opt);
+        ajax_action(/*[[@{/button/load}]]*/ "", {guid: guid}, opt);
     }
 </script>
 </html>

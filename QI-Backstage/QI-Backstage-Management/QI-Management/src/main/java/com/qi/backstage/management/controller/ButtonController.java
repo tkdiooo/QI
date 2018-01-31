@@ -4,6 +4,7 @@ import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.management.common.util.BreadcrumbUtil;
 import com.qi.backstage.management.model.domain.BaseButton;
 import com.qi.backstage.management.model.domain.BaseMenu;
+import com.qi.backstage.management.service.read.ButtonReadService;
 import com.qi.backstage.management.service.read.MenuReadService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class ButtonController
@@ -36,6 +39,9 @@ public class ButtonController {
 
     @Autowired
     private MenuReadService menuReadService;
+
+    @Autowired
+    private ButtonReadService buttonReadService;
 
     @Autowired
     private CacheFactory<IRedisService<String, Object>> factory;
@@ -57,6 +63,7 @@ public class ButtonController {
                 breadcrumb.addParams("guid", menu.getGuid());
                 return breadcrumb;
             }, button.getGuid(), button.getParent());
+            model.put("parent", button.getParent());
         }
         // 菜单导航请求
         else {
@@ -68,10 +75,10 @@ public class ButtonController {
                 breadcrumb.addParams("guid", menu.getGuid());
                 return breadcrumb;
             }, button.getMenu(), button.getParent());
+            model.put("parent", CommonConstants.ROOT_GUID);
         }
         model.put("header", list.get(list.size() - 1).getText());
         model.put("breadcrumbs", list);
-        model.put("parent", button.getMenu());
 //        model.put("data", menuReadService.findAll(menu));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("small", "按钮列表");
@@ -80,21 +87,23 @@ public class ButtonController {
     }
 
     @GetMapping("add")
-    public String add(ModelMap model, BaseButton button) {
+    public String add(ModelMap model, BaseButton button, String system) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
-        // 获取系统信息
-//        model.put("system", systemReadService.getByGuid(menu.getSystem()));
-//        Map<String, Object> defaultSel = new HashMap<>();
-//        if (CommonConstants.ROOT_GUID.equals(menu.getParent())) {
-//            defaultSel.put("text", CommonConstants.ROOT_NAME);
-//            defaultSel.put("value", CommonConstants.ROOT_GUID);
-//        } else {
-//            menu = menuReadService.getByGuid(menu.getParent());
-//            defaultSel.put("text", menu.getName());
-//            defaultSel.put("value", menu.getGuid());
+        // 获取系统Guid
+        model.put("system", system);
+        // 获取菜单信息
+        model.put("menu", menuReadService.getByGuid(button.getMenu()));
+        Map<String, Object> defaultSel = new HashMap<>();
+        if (CommonConstants.ROOT_GUID.equals(button.getParent())) {
+            defaultSel.put("text", CommonConstants.ROOT_NAME);
+            defaultSel.put("value", CommonConstants.ROOT_GUID);
+        } else {
+            button = buttonReadService.getByGuid(button.getParent());
+            defaultSel.put("text", button.getName());
+            defaultSel.put("value", button.getGuid());
 //            model.put("guid", menu.getGuid());
-//        }
-//        model.put("defaultSel", defaultSel);
+        }
+        model.put("defaultSel", defaultSel);
         return "button/edit";
     }
 

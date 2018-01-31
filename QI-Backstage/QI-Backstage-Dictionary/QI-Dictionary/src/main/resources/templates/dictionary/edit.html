@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label for="number" class="col-sm-2 control-label">字典编号</label>
                         <div class="col-xs-3 input-group">
-                            <div class="input-group-btn">
+                            <div class="input-group-btn" style="vertical-align: top !important;" th:value="${parent_number}">
                                 <button type="button" class="btn btn-info" th:if="${null != parent_number}" th:text="${parent_number}"></button>
                             </div>
                             <input type="text" class="form-control" id="number" name="number" placeholder="请输入字典编号" th:value="${model} ? ${model.number}">
@@ -84,6 +84,13 @@
                             url: /*[[@{/exist}]]*/ "",
                             message: '字典编号已存在',//提示消息
                             delay: 1000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
+                            data: function (validator) {
+                                return {
+                                    guid: $('[name="guid"]').val(),
+                                    parent: $('.input-group-btn').attr('value'),
+                                    number: $('[name="number"]').val()
+                                };
+                            },
                             type: 'POST'// 请求方式
                         },
                         regexp: {//匹配规则

@@ -23,6 +23,7 @@
                     action: function () {
                         load_url(/*[[@{/button/add}]]*/ "", $('.content-wrapper'), {
                             system: [[${system}]],
+                            menu: [[${menu}]],
                             parent: [[${parent}]]
                         });
                     }
@@ -137,7 +138,7 @@
         var opt = {
             callback: function (result) {
                 load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
-                    guid: [[${parent}]],
+                    guid: [[${menu}]],
                     system: [[${system}]]
                 });
             }
@@ -149,7 +150,7 @@
         var opt = {
             callback: function (result) {
                 load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
-                    guid: [[${parent}]],
+                    guid: [[${menu}]],
                     system: [[${system}]]
                 });
             }

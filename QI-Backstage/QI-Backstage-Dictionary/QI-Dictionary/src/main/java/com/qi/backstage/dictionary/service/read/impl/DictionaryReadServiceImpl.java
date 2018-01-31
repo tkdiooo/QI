@@ -50,8 +50,14 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
     }
 
     @Override
-    public boolean numberIsExist(String number) {
+    public boolean numberIsExist(String guid, String number) {
         BaseDictionaryExample example = new BaseDictionaryExample();
+        if (StringUtil.isNotBlank(guid)) {
+            BaseDictionary dictionary = getByGuid(guid);
+            if (dictionary.getNumber().equals(number)) {
+                return true;
+            }
+        }
         example.createCriteria().andNumberEqualTo(number);
         return mapper.selectByExample(example).size() == 0;
     }
