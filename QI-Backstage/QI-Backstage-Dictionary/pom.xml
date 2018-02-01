@@ -23,6 +23,7 @@
         <module>QI-Dictionary-Interface</module>
         <module>QI-Dictionary-Model</module>
         <module>QI-Dictionary-Dao</module>
+        <module>QI-Dictionary-Util</module>
     </modules>
 
 </project>

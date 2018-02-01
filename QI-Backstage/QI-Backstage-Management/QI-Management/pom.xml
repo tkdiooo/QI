@@ -82,10 +82,10 @@
             <artifactId>QI-Management-Interface</artifactId>
             <version>${backstage.version}</version>
         </dependency>
-        <!-- QI-Management-Interface support -->
+        <!-- QI-Dictionary-Util support -->
         <dependency>
             <groupId>com.qi.backstage.dictionary</groupId>
-            <artifactId>QI-Dictionary-Model</artifactId>
+            <artifactId>QI-Dictionary-Util</artifactId>
             <version>${dictionary.version}</version>
         </dependency>
     </dependencies>

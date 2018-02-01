@@ -83,15 +83,6 @@
         $("[data-original-title]").tooltip();
         load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
     });
-    var choose = function (obj) {
-        var opt = {
-            id: 'type_btn',
-            action: function (data) {
-                $('#system').val(data);
-            }
-        };
-        selectChange(obj, opt);
-    };
     var editSubmit = function () {
         var params = $(".form-horizontal").serializeJson();
         var opt = {

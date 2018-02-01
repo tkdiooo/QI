@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
  */
 public class CommonConstants {
 
-    public static final String DICT_NUMNER_SYSTEM_TYPE = "00015";
-
     public enum SystemType implements IEnum<String, String> {
         /**
          * 已删除

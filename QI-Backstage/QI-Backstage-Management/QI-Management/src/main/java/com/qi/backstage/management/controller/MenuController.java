@@ -151,7 +151,7 @@ public class MenuController {
     public String ordering(ModelMap model, BaseMenu menu) {
         // 获取所有当前节点数据
         model.put("data", readService.findAll(menu));
-        return "menu/sort";
+        return "common/sort";
     }
 
     @ResponseBody

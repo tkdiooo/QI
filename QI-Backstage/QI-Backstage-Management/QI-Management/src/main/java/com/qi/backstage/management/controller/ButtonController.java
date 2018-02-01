@@ -2,10 +2,12 @@ package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.management.common.util.BreadcrumbUtil;
+import com.qi.backstage.management.common.util.DictUtil;
 import com.qi.backstage.management.model.domain.BaseButton;
 import com.qi.backstage.management.model.domain.BaseMenu;
 import com.qi.backstage.management.service.read.ButtonReadService;
 import com.qi.backstage.management.service.read.MenuReadService;
+import com.qi.backstage.management.service.write.ButtonWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
@@ -41,7 +43,10 @@ public class ButtonController {
     private MenuReadService menuReadService;
 
     @Autowired
-    private ButtonReadService buttonReadService;
+    private ButtonReadService readService;
+
+    @Autowired
+    private ButtonWriteService writeService;
 
     @Autowired
     private CacheFactory<IRedisService<String, Object>> factory;
@@ -98,12 +103,15 @@ public class ButtonController {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
             defaultSel.put("value", CommonConstants.ROOT_GUID);
         } else {
-            button = buttonReadService.getByGuid(button.getParent());
+            button = readService.getByGuid(button.getParent());
             defaultSel.put("text", button.getName());
             defaultSel.put("value", button.getGuid());
 //            model.put("guid", menu.getGuid());
         }
         model.put("defaultSel", defaultSel);
+        List<Map<String, Object>> options = DictUtil.Button.options();
+        model.put("defaultOptions", options.get(0));
+        model.put("options", options);
         return "button/edit";
     }
 
@@ -130,9 +138,9 @@ public class ButtonController {
 
     @ResponseBody
     @PostMapping("save")
-    public ActionResult<BaseButton> save(BaseButton menu) {
-//        writeService.save(menu);
-        return new ActionResult<>(menu);
+    public ActionResult<BaseButton> save(BaseButton button) {
+        writeService.save(button);
+        return new ActionResult<>(button);
     }
 
     @ResponseBody
@@ -140,5 +148,32 @@ public class ButtonController {
     public ActionResult<BaseButton> disable(String guid) {
 //        writeService.changeStatus(guid, StatusConstants.Status.Disable);
         return new ActionResult<>();
+    }
+
+    @ResponseBody
+    @PostMapping("valid")
+    public ActionResult<BaseButton> valid(String guid) {
+//        writeService.changeStatus(guid, StatusConstants.Status.Valid);
+        return new ActionResult<>();
+    }
+
+    @GetMapping("ordering")
+    public String ordering(ModelMap model, BaseButton button) {
+        // 获取所有当前节点数据
+//        model.put("data", readService.findAll(menu));
+        return "common/sort";
+    }
+
+    @ResponseBody
+    @PostMapping("sort")
+    public ActionResult<String> sort(String sortable) {
+//        transactionalService.sort(sortable);
+        return new ActionResult<>();
+    }
+
+    @ResponseBody
+    @PostMapping("load")
+    public ActionResult<BaseButton> load(String guid) {
+        return new ActionResult<>(readService.getByGuid(guid));
     }
 }

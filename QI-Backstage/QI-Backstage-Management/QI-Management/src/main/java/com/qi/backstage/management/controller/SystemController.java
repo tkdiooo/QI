@@ -2,8 +2,8 @@ package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.management.common.util.BreadcrumbUtil;
+import com.qi.backstage.management.common.util.DictUtil;
 import com.qi.backstage.management.model.domain.BaseSystem;
-import com.qi.backstage.management.rpc.consumer.DictionaryServiceConsumer;
 import com.qi.backstage.management.service.read.SystemReadService;
 import com.qi.backstage.management.service.write.SystemWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
@@ -34,9 +34,6 @@ import java.util.Map;
 public class SystemController {
 
     @Autowired
-    private DictionaryServiceConsumer serviceConsumer;
-
-    @Autowired
     private SystemReadService readService;
 
     @Autowired
@@ -49,14 +46,14 @@ public class SystemController {
         model.put("data", readService.findAll(system));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("options", BootstrapUtil.matchOptions("system_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
-        model.put("type", serviceConsumer.getSystemTypeCloumns(CommonConstants.DICT_NUMNER_SYSTEM_TYPE));
+        model.put("type", DictUtil.System.cloumns());
         return "system/index";
     }
 
     @GetMapping("add")
     public String add(ModelMap model) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
-        List<Map<String, Object>> options = serviceConsumer.getSystemTypeOptions(CommonConstants.DICT_NUMNER_SYSTEM_TYPE);
+        List<Map<String, Object>> options = DictUtil.System.options();
         model.put("defaultSel", options.get(0));
         model.put("options", options);
         return "system/edit";
@@ -65,7 +62,7 @@ public class SystemController {
     @GetMapping("edit")
     public String edit(ModelMap model, String guid) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
-        List<Map<String, Object>> options = serviceConsumer.getSystemTypeOptions(CommonConstants.DICT_NUMNER_SYSTEM_TYPE);
+        List<Map<String, Object>> options = DictUtil.System.options();
         model.put("options", options);
         BaseSystem system = readService.getByGuid(guid);
         model.put("model", system);

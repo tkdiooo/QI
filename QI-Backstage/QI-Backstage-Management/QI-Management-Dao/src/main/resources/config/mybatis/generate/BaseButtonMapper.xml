@@ -9,7 +9,7 @@
         <id column="ID" jdbcType="BIGINT" property="id"/>
         <result column="Guid" jdbcType="CHAR" property="guid"/>
         <result column="Parent" jdbcType="CHAR" property="parent"/>
-        <result column="Menu" jdbcType="CHAR" property="menu"/>
+        <result column="Menu" jdbcType="VARCHAR" property="menu"/>
         <result column="Code" jdbcType="VARCHAR" property="code"/>
         <result column="Name" jdbcType="VARCHAR" property="name"/>
         <result column="Url" jdbcType="VARCHAR" property="url"/>
@@ -158,7 +158,7 @@
         insert into base_button (Guid, Parent, Menu,
         Code, Name, Url, Type,
         Description, Status)
-        values (#{guid,jdbcType=CHAR}, #{parent,jdbcType=CHAR}, #{menu,jdbcType=CHAR},
+        values (#{guid,jdbcType=CHAR}, #{parent,jdbcType=CHAR}, #{menu,jdbcType=VARCHAR},
         #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
         #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
     </insert>
@@ -210,7 +210,7 @@
                 #{parent,jdbcType=CHAR},
             </if>
             <if test="menu != null">
-                #{menu,jdbcType=CHAR},
+                #{menu,jdbcType=VARCHAR},
             </if>
             <if test="code != null">
                 #{code,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
                 Parent = #{record.parent,jdbcType=CHAR},
             </if>
             <if test="record.menu != null">
-                Menu = #{record.menu,jdbcType=CHAR},
+                Menu = #{record.menu,jdbcType=VARCHAR},
             </if>
             <if test="record.code != null">
                 Code = #{record.code,jdbcType=VARCHAR},
@@ -294,7 +294,7 @@
         set ID = #{record.id,jdbcType=BIGINT},
         Guid = #{record.guid,jdbcType=CHAR},
         Parent = #{record.parent,jdbcType=CHAR},
-        Menu = #{record.menu,jdbcType=CHAR},
+        Menu = #{record.menu,jdbcType=VARCHAR},
         Code = #{record.code,jdbcType=VARCHAR},
         Name = #{record.name,jdbcType=VARCHAR},
         Url = #{record.url,jdbcType=VARCHAR},
@@ -316,7 +316,7 @@
                 Parent = #{parent,jdbcType=CHAR},
             </if>
             <if test="menu != null">
-                Menu = #{menu,jdbcType=CHAR},
+                Menu = #{menu,jdbcType=VARCHAR},
             </if>
             <if test="code != null">
                 Code = #{code,jdbcType=VARCHAR},
@@ -347,7 +347,7 @@
         update base_button
         set Guid = #{guid,jdbcType=CHAR},
         Parent = #{parent,jdbcType=CHAR},
-        Menu = #{menu,jdbcType=CHAR},
+        Menu = #{menu,jdbcType=VARCHAR},
         Code = #{code,jdbcType=VARCHAR},
         Name = #{name,jdbcType=VARCHAR},
         Url = #{url,jdbcType=VARCHAR},
