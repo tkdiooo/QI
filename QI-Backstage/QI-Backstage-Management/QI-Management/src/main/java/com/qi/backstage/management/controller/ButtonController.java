@@ -84,7 +84,7 @@ public class ButtonController {
         }
         model.put("header", list.get(list.size() - 1).getText());
         model.put("breadcrumbs", list);
-//        model.put("data", menuReadService.findAll(menu));
+//        model.put("data", readService.findAll(button));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("small", "按钮列表");
         model.put("options", BootstrapUtil.matchOptions("button_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));

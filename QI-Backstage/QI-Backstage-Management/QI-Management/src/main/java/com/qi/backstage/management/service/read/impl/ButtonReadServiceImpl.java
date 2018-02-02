@@ -6,6 +6,8 @@ import com.qi.backstage.management.service.read.ButtonReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Class ButtonReadServiceImpl
  *
@@ -17,6 +19,11 @@ public class ButtonReadServiceImpl implements ButtonReadService {
 
     @Autowired
     private BaseButtonMapper mapper;
+
+    @Override
+    public List<BaseButton> findAll(BaseButton model) {
+        return null;
+    }
 
     @Override
     public BaseButton getByGuid(String guid) {

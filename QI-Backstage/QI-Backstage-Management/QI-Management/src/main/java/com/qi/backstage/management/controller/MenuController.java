@@ -11,6 +11,8 @@ import com.qi.backstage.management.service.write.MenuWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
+import com.sfsctech.cache.CacheFactory;
+import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
@@ -60,7 +62,9 @@ public class MenuController {
             String menuGuid = menu.getGuid();
             list = BreadcrumbUtil.buildBreadcrumb(() -> {
                 BaseMenu innerMenu = readService.getByGuid(menuGuid);
-                return new Breadcrumb(innerMenu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
+                Breadcrumb breadcrumb = new Breadcrumb(innerMenu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", innerMenu.getGuid());
+                return breadcrumb;
             }, menu.getGuid(), menu.getSystem());
         }
         // 系统级菜单导航请求

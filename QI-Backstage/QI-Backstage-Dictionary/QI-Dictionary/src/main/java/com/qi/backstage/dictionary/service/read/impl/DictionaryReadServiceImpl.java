@@ -2,6 +2,7 @@ package com.qi.backstage.dictionary.service.read.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.qi.backstage.dictionary.common.constants.CommonConstants;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
 import com.qi.backstage.dictionary.model.dto.DictionaryDto;
@@ -33,12 +34,13 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
     public List<BaseDictionary> findAll(BaseDictionary model) {
         BaseDictionaryExample example = new BaseDictionaryExample();
         BaseDictionaryExample.Criteria criteria = example.createCriteria();
-        if (StringUtil.isNotBlank(model.getParent())) {
-            criteria.andParentEqualTo(model.getParent());
-        }
-        if (StringUtil.isNotBlank(model.getNumber())) {
-            criteria.andNumberLike(model.getNumber() + LabelConstants.PERCENT);
-            criteria.andNumberNotEqualTo(model.getNumber());
+//        if (StringUtil.isNotBlank(model.getParent())) {
+//            criteria.andParentEqualTo(model.getParent());
+//        }
+        if (CommonConstants.ROOT_GUID.equals(model.getNumber())) {
+
+//            criteria.andNumberLike(model.getNumber() + LabelConstants.PERCENT);
+//            criteria.andNumberNotEqualTo(model.getNumber());
         }
         example.setOrderByClause("sort asc");
         return mapper.selectByExample(example);

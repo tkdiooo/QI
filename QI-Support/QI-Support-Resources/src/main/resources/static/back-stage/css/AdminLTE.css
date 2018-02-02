@@ -5996,3 +5996,11 @@ table.text-center th {
 .btn span {
     margin-right: 1px;
 }
+
+.form-alone {
+    float: none !important;
+}
+
+.form-group i {
+    top: 0 !important;
+}

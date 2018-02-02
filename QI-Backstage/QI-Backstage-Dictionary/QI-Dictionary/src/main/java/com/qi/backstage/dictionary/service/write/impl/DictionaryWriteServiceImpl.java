@@ -7,9 +7,16 @@ import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
+import com.sfsctech.common.util.Cn2SpellUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.common.uuid.UUIDUtil;
+import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.StatusConstants;
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +37,7 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
 
     @Override
     public void save(BaseDictionary model) {
-        if (!model.getParent().equals(CommonConstants.ROOT_GUID)) {
-            mapper.selectByGuid(model.getParent());
-            model.setNumber(mapper.selectByGuid(model.getParent()).getNumber() + model.getNumber());
-        }
+        model.setPinyin(Cn2SpellUtil.converterToSpell(model.getContent()) + LabelConstants.COMMA + Cn2SpellUtil.converterToFirstSpell(model.getContent()));
         if (StringUtil.isBlank(model.getGuid())) {
             model.setGuid(UUIDUtil.base58Uuid());
             model.setStatus(StatusConstants.Status.Valid.getCode());

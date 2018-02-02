@@ -23,22 +23,28 @@
             <!-- form start -->
             <form class="form-horizontal">
                 <div class="box-body">
-                    <div class="form-group">
-                        <label for="number" class="col-sm-2 control-label">字典编号</label>
-                        <div class="col-xs-3 input-group">
+                    <div class="form-group col-xs-6 form-alone">
+                        <label for="number" class="col-sm-4 control-label">字典编号</label>
+                        <div class="col-xs-7 input-group">
                             <div class="input-group-btn" style="vertical-align: top !important;" th:value="${parent_number}">
                                 <button type="button" class="btn btn-info" th:if="${null != parent_number}" th:text="${parent_number}"></button>
                             </div>
                             <input type="text" class="form-control" id="number" name="number" placeholder="请输入字典编号" th:value="${model} ? ${model.number}">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="content" class="col-sm-2 control-label">字典内容</label>
-                        <div class="col-xs-3 input-group">
+                    <div class="form-group col-xs-6">
+                        <label for="content" class="col-sm-4 control-label">字典内容</label>
+                        <div class="col-xs-7 input-group">
                             <input type="text" class="form-control" id="content" name="content" placeholder="请输入字典内容" th:value="${model} ? ${model.content}">
                         </div>
                     </div>
-                    <div class="form-group" style="height: 125px !important;">
+                    <div class="form-group col-xs-6">
+                        <label for="content" class="col-sm-4 control-label">字典内容（英文）</label>
+                        <div class="col-xs-7 input-group">
+                            <input type="text" class="form-control" id="english" name="english" placeholder="请输入字典内容（英文）" th:value="${model} ? ${model.english}">
+                        </div>
+                    </div>
+                    <div class="form-group" style="height: 225px !important;">
                         <label for="description" class="col-sm-2 control-label">字典描述</label>
                         <div class="col-xs-7 input-group">
                             <textarea class="form-control" id="description" name="description" rows="4" placeholder="请输入字典描述" th:value="${model} ? ${model.description}"></textarea>
@@ -75,9 +81,9 @@
                             message: '字典编号不能为空'
                         },
                         stringLength: {
-                            min: 5,
-                            max: 5,
-                            message: '字典编号长度必须是5位'
+                            min: 4,
+                            max: 4,
+                            message: '字典编号长度必须是4位'
                         },
                         threshold: 5,
                         remote: {
@@ -107,6 +113,18 @@
                         stringLength: {
                             max: 20,
                             message: '字典内容长度不能超过20位'
+                        }
+                    }
+                },
+                english: {
+                    validators: {
+                        stringLength: {
+                            max: 80,
+                            message: '字典内容（英文）长度不能超过80位'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: '字典内容（英文）只能包含大写、小写、数字和下划线'
                         }
                     }
                 }

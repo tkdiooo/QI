@@ -2,6 +2,8 @@ package com.qi.backstage.management.service.read;
 
 import com.qi.backstage.management.model.domain.BaseButton;
 
+import java.util.List;
+
 /**
  * Class ButtonReadService
  *
@@ -9,6 +11,8 @@ import com.qi.backstage.management.model.domain.BaseButton;
  * @version Description:
  */
 public interface ButtonReadService {
+
+    List<BaseButton> findAll(BaseButton model);
 
     BaseButton getByGuid(String guid);
 }

@@ -32,10 +32,10 @@
         <!-- 生成mapxml对应mapper，也就是接口dao -->
         <javaClientGenerator targetPackage="${mapper.package}" targetProject="src/main/java" type="XMLMAPPER" />
 
-        <table schema="${db.schema}" tableName="%" enableCountByExample="true" enableUpdateByExample="true"
+        <table schema="${db.schema}" tableName="base_dictionary" enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
             <!-- 主键生成 -->
-            <generatedKey column="id" sqlStatement="Mysql"/>
+            <!--<generatedKey column="id" sqlStatement="Mysql"/>-->
         </table>
     </context>
 </generatorConfiguration>

@@ -1,10 +1,10 @@
 package com.qi.backstage.dictionary.mapper;
 
+import com.qi.backstage.dictionary.model.domain.BaseDictionary;
+import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
 
 import java.util.List;
 
-import com.qi.backstage.dictionary.model.domain.BaseDictionary;
-import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface BaseDictionaryMapper {

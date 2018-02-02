@@ -324,76 +324,6 @@ public class BaseDictionaryExample {
             return (Criteria) this;
         }
 
-        public Criteria andParentIsNull() {
-            addCriterion("Parent is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentIsNotNull() {
-            addCriterion("Parent is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentEqualTo(String value) {
-            addCriterion("Parent =", value, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentNotEqualTo(String value) {
-            addCriterion("Parent <>", value, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentGreaterThan(String value) {
-            addCriterion("Parent >", value, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentGreaterThanOrEqualTo(String value) {
-            addCriterion("Parent >=", value, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentLessThan(String value) {
-            addCriterion("Parent <", value, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentLessThanOrEqualTo(String value) {
-            addCriterion("Parent <=", value, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentLike(String value) {
-            addCriterion("Parent like", value, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentNotLike(String value) {
-            addCriterion("Parent not like", value, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentIn(List<String> values) {
-            addCriterion("Parent in", values, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentNotIn(List<String> values) {
-            addCriterion("Parent not in", values, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentBetween(String value1, String value2) {
-            addCriterion("Parent between", value1, value2, "parent");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentNotBetween(String value1, String value2) {
-            addCriterion("Parent not between", value1, value2, "parent");
-            return (Criteria) this;
-        }
-
         public Criteria andNumberIsNull() {
             addCriterion("Number is null");
             return (Criteria) this;
@@ -531,6 +461,146 @@ public class BaseDictionaryExample {
 
         public Criteria andContentNotBetween(String value1, String value2) {
             addCriterion("Content not between", value1, value2, "content");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinIsNull() {
+            addCriterion("Pinyin is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinIsNotNull() {
+            addCriterion("Pinyin is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinEqualTo(String value) {
+            addCriterion("Pinyin =", value, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinNotEqualTo(String value) {
+            addCriterion("Pinyin <>", value, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinGreaterThan(String value) {
+            addCriterion("Pinyin >", value, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinGreaterThanOrEqualTo(String value) {
+            addCriterion("Pinyin >=", value, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinLessThan(String value) {
+            addCriterion("Pinyin <", value, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinLessThanOrEqualTo(String value) {
+            addCriterion("Pinyin <=", value, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinLike(String value) {
+            addCriterion("Pinyin like", value, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinNotLike(String value) {
+            addCriterion("Pinyin not like", value, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinIn(List<String> values) {
+            addCriterion("Pinyin in", values, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinNotIn(List<String> values) {
+            addCriterion("Pinyin not in", values, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinBetween(String value1, String value2) {
+            addCriterion("Pinyin between", value1, value2, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andPinyinNotBetween(String value1, String value2) {
+            addCriterion("Pinyin not between", value1, value2, "pinyin");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishIsNull() {
+            addCriterion("English is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishIsNotNull() {
+            addCriterion("English is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishEqualTo(String value) {
+            addCriterion("English =", value, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishNotEqualTo(String value) {
+            addCriterion("English <>", value, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishGreaterThan(String value) {
+            addCriterion("English >", value, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishGreaterThanOrEqualTo(String value) {
+            addCriterion("English >=", value, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishLessThan(String value) {
+            addCriterion("English <", value, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishLessThanOrEqualTo(String value) {
+            addCriterion("English <=", value, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishLike(String value) {
+            addCriterion("English like", value, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishNotLike(String value) {
+            addCriterion("English not like", value, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishIn(List<String> values) {
+            addCriterion("English in", values, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishNotIn(List<String> values) {
+            addCriterion("English not in", values, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishBetween(String value1, String value2) {
+            addCriterion("English between", value1, value2, "english");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnglishNotBetween(String value1, String value2) {
+            addCriterion("English not between", value1, value2, "english");
             return (Criteria) this;
         }
 
