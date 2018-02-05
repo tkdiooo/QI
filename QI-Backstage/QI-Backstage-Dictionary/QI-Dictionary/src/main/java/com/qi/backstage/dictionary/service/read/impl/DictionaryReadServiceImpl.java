@@ -3,16 +3,15 @@ package com.qi.backstage.dictionary.service.read.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qi.backstage.dictionary.common.constants.CommonConstants;
+import com.qi.backstage.dictionary.mapper.BaseDictionaryMapper;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
 import com.qi.backstage.dictionary.model.dto.DictionaryDto;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
-import com.qi.backstage.dictionary.mapper.BaseDictionaryMapper;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.common.util.BeanUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.LabelConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,33 +33,28 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
     public List<BaseDictionary> findAll(BaseDictionary model) {
         BaseDictionaryExample example = new BaseDictionaryExample();
         BaseDictionaryExample.Criteria criteria = example.createCriteria();
-//        if (StringUtil.isNotBlank(model.getParent())) {
-//            criteria.andParentEqualTo(model.getParent());
-//        }
-        if (CommonConstants.ROOT_GUID.equals(model.getNumber())) {
-
-//            criteria.andNumberLike(model.getNumber() + LabelConstants.PERCENT);
-//            criteria.andNumberNotEqualTo(model.getNumber());
+        if (StringUtil.isNotBlank(model.getParent())) {
+            criteria.andParentEqualTo(model.getParent());
         }
         example.setOrderByClause("sort asc");
         return mapper.selectByExample(example);
     }
 
     @Override
-    public BaseDictionary getByGuid(String guid) {
-        return mapper.selectByGuid(guid);
+    public BaseDictionary getByNumber(String number) {
+        return mapper.selectByNumber(number);
     }
 
     @Override
-    public boolean numberIsExist(String guid, String number) {
+    public boolean numberIsExist(BaseDictionary dictionary) {
         BaseDictionaryExample example = new BaseDictionaryExample();
-        if (StringUtil.isNotBlank(guid)) {
-            BaseDictionary dictionary = getByGuid(guid);
-            if (dictionary.getNumber().equals(number)) {
+        if (null != dictionary.getId()) {
+            BaseDictionary dict = mapper.selectByPrimaryKey(dictionary.getId());
+            if (dict.getNumber().equals(dictionary.getNumber())) {
                 return true;
             }
         }
-        example.createCriteria().andNumberEqualTo(number);
+        example.createCriteria().andNumberEqualTo(dictionary.getParent().equals(CommonConstants.ROOT_GUID) ? dictionary.getNumber() : (dictionary.getParent() + dictionary.getNumber()));
         return mapper.selectByExample(example).size() == 0;
     }
 

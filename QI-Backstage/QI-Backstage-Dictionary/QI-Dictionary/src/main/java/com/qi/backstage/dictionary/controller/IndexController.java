@@ -53,30 +53,30 @@ public class IndexController {
 
     @GetMapping("grid")
     public String grid(ModelMap model, BaseDictionary dictionary) {
-        // 父节点Guid为空
-        if (StringUtil.isBlank(dictionary.getNumber())) {
-            dictionary.setNumber(CommonConstants.ROOT_GUID);
+        // 父节点parent为空
+        if (StringUtil.isBlank(dictionary.getParent())) {
+            dictionary.setParent(CommonConstants.ROOT_GUID);
         }
         // 列表面包屑设置
-        List<Breadcrumb> list = factory.getList(dictionary.getNumber());
+        List<Breadcrumb> list = factory.getList(dictionary.getParent());
         // 缓存为空
         if (list == null) {
             // 根节点为空，设置根节点
-            if (CommonConstants.ROOT_GUID.equals(dictionary.getNumber())) {
+            if (CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
                 Breadcrumb breadcrumb = new Breadcrumb(CommonConstants.ROOT_NAME, CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
                 list = new ArrayList<>();
                 list.add(breadcrumb);
             } else {
-//                BaseDictionary dict = readService.getByGuid(dictionary.getParent());
-//                Breadcrumb breadcrumb = new Breadcrumb(dict.getContent(), CommonConstants.ROOT_CLASS);
-//                breadcrumb.addParams("guid", dict.getGuid());
-//                list = factory.getList(dict.getParent());
-//                list.add(breadcrumb);
+                BaseDictionary dict = readService.getByNumber(dictionary.getParent());
+                Breadcrumb breadcrumb = new Breadcrumb(dict.getContent(), CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", dict.getNumber());
+                list = factory.getList(dict.getParent());
+                list.add(breadcrumb);
             }
-            factory.getCacheClient().put(dictionary.getNumber(), list);
+            factory.getCacheClient().put(dictionary.getParent(), list);
         }
-//        model.put("parent", dictionary.getParent());
+        model.put("parent", dictionary.getParent());
         model.put("data", readService.findAll(dictionary));
         model.put("options", BootstrapUtil.matchOptions("dictionary_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
         model.put("breadcrumbs", list);
@@ -93,29 +93,27 @@ public class IndexController {
     @GetMapping("add")
     public String add(ModelMap model, String parent) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
-        if (StringUtil.isNotBlank(parent)) {
-            // 父节点Number
-            model.put("parent", parent);
+        // 不是跟节点的情况下，获取父节点编号
+        if (!CommonConstants.ROOT_GUID.equals(parent)) {
+            model.put("parent_number", parent);
         }
-//        // 不是跟节点的情况下，获取父节点编号
-//        if (!CommonConstants.ROOT_GUID.equals(parent)) {
-//            model.put("parent_number", readService.getByGuid(parent).getNumber());
-//        }
+        // 父节点Number
+        model.put("parent", parent);
         return "dictionary/edit";
     }
 
     @GetMapping("edit")
-    public String edit(ModelMap model, String guid) {
+    public String edit(ModelMap model, String number) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
-        BaseDictionary dict = readService.getByGuid(guid);
-        // 父节点Guid
-//        model.put("parent_guid", dict.getParent());
-//        // 不是跟节点的情况下，获取父节点编号
-//        if (!CommonConstants.ROOT_GUID.equals(dict.getParent())) {
-//            model.put("parent_number", dict.getNumber().substring(5));
-//        }
-        dict.setNumber(dict.getNumber().substring(dict.getNumber().length() - 5));
-        model.put("model", dict);
+        BaseDictionary dictionary = readService.getByNumber(number);
+        // 不是跟节点的情况下，获取父节点编号
+        if (!CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
+            model.put("parent_number", dictionary.getParent());
+            dictionary.setNumber(dictionary.getNumber().substring(dictionary.getNumber().length() - 4));
+        }
+        // 父节点Number
+        model.put("parent", dictionary.getParent());
+        model.put("model", dictionary);
         return "dictionary/edit";
     }
 
@@ -128,15 +126,15 @@ public class IndexController {
 
     @ResponseBody
     @PostMapping("disable")
-    public ActionResult<BaseDictionary> disable(String guid) {
-        writeService.changeStatus(guid, StatusConstants.Status.Disable);
+    public ActionResult<BaseDictionary> disable(String number) {
+        writeService.changeStatus(number, StatusConstants.Status.Disable);
         return new ActionResult<>();
     }
 
     @ResponseBody
     @PostMapping("valid")
-    public ActionResult<BaseDictionary> valid(String guid) {
-        writeService.changeStatus(guid, StatusConstants.Status.Valid);
+    public ActionResult<BaseDictionary> valid(String number) {
+        writeService.changeStatus(number, StatusConstants.Status.Valid);
         return new ActionResult<>();
     }
 
@@ -156,15 +154,20 @@ public class IndexController {
 
     @ResponseBody
     @PostMapping("load")
-    public ActionResult<BaseDictionary> load(String guid) {
-        return new ActionResult<>(readService.getByGuid(guid));
+    public ActionResult<BaseDictionary> load(String number) {
+        BaseDictionary dictionary = readService.getByNumber(number);
+        // 不是跟节点的情况下，获取父节点编号
+        if (!CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
+            dictionary.setNumber(dictionary.getNumber().substring(dictionary.getNumber().length() - 4));
+        }
+        return new ActionResult<>(dictionary);
     }
 
     @ResponseBody
     @PostMapping("exist")
-    public JSONObject exist(BaseDictionary dictionary, String parent) {
+    public JSONObject exist(BaseDictionary dictionary) {
         JSONObject json = new JSONObject();
-        json.put("valid", readService.numberIsExist(dictionary.getGuid(), parent + dictionary.getNumber()));
+        json.put("valid", readService.numberIsExist(dictionary));
         return json;
     }
 }

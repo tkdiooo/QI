@@ -43,7 +43,7 @@ public class MenuReadServiceImpl implements MenuReadService {
     }
 
     @Override
-    public List<MenuDto> findBySystem(String system, String parent) {
-        return dao.findBySystem(system, parent);
+    public List<MenuDto> findBySysCode(String sysCode, String parent) {
+        return dao.findBySysCode(sysCode, parent);
     }
 }

@@ -11,6 +11,6 @@ import com.sfsctech.rpc.result.ActionResult;
  */
 public interface BaseMenuService {
 
-    ActionResult<MenuDto> findBySystem(String system);
+    ActionResult<MenuDto> findBySystem(String sysGuid);
 
 }

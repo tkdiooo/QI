@@ -38,7 +38,7 @@ public class DictionaryServiceProvider implements DictionaryService {
         ActionResult<DictionaryDto> result = new ActionResult<>();
         try {
             BaseDictionary model = new BaseDictionary();
-            model.setNumber(number);
+            model.setParent(number);
             List<BaseDictionary> list = readService.findAll(model);
             if (ListUtil.isEmpty(list)) {
                 result.setSuccess(false);

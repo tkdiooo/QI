@@ -8,7 +8,8 @@
             <id column="cID" jdbcType="BIGINT" property="id"/>
             <result column="cGuid" jdbcType="CHAR" property="guid"/>
             <result column="cParent" jdbcType="CHAR" property="parent"/>
-            <result column="cSystem" jdbcType="VARCHAR" property="system"/>
+            <result column="cSysGuid" jdbcType="VARCHAR" property="sysguid"/>
+            <result column="cSysCode" jdbcType="VARCHAR" property="syscode"/>
             <result column="cCode" jdbcType="VARCHAR" property="code"/>
             <result column="cName" jdbcType="VARCHAR" property="name"/>
             <result column="cUrl" jdbcType="VARCHAR" property="url"/>
@@ -25,7 +26,8 @@
         C.ID AS cID,
         C.Guid AS cGuid,
         C.Parent AS cParent,
-        C.System AS cSystem,
+        C.SysGuid AS cSysGuid,
+	    C.SysCode AS cSysCode,
         C.`Code` AS cCode,
         C.`Name` AS cName,
         C.Url AS cUrl,
@@ -35,10 +37,10 @@
         C.`Status` AS cStatus
     FROM
         base_menu B
-    LEFT JOIN base_system S ON B.System = S.`Code`
+    LEFT JOIN base_system S ON B.SysGuid = S.Guid
     LEFT JOIN base_menu C ON B.Guid = C.Parent
     WHERE
-        B.System = #{system,jdbcType=VARCHAR}
+        B.SysCode = #{syscode,jdbcType=VARCHAR}
     AND B.Parent = #{parent,jdbcType=VARCHAR}
     ORDER BY
         B.Sort,

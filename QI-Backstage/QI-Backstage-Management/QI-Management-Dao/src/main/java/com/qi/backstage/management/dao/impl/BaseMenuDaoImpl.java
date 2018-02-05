@@ -22,9 +22,9 @@ import java.util.Map;
 public class BaseMenuDaoImpl extends BaseDaoImpl<MenuDto, Long, BaseMenuExample> implements BaseMenuDao {
 
     @Override
-    public List<MenuDto> findBySystem(String system, String parent) {
+    public List<MenuDto> findBySysCode(String sysCode, String parent) {
         Map<String, String> map = new HashMap<>();
-        map.put("system", system);
+        map.put("syscode", sysCode);
         map.put("parent", parent);
         return super.queryForList("findBySystem", map);
     }

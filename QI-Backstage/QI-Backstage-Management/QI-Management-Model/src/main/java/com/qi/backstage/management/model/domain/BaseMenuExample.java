@@ -394,73 +394,143 @@ public class BaseMenuExample {
             return (Criteria) this;
         }
 
-        public Criteria andSystemIsNull() {
-            addCriterion("System is null");
+        public Criteria andSysguidIsNull() {
+            addCriterion("SysGuid is null");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIsNotNull() {
-            addCriterion("System is not null");
+        public Criteria andSysguidIsNotNull() {
+            addCriterion("SysGuid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andSystemEqualTo(String value) {
-            addCriterion("System =", value, "system");
+        public Criteria andSysguidEqualTo(String value) {
+            addCriterion("SysGuid =", value, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemNotEqualTo(String value) {
-            addCriterion("System <>", value, "system");
+        public Criteria andSysguidNotEqualTo(String value) {
+            addCriterion("SysGuid <>", value, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemGreaterThan(String value) {
-            addCriterion("System >", value, "system");
+        public Criteria andSysguidGreaterThan(String value) {
+            addCriterion("SysGuid >", value, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemGreaterThanOrEqualTo(String value) {
-            addCriterion("System >=", value, "system");
+        public Criteria andSysguidGreaterThanOrEqualTo(String value) {
+            addCriterion("SysGuid >=", value, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemLessThan(String value) {
-            addCriterion("System <", value, "system");
+        public Criteria andSysguidLessThan(String value) {
+            addCriterion("SysGuid <", value, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemLessThanOrEqualTo(String value) {
-            addCriterion("System <=", value, "system");
+        public Criteria andSysguidLessThanOrEqualTo(String value) {
+            addCriterion("SysGuid <=", value, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemLike(String value) {
-            addCriterion("System like", value, "system");
+        public Criteria andSysguidLike(String value) {
+            addCriterion("SysGuid like", value, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemNotLike(String value) {
-            addCriterion("System not like", value, "system");
+        public Criteria andSysguidNotLike(String value) {
+            addCriterion("SysGuid not like", value, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIn(List<String> values) {
-            addCriterion("System in", values, "system");
+        public Criteria andSysguidIn(List<String> values) {
+            addCriterion("SysGuid in", values, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemNotIn(List<String> values) {
-            addCriterion("System not in", values, "system");
+        public Criteria andSysguidNotIn(List<String> values) {
+            addCriterion("SysGuid not in", values, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemBetween(String value1, String value2) {
-            addCriterion("System between", value1, value2, "system");
+        public Criteria andSysguidBetween(String value1, String value2) {
+            addCriterion("SysGuid between", value1, value2, "sysguid");
             return (Criteria) this;
         }
 
-        public Criteria andSystemNotBetween(String value1, String value2) {
-            addCriterion("System not between", value1, value2, "system");
+        public Criteria andSysguidNotBetween(String value1, String value2) {
+            addCriterion("SysGuid not between", value1, value2, "sysguid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeIsNull() {
+            addCriterion("SysCode is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeIsNotNull() {
+            addCriterion("SysCode is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeEqualTo(String value) {
+            addCriterion("SysCode =", value, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeNotEqualTo(String value) {
+            addCriterion("SysCode <>", value, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeGreaterThan(String value) {
+            addCriterion("SysCode >", value, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeGreaterThanOrEqualTo(String value) {
+            addCriterion("SysCode >=", value, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeLessThan(String value) {
+            addCriterion("SysCode <", value, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeLessThanOrEqualTo(String value) {
+            addCriterion("SysCode <=", value, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeLike(String value) {
+            addCriterion("SysCode like", value, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeNotLike(String value) {
+            addCriterion("SysCode not like", value, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeIn(List<String> values) {
+            addCriterion("SysCode in", values, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeNotIn(List<String> values) {
+            addCriterion("SysCode not in", values, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeBetween(String value1, String value2) {
+            addCriterion("SysCode between", value1, value2, "syscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSyscodeNotBetween(String value1, String value2) {
+            addCriterion("SysCode not between", value1, value2, "syscode");
             return (Criteria) this;
         }
 

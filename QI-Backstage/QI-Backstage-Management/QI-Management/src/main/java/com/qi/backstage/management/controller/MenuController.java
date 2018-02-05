@@ -54,34 +54,34 @@ public class MenuController {
     @GetMapping("index")
     public String index(ModelMap model, BaseMenu menu) {
         // 系统信息GUID
-        model.put("system", menu.getSystem());
+//        model.put("system", menu.getSystem());
         List<Breadcrumb> list;
         // 菜单的Guid不为空，并且不是ROOT。则是二级菜单导航请求
         if (StringUtil.isNotBlank(menu.getGuid()) && !CommonConstants.ROOT_GUID.equals(menu.getGuid())) {
             // 列表面包屑设置
             String menuGuid = menu.getGuid();
-            list = BreadcrumbUtil.buildBreadcrumb(() -> {
-                BaseMenu innerMenu = readService.getByGuid(menuGuid);
-                Breadcrumb breadcrumb = new Breadcrumb(innerMenu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
-                breadcrumb.addParams("guid", innerMenu.getGuid());
-                return breadcrumb;
-            }, menu.getGuid(), menu.getSystem());
+//            list = BreadcrumbUtil.buildBreadcrumb(() -> {
+//                BaseMenu innerMenu = readService.getByGuid(menuGuid);
+//                Breadcrumb breadcrumb = new Breadcrumb(innerMenu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
+//                breadcrumb.addParams("guid", innerMenu.getGuid());
+//                return breadcrumb;
+//            }, menu.getGuid(), menu.getSystem());
         }
         // 系统级菜单导航请求
         else {
             menu.setGuid(CommonConstants.ROOT_GUID);
-            String systemCode = menu.getSystem();
+//            String systemCode = menu.getSystem();
             // 根据系统Guid获取面包屑
-            list = BreadcrumbUtil.buildBreadcrumb(() -> {
-                // 获取系统信息
-                BaseSystem system = systemReadService.getByGuid(systemCode);
-                Breadcrumb breadcrumb = new Breadcrumb(system.getNamecn(), "/menu/index", CommonConstants.ROOT_CLASS);
-                breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
-                return breadcrumb;
-            }, systemCode, CommonConstants.CACHE_SYSTEM_ROOT);
+//            list = BreadcrumbUtil.buildBreadcrumb(() -> {
+//                // 获取系统信息
+//                BaseSystem system = systemReadService.getByGuid(systemCode);
+//                Breadcrumb breadcrumb = new Breadcrumb(system.getNamecn(), "/menu/index", CommonConstants.ROOT_CLASS);
+//                breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
+//                return breadcrumb;
+//            }, systemCode, CommonConstants.CACHE_SYSTEM_ROOT);
         }
-        model.put("header", list.get(list.size() - 1).getText());
-        model.put("breadcrumbs", list);
+//        model.put("header", list.get(list.size() - 1).getText());
+//        model.put("breadcrumbs", list);
         model.put("parent", menu.getGuid());
         model.put("data", readService.findAll(menu));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
@@ -94,7 +94,7 @@ public class MenuController {
     public String add(ModelMap model, BaseMenu menu) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
         // 获取系统信息
-        model.put("system", systemReadService.getByGuid(menu.getSystem()));
+//        model.put("system", systemReadService.getByGuid(menu.getSystem()));
         Map<String, Object> defaultSel = new HashMap<>();
         if (CommonConstants.ROOT_GUID.equals(menu.getParent())) {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
@@ -113,7 +113,7 @@ public class MenuController {
     public String edit(ModelMap model, BaseMenu menu) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
         // 获取系统信息
-        model.put("system", systemReadService.getByGuid(menu.getSystem()));
+//        model.put("system", systemReadService.getByGuid(menu.getSystem()));
         menu = readService.getByGuid(menu.getGuid());
         model.put("model", menu);
         Map<String, Object> defaultSel = new HashMap<>();

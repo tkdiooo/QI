@@ -32,12 +32,12 @@ public class MenuServiceConsumer {
     @Autowired
     private CacheFactory<IRedisService<String, Object>> factory;
 
-    public List<MenuDto> findSystemMenuBySystem(String system, String version) {
-        String cache_key = system + LabelConstants.POUND + version;
+    public List<MenuDto> findSystemMenuBySystem(String sysCode, String version) {
+        String cache_key = sysCode + LabelConstants.POUND + version;
         factory.getCacheClient().remove(cache_key);
         List<MenuDto> list = factory.getList(cache_key);
         if (null == list) {
-            ActionResult<MenuDto> result = service.findBySystem(system);
+            ActionResult<MenuDto> result = service.findBySystem(sysCode);
             if (RpcUtil.logPrint(result, logger)) {
                 list = result.getDataSet();
                 factory.getCacheClient().put(cache_key, list);

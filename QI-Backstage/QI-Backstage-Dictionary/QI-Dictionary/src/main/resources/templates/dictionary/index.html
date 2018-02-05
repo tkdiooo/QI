@@ -27,7 +27,7 @@
                 }, {
                     id: 'status_btn',
                     type: 'select',
-                    text: '状态',
+                    text: '所有状态',
                     title: '字典状态选择',
                     class: 'btn btn-default',
                     options: [[${options}]],
@@ -90,21 +90,21 @@
                             <td th:utext="${var.status}"></td>
                             <td>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'edit(\'' + ${var.guid} + '\');'"
+                                        th:onclick="'edit(\'' + ${var.number} + '\');'"
                                         th:data-original-title="'编辑（' + ${var.content} + '）字典'" data-placement="right">
                                     <span class="fa fa-edit"></span>编辑
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'disable(\'' + ${var.guid} + '\');'" th:if="${var.status == 1}"
+                                        th:onclick="'disable(\'' + ${var.number} + '\');'" th:if="${var.status == 1}"
                                         th:data-original-title="'禁用（' + ${var.content} + '）字典'" data-placement="right">
                                     <span class="fa fa-ban"></span>禁用
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'valid(\'' + ${var.guid} + '\');'" th:if="${var.status == 2}"
+                                        th:onclick="'valid(\'' + ${var.number} + '\');'" th:if="${var.status == 2}"
                                         th:data-original-title="'启用（' + ${var.content} + '）字典'" data-placement="right">
                                     <span class="fa fa-check-square-o"></span>启用
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.guid} + '\');'"
+                                <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.number} + '\');'"
                                         th:data-original-title="'查看（' + ${var.content} + '）子集'" data-placement="right">
                                     <span class="fa fa-search"></span>查看
                                 </button>
@@ -128,30 +128,30 @@
         load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), params);
     }
 
-    function edit(guid) {
-        load_url(/*[[@{/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
+    function edit(number) {
+        load_url(/*[[@{/edit}]]*/ "", $('.content-wrapper'), {number: number});
     }
 
-    function disable(guid) {
+    function disable(number) {
         var opt = {
             callback: function (result) {
                 load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
             }
         };
-        ajax_action(/*[[@{/disable}]]*/ "", {guid: guid}, opt);
+        ajax_action(/*[[@{/disable}]]*/ "", {number: number}, opt);
     }
 
-    function valid(guid) {
+    function valid(number) {
         var opt = {
             callback: function (result) {
                 load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
             }
         };
-        ajax_action(/*[[@{/valid}]]*/ "", {guid: guid}, opt);
+        ajax_action(/*[[@{/valid}]]*/ "", {number: number}, opt);
     }
 
-    function child(guid) {
-        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: guid});
+    function child(number) {
+        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: number});
     }
 </script>
 </html>

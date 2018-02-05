@@ -1,8 +1,10 @@
 package com.qi.backstage.dictionary.service.transactional.impl;
 
+import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
 import com.qi.backstage.dictionary.service.transactional.DictionaryTransactionalService;
 import com.qi.backstage.dictionary.mapper.BaseDictionaryMapper;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
+import com.sfsctech.constants.LabelConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +25,14 @@ public class DictionaryTransactionalServiceImpl implements DictionaryTransaction
     @Override
     public void sort(String sortable) {
         BaseDictionary model;
-        for (String sort : sortable.split("#")) {
+        BaseDictionaryExample example;
+        for (String sort : sortable.split(LabelConstants.POUND)) {
+            String[] sp = sort.split(LabelConstants.COMMA);
             model = new BaseDictionary();
-            model.setGuid(sort.split(",")[0]);
-            model.setSort(Integer.valueOf(sort.split(",")[1]));
-            mapper.updateByPrimaryKeySelective(model);
+            model.setSort(Integer.valueOf(sp[1]));
+            example = new BaseDictionaryExample();
+            example.createCriteria().andNumberEqualTo(sp[0]);
+            mapper.updateByExampleSelective(model, example);
         }
     }
 }

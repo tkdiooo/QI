@@ -12,7 +12,7 @@
     <div class="box-body">
         <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
         <ul class="todo-list">
-            <li th:each="var: ${data}" th:id="${var.guid}" style="cursor: move;">
+            <li th:each="var: ${data}" th:id="${var.number}" style="cursor: move;">
                 <!-- drag handle -->
                 <span class="handle">
                     <i class="fa fa-ellipsis-v"></i>
@@ -20,7 +20,7 @@
                 </span>
                 <span class="text" th:text="${var.content}"></span>
                 <div class="tools">
-                    <i class="fa fa-edit" th:onclick="'load(\'' + ${var.guid} + '\')'"></i>
+                    <i class="fa fa-edit" th:onclick="'load(\'' + ${var.number} + '\')'"></i>
                 </div>
             </li>
         </ul>

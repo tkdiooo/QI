@@ -13,5 +13,5 @@ public interface DictionaryWriteService {
 
     void save(BaseDictionary dictionary);
 
-    void changeStatus(String guid, StatusConstants.Status status);
+    void changeStatus(String number, StatusConstants.Status status);
 }

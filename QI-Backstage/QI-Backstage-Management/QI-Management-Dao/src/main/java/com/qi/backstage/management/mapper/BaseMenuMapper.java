@@ -2,7 +2,9 @@ package com.qi.backstage.management.mapper;
 
 import com.qi.backstage.management.model.domain.BaseMenu;
 import com.qi.backstage.management.model.domain.BaseMenuExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface BaseMenuMapper {

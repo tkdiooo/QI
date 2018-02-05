@@ -1,22 +1,15 @@
 package com.qi.backstage.dictionary.service.write.impl;
 
 import com.qi.backstage.dictionary.common.constants.CommonConstants;
-import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.backstage.dictionary.mapper.BaseDictionaryMapper;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
+import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.Cn2SpellUtil;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.common.uuid.UUIDUtil;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.constants.StatusConstants;
-import net.sourceforge.pinyin4j.PinyinHelper;
-import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
-import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
-import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,25 +31,26 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
     @Override
     public void save(BaseDictionary model) {
         model.setPinyin(Cn2SpellUtil.converterToSpell(model.getContent()) + LabelConstants.COMMA + Cn2SpellUtil.converterToFirstSpell(model.getContent()));
-        if (StringUtil.isBlank(model.getGuid())) {
-            model.setGuid(UUIDUtil.base58Uuid());
+        if (!CommonConstants.ROOT_GUID.equals(model.getParent())) {
+            model.setNumber(model.getParent() + model.getNumber());
+        }
+        if (null == model.getId()) {
             model.setStatus(StatusConstants.Status.Valid.getCode());
             model.setSort(NumberUtils.INTEGER_ZERO);
             mapper.insert(model);
         } else {
             BaseDictionaryExample example = new BaseDictionaryExample();
-            example.createCriteria().andGuidEqualTo(model.getGuid());
+            example.createCriteria().andIdEqualTo(model.getId());
             mapper.updateByExampleSelective(model, example);
         }
-        factory.getCacheClient().remove(model.getGuid());
     }
 
     @Override
-    public void changeStatus(String guid, StatusConstants.Status status) {
+    public void changeStatus(String number, StatusConstants.Status status) {
         BaseDictionary dictionary = new BaseDictionary();
         dictionary.setStatus(status.getCode());
         BaseDictionaryExample example = new BaseDictionaryExample();
-        example.createCriteria().andGuidEqualTo(guid);
+        example.createCriteria().andNumberEqualTo(number);
         mapper.updateByExampleSelective(dictionary, example);
     }
 

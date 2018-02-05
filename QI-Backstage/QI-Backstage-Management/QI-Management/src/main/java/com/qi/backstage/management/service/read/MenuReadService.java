@@ -17,5 +17,5 @@ public interface MenuReadService {
 
     BaseMenu getByGuid(String guid);
 
-    List<MenuDto> findBySystem(String system, String parent);
+    List<MenuDto> findBySysCode(String sysCode, String parent);
 }

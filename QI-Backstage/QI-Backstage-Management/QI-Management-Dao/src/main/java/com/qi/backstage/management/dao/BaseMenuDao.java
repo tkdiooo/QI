@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface BaseMenuDao extends IBaseDao<MenuDto, Long, BaseMenuExample> {
 
-    List<MenuDto> findBySystem(String system, String parent);
+    List<MenuDto> findBySysCode(String sysCode, String parent);
 
 }

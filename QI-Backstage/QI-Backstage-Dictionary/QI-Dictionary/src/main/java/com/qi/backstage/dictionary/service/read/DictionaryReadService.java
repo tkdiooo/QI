@@ -15,7 +15,7 @@ public interface DictionaryReadService {
 
     List<BaseDictionary> findAll(BaseDictionary model);
 
-    BaseDictionary getByGuid(String guid);
+    BaseDictionary getByNumber(String number);
 
-    boolean numberIsExist(String guid, String number);
+    boolean numberIsExist(BaseDictionary dictionary);
 }

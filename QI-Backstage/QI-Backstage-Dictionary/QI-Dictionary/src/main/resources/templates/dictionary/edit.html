@@ -51,8 +51,8 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" id="parent" name="parent" th:value="${parent_guid} ?: '0000000000000000000000'"/>
-                <input type="hidden" id="guid" name="guid" th:value="${model} ? ${model.guid}"/>
+                <input type="hidden" name="parent" th:value="${parent} ?: '0000000000000000000000'"/>
+                <input type="hidden" name="id" th:value="${model} ? ${model.id}"/>
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary pull-right" onclick="editSubmit()" data-original-title="提交表单">提交</button>
                     <button type="button" class="btn btn-default pull-right" onclick="goBack()" data-original-title="取消返回">取消</button>
@@ -66,7 +66,7 @@
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
-        load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('#parent').val()});
+        load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
         $('.form-horizontal').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -92,8 +92,8 @@
                             delay: 1000,// 每输入一个字符，就发ajax请求，服务器压力还是太大，设置2秒发送一次ajax（默认输入一个字符，提交一次，服务器压力太大）
                             data: function (validator) {
                                 return {
-                                    guid: $('[name="guid"]').val(),
-                                    parent: $('.input-group-btn').attr('value'),
+                                    id: $('[name="id"]').val(),
+                                    parent: $('[name="parent"]').val(),
                                     number: $('[name="number"]').val()
                                 };
                             },
@@ -139,15 +139,15 @@
             var params = form.serializeJson();
             var opt = {
                 callback: function (result) {
-                    $(".form-horizontal")[0].reset();
-                    load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('#parent').val()});
+                    $(".form-horizontal").clearForm();
+                    load_url(/*[[@{/ordering}]]*/ "", $('.right-column'), {parent: $('[name="parent"]').val()});
                 }
             };
             ajax_action(/*[[@{/save}]]*/ "", params, opt);
         }
     };
     var goBack = function () {
-        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+        load_url(/*[[@{/grid}]]*/ "", $('.content-wrapper'), {parent: $('[name="parent"]').val()});
     };
     var sort = function () {
         var params = '';
@@ -156,18 +156,19 @@
             params += $(this).attr('id') + ',' + i;
         });
         ajax_action(/*[[@{/sort}]]*/ "", {sortable: params});
-    }
-    var load = function (guid) {
+    };
+    var load = function (number) {
         var opt = {
             waiting: false,
             handler: function (result) {
-                $('#guid').val(result.result.guid);
-                $('#number').val(result.result.number.substring(result.result.number.length - 5));
+                $('[name="id"]').val(result.result.id);
+                $('#number').val(result.result.number);
+                $('#english').val(result.result.english);
                 $('#content').val(result.result.content);
                 $('#description').val(result.result.description);
             }
         };
-        ajax_action(/*[[@{/load}]]*/ "", {guid: guid}, opt);
-    }
+        ajax_action(/*[[@{/load}]]*/ "", {number: number}, opt);
+    };
 </script>
 </html>

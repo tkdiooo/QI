@@ -33,14 +33,14 @@ public class MenuServiceProvider implements BaseMenuService {
     private MenuReadService readService;
 
     @Override
-    public ActionResult<MenuDto> findBySystem(String system) {
+    public ActionResult<MenuDto> findBySystem(String sysCode) {
         ActionResult<MenuDto> result = new ActionResult<>();
         try {
-            List<MenuDto> list = readService.findBySystem(system, CommonConstants.ROOT_GUID);
+            List<MenuDto> list = readService.findBySysCode(sysCode, CommonConstants.ROOT_GUID);
             if (ListUtil.isEmpty(list)) {
                 result.setSuccess(false);
                 result.setStatus(RpcConstants.Status.Failure);
-                result.setMessage(I18NConstants.Tips.EmptyCollection, "系统编号：" + system + "获取");
+                result.setMessage(I18NConstants.Tips.EmptyCollection, "系统编号：" + sysCode + "获取");
                 logger.warn(JsonUtil.toJSONString(result.getStatus()));
                 logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             }

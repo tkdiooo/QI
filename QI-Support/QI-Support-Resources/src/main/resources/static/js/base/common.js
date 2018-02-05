@@ -27,6 +27,15 @@ $.fn.serializeString = function () {
     });
     return serializeObj;
 };
+
+$.fn.clearForm = function () {
+    $(':input', this)
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
+};
+
 /**
  * 重写window.alert方法，用layer控件替换
  * @param msg
