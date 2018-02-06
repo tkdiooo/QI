@@ -5,6 +5,7 @@ import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
+import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.common.util.SpringContextUtil;
 import com.sfsctech.constants.CacheConstants;
 
@@ -40,8 +41,10 @@ public class DictUtil {
         Map<String, String> cloumns = factory.get(CLOUMNS_KEY);
         if (null == cloumns) {
             List<DictionaryDto> list = com.qi.backstage.dictionary.util.DictUtil.findChildByNumber(number, OPTIONS_DICT_KEY);
-            cloumns = list.stream().collect(Collectors.toMap(DictionaryDto::getNumber, DictionaryDto::getContent));
-            factory.getCacheClient().putTimeOut(CLOUMNS_KEY, cloumns, CacheConstants.MilliSecond.Minutes30.getContent());
+            if (ListUtil.isNotEmpty(list)) {
+                cloumns = list.stream().collect(Collectors.toMap(DictionaryDto::getNumber, DictionaryDto::getContent));
+                factory.getCacheClient().putTimeOut(CLOUMNS_KEY, cloumns, CacheConstants.MilliSecond.Minutes30.getContent());
+            }
         }
         return cloumns;
     }
@@ -53,7 +56,7 @@ public class DictUtil {
         private static final String BUTTON_ADD_DEFAULT_OPTIONS = "button_add_default_options";
         private static final String BUTTON_TYPE_TABLE = "button_type_table";
 
-        private static final String DICT_NUMNER_BUTTON_TYPE = "00016";
+        private static final String DICT_NUMNER_BUTTON_TYPE = "0002";
 
         public static List<Map<String, Object>> options() {
             return DictUtil.getOptions(DICT_NUMNER_BUTTON_TYPE, BUTTON_ADD_OPTIONS, BUTTON_ADD_DEFAULT_OPTIONS, BUTTON_TYPE_DICT);
@@ -71,7 +74,7 @@ public class DictUtil {
         private static final String SYSTEM_ADD_DEFAULT_OPTIONS = "system_add_default_options";
         private static final String SYSTEM_TYPE_TABLE = "system_type_table";
 
-        private static final String DICT_NUMNER_SYSTEM_TYPE = "00015";
+        private static final String DICT_NUMNER_SYSTEM_TYPE = "0001";
 
         public static List<Map<String, Object>> options() {
             return DictUtil.getOptions(DICT_NUMNER_SYSTEM_TYPE, SYSTEM_ADD_OPTIONS, SYSTEM_ADD_DEFAULT_OPTIONS, SYSTEM_TYPE_DICT);

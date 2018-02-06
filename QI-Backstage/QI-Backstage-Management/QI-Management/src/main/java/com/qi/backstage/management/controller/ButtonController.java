@@ -52,39 +52,40 @@ public class ButtonController {
     private CacheFactory<IRedisService<String, Object>> factory;
 
     @GetMapping("index")
-    public String index(ModelMap model, BaseButton button, String system) {
+    public String index(ModelMap model, BaseButton button, String sysguid) {
         // 系统信息GUID
-        model.put("system", system);
+        model.put("system", sysguid);
         // 菜单GUID
-//        model.put("menu", button.getMenu());
+        model.put("menu", button.getMenuguid());
         List<Breadcrumb> list;
         // 按钮的Guid不为空，则是二级菜单导航请求
         if (StringUtil.isNotBlank(button.getGuid())) {
             // 列表面包屑设置
-//            list = BreadcrumbUtil.buildBreadcrumb(() -> {
-//                // 获取菜单信息
-//                BaseMenu menu = menuReadService.getByGuid(button.getMenu());
-//                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
-//                breadcrumb.addParams("guid", menu.getGuid());
-//                return breadcrumb;
-//            }, button.getGuid(), button.getParent());
+            list = BreadcrumbUtil.buildBreadcrumb(() -> {
+                // 获取菜单信息
+                BaseMenu menu = menuReadService.getByGuid(button.getMenuguid());
+                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", menu.getGuid());
+                return breadcrumb;
+            }, button.getGuid(), button.getParent());
             model.put("parent", button.getParent());
         }
         // 菜单导航请求
         else {
             // 根据系统Guid获取面包屑
-//            list = BreadcrumbUtil.buildBreadcrumb(() -> {
-//                // 获取菜单信息
-//                BaseMenu menu = menuReadService.getByGuid(button.getMenu());
-//                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
-//                breadcrumb.addParams("guid", menu.getGuid());
-//                return breadcrumb;
-//            }, button.getMenu(), button.getParent());
+            list = BreadcrumbUtil.buildBreadcrumb(() -> {
+                // 获取菜单信息
+                BaseMenu menu = menuReadService.getByGuid(button.getMenuguid());
+                Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", menu.getGuid());
+                return breadcrumb;
+            }, button.getMenuguid(), button.getParent());
             model.put("parent", CommonConstants.ROOT_GUID);
+            button.setParent(CommonConstants.ROOT_GUID);
         }
-//        model.put("header", list.get(list.size() - 1).getText());
-//        model.put("breadcrumbs", list);
-//        model.put("data", readService.findAll(button));
+        model.put("header", list.get(list.size() - 1).getText());
+        model.put("breadcrumbs", list);
+        model.put("data", readService.findAll(button));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("small", "按钮列表");
         model.put("options", BootstrapUtil.matchOptions("button_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
@@ -92,12 +93,12 @@ public class ButtonController {
     }
 
     @GetMapping("add")
-    public String add(ModelMap model, BaseButton button, String system) {
+    public String add(ModelMap model, BaseButton button, String sysguid) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
         // 获取系统Guid
-        model.put("system", system);
+        model.put("system", sysguid);
         // 获取菜单信息
-//        model.put("menu", menuReadService.getByGuid(button.getMenu()));
+        model.put("menu", menuReadService.getByGuid(button.getMenuguid()));
         Map<String, Object> defaultSel = new HashMap<>();
         if (CommonConstants.ROOT_GUID.equals(button.getParent())) {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
@@ -160,7 +161,7 @@ public class ButtonController {
     @GetMapping("ordering")
     public String ordering(ModelMap model, BaseButton button) {
         // 获取所有当前节点数据
-//        model.put("data", readService.findAll(menu));
+        model.put("data", readService.findAll(button));
         return "common/sort";
     }
 

@@ -29,7 +29,8 @@
                             <div class="btn-group" data-autorun="2" data-original-title="菜单信息">
                                 <button type="button" class="btn btn-warning dropdown-toggle" th:text="${menu} ? ${menu.name}" style="cursor: default !important;"></button>
                             </div>
-                            <input type="hidden" id="menu" name="menu" th:value="${menu} ? ${menu.code} : '默认'">
+                            <input type="hidden" name="menuguid" th:value="${menu} ? ${menu.guid} : '默认'">
+                            <input type="hidden" name="menucode" th:value="${menu} ? ${menu.code} : '默认'">
                         </div>
                         <label class="col-sm-2 control-label">上级按钮</label>
                         <div class="col-xs-3 input-group left-float">
@@ -113,7 +114,7 @@
     var goBack = function () {
         load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
             menu: [[${menu.guid}]],
-            system: [[${system}]],
+            sysguid: [[${system}]],
             parent: $('#parent').val()
         });
     };

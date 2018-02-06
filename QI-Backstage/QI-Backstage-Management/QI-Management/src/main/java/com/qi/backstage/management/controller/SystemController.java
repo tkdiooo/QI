@@ -72,6 +72,9 @@ public class SystemController {
                 break;
             }
         }
+        if (!model.containsKey("defaultSel")) {
+            model.put("defaultSel", options.get(0));
+        }
         return "system/edit";
     }
 

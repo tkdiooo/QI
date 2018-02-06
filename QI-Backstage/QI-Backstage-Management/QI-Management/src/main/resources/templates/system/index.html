@@ -106,7 +106,7 @@
                                     <span class="fa fa-check-square-o"></span>启用
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.guid} + '\');'"
-                                        th:data-original-title="'查看' + ${var.namecn} + '菜单'" data-placement="right">
+                                        th:data-original-title="查看系统菜单" data-placement="right">
                                     <span class="fa fa-search"></span>查看
                                 </button>
                             </td>
@@ -147,7 +147,7 @@
     }
 
     function child(guid) {
-        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {system: guid});
+        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {sysguid: guid});
     }
 </script>
 </html>

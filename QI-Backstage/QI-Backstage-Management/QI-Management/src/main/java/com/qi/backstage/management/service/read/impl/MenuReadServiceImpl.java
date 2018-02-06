@@ -31,8 +31,11 @@ public class MenuReadServiceImpl implements MenuReadService {
     public List<BaseMenu> findAll(BaseMenu model) {
         BaseMenuExample example = new BaseMenuExample();
         BaseMenuExample.Criteria criteria = example.createCriteria();
-        if (StringUtil.isNotBlank(model.getGuid())) {
-            criteria.andParentEqualTo(model.getGuid());
+        if (StringUtil.isNotBlank(model.getParent())) {
+            criteria.andParentEqualTo(model.getParent());
+        }
+        if (StringUtil.isNotBlank(model.getSysguid())) {
+            criteria.andSysguidEqualTo(model.getSysguid());
         }
         return mapper.selectByExample(example);
     }

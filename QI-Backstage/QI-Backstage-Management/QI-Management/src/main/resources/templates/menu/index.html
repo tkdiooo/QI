@@ -6,9 +6,9 @@
             container: '#data_table',
             bSort: false,
             columns: [
-                {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 150, orderable: false},
                 {sClass: "text-left", sWidth: 250, orderable: false},
+                {sClass: "text-left", sWidth: 200, orderable: false},
+                {sClass: "text-left", sWidth: 300, orderable: false},
                 {sClass: "text-left", sWidth: 100, orderable: false},
                 {sClass: "text-left", sWidth: 50, orderable: false},
                 {sClass: "text-left", sWidth: 50, visible: false},
@@ -23,7 +23,7 @@
                     class: 'btn btn-primary',
                     action: function () {
                         load_url(/*[[@{/menu/add}]]*/ "", $('.content-wrapper'), {
-                            system: [[${system}]],
+                            sysguid: [[${system}]],
                             parent: [[${parent}]]
                         });
                     }
@@ -108,13 +108,13 @@
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
                                         th:onclick="'child(\'' + ${var.guid} + '\');'" th:if="${var.isleaf}"
-                                        th:data-original-title="'查看' + ${var.name} + '子菜单'" data-placement="right">
+                                        th:data-original-title="查看子菜单" data-placement="right">
                                     <span class="fa fa-search"></span>查看
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
                                         th:onclick="'button(\'' + ${var.guid} + '\',\'' + ${var.parent} + '\');'"
                                         th:if="${!var.isleaf}"
-                                        th:data-original-title="'查看' + ${var.name} + '菜单按钮'" data-placement="right">
+                                        th:data-original-title="查看菜单按钮" data-placement="right">
                                     <span class="fa fa-search"></span>查看
                                 </button>
                             </td>
@@ -134,15 +134,15 @@
     });
 
     function edit(guid) {
-        load_url(/*[[@{/menu/edit}]]*/ "", $('.content-wrapper'), {guid: guid, system: [[${system}]]});
+        load_url(/*[[@{/menu/edit}]]*/ "", $('.content-wrapper'), {guid: guid, sysguid: [[${system}]]});
     }
 
     function disable(guid) {
         var opt = {
             callback: function (result) {
                 load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {
-                    guid: [[${parent}]],
-                    system: [[${system}]]
+                    parent: [[${parent}]],
+                    sysguid: [[${system}]]
                 });
             }
         };
@@ -153,8 +153,8 @@
         var opt = {
             callback: function (result) {
                 load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {
-                    guid: [[${parent}]],
-                    system: [[${system}]]
+                    parent: [[${parent}]],
+                    sysguid: [[${system}]]
                 });
             }
         };
@@ -162,19 +162,19 @@
     }
 
     function child(guid) {
-        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {guid: guid, system: [[${system}]]});
+        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {parent: guid, sysguid: [[${system}]]});
     }
 
     function button(guid, parent) {
         load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
-            menu: guid,
             parent: parent,
-            system: [[${system}]]
+            menuguid: guid,
+            sysguid: [[${system}]]
         });
     }
 
     function breadcrumb(url, guid) {
-        load_url(ctx + url, $('.content-wrapper'), {guid: guid, system: [[${system}]]});
+        load_url(ctx + url, $('.content-wrapper'), {parent: guid, sysguid: [[${system}]]});
     }
 </script>
 </html>

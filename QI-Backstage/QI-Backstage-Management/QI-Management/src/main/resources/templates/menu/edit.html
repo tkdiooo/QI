@@ -29,7 +29,8 @@
                             <div class="btn-group" data-autorun="2">
                                 <button type="button" class="btn btn-warning dropdown-toggle" th:text="${system} ? ${system.namecn}" style="cursor: default !important;"></button>
                             </div>
-                            <input type="hidden" id="system" name="system" th:value="${system} ? ${system.code} : '默认'">
+                            <input type="hidden" name="sysguid" th:value="${system} ? ${system.guid} : '默认'">
+                            <input type="hidden" name="syscode" th:value="${system} ? ${system.code} : '默认'">
                         </div>
                         <label class="col-sm-2 control-label">上级菜单</label>
                         <div class="col-xs-3 input-group left-float">
@@ -54,10 +55,6 @@
                         <div class="col-xs-3 input-group left-float">
                             <input type="text" class="form-control" id="url" name="url" placeholder="请输入菜单Url" th:value="${model} ? ${model.url}">
                         </div>
-                        <!--<label for="mapping" class="col-sm-2 control-label">Mapping映射</label>-->
-                        <!--<div class="col-xs-3 input-group left-float">-->
-                            <!--<input type="text" class="form-control" id="mapping" name="mapping" placeholder="请输入Mapping映射" th:value="${model} ? ${model.mapping}">-->
-                        <!--</div>-->
                     </div>
                     <div class="form-group" style="height: 125px !important;">
                         <label for="description" class="col-sm-2 control-label">菜单描述</label>
@@ -81,22 +78,28 @@
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
-        load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+        load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {
+            parent: $('#parent').val(),
+            sysguid: [[${system.guid}]]
+        });
     });
     var editSubmit = function () {
         var params = $(".form-horizontal").serializeJson();
         var opt = {
             callback: function (result) {
                 $(".form-horizontal")[0].reset();
-                load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+                load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {
+                    parent: $('#parent').val(),
+                    sysguid: [[${system.guid}]]
+                });
             }
         };
         ajax_action(/*[[@{/menu/save}]]*/ "", params, opt);
     };
     var goBack = function () {
         load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {
-            guid: $('#parent').val(),
-            system: [[${system.guid}]]
+            parent: $('#parent').val(),
+            sysguid: [[${system.guid}]]
         });
     };
     var sort = function () {
@@ -116,8 +119,7 @@
                 $('#name').val(result.result.name);
                 $('#description').val(result.result.description);
                 if (!result.result.isleaf) {
-                    $('#controller').val(result.result.controller);
-                    $('#mapping').val(result.result.mapping);
+                    $('#url').val(result.result.url);
                 }
             }
         };
