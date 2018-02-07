@@ -87,7 +87,7 @@
         var params = $(".form-horizontal").serializeJson();
         var opt = {
             callback: function (result) {
-                $(".form-horizontal")[0].reset();
+                $(".form-horizontal").clearForm();
                 load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {
                     parent: $('#parent').val(),
                     sysguid: [[${system.guid}]]

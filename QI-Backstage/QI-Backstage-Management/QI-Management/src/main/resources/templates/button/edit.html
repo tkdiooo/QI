@@ -90,7 +90,10 @@
     $(function () {
         //显示tooltip
         $("[data-original-title]").tooltip();
-        load_url(/*[[@{/button/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+        load_url(/*[[@{/button/ordering}]]*/ "", $('.right-column'), {
+            parent: $('#parent').val(),
+            menuguid: [[${menu.guid}]]
+        });
     });
     var choose = function (obj) {
         var opt = {
@@ -105,27 +108,26 @@
         var params = $(".form-horizontal").serializeJson();
         var opt = {
             callback: function (result) {
-                $(".form-horizontal")[0].reset();
-                load_url(/*[[@{/button/ordering}]]*/ "", $('.right-column'), {guid: $('#parent').val()});
+                $(".form-horizontal").clearForm();
+                load_url(/*[[@{/button/ordering}]]*/ "", $('.right-column'), {
+                    parent: $('#parent').val(),
+                    menuguid: [[${menu.guid}]]
+                });
             }
         };
         ajax_action(/*[[@{/button/save}]]*/ "", params, opt);
     };
     var goBack = function () {
         load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
-            menu: [[${menu.guid}]],
+            menuguid: [[${menu.guid}]],
             sysguid: [[${system}]],
-            parent: $('#parent').val()
+            parent: $('#parent').val(),
+            guid: $('#parent').val()
         });
     };
     var sort = function () {
-        var params = '';
-        $(this).find('li').each(function (i) {
-            if (i !== 0) params += '#';
-            params += $(this).attr('id') + ',' + i;
-        });
-        ajax_action(/*[[@{/button/sort}]]*/ "", {sortable: params});
-    }
+
+    };
     var load = function (guid) {
         var opt = {
             waiting: false,
@@ -134,9 +136,9 @@
                 $('#code').val(result.result.code);
                 $('#name').val(result.result.name);
                 $('#description').val(result.result.description);
-                if (!result.result.isleaf) {
-                    $('#controller').val(result.result.controller);
-                    $('#mapping').val(result.result.mapping);
+                $('#url').val(result.result.url);
+                if ($('#type_btn').attr('val') !== result.result.type) {
+                    choose($('.dropdown-menu').children('li[val="' + result.result.type + '"]'));
                 }
             }
         };

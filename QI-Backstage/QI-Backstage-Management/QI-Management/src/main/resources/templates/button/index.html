@@ -6,8 +6,8 @@
             container: '#data_table',
             bSort: false,
             columns: [
-                {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 150, orderable: false},
+                {sClass: "text-left", sWidth: 250, orderable: false},
+                {sClass: "text-left", sWidth: 200, orderable: false},
                 {sClass: "text-left", sWidth: 100, orderable: false},
                 {sClass: "text-left", sWidth: 50, orderable: false},
                 {sClass: "text-left", sWidth: 50, visible: false},
@@ -83,9 +83,9 @@
                         </thead>
                         <tbody>
                         <tr th:each="var, stat : ${data}">
-                            <td th:text="${var.code}"></td>
+                            <td th:text="${var.menucode} + '.' + ${var.code}"></td>
                             <td th:text="${var.name}"></td>
-                            <td th:text="${var.type}"></td>
+                            <td th:text="${type.get(var.type)}"></td>
                             <td th:utext="${status.get(var.status)}"></td>
                             <td th:utext="${var.status}"></td>
                             <td>
@@ -126,15 +126,20 @@
     });
 
     function edit(guid) {
-        load_url(/*[[@{/button/edit}]]*/ "", $('.content-wrapper'), {guid: guid, system: [[${system}]]});
+        load_url(/*[[@{/button/edit}]]*/ "", $('.content-wrapper'), {
+            guid: guid,
+            menuguid: [[${menu}]],
+            sysguid: [[${system}]]
+        });
     }
 
     function disable(guid) {
         var opt = {
             callback: function (result) {
                 load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
-                    guid: [[${menu}]],
-                    system: [[${system}]]
+                    menuguid: [[${menu}]],
+                    sysguid: [[${system}]],
+                    parent: [[${parent}]]
                 });
             }
         };
@@ -145,8 +150,9 @@
         var opt = {
             callback: function (result) {
                 load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
-                    guid: [[${menu}]],
-                    system: [[${system}]]
+                    menuguid: [[${menu}]],
+                    sysguid: [[${system}]],
+                    parent: [[${parent}]]
                 });
             }
         };
@@ -154,11 +160,16 @@
     }
 
     function child(guid) {
-        load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {guid: guid, system: [[${system}]]});
+        load_url(/*[[@{/button/index}]]*/ "", $('.content-wrapper'), {
+            menuguid: [[${menu}]],
+            sysguid: [[${system}]],
+            parent: [[${parent_breadcrumbs}]],
+            guid: guid
+        });
     }
 
     function breadcrumb(url, guid) {
-        load_url(ctx + url, $('.content-wrapper'), {parent: guid, sysguid: [[${system}]]});
+        load_url(ctx + url, $('.content-wrapper'), {menuguid: [[${menu}]], parent: guid,guid: guid, sysguid: [[${system}]]});
     }
 </script>
 </html>
