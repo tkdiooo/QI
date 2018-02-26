@@ -4,15 +4,17 @@
     $(function () {
         var opt = {
             container: '#data_table',
-            order: [3, "asc"],
+            order: [5, "asc"],
             columns: [
-                {sClass: "text-left", sWidth: 150, sScrollY: 40},
-                {sClass: "text-left", sWidth: 200, orderable: false},
-                {sClass: "text-left", sWidth: "60%", orderable: false},
-                {sClass: "text-left", sWidth: 30},
-                {sClass: "text-left", sWidth: 50, orderable: false},
-                {sClass: "text-left", sWidth: 50, visible: false},
-                {sClass: "text-left", sWidth: "100%", orderable: false}
+                {sClass: "text-left", sWidth: "12%", sScrollY: 40},
+                {sClass: "text-left", sWidth: "12%", orderable: false},
+                {sClass: "text-left", sWidth: "12%", orderable: false},
+                {sClass: "text-left", sWidth: "12%", orderable: false},
+                {sClass: "text-left", sWidth: "12%", orderable: false},
+                {sClass: "text-left", sWidth: "5%"},
+                {sClass: "text-left", sWidth: "5%", orderable: false},
+                {sClass: "text-left", visible: false},
+                {sClass: "text-left", sWidth: "25%", orderable: false}
             ],
             buttons: [
                 {
@@ -73,6 +75,8 @@
                         <tr>
                             <th>字典编号</th>
                             <th>字典内容</th>
+                            <th>字典拼音</th>
+                            <th>字典英文</th>
                             <th>字典描述</th>
                             <th>排序</th>
                             <th>状态</th>
@@ -84,6 +88,8 @@
                         <tr th:each="var, stat : ${data}">
                             <td th:text="${var.number}"></td>
                             <td th:text="${var.content}"></td>
+                            <td th:text="${var.pinyin}"></td>
+                            <td th:text="${var.english}"></td>
                             <td th:text="${var.description}"></td>
                             <td th:text="${var.sort}"></td>
                             <td th:utext="${status.get(var.status)}"></td>

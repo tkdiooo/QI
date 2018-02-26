@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>QI-Platform-Backend</artifactId>
+    <artifactId>QI-Backend-Platform</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -72,7 +72,7 @@
     </dependencies>
 
     <build>
-        <finalName>Backstage-Dictionary</finalName>
+        <finalName>QI-Backend-Platform</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

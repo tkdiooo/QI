@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>QI-Platform-Frontend</artifactId>
+    <artifactId>QI-Frontend-Platform</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -61,7 +61,7 @@
     </dependencies>
 
     <build>
-        <finalName>SSO-Website</finalName>
+        <finalName>QI-Frontend-Platform</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
