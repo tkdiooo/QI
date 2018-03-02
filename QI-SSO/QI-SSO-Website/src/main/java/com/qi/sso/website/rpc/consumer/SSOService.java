@@ -2,6 +2,8 @@ package com.qi.sso.website.rpc.consumer;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.sfsctech.auth.inf.LoginService;
+import com.sfsctech.auth.inf.VerifyService;
+import com.sfsctech.auth.util.SingletonUtil;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.base.session.UserAuthData;
 import com.sfsctech.rpc.result.ActionResult;
@@ -20,12 +22,15 @@ public class SSOService {
     @Reference
     private LoginService loginService;
 
+    @Reference
+    private VerifyService verifyService;
+
     public ActionResult<JwtToken> login(final UserAuthData authData) {
         return loginService.login(authData);
     }
 
     public ActionResult<JwtToken> check(final JwtToken jt) {
-        return null;
+        return verifyService.complexVerify(jt);
     }
 
     @Async

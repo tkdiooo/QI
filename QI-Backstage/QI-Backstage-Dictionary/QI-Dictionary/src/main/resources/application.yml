@@ -109,6 +109,7 @@ dubbo:
       name: dubbo
   rpc:
     service-package: com.qi.backstage.dictionary.rpc
+    concurrency: 40
 #common setting
 website:
   # 网站支持

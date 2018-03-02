@@ -9,6 +9,7 @@ import com.sfsctech.base.result.ValidatorResult;
 import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.base.session.SessionInfo;
 import com.sfsctech.base.session.UserAuthData;
+import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
 import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.StringUtil;

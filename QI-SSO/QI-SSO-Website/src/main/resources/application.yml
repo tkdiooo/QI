@@ -71,6 +71,7 @@ dubbo:
     timeout: 2000
   rpc:
     service-package: com.qi.sso.website.rpc
+    concurrency: 40
 #common setting
 website:
   # 网站支持
