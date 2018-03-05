@@ -16,7 +16,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>QI-SSO-Auth</module>
         <module>QI-SSO-Interface</module>
         <module>QI-SSO-Model</module>
         <module>QI-SSO-Server</module>

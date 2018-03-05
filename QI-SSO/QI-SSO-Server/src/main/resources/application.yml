@@ -60,7 +60,7 @@ dubbo:
       name: dubbo
   rpc:
     service-package: com.qi.sso.server.rpc
-    concurrency: 40
+    concurrency: 200
 #common setting
 website:
   jwt:
