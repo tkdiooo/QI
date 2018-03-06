@@ -1,5 +1,8 @@
 package com.qi.backstage.management.service.write.impl;
 
+import com.qi.backstage.management.mapper.BaseMenuMapper;
+import com.qi.backstage.management.model.domain.BaseMenu;
+import com.qi.backstage.management.model.domain.BaseMenuExample;
 import com.qi.backstage.management.service.write.SystemWriteService;
 import com.qi.backstage.management.mapper.BaseSystemMapper;
 import com.qi.backstage.management.model.domain.BaseSystem;
@@ -22,6 +25,9 @@ public class SystemWriteServiceImpl implements SystemWriteService {
     @Autowired
     private BaseSystemMapper mapper;
 
+    @Autowired
+    private BaseMenuMapper menuMapper;
+
     @Override
     public void save(BaseSystem model) {
         if (StringUtil.isBlank(model.getGuid())) {
@@ -32,6 +38,12 @@ public class SystemWriteServiceImpl implements SystemWriteService {
             BaseSystemExample example = new BaseSystemExample();
             example.createCriteria().andGuidEqualTo(model.getGuid());
             mapper.updateByExampleSelective(model, example);
+            // 更新菜单里的系统编号
+            BaseMenuExample menuExample = new BaseMenuExample();
+            menuExample.createCriteria().andSysguidEqualTo(model.getGuid());
+            BaseMenu menu = new BaseMenu();
+            menu.setSyscode(model.getCode());
+            menuMapper.updateByExampleSelective(menu, menuExample);
         }
     }
 

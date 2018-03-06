@@ -63,6 +63,8 @@ public class CommonConstants {
 
     public static final String CACHE_SYSTEM_ROOT = "SYSTEM_ROOT";
 
+    public static final String CACHE_SECURITY_ROOT = "SECURITY_ROOT";
+
     public static final String ROOT_NAME = "Root";
 
     public static final String ROOT_CLASS = "active";

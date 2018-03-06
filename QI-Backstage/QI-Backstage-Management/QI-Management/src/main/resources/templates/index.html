@@ -4,7 +4,7 @@
 <script th:inline="javascript">
     var ctx = /*[[@{/}]]*/ "";
     $(function () {
-        load_url(/*[[@{/system/index}]]*/ "", $('.content-wrapper'));
+        load_url(ctx + /*[[${path}]]*/ "", $('.content-wrapper'));
     });
 </script>
 <body class="hold-transition skin-blue sidebar-mini">

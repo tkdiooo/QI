@@ -1,5 +1,8 @@
 package com.qi.backstage.management.service.write.impl;
 
+import com.qi.backstage.management.mapper.BaseButtonMapper;
+import com.qi.backstage.management.model.domain.BaseButton;
+import com.qi.backstage.management.model.domain.BaseButtonExample;
 import com.qi.backstage.management.service.write.MenuWriteService;
 import com.qi.backstage.management.mapper.BaseMenuMapper;
 import com.qi.backstage.management.model.domain.BaseMenu;
@@ -23,6 +26,9 @@ public class MenuWriteServiceImpl implements MenuWriteService {
     @Autowired
     private BaseMenuMapper mapper;
 
+    @Autowired
+    private BaseButtonMapper buttonMapper;
+
     @Override
     public void save(BaseMenu model) {
         if (StringUtil.isBlank(model.getGuid())) {
@@ -34,6 +40,12 @@ public class MenuWriteServiceImpl implements MenuWriteService {
             BaseMenuExample example = new BaseMenuExample();
             example.createCriteria().andGuidEqualTo(model.getGuid());
             mapper.updateByExampleSelective(model, example);
+            // 更新按钮里的菜单编号
+            BaseButtonExample buttonExample = new BaseButtonExample();
+            buttonExample.createCriteria().andMenuguidEqualTo(model.getGuid());
+            BaseButton button = new BaseButton();
+            button.setMenucode(model.getCode());
+            buttonMapper.updateByExampleSelective(button, buttonExample);
         }
     }
 
