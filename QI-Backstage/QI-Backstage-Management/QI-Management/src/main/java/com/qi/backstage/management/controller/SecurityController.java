@@ -2,21 +2,25 @@ package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.management.common.util.BreadcrumbUtil;
-import com.qi.backstage.management.common.util.DictUtil;
 import com.qi.backstage.management.model.domain.BaseDatasource;
-import com.qi.backstage.management.model.domain.BaseSystem;
+import com.qi.backstage.management.service.read.DatasourceReadService;
+import com.qi.backstage.management.service.write.DatasourceWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
-import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
-import com.sfsctech.constants.StatusConstants;
+import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.constants.JDBCConstants;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.rpc.result.ActionResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class DataSecurityController
@@ -27,6 +31,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("security")
 public class SecurityController {
+
+    @Autowired
+    private DatasourceReadService readService;
+
+    @Autowired
+    private DatasourceWriteService writeService;
 
     @GetMapping("index")
     public String index(ModelMap model) {
@@ -39,22 +49,18 @@ public class SecurityController {
         return "security/index";
     }
 
+    @ResponseBody
+    @PostMapping("query")
+    public ActionResult<PagingInfo<BaseDatasource>> getData(PagingInfo<BaseDatasource> pagingInfo) {
+        return new ActionResult<>(readService.findByPage(pagingInfo));
+    }
+
     @GetMapping("add")
-    public String add(ModelMap model, BaseDatasource datasource) {
+    public String add(ModelMap model) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
-//        // 获取系统信息
-//        model.put("system", systemReadService.getByGuid(menu.getSysguid()));
-//        Map<String, Object> defaultSel = new HashMap<>();
-//        if (CommonConstants.ROOT_GUID.equals(menu.getParent())) {
-//            defaultSel.put("text", CommonConstants.ROOT_NAME);
-//            defaultSel.put("value", CommonConstants.ROOT_GUID);
-//        } else {
-//            menu = readService.getByGuid(menu.getParent());
-//            defaultSel.put("text", menu.getName());
-//            defaultSel.put("value", menu.getGuid());
-//            model.put("guid", menu.getGuid());
-//        }
-//        model.put("defaultSel", defaultSel);
+        List<Map<String, Object>> options = BootstrapUtil.matchOptions("DATABASE_TYPE", JDBCConstants.Driver.MySQL, JDBCConstants.Driver.Oracle);
+        model.put("defaultSel", options.get(0));
+        model.put("options", options);
         return "security/edit";
     }
 
@@ -82,7 +88,7 @@ public class SecurityController {
     @ResponseBody
     @PostMapping("save")
     public ActionResult<BaseDatasource> save(BaseDatasource datasource) {
-//        writeService.save(menu);
+        writeService.save(datasource);
         return new ActionResult<>(datasource);
     }
 }

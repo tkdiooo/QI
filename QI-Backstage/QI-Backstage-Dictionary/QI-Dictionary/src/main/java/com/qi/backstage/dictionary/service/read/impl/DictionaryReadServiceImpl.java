@@ -57,17 +57,4 @@ public class DictionaryReadServiceImpl implements DictionaryReadService {
         example.createCriteria().andNumberEqualTo(dictionary.getParent().equals(CommonConstants.ROOT_GUID) ? dictionary.getNumber() : (dictionary.getParent() + dictionary.getNumber()));
         return mapper.selectByExample(example).size() == 0;
     }
-
-    //    @Override
-    public PagingInfo<DictionaryDto> findByPage(PagingInfo<DictionaryDto> pagingInfo) {
-        PageHelper.startPage(pagingInfo.getPageNum(), pagingInfo.getPageSize());
-        BaseDictionaryExample example = new BaseDictionaryExample();
-        if (ListUtil.isNotEmpty(pagingInfo.getOrder())) {
-            example.setOrderByClause(pagingInfo.getOrderByClause());
-        }
-        PageInfo<BaseDictionary> page = new PageInfo<>(mapper.selectByExample(example));
-        pagingInfo.setRecordsTotal(page.getTotal());
-        page.getList().forEach(dictionary -> pagingInfo.getData().add(BeanUtil.copyBeanForCglib(dictionary, DictionaryDto.class)));
-        return pagingInfo;
-    }
 }

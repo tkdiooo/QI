@@ -3,6 +3,7 @@
 <script th:inline="javascript">
     $(function () {
         var opt = {
+            url: /*[[@{/security/query}]]*/ "",
             container: '#data_table',
             bSort: false,
             columns: [
@@ -11,8 +12,6 @@
                 {sClass: "text-left", sWidth: 150, orderable: false},
                 {sClass: "text-left", sWidth: 250, orderable: false},
                 {sClass: "text-left", sWidth: 100, orderable: false},
-                {sClass: "text-left", sWidth: 50, orderable: false},
-                {sClass: "text-left", sWidth: 50, visible: false},
                 {sClass: "text-left", sWidth: "100%", orderable: false}
             ],
             buttons: [
@@ -29,7 +28,7 @@
             ]
         };
         //dt-buttons
-        var table = matchDomTable(opt, true);
+        var table = matchAjaxTable(opt, true);
     })
 </script>
 <!-- Content Wrapper. Contains page content -->
@@ -59,13 +58,11 @@
                     <table id="data_table" class="table table-bordered table-striped" width="100%">
                         <thead>
                         <tr>
-                            <th>系统编号</th>
-                            <th>系统名称</th>
-                            <th>系统域名</th>
-                            <th>系统URL</th>
-                            <th>系统类型</th>
-                            <th>状态</th>
-                            <th>状态(隐藏)</th>
+                            <th>数据库类型</th>
+                            <th>服务IP</th>
+                            <th>端口</th>
+                            <th>用户名</th>
+                            <th>密码</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -94,7 +91,8 @@
                                         th:data-original-title="'启用' + ${var.namecn} + ''" data-placement="right">
                                     <span class="fa fa-check-square-o"></span>启用
                                 </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn" th:onclick="'child(\'' + ${var.guid} + '\');'"
+                                <button type="button" class="btn btn-default btn-sm dt-btn"
+                                        th:onclick="'child(\'' + ${var.guid} + '\');'"
                                         th:data-original-title="查看系统菜单" data-placement="right">
                                     <span class="fa fa-search"></span>查看
                                 </button>

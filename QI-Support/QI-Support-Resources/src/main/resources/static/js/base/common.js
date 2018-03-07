@@ -451,21 +451,21 @@ function matchDomTable(opt, destorys) {
 
 /**
  * dataTables加载
- * @param url 请求路径
- * @param container: 渲染的容器jQuery.ID
  * @param opt: 设置
+ * @param opt.url 请求路径
+ * @param opt.container: 渲染的容器jQuery.ID
  * @param opt.columns: 列字段处理
  * @param opt.params: 请求参数
  * @param opt.buttons: 按钮
  * @param destorys: 是否销毁
  */
-function matchAjaxTable(url, container, opt, destorys) {
+function matchAjaxTable(opt, destorys) {
     if (destorys) {
-        if ($.fn.dataTable.isDataTable(container)) {
-            $(container).DataTable().destroy();
+        if ($.fn.dataTable.isDataTable(opt.container)) {
+            $(opt.container).DataTable().destroy();
         }
     }
-    var options = {
+    var defaults = {
         scrollX: true,
         bServerSide: true,
         bSort: true,
@@ -502,9 +502,10 @@ function matchAjaxTable(url, container, opt, destorys) {
             // 请求参数封装
             data.condition = opt.params;
             //ajax请求数据
-            ajax_action(url, JSON.stringify(data), {
+            ajax_action(opt.url, JSON.stringify(data), {
                 contentType: 'application/json; charset=utf-8',
                 handler: function (result) {
+                    console.info(data);
                     setTimeout(function () {
                         //封装返回数据
                         result.result.draw = data.draw;
@@ -517,12 +518,16 @@ function matchAjaxTable(url, container, opt, destorys) {
         },
         columns: opt.columns
     };
-    if (opt.buttons) {
-        option['dom'] = 'Bfrtip';
-        option['buttons'] = opt.buttons;
+    var settings = $.extend({}, defaults, opt);
+    var table = $(opt.container).DataTable(settings);
+    if (settings.buttons) {
+        matchTableButtons(settings);
+    }
+    if (settings.autoColumnSizing) {
+        $(opt.container + '_wrapper').find('.dataTables_scrollHeadInner').addClass('fullWidth').find('.table-bordered').addClass('fullWidth');
     }
     //初始化表格
-    return $(container).DataTable(options);
+    return table;
 }
 
 function matchTableButtons(opt) {

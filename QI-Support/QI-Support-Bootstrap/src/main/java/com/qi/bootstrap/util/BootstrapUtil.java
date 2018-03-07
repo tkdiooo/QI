@@ -2,6 +2,7 @@ package com.qi.bootstrap.util;
 
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.common.util.BeanUtil;
+import com.sfsctech.common.util.NumberUtil;
 import com.sfsctech.common.util.SpringContextUtil;
 import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.inf.IEnum;
@@ -40,7 +41,9 @@ public class BootstrapUtil {
             Map<String, Object> map = new HashMap<>();
             map.put("value", e.getCode());
             map.put("text", e.getContent());
-            map.put("class", OPTIONS_CLASS[Integer.valueOf(e.getCode().toString())]);
+            if (StringUtil.isNumeric(e.getCode().toString())) {
+                map.put("class", OPTIONS_CLASS[Integer.valueOf(e.getCode().toString())]);
+            }
             options.add(map);
         }
         factory.getCacheClient().put(cacheKey, options);

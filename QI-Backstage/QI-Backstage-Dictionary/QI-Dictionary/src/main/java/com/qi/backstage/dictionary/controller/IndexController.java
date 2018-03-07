@@ -84,12 +84,6 @@ public class IndexController {
         return "dictionary/index";
     }
 
-//    @ResponseBody
-//    @PostMapping("query")
-//    public ActionResult<PagingInfo<DictionaryDto>> getData(PagingInfo<DictionaryDto> pagingInfo) {
-//        return new ActionResult<>(readService.findByPage(pagingInfo));
-//    }
-
     @GetMapping("add")
     public String add(ModelMap model, String parent) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());

@@ -51,9 +51,9 @@
         </dependency>
         <!-- jquery.maskedinput -->
         <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>jquery.maskedinput</artifactId>
-            <version>1.4.1</version>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>inputmask</artifactId>
+            <version>3.3.11</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.webjars.bower</groupId>
