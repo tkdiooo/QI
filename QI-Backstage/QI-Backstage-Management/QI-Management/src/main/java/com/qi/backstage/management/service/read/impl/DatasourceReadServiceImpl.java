@@ -37,4 +37,9 @@ public class DatasourceReadServiceImpl implements DatasourceReadService {
         return pagingInfo;
     }
 
+    @Override
+    public BaseDatasource get(Long id) {
+        return mapper.selectByPrimaryKey(id);
+    }
+
 }

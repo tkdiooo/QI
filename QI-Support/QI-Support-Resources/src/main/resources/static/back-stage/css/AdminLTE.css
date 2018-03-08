@@ -6004,3 +6004,7 @@ table.text-center th {
 .form-group i {
     top: 0 !important;
 }
+
+.left-margin-5 {
+    margin-left: 5px !important;
+}

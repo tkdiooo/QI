@@ -1,36 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<script th:inline="javascript">
-    $(function () {
-        var opt = {
-            url: /*[[@{/security/query}]]*/ "",
-            container: '#data_table',
-            bSort: false,
-            columns: [
-                {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 150, orderable: false},
-                {sClass: "text-left", sWidth: 250, orderable: false},
-                {sClass: "text-left", sWidth: 100, orderable: false},
-                {sClass: "text-left", sWidth: "100%", orderable: false}
-            ],
-            buttons: [
-                {
-                    id: 'add_btn',
-                    type: 'button',
-                    text: '新增',
-                    title: '新增数据源',
-                    class: 'btn btn-primary',
-                    action: function () {
-                        load_url(/*[[@{/security/add}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
-                    }
-                }
-            ]
-        };
-        //dt-buttons
-        var table = matchAjaxTable(opt, true);
-    })
-</script>
 <!-- Content Wrapper. Contains page content -->
 <section class="content-header">
     <h1>
@@ -55,51 +24,7 @@
                     </ol>
                 </div>
                 <div class="box-body">
-                    <table id="data_table" class="table table-bordered table-striped" width="100%">
-                        <thead>
-                        <tr>
-                            <th>数据库类型</th>
-                            <th>服务IP</th>
-                            <th>端口</th>
-                            <th>用户名</th>
-                            <th>密码</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="var, stat : ${data}">
-                            <td th:text="${var.code}"></td>
-                            <td th:text="${var.namecn}"></td>
-                            <td th:text="${var.domain}"></td>
-                            <td th:text="${var.url}"></td>
-                            <td th:text="${type.get(var.type)}"></td>
-                            <td th:utext="${status.get(var.status)}"></td>
-                            <td th:utext="${var.status}"></td>
-                            <td>
-                                <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'edit(\'' + ${var.guid} + '\');'"
-                                        th:data-original-title="'编辑' + ${var.namecn} + ''" data-placement="right">
-                                    <span class="fa fa-edit"></span>编辑
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'disable(\'' + ${var.guid} + '\');'" th:if="${var.status == 1}"
-                                        th:data-original-title="'禁用' + ${var.namecn} + ''" data-placement="right">
-                                    <span class="fa fa-ban"></span>禁用
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'valid(\'' + ${var.guid} + '\');'" th:if="${var.status == 2}"
-                                        th:data-original-title="'启用' + ${var.namecn} + ''" data-placement="right">
-                                    <span class="fa fa-check-square-o"></span>启用
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'child(\'' + ${var.guid} + '\');'"
-                                        th:data-original-title="查看系统菜单" data-placement="right">
-                                    <span class="fa fa-search"></span>查看
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <table id="data_table" class="table table-bordered table-striped" width="100%"></table>
                 </div>
             </div>
         </div>
@@ -107,12 +32,87 @@
 </section>
 <script th:inline="javascript">
     $(function () {
+        var opt = {
+            url: /*[[@{/security/query}]]*/ "",
+            container: '#data_table',
+            bSort: false,
+            columns: [
+                {sClass: "text-left", sWidth: 150, orderable: false, data: "type", title: "数据库类型"},
+                {sClass: "text-left", sWidth: 150, orderable: false, data: "serverip", title: "服务IP"},
+                {sClass: "text-left", sWidth: 100, orderable: false, data: "port", title: "端口"},
+                {sClass: "text-left", sWidth: 170, orderable: false, data: "username", title: "用户名"},
+                {sClass: "text-left", sWidth: 170, orderable: false, data: "password", title: "密码"},
+                {
+                    sClass: "text-left",
+                    sWidth: "100%",
+                    orderable: false,
+                    data: null,
+                    title: "操作",
+                    defaultContent: ""
+                }
+            ],
+            columnsButtons: [
+                {
+                    text: '编辑',
+                    class: 'btn btn-default btn-sm dt-btn',
+                    action: 'edit',
+                    icon: '<span class="fa fa-edit"></span>'
+                },
+                {
+                    text: '前端数据安全',
+                    class: 'btn btn-default btn-sm dt-btn',
+                    action: 'edit',
+                    icon: '<span class="fa fa-edit"></span>'
+                },
+                {
+                    text: '后端数据安全',
+                    class: 'btn btn-default btn-sm dt-btn',
+                    action: 'edit',
+                    icon: '<span class="fa fa-edit"></span>'
+                }
+            ],
+            params : {
+                cc : "cc"
+            },
+            form: [
+                {
+                    type: 'text',
+                    id: 'serverip',
+                    text: '根据IP查询'
+                },
+                {
+                    type: 'text',
+                    id: 'username',
+                    text: '根据用户名查询'
+                },
+                {
+                    type: 'button',
+                    action: function () {
+                        table.ajax.reload();
+                    }
+                }
+            ],
+            buttons: [
+                {
+                    id: 'add_btn',
+                    type: 'button',
+                    text: '新增',
+                    title: '新增数据源',
+                    class: 'btn btn-primary',
+                    action: function () {
+                        load_url(/*[[@{/security/add}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+                    }
+                }
+            ]
+        };
+        //dt-buttons
+        var table = matchAjaxTable(opt, true);
         //显示tooltip
         $("[data-original-title]").tooltip();
     });
 
-    function edit(guid) {
-        load_url(/*[[@{/system/edit}]]*/ "", $('.content-wrapper'), {guid: guid});
+    function edit(id) {
+        load_url(/*[[@{/security/edit}]]*/ "", $('.content-wrapper'), {id: id});
     }
 
     function disable(guid) {

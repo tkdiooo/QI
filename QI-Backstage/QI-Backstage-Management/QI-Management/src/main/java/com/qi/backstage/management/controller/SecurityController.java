@@ -67,21 +67,16 @@ public class SecurityController {
     @GetMapping("edit")
     public String edit(ModelMap model, BaseDatasource datasource) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
-//        // 获取系统信息
-//        model.put("system", systemReadService.getByGuid(menu.getSysguid()));
-//        menu = readService.getByGuid(menu.getGuid());
-//        model.put("model", menu);
-//        Map<String, Object> defaultSel = new HashMap<>();
-//        if (menu.getParent().equals(CommonConstants.ROOT_GUID)) {
-//            defaultSel.put("text", CommonConstants.ROOT_NAME);
-//            defaultSel.put("value", CommonConstants.ROOT_GUID);
-//        } else {
-//            BaseMenu parent = readService.getByGuid(menu.getParent());
-//            defaultSel.put("text", parent.getName());
-//            defaultSel.put("value", parent.getGuid());
-//            model.put("guid", menu.getGuid());
-//        }
-//        model.put("defaultSel", defaultSel);
+        List<Map<String, Object>> options = BootstrapUtil.matchOptions("DATABASE_TYPE", JDBCConstants.Driver.MySQL, JDBCConstants.Driver.Oracle);
+        datasource = readService.get(datasource.getId());
+        model.put("model", datasource);
+        for (Map<String, Object> option : options) {
+            if (option.get("value").equals(datasource.getType())) {
+                model.put("defaultSel", option);
+                break;
+            }
+        }
+        model.put("options", options);
         return "security/edit";
     }
 

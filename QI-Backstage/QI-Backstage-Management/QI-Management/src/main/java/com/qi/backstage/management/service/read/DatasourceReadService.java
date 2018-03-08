@@ -12,4 +12,6 @@ import com.sfsctech.base.model.PagingInfo;
 public interface DatasourceReadService {
 
     PagingInfo<BaseDatasource> findByPage(PagingInfo<BaseDatasource> pagingInfo);
+
+    BaseDatasource get(Long id);
 }

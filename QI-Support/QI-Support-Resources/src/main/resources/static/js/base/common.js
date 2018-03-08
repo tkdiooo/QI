@@ -431,22 +431,26 @@ function matchDomTable(opt, destorys) {
         bDeferRender: false,
         retrieve: true,
         processing: false,
-        columns: opt.columns
+        columns: opt.columns,
+        dom: "<'row'<'col-md-6'l<'#toolbar'>><'col-md-6'f>r>t<'row'<'col-md-5 sm-center'i><'col-md-7 text-right sm-center'p>>",
+        initComplete: function () {
+            // 表格加载完毕，手动添加按钮到表格上
+            if (settings.buttons) {
+                matchTableButtons(settings);
+            }
+            // 表格加载完毕，表头宽度自适应
+            if (settings.autoColumnSizing) {
+                $(opt.container + '_wrapper').find('.dataTables_scrollHeadInner').addClass('fullWidth').find('.table-bordered').addClass('fullWidth');
+            }
+        }
         // drawCallback: function (settings) {
         //     $('#data_table_wrapper').find('.row').attr('style', 'margin-left:0 !important;margin-right:0 !important;');
         //     $('#data_table_paginate').find('li').find('a').attr('style', 'padding:4px 10px !important;');
         // }
     };
     var settings = $.extend({}, defaults, opt);
-    var table = $(opt.container).DataTable(settings);
-    if (settings.buttons) {
-        matchTableButtons(settings);
-    }
-    if (settings.autoColumnSizing) {
-        $(opt.container + '_wrapper').find('.dataTables_scrollHeadInner').addClass('fullWidth').find('.table-bordered').addClass('fullWidth');
-    }
     //初始化表格
-    return table;
+    return $(opt.container).DataTable(settings);
 }
 
 /**
@@ -455,8 +459,10 @@ function matchDomTable(opt, destorys) {
  * @param opt.url 请求路径
  * @param opt.container: 渲染的容器jQuery.ID
  * @param opt.columns: 列字段处理
+ * @param opt.columnsButtons: 列按钮处理
  * @param opt.params: 请求参数
  * @param opt.buttons: 按钮
+ * @param opt.form: 查询条件
  * @param destorys: 是否销毁
  */
 function matchAjaxTable(opt, destorys) {
@@ -471,6 +477,7 @@ function matchAjaxTable(opt, destorys) {
         bSort: true,
         searching: false, //禁用原生搜索
         bLengthChange: false, //禁用数据量选择
+        autoColumnSizing: true, // 表头宽度自适应
         renderer: 'bootstrap', //渲染样式：Bootstrap和jquery-ui
         pagingType: 'full_numbers', //分页样式：simple,simple_numbers,full,full_numbers
         language: {
@@ -499,13 +506,17 @@ function matchAjaxTable(opt, destorys) {
         retrieve: true,
         processing: false,
         ajax: function (data, callback, settings) {
-            // 请求参数封装
-            data.condition = opt.params;
+            if (opt.form) {
+                // 动态参数
+                data.condition = eval('(' + (JSON.stringify(opt.params) + JSON.stringify($("#dataTables_form").serializeJson())).replace(/}{/, ',') + ')');
+            } else {
+                // 请求参数封装
+                data.condition = opt.params;
+            }
             //ajax请求数据
             ajax_action(opt.url, JSON.stringify(data), {
                 contentType: 'application/json; charset=utf-8',
                 handler: function (result) {
-                    console.info(data);
                     setTimeout(function () {
                         //封装返回数据
                         result.result.draw = data.draw;
@@ -516,22 +527,40 @@ function matchAjaxTable(opt, destorys) {
                 }
             });
         },
-        columns: opt.columns
+        columns: opt.columns,
+        //行被创建回调
+        createdRow: function (row, data, dataIndex) {
+            // 构建列字段上操作按钮
+            if (settings.columnsButtons) {
+                $.each(settings.columnsButtons, function (i, value) {
+                    $(row).find('td:last').append('<button type="button" class="' + value.class + '" onclick="' + value.action + '(\'' + data.id + '\');" data-original-title="' + value.text + '" data-placement="right">' + value.icon + value.text + '</button>');
+                });
+                $("[data-original-title]").tooltip();
+            }
+        },
+        dom: "<'row'<'col-md-6'l<'#toolbar'>><'col-md-6' l<'#formbar'>f>r>t",
+        initComplete: function () {
+            // 表格加载完毕，手动添加按钮到表格上
+            if (settings.buttons) {
+                matchTableButtons(settings);
+            }
+            // 表格加载完毕，手动添加查询条件到表格上
+            if (settings.form) {
+                matchTableForm(settings);
+            }
+            // 表格加载完毕，表头宽度自适应
+            if (settings.autoColumnSizing) {
+                $(opt.container + '_wrapper').find('.dataTables_scrollHeadInner').addClass('fullWidth').find('.table-bordered').addClass('fullWidth');
+            }
+            $("[data-original-title]").tooltip();
+        }
     };
     var settings = $.extend({}, defaults, opt);
-    var table = $(opt.container).DataTable(settings);
-    if (settings.buttons) {
-        matchTableButtons(settings);
-    }
-    if (settings.autoColumnSizing) {
-        $(opt.container + '_wrapper').find('.dataTables_scrollHeadInner').addClass('fullWidth').find('.table-bordered').addClass('fullWidth');
-    }
     //初始化表格
-    return table;
+    return $(opt.container).DataTable(settings);
 }
 
 function matchTableButtons(opt) {
-    var row = $(opt.container + '_wrapper').children('div:first-child').children('div:first-child');
     $.each(opt.buttons, function (i, value) {
         var div = $('<div class="btn-group" data-autorun="' + (i + 1) + '" data-original-title="' + value.title + '"></div>');
         // 按钮
@@ -556,8 +585,22 @@ function matchTableButtons(opt) {
             div.append(select);
             div.append(options);
         }
-        row.append(div);
+        $("#toolbar").append(div);
     });
+}
+
+function matchTableForm(opt) {
+    var form = $('<form id="dataTables_form"></form>');
+    $.each(opt.form, function (i, value) {
+        // 文本框
+        if (value.type === 'text') {
+            form.append($('<input type="' + value.type + '" name="' + value.id + '" class="form-control input-sm" placeholder="' + value.text + '"/>'));
+        } else if (value.type === 'button') {
+            var button = $('<button type="button" class="btn btn-primary left-margin-5"><span class="glyphicon">查询</span></button>').click(value.action);
+            form.append(button);
+        }
+    });
+    $('#formbar').addClass('dataTables_filter').append(form);
 }
 
 function selectChange(obj, opt) {
