@@ -59,15 +59,9 @@
                     icon: '<span class="fa fa-edit"></span>'
                 },
                 {
-                    text: '前端数据安全',
+                    text: '数据校验',
                     class: 'btn btn-default btn-sm dt-btn',
-                    action: 'edit',
-                    icon: '<span class="fa fa-edit"></span>'
-                },
-                {
-                    text: '后端数据安全',
-                    class: 'btn btn-default btn-sm dt-btn',
-                    action: 'edit',
+                    action: 'verify',
                     icon: '<span class="fa fa-edit"></span>'
                 }
             ],
@@ -115,26 +109,8 @@
         load_url(/*[[@{/security/edit}]]*/ "", $('.content-wrapper'), {id: id});
     }
 
-    function disable(guid) {
-        var opt = {
-            callback: function (result) {
-                load_url(/*[[@{/system/index}]]*/ "", $('.content-wrapper'));
-            }
-        };
-        ajax_action(/*[[@{/system/disable}]]*/ "", {guid: guid}, opt);
-    }
-
-    function valid(guid) {
-        var opt = {
-            callback: function (result) {
-                load_url(/*[[@{/system/index}]]*/ "", $('.content-wrapper'));
-            }
-        };
-        ajax_action(/*[[@{/system/valid}]]*/ "", {guid: guid}, opt);
-    }
-
-    function child(guid) {
-        load_url(/*[[@{/menu/index}]]*/ "", $('.content-wrapper'), {sysguid: guid});
+    function verify(id) {
+        load_url(/*[[@{/security/verify}]]*/ "", $('.content-wrapper'), {id: id});
     }
 </script>
 </html>

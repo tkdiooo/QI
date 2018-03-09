@@ -64,6 +64,12 @@
             <artifactId>common-auth</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
+        <!-- common-database support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-database</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
         <!-- QI-Support-Bootstrap support -->
         <dependency>
             <groupId>com.qi.support</groupId>

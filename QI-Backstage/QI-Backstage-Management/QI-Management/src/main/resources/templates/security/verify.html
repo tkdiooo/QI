@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style type="text/css">
+    .nav-stacked li {
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+</style>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        数据校验配置
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Forms</a></li>
+        <li class="active">General Elements</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- left column -->
+    <div class="col-md-3 left-column">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">数据库信息</h3>
+            </div>
+            <div id="databases_list" class="box-body" style="overflow-y: scroll;">
+                <div th:each="var, stat : ${databases}" class="box box-default collapsed-box box-solid" style="margin-bottom: 2px !important;">
+                    <div class="box-header with-border" style="border-bottom: 0 !important;">
+                        <h3 class="box-title">
+                            <i class="fa fa-database"></i><span style="margin-left: 5px;" th:text="${var}"></span>
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" th:onclick="'dbChoose(\'' + ${var} + '\', this);'">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul class="nav nav-stacked"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 right-column">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">表结构信息</h3>
+            </div>
+            <div class="box-body">
+
+            </div>
+        </div>
+    </div>
+</section>
+<input type="hidden" id="id" th:value="${datasource.id}"/>
+<script th:inline="javascript">
+    $(function () {
+        $('#databases_list').height(win.height - 145);
+        //显示tooltip
+        $("[data-original-title]").tooltip();
+    });
+    var dbChoose = function (database, obj) {
+        var box = $(obj).parent().parent().parent();
+        var list = box.find('.nav-stacked');
+        if (box.hasClass("collapsed-box") && list.children().length === 0) {
+            var opt = {
+                waiting: false,
+                handler: function (result) {
+                    $.each(result.dataSet, function (i, value) {
+                        list.append('<li><a href="#"><i class="fa fa-table"></i><span style="margin-left: 5px;">' + value + '</span></a></li>');
+                    });
+                }
+            };
+            ajax_action(/*[[@{/security/loadTables}]]*/ "", {
+                database: database,
+                id: $('#id').val()
+            }, opt);
+        }
+    };
+    var editSubmit = function () {
+        var params = $(".form-horizontal").serializeJson();
+        var opt = {
+            callback: goBack
+        };
+        ajax_action(/*[[@{/security/save}]]*/ "", params, opt);
+    };
+    var goBack = function () {
+        load_url(/*[[@{/security/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+    };
+</script>
+</html>
