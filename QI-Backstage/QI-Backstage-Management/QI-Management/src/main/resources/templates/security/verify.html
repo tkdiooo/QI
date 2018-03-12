@@ -50,7 +50,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">表结构信息</h3>
             </div>
-            <div class="box-body">
+            <div id="table_desc" class="box-body">
 
             </div>
         </div>
@@ -71,7 +71,7 @@
                 waiting: false,
                 handler: function (result) {
                     $.each(result.dataSet, function (i, value) {
-                        list.append('<li><a href="#"><i class="fa fa-table"></i><span style="margin-left: 5px;">' + value + '</span></a></li>');
+                        list.append('<li><a href="javascript:void(0);" onclick="descTable(\'' + database + '\',\'' + value + '\');"><i class="fa fa-table"></i><span style="margin-left: 5px;">' + value + '</span></a></li>');
                     });
                 }
             };
@@ -81,12 +81,8 @@
             }, opt);
         }
     };
-    var editSubmit = function () {
-        var params = $(".form-horizontal").serializeJson();
-        var opt = {
-            callback: goBack
-        };
-        ajax_action(/*[[@{/security/save}]]*/ "", params, opt);
+    var descTable = function (database, table) {
+        load_url(/*[[@{/security/descTable}]]*/ "", $('#table_desc'), {database: database, table: table});
     };
     var goBack = function () {
         load_url(/*[[@{/security/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});

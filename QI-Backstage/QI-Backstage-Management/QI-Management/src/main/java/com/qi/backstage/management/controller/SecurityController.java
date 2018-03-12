@@ -3,7 +3,6 @@ package com.qi.backstage.management.controller;
 import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.backstage.management.common.util.BreadcrumbUtil;
 import com.qi.backstage.management.model.domain.BaseDatasource;
-import com.qi.backstage.management.service.jdbc.JdbcService;
 import com.qi.backstage.management.service.read.DatasourceReadService;
 import com.qi.backstage.management.service.write.DatasourceWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
@@ -11,6 +10,7 @@ import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.constants.JDBCConstants;
 import com.sfsctech.constants.UIConstants;
+import com.sfsctech.database.jdbc.JdbcService;
 import com.sfsctech.database.model.DBConfigModel;
 import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +39,6 @@ public class SecurityController {
 
     @Autowired
     private DatasourceWriteService writeService;
-
-    @Autowired
-    private JdbcService jdbcService;
 
     @GetMapping("index")
     public String index(ModelMap model) {
@@ -95,7 +92,7 @@ public class SecurityController {
     @GetMapping("verify")
     public String verify(ModelMap model, BaseDatasource datasource) {
         datasource = readService.get(datasource.getId());
-        model.put("databases", jdbcService.showDatabases(datasource));
+        model.put("databases", JdbcService.showDatabases(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), null, datasource.getUsername(), datasource.getPassword())));
         model.put("datasource", datasource);
         return "security/verify";
     }
@@ -104,6 +101,13 @@ public class SecurityController {
     @PostMapping("loadTables")
     public ActionResult<String> loadTables(BaseDatasource datasource, String database) {
         datasource = readService.get(datasource.getId());
-        return new ActionResult<>(jdbcService.showTabls(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword())));
+        return new ActionResult<>(JdbcService.showTables(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword())));
+    }
+
+    @PostMapping("descTable")
+    public String descTable(ModelMap model, BaseDatasource datasource, String database, String table) {
+        datasource = readService.get(datasource.getId());
+        model.put("desc", JdbcService.descTable(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword()), table));
+        return "security/descTable";
     }
 }
