@@ -104,10 +104,10 @@ public class SecurityController {
         return new ActionResult<>(JdbcService.showTables(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword())));
     }
 
-    @PostMapping("descTable")
+    @GetMapping("descTable")
     public String descTable(ModelMap model, BaseDatasource datasource, String database, String table) {
         datasource = readService.get(datasource.getId());
-        model.put("desc", JdbcService.descTable(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword()), table));
+        model.put("data", JdbcService.descTable(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword()), table));
         return "security/descTable";
     }
 }

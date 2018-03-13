@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="box-body table-responsive no-padding">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th width="46"></th>
+            <th width="202">名称</th>
+            <th width="82">是否为空</th>
+            <th width="153">类型</th>
+            <th width="103">约束</th>
+            <th>说明</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div id="table_comment" class="box-body table-responsive no-padding" style="overflow-y: scroll;">
+    <div th:each="var, stat : ${data}" class="table-comment collapsed-box">
+        <div class="comment-div">
+            <span style="width: 50px;">
+                <button type="button" class="btn btn-box-tool" onclick="collapse(this);">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </span>
+            <span style="width: 200px;" th:text="${var.name}"></span>
+            <span style="width: 80px;" th:text="${var.isNull}"></span>
+            <span style="width: 150px;" th:text="${var.type}"></span>
+            <span style="width: 100px;" th:text="${var.key}"></span>
+            <span th:text="${var.comment}"></span>
+        </div>
+        <div class="comment-div" style="display: none;">
+            <span style="width: 50px;padding-left: 5px;">
+                <label data-original-title="添加验证" data-placement="bottom">
+                    <input type="checkbox" onclick="addVerify(this);"/>
+                </label>
+            </span>
+            <span style="width: 200px;display: none;">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger" onclick="chooseVerify(this);">默认</button>
+                    <button type="button" class="btn btn-success" onclick="chooseVerify(this);">自定义</button>
+                </div>
+            </span>
+            <span style="width: 80px;display: none;">
+                <label>
+                    <input type="checkbox" onclick="addVerify(this);"/>notNull
+                </label>
+            </span>
+            <span style="width: 150px;display: none;"></span>
+            <span style="width: 100px;display: none;"></span>
+            <span style="display: none;"></span>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    .comment-div {
+        width: 100%;
+        border-bottom: 1px solid #f4f4f4;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .comment-div:hover {
+        background-color: #f5f5f5;
+    }
+
+    .comment-div span {
+        display: inline-block;
+    }
+</style>
+<script th:inline="javascript">
+    $(function () {
+        $('#table_comment').height(win.height - 200);
+        //显示tooltip
+        $("[data-original-title]").tooltip();
+    });
+    collapse = function (element) {
+        var box = $(element).parents(".table-comment").first();
+        var box_content = box.find(".comment-div").eq(1);
+        if (!box.hasClass("collapsed-box")) {
+            //Convert minus into plus
+            $(element).children(":first").removeClass("fa-minus").addClass("fa-plus");
+            //Hide the content
+            box_content.slideUp(500, function () {
+                box.addClass("collapsed-box");
+            });
+        } else {
+            //Convert plus into minus
+            $(element).children(":first").removeClass("fa-plus").addClass("fa-minus");
+            //Show the content
+            box_content.slideDown(500, function () {
+                box.removeClass("collapsed-box");
+            });
+        }
+    };
+    addVerify = function (element) {
+        var box = $(element).parents(".comment-div").first();
+        box.find("span").eq(1).toggle();
+    };
+    chooseVerify = function (element) {
+        var box = $(element).parent();
+        if (box.children(":first").hasClass("btn-danger")) {
+            box.children(":first").removeClass("btn-danger").addClass("btn-success");
+            box.children(":last").removeClass("btn-success").addClass("btn-danger");
+        } else {
+            box.children(":last").removeClass("btn-danger").addClass("btn-success");
+            box.children(":first").removeClass("btn-success").addClass("btn-danger");
+        }
+    }
+</script>
+</html>
