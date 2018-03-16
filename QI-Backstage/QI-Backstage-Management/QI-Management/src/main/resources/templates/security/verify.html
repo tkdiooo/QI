@@ -27,13 +27,15 @@
                 <h3 class="box-title">数据库信息</h3>
             </div>
             <div id="databases_list" class="box-body" style="overflow-y: scroll;">
-                <div th:each="var, stat : ${databases}" class="box box-danger collapsed-box box-solid" style="margin-bottom: 2px !important;">
+                <div th:each="var, stat : ${databases}" class="box box-danger collapsed-box box-solid"
+                     style="margin-bottom: 2px !important;">
                     <div class="box-header with-border" style="border-bottom: 0 !important;">
                         <h3 class="box-title">
                             <i class="fa fa-database"></i><span style="margin-left: 5px;" th:text="${var}"></span>
                         </h3>
                         <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse" th:onclick="'dbChoose(\'' + ${var} + '\', this);'">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"
+                                    th:onclick="'dbChoose(\'' + ${var} + '\', this);'">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -49,10 +51,16 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">表结构信息</h3>
+                <div class="box-tools">
+                    <a href="javascript:void(0)" onclick="backend()" class="btn btn-sm btn-primary btn-flat">生成前端验证</a>
+                    <a href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat">生成后台验证</a>
+                    <a href="javascript:void(0)" onclick="goBack()" class="btn btn-sm btn-default btn-flat">返回数据源</a>
+                </div>
             </div>
-            <div id="table_desc" class="box-body">
-
-            </div>
+            <input type="file" name="className" style="display: none;" onchange="backendSubmit()"/>
+            <form class="form-horizontal">
+                <div id="table_desc" class="box-body"></div>
+            </form>
         </div>
     </div>
 </section>
@@ -64,7 +72,7 @@
         //显示tooltip
         $("[data-original-title]").tooltip();
     });
-    var dbChoose = function (database, obj) {
+    dbChoose = function (database, obj) {
         var box = $(obj).parent().parent().parent();
         var list = box.find('.nav-stacked');
         if (box.hasClass("collapsed-box") && list.children().length === 0) {
@@ -82,15 +90,39 @@
             }, opt);
         }
     };
-    var descTable = function (database, table) {
+    descTable = function (database, table) {
         load_url(/*[[@{/security/descTable}]]*/ "", $('#table_desc'), {
             id: $('#id').val(),
             database: database,
             table: table
         });
     };
-    var goBack = function () {
+    goBack = function () {
         load_url(/*[[@{/security/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
+    };
+    backend = function () {
+        $('input[name="className"]').trigger("click");
+    };
+    backendSubmit = function () {
+        var className = $('input[name="className"]').val();
+        var from = $('.form-horizontal');
+        var verifys = from.find('input[name="verify"]:checked');
+        if (verifys.length === 0) {
+            alert("请配置表的验证规则");
+            return;
+        }
+        var data = [];
+        $.each(verifys, function (i, element) {
+            var json = {};
+            var box = $(element).parents(".comment-div").first();
+            json.name = $(element).val();
+            json.type = box.find("#verifyType").val();
+            if (json.type === 'custom') {
+
+            }
+            data.push(json);
+        });
+        console.info(data);
     };
 </script>
 </html>

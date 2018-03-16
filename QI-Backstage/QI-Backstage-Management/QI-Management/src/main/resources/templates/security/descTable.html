@@ -31,7 +31,7 @@
         <div class="comment-div" style="display: none;">
             <div style="width: 50px;padding-left: 5px;">
                 <label data-original-title="添加验证">
-                    <input type="checkbox" onclick="addVerify(this);"/>
+                    <input type="checkbox" name="verify" th:value="${var.name}" onclick="addVerify(this);"/>
                 </label>
             </div>
             <div style="width: 200px;display: none;">
@@ -39,87 +39,27 @@
                     <button type="button" class="btn btn-danger" onclick="chooseVerify(this);">默认</button>
                     <button type="button" class="btn btn-success" onclick="chooseVerify(this);">自定义</button>
                 </div>
+                <input type="hidden" id="verifyType" name="" value="default"/>
             </div>
             <div style="width: 80px;display: none;">
                 <label>
                     <input type="checkbox"/>&nbsp;notNull
                 </label>
             </div>
-            <div style="display: none;" th:if="${var.type == 'datetime'}">
-                <div class="btn-group" style="margin-right: 5px;">
-                    <button type="button" th:id="'datetime_btn_' + ${stat.index}" class="btn btn-info" val="&nbsp;&nbsp;&nbsp;&nbsp;">&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li onclick="choose(this);" val="Past"><a href="javascript:void(0);">Past（数值必须是一个过去的日期）</a></li>
-                        <li onclick="choose(this);" val="Future"><a href="javascript:void(0);">Future（数值必须是一个将来的日期）</a></li>
-                        <li onclick="choose(this);" val="Pattern"><a href="javascript:void(0);">Pattern（数值必须符合指定的正则表达式）</a></li>
-                    </ul>
-                    <input type="hidden" />
-                </div>
-                <label style="display: none">
-                    <input class="form-control" type="text"/>
-                </label>
-            </div>
-            <div style="display: none;width: 200px;" th:if="${#strings.contains(var.type, 'int') || #strings.contains(var.type, 'decimal')}">
-                <label data-original-title="校验整数位数和小数位数">
-                    <input type="checkbox" onclick="chooseNext(this)"/>&nbsp;Digits
-                </label>
-                <label style="display: none;">
-                    <input class="form-control" type="text" style="width: 70px;" />
-                </label>
-                <label style="display: none;">
-                    <input class="form-control" type="text" style="width: 70px;" />
-                </label>
-            </div>
-            <div style="display: none;width: 435px;" th:if="${#strings.contains(var.type, 'int') || #strings.contains(var.type, 'decimal')}">
-                <div class="btn-group" style="margin-right: 5px;">
-                    <button type="button" th:id="'int_btn_' + ${stat.index}" class="btn btn-info" val="&nbsp;&nbsp;&nbsp;&nbsp;">&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li onclick="choose(this);" val="Max"><a href="javascript:void(0);">Max（数值<=指定的值）</a></li>
-                        <li onclick="choose(this);" val="Min"><a href="javascript:void(0);">Min（数值>=指定的值）</a></li>
-                        <li onclick="choose(this);" val="Range"><a href="javascript:void(0);">Range（数值必须在范围内）</a></li>
-                    </ul>
-                    <input type="hidden" />
-                </div>
-                <label style="display: none">
-                    <input class="form-control" type="text" style="width: 90px;" />
-                </label>
-                <label style="display: none">~</label>
-                <label style="display: none">
-                    <input class="form-control" type="text" style="width: 90px;" />
-                </label>
-            </div>
-            <div style="display: none;width: 200px;" th:if="${#strings.contains(var.type, 'char')}">
-                <label data-original-title="字符串的大小必须在指定的范围内">
-                    <input type="checkbox" onclick="chooseNext(this)"/>&nbsp;Length
-                </label>
-                <label style="display: none;">
-                    <input class="form-control" type="text" style="width: 65px;" />
-                </label>
-                <label style="display: none;">
-                    <input class="form-control" type="text" style="width: 65px;" />
-                </label>
-            </div>
-            <div style="display: none;width: 435px;" th:if="${#strings.contains(var.type, 'char')}">
-                <label data-original-title="正则表达式验证">
-                    <input type="checkbox" onclick="chooseNext(this)"/>&nbsp;Pattern
-                </label>
-                <label style="display: none">
-                    <input class="form-control" type="text"/>
-                </label>
-            </div>
-            <div style="display: none;" th:if="${#strings.contains(var.type, 'bit')}">
-                <div class="btn-group" style="margin-right: 5px;">
-                    <button type="button" th:id="'datetime_btn_' + ${stat.index}" class="btn btn-info" val="&nbsp;&nbsp;&nbsp;&nbsp;">&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        <li onclick="choose(this);" val="AssertTrue"><a href="javascript:void(0);">AssertTrue（数值必须为 true）</a></li>
-                        <li onclick="choose(this);" val="AssertFalse"><a href="javascript:void(0);">AssertFalse（数值必须为 false）</a></li>
-                    </ul>
-                    <input type="hidden" />
-                </div>
-            </div>
+            <div style="display: none;" th:if="${var.type == 'datetime'}"
+                 th:include="security/typeTemplate :: datetime"></div>
+            <div style="display: none;width: 200px;"
+                 th:if="${#strings.contains(var.type, 'int') || #strings.contains(var.type, 'decimal')}"
+                 th:include="security/typeTemplate :: number_length"></div>
+            <div style="display: none;width: 435px;"
+                 th:if="${#strings.contains(var.type, 'int') || #strings.contains(var.type, 'decimal')}"
+                 th:include="security/typeTemplate :: number"></div>
+            <div style="display: none;width: 200px;" th:if="${#strings.contains(var.type, 'char')}"
+                 th:include="security/typeTemplate :: character_length"></div>
+            <div style="display: none;width: 435px;" th:if="${#strings.contains(var.type, 'char')}"
+                 th:include="security/typeTemplate :: character"></div>
+            <div style="display: none;" th:if="${#strings.contains(var.type, 'bit')}"
+                 th:include="security/typeTemplate :: bit"></div>
         </div>
     </div>
 </div>
@@ -155,7 +95,7 @@
         $("[data-original-title]").tooltip();
     });
     // 校验类型下拉框选择
-    var choose = function (element) {
+    choose = function (element) {
         var group = $(element).parent().parent();
         var btn = group.find(".btn-info").first();
         var opt = {
@@ -164,12 +104,13 @@
                 group.find('input').val(data);
                 if ($.trim(data) === '' || data === 'Past' || data === 'Future') {
                     group.nextAll().hide();
-                } else if (data === 'Range' || data === 'Pattern' || data === 'Digits') {
+                } else if (data === 'Range' || data === 'Digits') {
                     group.nextAll().show();
-                } else if (data === 'Max' || data === 'Min') {
+                } else if (data === 'Max' || data === 'Min' || data === 'Pattern' || data === 'custom') {
                     group.nextAll().hide();
                     group.next().show();
                 } else {
+                    group.nextAll().hide();
                 }
             }
         };
@@ -213,18 +154,27 @@
             box.children(":first").removeClass("btn-danger").addClass("btn-success");
             box.children(":last").removeClass("btn-success").addClass("btn-danger");
             box.parent().nextAll().show();
+            box.next().val("custom");
         } else {
             box.children(":last").removeClass("btn-danger").addClass("btn-success");
             box.children(":first").removeClass("btn-success").addClass("btn-danger");
             box.parent().nextAll().hide();
+            box.next().val("default");
         }
     };
-    chooseNext = function (element) {
+    chooseNextAll = function (element) {
         if ($(element).is(':checked')) {
             $(element).parent().nextAll().show();
         } else {
             $(element).parent().nextAll().hide();
         }
     };
+    chooseNext = function (element) {
+        if ($(element).is(':checked')) {
+            $(element).parents("div").first().next().show();
+        } else {
+            $(element).parents("div").first().next().hide();
+        }
+    }
 </script>
 </html>
