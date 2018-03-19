@@ -52,8 +52,8 @@
             <div class="box-header with-border">
                 <h3 class="box-title">表结构信息</h3>
                 <div class="box-tools">
-                    <a href="javascript:void(0)" onclick="backend()" class="btn btn-sm btn-primary btn-flat">生成前端验证</a>
-                    <a href="javascript:void(0)" class="btn btn-sm btn-warning btn-flat">生成后台验证</a>
+                    <a href="javascript:void(0)" onclick="" class="btn btn-sm btn-primary btn-flat">生成前端验证</a>
+                    <a href="javascript:void(0)" onclick="backend()" class="btn btn-sm btn-warning btn-flat">生成后台验证</a>
                     <a href="javascript:void(0)" onclick="goBack()" class="btn btn-sm btn-default btn-flat">返回数据源</a>
                 </div>
             </div>
@@ -101,7 +101,7 @@
         load_url(/*[[@{/security/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
     };
     backend = function () {
-        $('input[name="className"]').trigger("click");
+        $('input[name="className"]').trigger('click');
     };
     backendSubmit = function () {
         var className = $('input[name="className"]').val();
@@ -114,11 +114,33 @@
         var data = [];
         $.each(verifys, function (i, element) {
             var json = {};
-            var box = $(element).parents(".comment-div").first();
+            var box = $(element).parents('.comment-div').first();
+            var fieldType = $(element).attr('fieldType');
             json.name = $(element).val();
-            json.type = box.find("#verifyType").val();
+            json.type = box.find('#verifyType').val();
             if (json.type === 'custom') {
+                json.notNull = box.find('#notNull').prop('checked');
+                if (fieldType.indexOf('char') > -1) {
+                    if (box.find('#fieldLength').is(':checked')) {
+                        json.length = {
+                            min: box.find('#min').val(),
+                            max: box.find('#max').val()
+                        };
+                    }
+                    if (box.find('#fieldPattern').is(':checked')) {
+                        if (box.find('#pattern_select').val() === 'custom') {
+                            json.pattern = box.find('#charPattern').val();
+                        } else {
+                            json.pattern = box.find('#pattern_select').val();
+                        }
+                    }
+                } else if (fieldType.indexOf('int') > -1 || fieldType.indexOf('decimal' > -1)) {
 
+                } else if (fieldType.indexOf('bit') > -1) {
+
+                } else if (fieldType.indexOf('date') > -1) {
+
+                }
             }
             data.push(json);
         });

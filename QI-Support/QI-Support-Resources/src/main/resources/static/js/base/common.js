@@ -261,6 +261,7 @@ function ajax_action(url, data, opt) {
             }
         },
         success: function (data, textStatus, request) {
+            console.info(data)
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
@@ -280,23 +281,28 @@ function ajax_action(url, data, opt) {
             }
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
+            console.info(XMLHttpRequest.readyState)
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
             if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
-                var json = JSON.parse(XMLHttpRequest.responseText);
-                if (json.attachs.messages_details) {
-                    alert(json.messages.join('<br/>'), function () {
-                        $.each(json.attachs.messages_details.messages, function (key, value) {
-                            layer.tips(value, '#' + key, {
-                                tipsMore: true, time: 10000
-                            });
-                        })
-                    });
+                if (isJSON(XMLHttpRequest.responseText)) {
+                    var json = JSON.parse(XMLHttpRequest.responseText);
+                    if (json.attachs.messages_details) {
+                        alert(json.messages.join('<br/>'), function () {
+                            $.each(json.attachs.messages_details.messages, function (key, value) {
+                                layer.tips(value, '#' + key, {
+                                    tipsMore: true, time: 10000
+                                });
+                            })
+                        });
+                    } else {
+                        alert(json.messages.join('<br/>'), function () {
+                            to_url(json.attachs.url);
+                        });
+                    }
                 } else {
-                    alert(json.messages.join('<br/>'), function () {
-                        to_url(json.attachs.url);
-                    });
+                    $('body').html(XMLHttpRequest.responseText);
                 }
             } else {
                 alert('网络出现错误，请稍后尝试');
@@ -371,10 +377,14 @@ function load_url(url, container, data, opt) {
                 closeWaiting();
             }
             if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
-                var json = JSON.parse(XMLHttpRequest.responseText);
-                alert(json.messages.join('<br/>'), function () {
-                    to_url(json.attachs.url);
-                });
+                if (isJSON(XMLHttpRequest.responseText)) {
+                    var json = JSON.parse(XMLHttpRequest.responseText);
+                    alert(json.messages.join('<br/>'), function () {
+                        to_url(json.attachs.url);
+                    });
+                } else {
+                    container.html(XMLHttpRequest.responseText);
+                }
             } else {
                 alert('网络异常，请稍后尝试');
             }

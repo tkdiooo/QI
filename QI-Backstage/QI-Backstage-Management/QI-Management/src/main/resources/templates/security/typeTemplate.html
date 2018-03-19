@@ -29,7 +29,7 @@
         </li>
         <li onclick="choose(this);" val="custom"><a href="javascript:void(0);">自定义</a></li>
     </ul>
-    <input type="hidden"/>
+    <input type="hidden" id="pattern_select"/>
 </div>
 <div th:fragment="datetime">
     <div class="btn-group" style="margin-right: 5px;">
@@ -85,24 +85,24 @@
 </div>
 <div th:fragment="character_length">
     <label data-original-title="字符串的大小必须在指定的范围内">
-        <input type="checkbox" onclick="chooseNextAll(this)"/>&nbsp;Length
+        <input type="checkbox" id="fieldLength" onclick="chooseNextAll(this)"/>&nbsp;Length
     </label>
     <label style="display: none;">
-        <input class="form-control" type="text" style="width: 65px;"/>
+        <input class="form-control" type="text" id="min" style="width: 65px;"/>
     </label>
     <label style="display: none;">
-        <input class="form-control" type="text" style="width: 65px;"/>
+        <input class="form-control" type="text" id="max" style="width: 65px;"/>
     </label>
 </div>
 <div th:fragment="character">
     <div style="margin-right: 5px;">
         <label data-original-title="正则表达式验证">
-            <input type="checkbox" onclick="chooseNext(this)"/>&nbsp;Pattern
+            <input type="checkbox" id="fieldPattern" onclick="chooseNext(this)"/>&nbsp;Pattern
         </label>
     </div>
     <div th:replace="security/typeTemplate :: Pattern"></div>
     <label style="display: none">
-        <input class="form-control" type="text"/>
+        <input class="form-control" type="text" id="charPattern"/>
     </label>
 </div>
 <div th:fragment="bit">

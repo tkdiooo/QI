@@ -31,7 +31,8 @@
         <div class="comment-div" style="display: none;">
             <div style="width: 50px;padding-left: 5px;">
                 <label data-original-title="添加验证">
-                    <input type="checkbox" name="verify" th:value="${var.name}" onclick="addVerify(this);"/>
+                    <input type="checkbox" name="verify" th:value="${var.name}" th:fieldType="${var.type}"
+                           onclick="addVerify(this);"/>
                 </label>
             </div>
             <div style="width: 200px;display: none;">
@@ -39,14 +40,14 @@
                     <button type="button" class="btn btn-danger" onclick="chooseVerify(this);">默认</button>
                     <button type="button" class="btn btn-success" onclick="chooseVerify(this);">自定义</button>
                 </div>
-                <input type="hidden" id="verifyType" name="" value="default"/>
+                <input type="hidden" id="verifyType" value="default"/>
             </div>
             <div style="width: 80px;display: none;">
                 <label>
-                    <input type="checkbox"/>&nbsp;notNull
+                    <input type="checkbox" id="notNull"/>&nbsp;notNull
                 </label>
             </div>
-            <div style="display: none;" th:if="${var.type == 'datetime'}"
+            <div style="display: none;" th:if="${#strings.contains(var.type, 'date')}"
                  th:include="security/typeTemplate :: datetime"></div>
             <div style="display: none;width: 200px;"
                  th:if="${#strings.contains(var.type, 'int') || #strings.contains(var.type, 'decimal')}"
