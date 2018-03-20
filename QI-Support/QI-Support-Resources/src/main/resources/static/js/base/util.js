@@ -248,3 +248,7 @@ function isJSON(str) {
         }
     }
 }
+
+function scrollPosition(container, scrollTo) {
+    container.animate({scrollTop: container.scrollTop() + scrollTo.offset().top - container.offset().top}, 500);
+}

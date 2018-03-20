@@ -64,6 +64,8 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="database" th:value="${database}"/>
+<input type="hidden" id="table" th:value="${table}"/>
 <style type="text/css">
     .comment-div {
         width: 100%;
@@ -94,6 +96,9 @@
         $('#table_comment').height(win.height - 200);
         //显示tooltip
         $("[data-original-title]").tooltip();
+        $('button[data-toggle="dropdown"]').click(function () {
+            scrollPosition($('#table_comment'), $(this));
+        });
     });
     // 校验类型下拉框选择
     choose = function (element) {
@@ -117,6 +122,7 @@
         };
         selectChange(element, opt);
     };
+
     // 展开配置
     collapse = function (element) {
         var box = $(element).parents(".table-comment").first();
@@ -136,6 +142,7 @@
                 box.removeClass("collapsed-box");
             });
         }
+        scrollPosition($('#table_comment'), box);
     };
     // 添加验证选择
     addVerify = function (element) {

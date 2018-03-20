@@ -57,7 +57,7 @@
                     <a href="javascript:void(0)" onclick="goBack()" class="btn btn-sm btn-default btn-flat">返回数据源</a>
                 </div>
             </div>
-            <input type="file" name="className" style="display: none;" onchange="backendSubmit()"/>
+            <input type="file" name="classPath" style="display: none;" onchange="backendSubmit()"/>
             <form class="form-horizontal">
                 <div id="table_desc" class="box-body"></div>
             </form>
@@ -70,7 +70,7 @@
         $('#databases_list').height(win.height - 145);
         $('#table_desc').height(win.height - 145);
         //显示tooltip
-        $("[data-original-title]").tooltip();
+        $('[data-original-title]').tooltip();
     });
     dbChoose = function (database, obj) {
         var box = $(obj).parent().parent().parent();
@@ -101,50 +101,7 @@
         load_url(/*[[@{/security/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
     };
     backend = function () {
-        $('input[name="className"]').trigger('click');
-    };
-    backendSubmit = function () {
-        var className = $('input[name="className"]').val();
-        var from = $('.form-horizontal');
-        var verifys = from.find('input[name="verify"]:checked');
-        if (verifys.length === 0) {
-            alert("请配置表的验证规则");
-            return;
-        }
-        var data = [];
-        $.each(verifys, function (i, element) {
-            var json = {};
-            var box = $(element).parents('.comment-div').first();
-            var fieldType = $(element).attr('fieldType');
-            json.name = $(element).val();
-            json.type = box.find('#verifyType').val();
-            if (json.type === 'custom') {
-                json.notNull = box.find('#notNull').prop('checked');
-                if (fieldType.indexOf('char') > -1) {
-                    if (box.find('#fieldLength').is(':checked')) {
-                        json.length = {
-                            min: box.find('#min').val(),
-                            max: box.find('#max').val()
-                        };
-                    }
-                    if (box.find('#fieldPattern').is(':checked')) {
-                        if (box.find('#pattern_select').val() === 'custom') {
-                            json.pattern = box.find('#charPattern').val();
-                        } else {
-                            json.pattern = box.find('#pattern_select').val();
-                        }
-                    }
-                } else if (fieldType.indexOf('int') > -1 || fieldType.indexOf('decimal' > -1)) {
-
-                } else if (fieldType.indexOf('bit') > -1) {
-
-                } else if (fieldType.indexOf('date') > -1) {
-
-                }
-            }
-            data.push(json);
-        });
-        console.info(data);
+        $('input[name="classPath"]').trigger('click');
     };
 </script>
 </html>

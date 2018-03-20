@@ -108,6 +108,8 @@ public class SecurityController {
     public String descTable(ModelMap model, BaseDatasource datasource, String database, String table) {
         datasource = readService.get(datasource.getId());
         model.put("data", JdbcService.descTable(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword()), table));
+        model.put("database", database);
+        model.put("table", table);
         return "security/descTable";
     }
 }

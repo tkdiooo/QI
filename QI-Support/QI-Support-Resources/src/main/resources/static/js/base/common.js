@@ -261,7 +261,6 @@ function ajax_action(url, data, opt) {
             }
         },
         success: function (data, textStatus, request) {
-            console.info(data)
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
@@ -281,7 +280,6 @@ function ajax_action(url, data, opt) {
             }
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
-            console.info(XMLHttpRequest.readyState)
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
@@ -660,3 +658,88 @@ function closeWaiting() {
     if (self !== top) parent.layer.closeAll('loading');
     else layer.closeAll('loading');
 }
+
+
+backendSubmit = function () {
+    var classPath = $('input[name="classPath"]').val();
+    var from = $('.form-horizontal');
+    var verifys = from.find('input[name="verify"]:checked');
+    if (verifys.length === 0) {
+        alert("请配置表的验证规则");
+        return;
+    }
+    var data = [];
+    $.each(verifys, function (i, element) {
+        var json = {};
+        var box = $(element).parents('.comment-div').first();
+        var fieldType = $(element).attr('fieldType');
+        json.name = $(element).val();
+        json.type = box.find('#verifyType').val();
+        if (json.type === 'custom') {
+            json.notNull = box.find('#notNull').prop('checked');
+            // character
+            if (fieldType.indexOf('char') > -1) {
+                if (box.find('#charLength').is(':checked')) {
+                    json.length = {
+                        min: box.find('#min').val(),
+                        max: box.find('#max').val()
+                    };
+                }
+                if (box.find('#fieldPattern').is(':checked')) {
+                    if (box.find('#pattern_select').val() === 'custom') {
+                        json.pattern = box.find('#charPattern').val();
+                    } else {
+                        json.pattern = box.find('#pattern_select').val();
+                    }
+                }
+            } else
+            // number
+            if (fieldType.indexOf('int') > -1 || fieldType.indexOf('decimal') > -1) {
+                if (box.find('#fieldDigits').is(':checked')) {
+                    json.length = {
+                        min: box.find('#integer').val(),
+                        max: box.find('#fraction').val()
+                    };
+                }
+                if ($.trim(box.find('#number_select').val()) !== '') {
+                    if (box.find('#number_select').val() === 'Range') {
+                        json[box.find('#number_select').val()] = {
+                            min: box.find('#numberMin').val(),
+                            max: box.find('#numberMax').val()
+                        };
+                    } else {
+                        json[box.find('#number_select').val()] = box.find('#numberMin').val();
+                    }
+                }
+            } else
+            // bit
+            if (fieldType.indexOf('bit') > -1) {
+                if ($.trim(box.find('#bit_select').val()) !== '') {
+                    json.constraint = box.find('#bit_select').val();
+                }
+            } else
+            // date
+            if (fieldType.indexOf('date') > -1) {
+                if ($.trim(box.find('#date_select').val()) !== '') {
+                    if (box.find('#date_select').val() === 'Pattern') {
+                        if (box.find('#pattern_select').val() === 'custom') {
+                            json.pattern = box.find('#charPattern').val();
+                        } else {
+                            json.pattern = box.find('#pattern_select').val();
+                        }
+                    } else {
+                        json.constraint = box.find('#date_select').val();
+                    }
+                }
+            }
+        }
+        data.push(json);
+    });
+    console.info({
+        id: $('#id').val(),
+        database: $('#database').val(),
+        table: $('#table').val(),
+        classPath: classPath,
+        condition: data
+    });
+};

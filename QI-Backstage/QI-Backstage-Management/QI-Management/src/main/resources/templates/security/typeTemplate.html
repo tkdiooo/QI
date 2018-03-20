@@ -8,6 +8,7 @@
     </button>
     <ul class="dropdown-menu">
         <li onclick="choose(this);" val="[\u4e00-\u9fa5]"><a href="javascript:void(0);">中文字符</a></li>
+        <li onclick="choose(this);" val="[a-zA-Z0-9_.^%&',;=?$\x22]*$"><a href="javascript:void(0);">英文和特殊字符</a></li>
         <li onclick="choose(this);" val="[^\x00-\xff]"><a href="javascript:void(0);">双字节字符</a></li>
         <li onclick="choose(this);"
             val="[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?">
@@ -43,22 +44,22 @@
             <li onclick="choose(this);" val="Future"><a href="javascript:void(0);">Future（数值必须是一个将来的日期）</a></li>
             <li onclick="choose(this);" val="Pattern"><a href="javascript:void(0);">Pattern（数值必须符合指定的正则表达式）</a></li>
         </ul>
-        <input type="hidden"/>
+        <input type="hidden" id="date_select"/>
     </div>
     <div th:replace="security/typeTemplate :: Pattern"></div>
     <label style="display: none">
-        <input class="form-control" type="text"/>
+        <input class="form-control" type="text" id=""/>
     </label>
 </div>
 <div th:fragment="number_length">
     <label data-original-title="校验整数位数和小数位数">
-        <input type="checkbox" onclick="chooseNextAll(this)"/>&nbsp;Digits
+        <input type="checkbox" id="fieldDigits" onclick="chooseNextAll(this)"/>&nbsp;Digits
     </label>
     <label style="display: none;">
-        <input class="form-control" type="text" style="width: 70px;"/>
+        <input class="form-control" id="integer" type="text" style="width: 70px;"/>
     </label>
     <label style="display: none;">
-        <input class="form-control" type="text" style="width: 70px;"/>
+        <input class="form-control" id="fraction" type="text" style="width: 70px;"/>
     </label>
 </div>
 <div th:fragment="number">
@@ -73,19 +74,19 @@
             <li onclick="choose(this);" val="Min"><a href="javascript:void(0);">Min（数值>=指定的值）</a></li>
             <li onclick="choose(this);" val="Range"><a href="javascript:void(0);">Range（数值必须在范围内）</a></li>
         </ul>
-        <input type="hidden"/>
+        <input type="hidden" id="number_select"/>
     </div>
     <label style="display: none">
-        <input class="form-control" type="text" style="width: 90px;"/>
+        <input class="form-control" type="text" id="numberMin" style="width: 90px;"/>
     </label>
     <label style="display: none">~</label>
     <label style="display: none">
-        <input class="form-control" type="text" style="width: 90px;"/>
+        <input class="form-control" type="text" id="numberMax" style="width: 90px;"/>
     </label>
 </div>
 <div th:fragment="character_length">
     <label data-original-title="字符串的大小必须在指定的范围内">
-        <input type="checkbox" id="fieldLength" onclick="chooseNextAll(this)"/>&nbsp;Length
+        <input type="checkbox" id="charLength" onclick="chooseNextAll(this)"/>&nbsp;Length
     </label>
     <label style="display: none;">
         <input class="form-control" type="text" id="min" style="width: 65px;"/>
@@ -117,7 +118,7 @@
             <li onclick="choose(this);" val="AssertFalse"><a href="javascript:void(0);">AssertFalse（数值必须为 false）</a>
             </li>
         </ul>
-        <input type="hidden"/>
+        <input type="hidden" id="bit_select"/>
     </div>
 </div>
 </html>
