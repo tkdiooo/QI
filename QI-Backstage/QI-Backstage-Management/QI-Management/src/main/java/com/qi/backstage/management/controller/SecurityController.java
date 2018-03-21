@@ -9,6 +9,7 @@ import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.base.model.PagingInfo;
 import com.sfsctech.constants.JDBCConstants;
+import com.sfsctech.constants.PatternConstants;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.database.jdbc.JdbcService;
 import com.sfsctech.database.model.DBConfigModel;
@@ -108,6 +109,9 @@ public class SecurityController {
     public String descTable(ModelMap model, BaseDatasource datasource, String database, String table) {
         datasource = readService.get(datasource.getId());
         model.put("data", JdbcService.descTable(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword()), table));
+        Map<String, String> pattern = PatternConstants.Pattern.getColumns();
+        pattern.put("custom", "自定义");
+        model.put("patterns", pattern);
         model.put("database", database);
         model.put("table", table);
         return "security/descTable";

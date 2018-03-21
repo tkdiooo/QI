@@ -662,8 +662,8 @@ function closeWaiting() {
 
 backendSubmit = function () {
     var classPath = $('input[name="classPath"]').val();
-    var from = $('.form-horizontal');
-    var verifys = from.find('input[name="verify"]:checked');
+    var form = $('.form-horizontal');
+    var verifys = form.find('input[name="verify"]:checked');
     if (verifys.length === 0) {
         alert("请配置表的验证规则");
         return;
@@ -723,7 +723,7 @@ backendSubmit = function () {
                 if ($.trim(box.find('#date_select').val()) !== '') {
                     if (box.find('#date_select').val() === 'Pattern') {
                         if (box.find('#pattern_select').val() === 'custom') {
-                            json.pattern = box.find('#charPattern').val();
+                            json.pattern = box.find('#datePattern').val();
                         } else {
                             json.pattern = box.find('#pattern_select').val();
                         }
@@ -735,11 +735,32 @@ backendSubmit = function () {
         }
         data.push(json);
     });
-    console.info({
+    var params = {
         id: $('#id').val(),
         database: $('#database').val(),
         table: $('#table').val(),
-        classPath: classPath,
         condition: data
-    });
+    };
+    console.info(JSON.stringify(params));
+    jQuery.addOtherRequestsToForm(form, params);
+    console.info(form)
+
+    // $.ajaxFileUpload({
+    //     url: uploadUrl,    //需要链接到服务器地址
+    //     secureuri:false,
+    //     type:'post',
+    //     fileElementId:'fileUpload', //文件选择框的id属性
+    //     dataType:'json',
+    //     success:function(data,status){
+    //         if(data.success == true){
+    //             $("#fileUpload").replaceWith($("#fileUpload").clone(true));
+    //             var data = {filePath:data.filePath,month:$("#month").val()};
+    //             $("#results_panel").show();
+    //             // loadURL("#springUrl("/attendRecord/validateAttendRecord.htm")",$("#results_panel"),{data:data});
+    //         } else {
+    //             alert(data.messages);
+    //         }
+    //     }
+    //
+    // });
 };

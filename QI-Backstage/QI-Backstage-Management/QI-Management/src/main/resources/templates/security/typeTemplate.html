@@ -7,28 +7,9 @@
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-        <li onclick="choose(this);" val="[\u4e00-\u9fa5]"><a href="javascript:void(0);">中文字符</a></li>
-        <li onclick="choose(this);" val="[a-zA-Z0-9_.^%&',;=?$\x22]*$"><a href="javascript:void(0);">英文和特殊字符</a></li>
-        <li onclick="choose(this);" val="[^\x00-\xff]"><a href="javascript:void(0);">双字节字符</a></li>
-        <li onclick="choose(this);"
-            val="[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?">
-            <a href="javascript:void(0);">Email</a></li>
-        <li onclick="choose(this);" val="[a-zA-z]+://[^\s]*"><a href="javascript:void(0);">Url</a></li>
-        <li onclick="choose(this);" val="0?(13|14|15|18)[0-9]{9}"><a href="javascript:void(0);">手机（国内）</a></li>
-        <li onclick="choose(this);" val="\d{3}-\d{8}|\d{4}-\{7,8}"><a href="javascript:void(0);">电话号码（国内）</a></li>
-        <li onclick="choose(this);" val="[1-9]\d{5}(?!\d)"><a href="javascript:void(0);">邮政编码</a></li>
-        <li onclick="choose(this);" val="^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$"><a
-                href="javascript:void(0);">身份证</a></li>
-        <li onclick="choose(this);"
-            val="([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8])))">
-            <a href="javascript:void(0);">日期（yyyy-MM-dd）</a></li>
-        <li onclick="choose(this);" val="^[1-9]\d*$"><a href="javascript:void(0);">正整数</a></li>
-        <li onclick="choose(this);" val="^-[1-9]\d*$"><a href="javascript:void(0);">负整数</a></li>
-        <li onclick="choose(this);" val="^-?[1-9]\d*$"><a href="javascript:void(0);">整数</a></li>
-        <li onclick="choose(this);" val="^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$"><a href="javascript:void(0);">正浮点数</a></li>
-        <li onclick="choose(this);" val="^-[1-9]\d*\.\d*|-0\.\d*[1-9]\d*$"><a href="javascript:void(0);">负浮点数</a>
+        <li th:each="var : ${patterns}" th:val="${var.key}" onclick="choose(this);">
+            <a href="javascript:void(0);" th:text="${var.value}"></a>
         </li>
-        <li onclick="choose(this);" val="custom"><a href="javascript:void(0);">自定义</a></li>
     </ul>
     <input type="hidden" id="pattern_select"/>
 </div>
@@ -48,7 +29,7 @@
     </div>
     <div th:replace="security/typeTemplate :: Pattern"></div>
     <label style="display: none">
-        <input class="form-control" type="text" id=""/>
+        <input class="form-control" type="text" id="datePattern"/>
     </label>
 </div>
 <div th:fragment="number_length">
@@ -56,10 +37,10 @@
         <input type="checkbox" id="fieldDigits" onclick="chooseNextAll(this)"/>&nbsp;Digits
     </label>
     <label style="display: none;">
-        <input class="form-control" id="integer" type="text" style="width: 70px;"/>
+        <input class="form-control" id="integer" name="number" type="text" style="width: 70px;"/>
     </label>
     <label style="display: none;">
-        <input class="form-control" id="fraction" type="text" style="width: 70px;"/>
+        <input class="form-control" id="fraction" name="number" type="text" style="width: 70px;"/>
     </label>
 </div>
 <div th:fragment="number">
@@ -77,11 +58,11 @@
         <input type="hidden" id="number_select"/>
     </div>
     <label style="display: none">
-        <input class="form-control" type="text" id="numberMin" style="width: 90px;"/>
+        <input class="form-control" type="text" id="numberMin" name="number" style="width: 90px;"/>
     </label>
     <label style="display: none">~</label>
     <label style="display: none">
-        <input class="form-control" type="text" id="numberMax" style="width: 90px;"/>
+        <input class="form-control" type="text" id="numberMax" name="number" style="width: 90px;"/>
     </label>
 </div>
 <div th:fragment="character_length">
@@ -89,10 +70,10 @@
         <input type="checkbox" id="charLength" onclick="chooseNextAll(this)"/>&nbsp;Length
     </label>
     <label style="display: none;">
-        <input class="form-control" type="text" id="min" style="width: 65px;"/>
+        <input class="form-control" type="text" id="min" name="number" style="width: 65px;"/>
     </label>
     <label style="display: none;">
-        <input class="form-control" type="text" id="max" style="width: 65px;"/>
+        <input class="form-control" type="text" id="max" name="number" style="width: 65px;"/>
     </label>
 </div>
 <div th:fragment="character">
