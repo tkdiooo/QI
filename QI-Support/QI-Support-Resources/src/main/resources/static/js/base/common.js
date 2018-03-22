@@ -218,6 +218,92 @@ $(function () {
     initSize();
 });
 
+
+/**
+ * ajax上传
+ * @param url 请求路径
+ * @param data 数据
+ * @param opt 设置
+ */
+function ajax_upload(url, data, opt) {
+    var defaults = {
+        type: 'POST',
+        dataType: 'json',
+        waiting: true,
+        handler: null,
+        callback: null
+    };
+    if (url.indexOf('?') !== -1) {
+        url += '&ajaxTimeFresh=' + Math.random();
+    } else {
+        url += '?ajaxTimeFresh=' + Math.random();
+    }
+    data = setCSRF(data);
+    var plugin = this;
+    plugin.settings = $.extend({}, defaults, opt);
+
+
+    $.ajaxFileUpload({
+        url: url,    //需要链接到服务器地址
+        data: data,
+        secureuri: false,
+        type: plugin.settings.type,
+        fileElementId: plugin.settings.fileElementId, //文件选择框的id属性
+        dataType: plugin.settings.dataType,
+        beforeSend: function () {
+            if (plugin.settings.waiting) {
+                showWaiting();
+            }
+        },
+        success: function (data, textStatus, request) {
+            if (plugin.settings.waiting) {
+                closeWaiting();
+            }
+            if (data.attachs) {
+                $('#_csrf').val(data.attachs._csrf.token).attr('name', data.attachs._csrf.parameterName);
+            }
+            if (plugin.settings.handler !== null && plugin.settings.handler !== undefined) {
+                invoke(plugin.settings.handler, data);
+            }
+            else if (plugin.settings.callback !== null && plugin.settings.callback !== undefined) {
+                alert(data.messages.join('<br/>'), function () {
+                    invoke(plugin.settings.callback, data);
+                });
+            }
+            else {
+                alert(data.messages.join('<br/>'));
+            }
+        },
+        error: function (XMLHttpRequest, ajaxOptions, thrownError) {
+            if (plugin.settings.waiting) {
+                closeWaiting();
+            }
+            if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
+                if (isJSON(XMLHttpRequest.responseText)) {
+                    var json = JSON.parse(XMLHttpRequest.responseText);
+                    if (json.attachs.messages_details) {
+                        alert(json.messages.join('<br/>'), function () {
+                            $.each(json.attachs.messages_details.messages, function (key, value) {
+                                layer.tips(value, '#' + key, {
+                                    tipsMore: true, time: 10000
+                                });
+                            })
+                        });
+                    } else {
+                        alert(json.messages.join('<br/>'), function () {
+                            to_url(json.attachs.url);
+                        });
+                    }
+                } else {
+                    $('body').html(XMLHttpRequest.responseText);
+                }
+            } else {
+                alert('网络出现错误，请稍后尝试');
+            }
+        }
+    });
+}
+
 /**
  * 发送ajax请求
  * @param url 请求路径
@@ -696,13 +782,13 @@ backendSubmit = function () {
             // number
             if (fieldType.indexOf('int') > -1 || fieldType.indexOf('decimal') > -1) {
                 if (box.find('#fieldDigits').is(':checked')) {
-                    json.length = {
-                        min: box.find('#integer').val(),
-                        max: box.find('#fraction').val()
+                    json.digits = {
+                        integer: box.find('#integer').val(),
+                        fraction: box.find('#fraction').val()
                     };
                 }
                 if ($.trim(box.find('#number_select').val()) !== '') {
-                    if (box.find('#number_select').val() === 'Range') {
+                    if (box.find('#number_select').val() === 'range') {
                         json[box.find('#number_select').val()] = {
                             min: box.find('#numberMin').val(),
                             max: box.find('#numberMax').val()
@@ -742,25 +828,11 @@ backendSubmit = function () {
         condition: data
     };
     console.info(JSON.stringify(params));
-    jQuery.addOtherRequestsToForm(form, params);
-    console.info(form)
-
-    // $.ajaxFileUpload({
-    //     url: uploadUrl,    //需要链接到服务器地址
-    //     secureuri:false,
-    //     type:'post',
-    //     fileElementId:'fileUpload', //文件选择框的id属性
-    //     dataType:'json',
-    //     success:function(data,status){
-    //         if(data.success == true){
-    //             $("#fileUpload").replaceWith($("#fileUpload").clone(true));
-    //             var data = {filePath:data.filePath,month:$("#month").val()};
-    //             $("#results_panel").show();
-    //             // loadURL("#springUrl("/attendRecord/validateAttendRecord.htm")",$("#results_panel"),{data:data});
-    //         } else {
-    //             alert(data.messages);
-    //         }
-    //     }
-    //
-    // });
+    var opt = {
+        fileElementId: 'classPath',
+        handler: function (result) {
+            console.info(result)
+        }
+    };
+    ajax_upload(/*[[@{/security/generateBackend}]]*/ "", params, opt);
 };

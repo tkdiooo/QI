@@ -112,9 +112,9 @@
                 group.find('input').val(data);
                 if ($.trim(data) === '' || data === 'Past' || data === 'Future') {
                     group.nextAll().hide();
-                } else if (data === 'Range' || data === 'Digits') {
+                } else if (data === 'range' || data === 'Digits') {
                     group.nextAll().show();
-                } else if (data === 'Max' || data === 'Min' || data === 'Pattern' || data === 'custom') {
+                } else if (data === 'max' || data === 'min' || data === 'Pattern' || data === 'custom') {
                     group.nextAll().hide();
                     group.next().show();
                 } else {

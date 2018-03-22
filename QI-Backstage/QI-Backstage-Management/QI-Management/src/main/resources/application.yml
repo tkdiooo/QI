@@ -83,9 +83,6 @@ spring:
       max-wait: 10000
       max-idle: 100
       min-idle: 50
-  http:
-    multipart:
-      location: D:\class
 #dubbo setting
 dubbo:
   application:

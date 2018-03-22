@@ -1,4 +1,15 @@
 jQuery.extend({
+    handleError: function (s, xhr, status, e) {
+        // If a local callback was specified, fire it
+        if (s.error) {
+            s.error.call(s.context || s, xhr, status, e);
+        }
+
+        // Fire the global callback
+        if (s.global) {
+            (s.context ? jQuery(s.context) : jQuery.event).trigger("ajaxError", [xhr, s, e]);
+        }
+    },
     createUploadIframe: function (id, uri) {
         //create frame
         var frameId = 'jUploadFrame' + id;
@@ -128,7 +139,11 @@ jQuery.extend({
                     xml.responseXML = io.contentDocument.document.XMLDocument ? io.contentDocument.document.XMLDocument : io.contentDocument.document;
                 }
             } catch (e) {
-                jQuery.handleError(s, xml, null, e);
+                if (s.error) {
+                    s.error(s, xml, null, e);
+                } else {
+                    jQuery.handleError(s, xml, null, e);
+                }
             }
             if (xml || isTimeout === "timeout") {
                 requestDone = true;
@@ -146,11 +161,20 @@ jQuery.extend({
                         // Fire the global callback
                         if (s.global)
                             jQuery.event.trigger("ajaxSuccess", [xml, s]);
-                    } else
-                        jQuery.handleError(s, xml, status);
+                    } else {
+                        if (s.error) {
+                            s.error(s, xml, null);
+                        } else {
+                            jQuery.handleError(s, xml, status);
+                        }
+                    }
                 } catch (e) {
                     status = "error";
-                    jQuery.handleError(s, xml, status, e);
+                    if (s.error) {
+                        s.error(s, xml, status, e);
+                    } else {
+                        jQuery.handleError(s, xml, status, e);
+                    }
                 }
 
                 // The request was completed
@@ -173,9 +197,12 @@ jQuery.extend({
                         $(form).remove();
 
                     } catch (e) {
-                        jQuery.handleError(s, xml, null, e);
+                        if (s.error) {
+                            s.error(s, xml, null, e);
+                        } else {
+                            jQuery.handleError(s, xml, null, e);
+                        }
                     }
-
                 }, 100);
                 xml = null
             }
@@ -186,6 +213,10 @@ jQuery.extend({
                 // Check to see if the request is still happening
                 if (!requestDone) uploadCallback("timeout");
             }, s.timeout);
+        }
+
+        if (s.beforeSend) {
+            s.beforeSend.call();
         }
         try {
             // var io = $('#' + frameId);
@@ -200,9 +231,12 @@ jQuery.extend({
                 form.enctype = 'multipart/form-data';
             }
             $(form).submit();
-
         } catch (e) {
-            jQuery.handleError(s, xml, null, e);
+            if (s.error) {
+                s.error(s, xml, null, e);
+            } else {
+                jQuery.handleError(s, xml, null, e);
+            }
         }
         if (window.attachEvent) {
             document.getElementById(frameId).attachEvent('onload', uploadCallback);

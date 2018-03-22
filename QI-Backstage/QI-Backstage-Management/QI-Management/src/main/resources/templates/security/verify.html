@@ -57,7 +57,7 @@
                     <a href="javascript:void(0)" onclick="goBack()" class="btn btn-sm btn-default btn-flat">返回数据源</a>
                 </div>
             </div>
-            <input type="file" name="classPath" style="display: none;" onchange="backendSubmit()"/>
+            <input type="file" id="classPath" style="display: none;" onchange="backendSubmit()"/>
             <form class="form-horizontal">
                 <div id="table_desc" class="box-body"></div>
             </form>
@@ -101,7 +101,7 @@
         load_url(/*[[@{/security/index}]]*/ "", $('.content-wrapper'), {parent: $('#parent').val()});
     };
     backend = function () {
-        $('input[name="classPath"]').trigger('click');
+        $('#classPath').trigger('click');
     };
 </script>
 </html>

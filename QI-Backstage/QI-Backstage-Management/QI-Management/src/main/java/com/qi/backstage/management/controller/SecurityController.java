@@ -1,6 +1,7 @@
 package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
+import com.qi.backstage.management.common.model.VerifyModel;
 import com.qi.backstage.management.common.util.BreadcrumbUtil;
 import com.qi.backstage.management.model.domain.BaseDatasource;
 import com.qi.backstage.management.service.read.DatasourceReadService;
@@ -17,10 +18,8 @@ import com.sfsctech.rpc.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -115,5 +114,11 @@ public class SecurityController {
         model.put("database", database);
         model.put("table", table);
         return "security/descTable";
+    }
+
+    @PostMapping("generateBackend")
+    @ResponseBody
+    public ActionResult upload(@RequestParam(value = "fileUpload") MultipartFile mf, VerifyModel vm) {
+        return new ActionResult();
     }
 }
