@@ -238,7 +238,7 @@ function decimal(num, v) {
     return Math.round(num * vv) / vv;
 }
 
-function isJSON(str) {
+function isJson(str) {
     if (typeof str === 'string') {
         try {
             var obj = JSON.parse(str);

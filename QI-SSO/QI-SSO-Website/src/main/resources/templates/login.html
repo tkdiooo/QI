@@ -738,13 +738,11 @@
         formValid.validate();
         if (formValid.isValid()) {
             var formParams = $("#loginForm").serializeJson();
-            console.info(formParams)
             var key = getRSAKey();
             var _csrf = $('#_csrf');
             formParams.account = encryptedString(key, formParams.account);
             formParams.password = encryptedString(key, formParams.password);
             formParams[_csrf.attr('name')] = _csrf.val();
-            console.info(formParams)
             var opt = {
                 handler: function (result) {
                     if (!result.success) {

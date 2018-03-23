@@ -279,7 +279,7 @@ function ajax_upload(url, data, opt) {
                 closeWaiting();
             }
             if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
-                if (isJSON(XMLHttpRequest.responseText)) {
+                if (isJson(XMLHttpRequest.responseText)) {
                     var json = JSON.parse(XMLHttpRequest.responseText);
                     if (json.attachs.messages_details) {
                         alert(json.messages.join('<br/>'), function () {
@@ -370,7 +370,7 @@ function ajax_action(url, data, opt) {
                 closeWaiting();
             }
             if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
-                if (isJSON(XMLHttpRequest.responseText)) {
+                if (isJson(XMLHttpRequest.responseText)) {
                     var json = JSON.parse(XMLHttpRequest.responseText);
                     if (json.attachs.messages_details) {
                         alert(json.messages.join('<br/>'), function () {
@@ -461,7 +461,7 @@ function load_url(url, container, data, opt) {
                 closeWaiting();
             }
             if (null != XMLHttpRequest.responseText && '' !== XMLHttpRequest.responseText) {
-                if (isJSON(XMLHttpRequest.responseText)) {
+                if (isJson(XMLHttpRequest.responseText)) {
                     var json = JSON.parse(XMLHttpRequest.responseText);
                     alert(json.messages.join('<br/>'), function () {
                         to_url(json.attachs.url);
@@ -744,95 +744,3 @@ function closeWaiting() {
     if (self !== top) parent.layer.closeAll('loading');
     else layer.closeAll('loading');
 }
-
-
-backendSubmit = function () {
-    var classPath = $('input[name="classPath"]').val();
-    var form = $('.form-horizontal');
-    var verifys = form.find('input[name="verify"]:checked');
-    if (verifys.length === 0) {
-        alert("请配置表的验证规则");
-        return;
-    }
-    var data = [];
-    $.each(verifys, function (i, element) {
-        var json = {};
-        var box = $(element).parents('.comment-div').first();
-        var fieldType = $(element).attr('fieldType');
-        json.name = $(element).val();
-        json.type = box.find('#verifyType').val();
-        if (json.type === 'custom') {
-            json.notNull = box.find('#notNull').prop('checked');
-            // character
-            if (fieldType.indexOf('char') > -1) {
-                if (box.find('#charLength').is(':checked')) {
-                    json.length = {
-                        min: box.find('#min').val(),
-                        max: box.find('#max').val()
-                    };
-                }
-                if (box.find('#fieldPattern').is(':checked')) {
-                    if (box.find('#pattern_select').val() === 'custom') {
-                        json.pattern = box.find('#charPattern').val();
-                    } else {
-                        json.pattern = box.find('#pattern_select').val();
-                    }
-                }
-            } else
-            // number
-            if (fieldType.indexOf('int') > -1 || fieldType.indexOf('decimal') > -1) {
-                if (box.find('#fieldDigits').is(':checked')) {
-                    json.digits = {
-                        integer: box.find('#integer').val(),
-                        fraction: box.find('#fraction').val()
-                    };
-                }
-                if ($.trim(box.find('#number_select').val()) !== '') {
-                    if (box.find('#number_select').val() === 'range') {
-                        json[box.find('#number_select').val()] = {
-                            min: box.find('#numberMin').val(),
-                            max: box.find('#numberMax').val()
-                        };
-                    } else {
-                        json[box.find('#number_select').val()] = box.find('#numberMin').val();
-                    }
-                }
-            } else
-            // bit
-            if (fieldType.indexOf('bit') > -1) {
-                if ($.trim(box.find('#bit_select').val()) !== '') {
-                    json.constraint = box.find('#bit_select').val();
-                }
-            } else
-            // date
-            if (fieldType.indexOf('date') > -1) {
-                if ($.trim(box.find('#date_select').val()) !== '') {
-                    if (box.find('#date_select').val() === 'Pattern') {
-                        if (box.find('#pattern_select').val() === 'custom') {
-                            json.pattern = box.find('#datePattern').val();
-                        } else {
-                            json.pattern = box.find('#pattern_select').val();
-                        }
-                    } else {
-                        json.constraint = box.find('#date_select').val();
-                    }
-                }
-            }
-        }
-        data.push(json);
-    });
-    var params = {
-        id: $('#id').val(),
-        database: $('#database').val(),
-        table: $('#table').val(),
-        condition: data
-    };
-    console.info(JSON.stringify(params));
-    var opt = {
-        fileElementId: 'classPath',
-        handler: function (result) {
-            console.info(result)
-        }
-    };
-    ajax_upload(/*[[@{/security/generateBackend}]]*/ "", params, opt);
-};

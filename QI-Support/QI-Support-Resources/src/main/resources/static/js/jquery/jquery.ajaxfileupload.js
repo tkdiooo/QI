@@ -131,16 +131,16 @@ jQuery.extend({
             var io = document.getElementById(frameId);
             try {
                 if (io.contentWindow) {
-                    xml.responseText = io.contentWindow.document.body ? io.contentWindow.document.body.innerHTML : null;
+                    xml.responseText = io.contentWindow.document.body ? io.contentWindow.document.body.innerText : null;
                     xml.responseXML = io.contentWindow.document.XMLDocument ? io.contentWindow.document.XMLDocument : io.contentWindow.document;
 
                 } else if (io.contentDocument) {
-                    xml.responseText = io.contentDocument.document.body ? io.contentDocument.document.body.innerHTML : null;
+                    xml.responseText = io.contentDocument.document.body ? io.contentDocument.document.body.innerText : null;
                     xml.responseXML = io.contentDocument.document.XMLDocument ? io.contentDocument.document.XMLDocument : io.contentDocument.document;
                 }
             } catch (e) {
                 if (s.error) {
-                    s.error(s, xml, null, e);
+                    s.error(xml, s, e);
                 } else {
                     jQuery.handleError(s, xml, null, e);
                 }
@@ -154,16 +154,18 @@ jQuery.extend({
                     if (status !== "error") {
                         // process the data (runs the xml through httpData regardless of callback)
                         var data = jQuery.uploadHttpData(xml, s.dataType);
-                        // If a local callback was specified, fire it and pass it the data
-                        if (s.success)
+                        if (data.success && s.success) {
+                            // If a local callback was specified, fire it and pass it the data
                             s.success(data, status);
-
+                        } else if (!data.success && s.error) {
+                            s.error(xml, s, null);
+                        }
                         // Fire the global callback
                         if (s.global)
                             jQuery.event.trigger("ajaxSuccess", [xml, s]);
                     } else {
                         if (s.error) {
-                            s.error(s, xml, null);
+                            s.error(xml, s, null);
                         } else {
                             jQuery.handleError(s, xml, status);
                         }
@@ -171,7 +173,7 @@ jQuery.extend({
                 } catch (e) {
                     status = "error";
                     if (s.error) {
-                        s.error(s, xml, status, e);
+                        s.error(xml, s, e);
                     } else {
                         jQuery.handleError(s, xml, status, e);
                     }
@@ -198,7 +200,7 @@ jQuery.extend({
 
                     } catch (e) {
                         if (s.error) {
-                            s.error(s, xml, null, e);
+                            s.error(xml, s, e);
                         } else {
                             jQuery.handleError(s, xml, null, e);
                         }
@@ -222,7 +224,7 @@ jQuery.extend({
             // var io = $('#' + frameId);
             form = $('#' + formId);
             $(form).attr('action', s.url);
-            $(form).attr('method', 'POST');
+            $(form).attr('method', s.type);
             $(form).attr('target', frameId);
             if (form.encoding) {
                 form.encoding = 'multipart/form-data';
@@ -233,7 +235,7 @@ jQuery.extend({
             $(form).submit();
         } catch (e) {
             if (s.error) {
-                s.error(s, xml, null, e);
+                s.error(xml, s, e);
             } else {
                 jQuery.handleError(s, xml, null, e);
             }
@@ -263,11 +265,12 @@ jQuery.extend({
             // you have to delete the '<pre></pre>' tag.
             // The pre tag in Chrome has attribute, so have to use regex to remove
             data = r.responseText;
-            var rx = new RegExp("<pre.*?>(.*?)</pre>", "i");
-            var am = rx.exec(data);
+            // var rx = new RegExp("<pre.*?>(.*?)</pre>", "i");
+            // var am = rx.exec(data);
             //this is the desired data extracted
-            data = (am) ? am[1] : "";    //the only submatch or empty
-            eval("data = " + data);
+            // data = (am) ? am[1] : "";    //the only submatch or empty
+            data = JSON.parse(data);
+            // eval("data = " + data);
         }
         // evaluate scripts within html
         if (type === "html")
