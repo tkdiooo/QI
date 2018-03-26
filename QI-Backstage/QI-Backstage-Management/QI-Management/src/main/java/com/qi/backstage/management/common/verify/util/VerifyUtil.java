@@ -27,7 +27,7 @@ public class VerifyUtil {
         ActionResult<String> result = new ActionResult<>();
         String fileName = mf.getOriginalFilename().toLowerCase();
         String suffix = FileUtil.getFileSuffixName(fileName);
-        if (!suffix.toLowerCase().equals(".java")) {
+        if (!".java".contains(suffix.toLowerCase())) {
             result.setSuccess(false);
             result.setMessage("上传文件格式不正确");
         } else {
