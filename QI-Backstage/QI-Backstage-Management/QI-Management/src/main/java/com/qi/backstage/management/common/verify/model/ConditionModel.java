@@ -1,4 +1,4 @@
-package com.qi.backstage.management.common.model;
+package com.qi.backstage.management.common.verify.model;
 
 /**
  * Class ConditionModel

@@ -1,8 +1,9 @@
 package com.qi.backstage.management.controller;
 
 import com.qi.backstage.management.common.constants.CommonConstants;
-import com.qi.backstage.management.common.model.VerifyModel;
+import com.qi.backstage.management.common.verify.model.VerifyModel;
 import com.qi.backstage.management.common.util.BreadcrumbUtil;
+import com.qi.backstage.management.common.verify.util.VerifyUtil;
 import com.qi.backstage.management.model.domain.BaseDatasource;
 import com.qi.backstage.management.service.read.DatasourceReadService;
 import com.qi.backstage.management.service.write.DatasourceWriteService;
@@ -116,9 +117,9 @@ public class SecurityController {
         return "security/descTable";
     }
 
-    @PostMapping("generateBackend")
+    @PostMapping("backendVerify")
     @ResponseBody
-    public ActionResult upload(@RequestParam(value = "fileUpload") MultipartFile mf, VerifyModel vm) {
-        return new ActionResult();
+    public ActionResult<String> upload(@RequestParam(value = "fileUpload") MultipartFile mf, VerifyModel vm) {
+        return VerifyUtil.BackendVerify(mf, vm);
     }
 }
