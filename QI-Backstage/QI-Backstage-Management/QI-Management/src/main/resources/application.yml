@@ -118,7 +118,7 @@ website:
     static-resources: http://localhost:8080
     welcome-file: /index
     uploadPath:
-      classFilePath: D:\upload\classfile
+      VerifyFilePath: D:\upload\classfile\
   # 单点登录
   sso:
     login-url: http://www.zzl.com/sso/index

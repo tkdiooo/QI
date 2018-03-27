@@ -187,7 +187,9 @@
         var opt = {
             fileElementId: 'fileUpload',
             handler: function (result) {
-                console.info(result)
+                var url = /*[[@{/security/downloadVerify}]]*/ "";
+                console.info(url + "?fileName=" + result.result);
+                window.location.href = url + "?fileName=" + result.result;
             }
         };
         ajax_upload(/*[[@{/security/backendVerify}]]*/ "", params, opt);

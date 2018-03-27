@@ -10,20 +10,32 @@ import com.qi.backstage.management.service.write.DatasourceWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.common.util.FileUtil;
+import com.sfsctech.common.util.MapUtil;
 import com.sfsctech.constants.JDBCConstants;
 import com.sfsctech.constants.PatternConstants;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.database.jdbc.JdbcService;
 import com.sfsctech.database.model.DBConfigModel;
+import com.sfsctech.database.model.TableModel;
 import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.spring.properties.WebsiteProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Class DataSecurityController
@@ -40,6 +52,9 @@ public class SecurityController {
 
     @Autowired
     private DatasourceWriteService writeService;
+
+    @Autowired
+    private WebsiteProperties properties;
 
     @GetMapping("index")
     public String index(ModelMap model) {
@@ -120,6 +135,21 @@ public class SecurityController {
     @PostMapping("backendVerify")
     @ResponseBody
     public ActionResult<String> upload(@RequestParam(value = "fileUpload") MultipartFile mf, VerifyModel vm) {
-        return VerifyUtil.BackendVerify(mf, vm);
+        BaseDatasource datasource = readService.get(vm.getId());
+        List<TableModel> tableModels = JdbcService.descTable(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), vm.getDatabase(), datasource.getUsername(), datasource.getPassword()), vm.getTable());
+        return VerifyUtil.BackendVerify(mf, vm.getCondition(), MapUtil.toMap(tableModels, "name"));
+    }
+
+
+    @RequestMapping(value = "downloadVerify", produces = "text/html;charset=UTF-8")
+    public ResponseEntity<byte[]> downloadVerify(String fileName) throws IOException {
+        File file = new File(properties.getSupport().getUploadPath().get("VerifyFilePath") + fileName);
+        if (file.exists()) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDispositionFormData("attachment", fileName);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return new ResponseEntity<>(FileUtil.readFileToByteArray(file), headers, HttpStatus.OK);
+        }
+        return null;
     }
 }

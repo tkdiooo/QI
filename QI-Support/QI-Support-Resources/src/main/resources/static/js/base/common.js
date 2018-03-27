@@ -291,7 +291,9 @@ function ajax_upload(url, data, opt) {
                         });
                     } else {
                         alert(json.messages.join('<br/>'), function () {
-                            to_url(json.attachs.url);
+                            if (json.attachs.url) {
+                                to_url(json.attachs.url);
+                            }
                         });
                     }
                 } else {
@@ -382,7 +384,9 @@ function ajax_action(url, data, opt) {
                         });
                     } else {
                         alert(json.messages.join('<br/>'), function () {
-                            to_url(json.attachs.url);
+                            if (json.attachs.url) {
+                                to_url(json.attachs.url);
+                            }
                         });
                     }
                 } else {
@@ -464,7 +468,9 @@ function load_url(url, container, data, opt) {
                 if (isJson(XMLHttpRequest.responseText)) {
                     var json = JSON.parse(XMLHttpRequest.responseText);
                     alert(json.messages.join('<br/>'), function () {
-                        to_url(json.attachs.url);
+                        if (json.attachs.url) {
+                            to_url(json.attachs.url);
+                        }
                     });
                 } else {
                     container.html(XMLHttpRequest.responseText);
