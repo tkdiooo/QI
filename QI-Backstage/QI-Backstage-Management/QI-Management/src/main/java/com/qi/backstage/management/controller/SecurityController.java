@@ -141,7 +141,7 @@ public class SecurityController {
     }
 
 
-    @RequestMapping(value = "downloadVerify", produces = "text/html;charset=UTF-8")
+    @RequestMapping("downloadVerify")
     public ResponseEntity<byte[]> downloadVerify(String fileName) throws IOException {
         File file = new File(properties.getSupport().getUploadPath().get("VerifyFilePath") + fileName);
         if (file.exists()) {

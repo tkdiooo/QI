@@ -87,8 +87,9 @@ public class VerifyUtil {
                     }
                     if (StringUtil.isNotBlank(c.getPattern())) {
                         im.add("import javax.validation.constraints.Pattern;");
-                        String pattern = PatternConstants.Pattern.getPatternByKey(c.getPattern());
-                        sb.append(LabelConstants.FOUR_SPACES).append("@Pattern(regexp = \"").append(StringUtil.isNotBlank(pattern) ? pattern : c.getPattern()).append("\")").append(LabelConstants.RETURN_NEW_LINE);
+                        PatternConstants.Pattern pattern = PatternConstants.Pattern.getPatternByKey(c.getPattern());
+                        sb.append(LabelConstants.FOUR_SPACES).append("@Pattern(regexp = \"").append(null != pattern ? pattern.getPattern() : c.getPattern()).append("\")").append(", message = \"值：${value}必须是").append(null != pattern ? pattern.getContent() : c.getPattern()).append("\"")
+                                .append(LabelConstants.RETURN_NEW_LINE);
                     }
                     if (StringUtil.isNotBlank(c.getConstraint())) {
                         im.add("import javax.validation.constraints." + c.getConstraint() + ";");

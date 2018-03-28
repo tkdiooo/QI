@@ -723,11 +723,11 @@ function selectChange(obj, opt) {
 }
 
 function to_url(url) {
-    // if (self !== top) {
-    //     parent.window.location.href = url;
-    // } else {
-    window.location.href = url;
-    // }
+    if (self !== top) {
+        parent.window.location.href = url;
+    } else {
+        window.location.href = url;
+    }
 }
 
 function setCSRF(data) {
