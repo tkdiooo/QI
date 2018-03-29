@@ -15,6 +15,7 @@ import com.sfsctech.common.util.StringUtil;
 import com.sfsctech.constants.StatusConstants;
 import com.sfsctech.constants.UIConstants;
 import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.security.annotation.Verify;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -113,7 +114,7 @@ public class IndexController {
 
     @ResponseBody
     @PostMapping("save")
-    public ActionResult<BaseDictionary> save(BaseDictionary dictionary) {
+    public ActionResult<BaseDictionary> save(@Verify BaseDictionary dictionary) {
         writeService.save(dictionary);
         return new ActionResult<>(dictionary);
     }

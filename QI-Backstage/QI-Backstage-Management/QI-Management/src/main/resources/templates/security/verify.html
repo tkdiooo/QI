@@ -52,7 +52,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">表结构信息</h3>
                 <div class="box-tools">
-                    <a href="javascript:void(0)" onclick="" class="btn btn-sm btn-primary btn-flat">生成前端验证</a>
+                    <a href="javascript:void(0)" onclick="frontend()" class="btn btn-sm btn-primary btn-flat">生成前端验证</a>
                     <a href="javascript:void(0)" onclick="backend()" class="btn btn-sm btn-warning btn-flat">生成后台验证</a>
                     <a href="javascript:void(0)" onclick="goBack()" class="btn btn-sm btn-default btn-flat">返回数据源</a>
                 </div>
@@ -104,7 +104,21 @@
         $('#fileUpload').trigger('click');
     };
 
-    backendSubmit = function () {
+    frontend = function () {
+        var params = buildParams();
+
+        var opt = {
+            contentType: 'application/json; charset=utf-8',
+            waiting: false,
+            handler: function (result) {
+                var url = /*[[@{/security/downloadVerify}]]*/ "";
+                window.location.href = url + "?fileName=" + result.result;
+            }
+        };
+        ajax_action(/*[[@{/security/frontendVerify}]]*/ "", JSON.stringify(params), opt);
+    };
+
+    buildParams = function () {
         var form = $('.form-horizontal');
         var verifys = form.find('input[name="verify"]:checked');
         if (verifys.length === 0) {
@@ -178,17 +192,20 @@
             }
             data.push(json);
         });
-        var params = {
+        return {
             id: $('#id').val(),
             database: $('#database').val(),
             table: $('#table').val(),
             condition: data
         };
+    };
+
+    backendSubmit = function () {
+        var params = buildParams();
         var opt = {
             fileElementId: 'fileUpload',
             handler: function (result) {
                 var url = /*[[@{/security/downloadVerify}]]*/ "";
-                console.info(url + "?fileName=" + result.result);
                 window.location.href = url + "?fileName=" + result.result;
             }
         };

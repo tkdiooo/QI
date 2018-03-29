@@ -1,6 +1,11 @@
 package com.qi.backstage.dictionary.model.domain;
 
 import com.sfsctech.base.model.BaseDto;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class BaseDictionary extends BaseDto {
     /**
@@ -17,6 +22,9 @@ public class BaseDictionary extends BaseDto {
      *
      * @mbg.generated
      */
+    @NotEmpty
+    @Length(max = 40)
+    @Pattern(regexp = "[0-9]*", message = "数值必须是数字")
     private String parent;
 
     /**
@@ -25,6 +33,9 @@ public class BaseDictionary extends BaseDto {
      *
      * @mbg.generated
      */
+    @NotEmpty
+    @Length(min = 4, max = 4)
+    @Pattern(regexp = "[0-9]*", message = "数值必须是数字")
     private String number;
 
     /**
@@ -33,6 +44,8 @@ public class BaseDictionary extends BaseDto {
      *
      * @mbg.generated
      */
+    @NotEmpty
+    @Length(max = 20)
     private String content;
 
     /**
@@ -41,6 +54,8 @@ public class BaseDictionary extends BaseDto {
      *
      * @mbg.generated
      */
+    @Length(max = 100)
+    @Pattern(regexp = "[a-zA-Z0-9_.^%&',;=?$\\x22]*$", message = "数值必须是英文/特殊字符")
     private String pinyin;
 
     /**
@@ -49,6 +64,8 @@ public class BaseDictionary extends BaseDto {
      *
      * @mbg.generated
      */
+    @Length(max = 100)
+    @Pattern(regexp = "[a-zA-Z0-9_.^%&',;=?$\\x22]*$", message = "数值必须是英文/特殊字符")
     private String english;
 
     /**
@@ -57,6 +74,7 @@ public class BaseDictionary extends BaseDto {
      *
      * @mbg.generated
      */
+    @Length(max = 100)
     private String description;
 
     /**

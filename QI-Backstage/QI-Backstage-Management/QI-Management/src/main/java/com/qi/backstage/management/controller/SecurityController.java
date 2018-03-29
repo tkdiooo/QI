@@ -69,7 +69,7 @@ public class SecurityController {
 
     @ResponseBody
     @PostMapping("query")
-    public ActionResult<PagingInfo<BaseDatasource>> getData(PagingInfo<BaseDatasource> pagingInfo) {
+    public ActionResult<PagingInfo<BaseDatasource>> getData(@RequestBody PagingInfo<BaseDatasource> pagingInfo) {
         return new ActionResult<>(readService.findByPage(pagingInfo));
     }
 
@@ -134,12 +134,19 @@ public class SecurityController {
 
     @PostMapping("backendVerify")
     @ResponseBody
-    public ActionResult<String> upload(@RequestParam(value = "fileUpload") MultipartFile mf, VerifyModel vm) {
+    public ActionResult<String> backendVerify(@RequestParam(value = "fileUpload") MultipartFile mf, VerifyModel vm) {
         BaseDatasource datasource = readService.get(vm.getId());
         List<TableModel> tableModels = JdbcService.descTable(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), vm.getDatabase(), datasource.getUsername(), datasource.getPassword()), vm.getTable());
         return VerifyUtil.BackendVerify(mf, vm.getCondition(), MapUtil.toMap(tableModels, "name"));
     }
 
+    @PostMapping("frontendVerify")
+    @ResponseBody
+    public ActionResult<String> frontendVerify(@RequestBody VerifyModel vm) {
+        BaseDatasource datasource = readService.get(vm.getId());
+        List<TableModel> tableModels = JdbcService.descTable(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), vm.getDatabase(), datasource.getUsername(), datasource.getPassword()), vm.getTable());
+        return VerifyUtil.FrontendVerify(vm.getCondition(), MapUtil.toMap(tableModels, "name"));
+    }
 
     @RequestMapping("downloadVerify")
     public ResponseEntity<byte[]> downloadVerify(String fileName) throws IOException {

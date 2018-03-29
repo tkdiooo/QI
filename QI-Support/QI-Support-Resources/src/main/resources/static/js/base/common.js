@@ -292,7 +292,7 @@ function ajax_upload(url, data, opt) {
                     } else {
                         alert(json.messages.join('<br/>'), function () {
                             if (json.attachs.url) {
-                                to_url(json.attachs.url);
+                                window.location.href = json.attachs.url;
                             }
                         });
                     }
@@ -385,7 +385,7 @@ function ajax_action(url, data, opt) {
                     } else {
                         alert(json.messages.join('<br/>'), function () {
                             if (json.attachs.url) {
-                                to_url(json.attachs.url);
+                                window.location.href = json.attachs.url;
                             }
                         });
                     }
@@ -469,7 +469,7 @@ function load_url(url, container, data, opt) {
                     var json = JSON.parse(XMLHttpRequest.responseText);
                     alert(json.messages.join('<br/>'), function () {
                         if (json.attachs.url) {
-                            to_url(json.attachs.url);
+                            window.location.href = json.attachs.url;
                         }
                     });
                 } else {
@@ -613,6 +613,7 @@ function matchAjaxTable(opt, destorys) {
                 // 请求参数封装
                 data.condition = opt.params;
             }
+            console.info(data)
             //ajax请求数据
             ajax_action(opt.url, JSON.stringify(data), {
                 contentType: 'application/json; charset=utf-8',
