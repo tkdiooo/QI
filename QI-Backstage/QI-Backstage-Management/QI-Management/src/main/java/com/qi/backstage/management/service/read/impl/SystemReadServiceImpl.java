@@ -1,5 +1,7 @@
 package com.qi.backstage.management.service.read.impl;
 
+import com.qi.backstage.management.dao.BaseSystemDao;
+import com.qi.backstage.management.model.dto.SystemDto;
 import com.qi.backstage.management.service.read.SystemReadService;
 import com.qi.backstage.management.mapper.BaseSystemMapper;
 import com.qi.backstage.management.model.domain.BaseSystem;
@@ -21,6 +23,9 @@ public class SystemReadServiceImpl implements SystemReadService {
     @Autowired
     private BaseSystemMapper mapper;
 
+    @Autowired
+    private BaseSystemDao dao;
+
     @Override
     public List<BaseSystem> findAll(BaseSystem system) {
         BaseSystemExample example = new BaseSystemExample();
@@ -30,5 +35,10 @@ public class SystemReadServiceImpl implements SystemReadService {
     @Override
     public BaseSystem getByGuid(String guid) {
         return mapper.selectByGuid(guid);
+    }
+
+    @Override
+    public SystemDto getByCode(String code) {
+        return dao.getByCode(code);
     }
 }

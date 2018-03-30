@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qi.backstage.management.mapper.BaseSystemMapper">
+    <resultMap id="ChildResultMap" type="com.qi.backstage.management.model.dto.SystemDto" extends="BaseResultMap">
+        <!-- 一对多 -->
+        <collection property="child" ofType="com.qi.backstage.management.model.dto.MenuDto">
+            <id column="bID" jdbcType="BIGINT" property="id"/>
+            <result column="bGuid" jdbcType="CHAR" property="guid"/>
+            <result column="bParent" jdbcType="CHAR" property="parent"/>
+            <result column="bSysGuid" jdbcType="VARCHAR" property="sysguid"/>
+            <result column="bSysCode" jdbcType="VARCHAR" property="syscode"/>
+            <result column="bCode" jdbcType="VARCHAR" property="code"/>
+            <result column="bName" jdbcType="VARCHAR" property="name"/>
+            <result column="bUrl" jdbcType="VARCHAR" property="url"/>
+            <result column="bDescription" jdbcType="VARCHAR" property="description"/>
+            <result column="bSort" jdbcType="INTEGER" property="sort"/>
+            <result column="bIsLeaf" jdbcType="BIT" property="isleaf"/>
+            <result column="bStatus" jdbcType="INTEGER" property="status"/>
+            <!-- 一对多 -->
+            <collection property="child" ofType="com.qi.backstage.management.model.dto.MenuDto">
+                <id column="cID" jdbcType="BIGINT" property="id"/>
+                <result column="cGuid" jdbcType="CHAR" property="guid"/>
+                <result column="cParent" jdbcType="CHAR" property="parent"/>
+                <result column="cSysGuid" jdbcType="VARCHAR" property="sysguid"/>
+                <result column="cSysCode" jdbcType="VARCHAR" property="syscode"/>
+                <result column="cCode" jdbcType="VARCHAR" property="code"/>
+                <result column="cName" jdbcType="VARCHAR" property="name"/>
+                <result column="cUrl" jdbcType="VARCHAR" property="url"/>
+                <result column="cDescription" jdbcType="VARCHAR" property="description"/>
+                <result column="cSort" jdbcType="INTEGER" property="sort"/>
+                <result column="cIsLeaf" jdbcType="BIT" property="isleaf"/>
+                <result column="cStatus" jdbcType="INTEGER" property="status"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getByCode" resultMap="ChildResultMap" parameterType="java.util.Map">
+    SELECT
+        S.*, B.ID AS bID,
+        B.Guid AS bGuid,
+        B.Parent AS bParent,
+        B.SysGuid AS bSysGuid,
+        B.SysCode AS bSysCode,
+        B.`Code` AS bCode,
+        B.`Name` AS bName,
+        B.Url AS bUrl,
+        B.Description AS bDescription,
+        B.Sort AS bSort,
+        B.isLeaf AS bIsLeaf,
+        B.`Status` AS bStatus,
+        C.ID AS cID,
+        C.Guid AS cGuid,
+        C.Parent AS cParent,
+        C.SysGuid AS cSysGuid,
+        C.SysCode AS cSysCode,
+        C.`Code` AS cCode,
+        C.`Name` AS cName,
+        C.Url AS cUrl,
+        C.Description AS cDescription,
+        C.Sort AS cSort,
+        C.isLeaf AS cIsLeaf,
+        C.`Status` AS cStatus
+    FROM
+        base_system S
+    LEFT JOIN base_menu B ON B.SysGuid = S.Guid
+    LEFT JOIN base_menu C ON B.Guid = C.Parent
+    WHERE
+        B.SysCode = #{code,jdbcType=VARCHAR}
+        AND B.Parent = #{parent,jdbcType=VARCHAR}
+        AND S.`Status` = #{status,jdbcType=INTEGER}
+        AND B.`Status` = #{status,jdbcType=INTEGER}
+    HAVING
+	    C.`Status` = #{status,jdbcType=INTEGER} OR ISNULL(C.`Status`)
+    ORDER BY
+        B.Sort,
+        C.Sort
+    </select>
+</mapper>

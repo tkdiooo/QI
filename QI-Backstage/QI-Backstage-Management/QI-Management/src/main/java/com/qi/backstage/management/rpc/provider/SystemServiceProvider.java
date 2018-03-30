@@ -1,10 +1,9 @@
 package com.qi.backstage.management.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.qi.backstage.management.inf.MenuService;
-import com.qi.backstage.management.common.constants.CommonConstants;
-import com.qi.backstage.management.service.read.MenuReadService;
-import com.qi.backstage.management.model.dto.MenuDto;
+import com.qi.backstage.management.inf.SystemService;
+import com.qi.backstage.management.model.dto.SystemDto;
+import com.qi.backstage.management.service.read.SystemReadService;
 import com.sfsctech.common.util.JsonUtil;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.common.util.ThrowableUtil;
@@ -16,35 +15,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 /**
- * Class MenuServiceProvider
+ * Class SystemServiceProvider
  *
- * @author 张麒 2017-11-20.
+ * @author 张麒 2018-3-30.
  * @version Description:
  */
 @Service
-public class MenuServiceProvider implements MenuService {
+public class SystemServiceProvider implements SystemService {
 
-    private final Logger logger = LoggerFactory.getLogger(MenuServiceProvider.class);
+    private final Logger logger = LoggerFactory.getLogger(SystemServiceProvider.class);
 
     @Autowired
-    private MenuReadService readService;
+    private SystemReadService readService;
 
     @Override
-    public ActionResult<MenuDto> findBySystemCode(String sysCode) {
-        ActionResult<MenuDto> result = new ActionResult<>();
+    public ActionResult<SystemDto> getByCode(String code) {
+        ActionResult<SystemDto> result = new ActionResult<>();
         try {
-            List<MenuDto> list = readService.findBySysCode(sysCode, CommonConstants.ROOT_GUID);
-            if (ListUtil.isEmpty(list)) {
+            SystemDto dto = readService.getByCode(code);
+            if (null == dto) {
                 result.setSuccess(false);
                 result.setStatus(RpcConstants.Status.Failure);
-                result.setMessage(I18NConstants.Tips.EmptyCollection, "系统编号：" + sysCode + "获取");
+                result.setMessage(I18NConstants.Tips.EmptyObject, "系统编号：" + code + "获取");
                 logger.warn(JsonUtil.toJSONString(result.getStatus()));
                 logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             }
-            result.setDataSet(list);
+            result.setResult(dto);
         } catch (Exception e) {
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.ServerError);
@@ -53,5 +50,4 @@ public class MenuServiceProvider implements MenuService {
         }
         return result;
     }
-
 }

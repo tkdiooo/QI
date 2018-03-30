@@ -20,6 +20,8 @@
 <div th:fragment="validator">
     <link th:href="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/css/bootstrapValidator.min.css'" rel="stylesheet">
     <script th:src="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/js/bootstrapValidator.min.js'"></script>
+    <script th:src="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/js/language/zh_CN'"></script>
+    <script th:src="${application.static_resource} + '/webjars/bootstrapValidator/0.5.2/dist/js/language/en_US.js'"></script>
 </div>
 <div th:fragment="datatables">
     <!-- dataTables.css -->
@@ -51,9 +53,9 @@
     <!-- Logo -->
     <a href="index2.html" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <span class="logo-mini"><b th:text="${system.nameen}"></b></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-lg"><b th:text="${system.namecn}"></b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -61,7 +63,6 @@
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
-
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
@@ -273,14 +274,13 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <!--<img src="#" class="user-image" alt="User Image">-->
+                        <span class="hidden-xs" th:text="${const_uams_assertion.account}"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
                             <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
                             <p>
                                 Alexander Pierce - Web Developer
                                 <small>Member since Nov. 2012</small>
@@ -329,9 +329,10 @@
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search...">
                 <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div>
         </form>
         <!-- /.search form -->
@@ -347,7 +348,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li th:class="${c.choose} ? 'active' : ''" th:each="c : ${var.child}">
-                        <a th:id="${c.guid}" th:href="'http://' + ${var.domain} + ${c.url} + '?ajaxTimeFresh=' + ${#calendars.createNow().getTimeInMillis()}" onclick="menuChange(this.id)" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}" target="myFrame"></a>
+                        <a th:id="${c.guid}" th:href="'http://' + ${system.domain} + ${c.url} + '?ajaxTimeFresh=' + ${#calendars.createNow().getTimeInMillis()}" onclick="menuChange(this.id)" th:utext="'<i class=\'fa fa-circle-o\'></i>' + ${c.name}" target="myFrame"></a>
                     </li>
                 </ul>
             </li>

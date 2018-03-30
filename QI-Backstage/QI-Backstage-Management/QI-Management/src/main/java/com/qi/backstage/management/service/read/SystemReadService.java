@@ -1,6 +1,7 @@
 package com.qi.backstage.management.service.read;
 
 import com.qi.backstage.management.model.domain.BaseSystem;
+import com.qi.backstage.management.model.dto.SystemDto;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface SystemReadService {
     List<BaseSystem> findAll(BaseSystem system);
 
     BaseSystem getByGuid(String guid);
+
+    SystemDto getByCode(String code);
 }

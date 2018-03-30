@@ -70,6 +70,7 @@ dubbo:
     timeout: 2000
   rpc:
     service-package: com.qi.platform.frontend.rpc
+    concurrency: 40
 #common setting
 website:
   # 网站支持

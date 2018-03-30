@@ -9,8 +9,8 @@ import com.sfsctech.rpc.result.ActionResult;
  * @author 张麒 2017/10/23.
  * @version Description:
  */
-public interface BaseMenuService {
+public interface MenuService {
 
-    ActionResult<MenuDto> findBySystem(String sysGuid);
+    ActionResult<MenuDto> findBySystemCode(String sysCode);
 
 }
