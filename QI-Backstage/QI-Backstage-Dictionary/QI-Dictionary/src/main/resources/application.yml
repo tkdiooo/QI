@@ -121,7 +121,7 @@ website:
   sso:
     login-url: http://www.zzl.com/sso/index
     logout-url: http://www.zzl.com/sso/logout
-    portal-url: http://www.zzl.com/platform/index
+    portal-url: http://www.zzl.com/platform/basic
     auth:
       way: Simple
       protocol: Rpc

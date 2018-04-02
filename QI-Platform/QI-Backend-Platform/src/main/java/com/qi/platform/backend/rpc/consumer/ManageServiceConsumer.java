@@ -3,10 +3,11 @@ package com.qi.platform.backend.rpc.consumer;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qi.backstage.management.inf.MenuService;
 import com.qi.backstage.management.inf.SystemService;
-import com.qi.backstage.management.model.dto.MenuDto;
 import com.qi.backstage.management.model.dto.SystemDto;
+import com.sfsctech.base.exception.BizException;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
+import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.constants.CacheConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.rpc.result.ActionResult;
@@ -15,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Class MenuServiceConsumer
@@ -53,6 +52,8 @@ public class ManageServiceConsumer {
             if (RpcUtil.logPrint(result, logger)) {
                 system = result.getResult();
                 factory.getCacheClient().putTimeOut(cache_key, system, CacheConstants.MilliSecond.Minutes30.getContent());
+            } else {
+                throw new BizException(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             }
         }
         return system;
