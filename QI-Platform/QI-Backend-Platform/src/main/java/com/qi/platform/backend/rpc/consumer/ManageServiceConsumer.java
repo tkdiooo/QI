@@ -9,6 +9,7 @@ import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.ListUtil;
 import com.sfsctech.constants.CacheConstants;
+import com.sfsctech.constants.CommonConstants;
 import com.sfsctech.constants.LabelConstants;
 import com.sfsctech.rpc.result.ActionResult;
 import com.sfsctech.rpc.util.RpcUtil;
@@ -53,7 +54,9 @@ public class ManageServiceConsumer {
                 system = result.getResult();
                 factory.getCacheClient().putTimeOut(cache_key, system, CacheConstants.MilliSecond.Minutes30.getContent());
             } else {
-                throw new BizException(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                BizException e = new BizException(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                e.setViewName(CommonConstants.VIEW_404);
+                throw e;
             }
         }
         return system;
