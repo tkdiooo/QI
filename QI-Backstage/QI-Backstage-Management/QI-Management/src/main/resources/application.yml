@@ -121,13 +121,14 @@ website:
       VerifyFilePath: D:\upload\classfile\
   # 单点登录
   sso:
+    domain: http://www.zzl.com
+    home-page: http://www.zzl.com/platform/basic
     login-url: http://www.zzl.com/sso/index
     logout-url: http://www.zzl.com/sso/logout
-    portal-url: http://www.zzl.com/platform/basic
     auth:
       way: Complex
       protocol: Rpc
-      item-type: Server
+      item-type: FrameService
   # 服务架构
 #  session:
 #    authentication: sso

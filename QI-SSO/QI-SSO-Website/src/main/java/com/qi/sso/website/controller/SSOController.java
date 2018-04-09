@@ -113,6 +113,6 @@ public class SSOController {
         } else {
             service.logout(jt);
         }
-        return "redirect:" + properties.getPortalUrl();
+        return "redirect:" + properties.getHomePage();
     }
 }

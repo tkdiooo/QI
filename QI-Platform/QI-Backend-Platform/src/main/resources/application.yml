@@ -81,12 +81,14 @@ website:
     welcome-file: /index
   # 单点登录
   sso:
+    domain: http://www.zzl.com
+    home-page: http://www.zzl.com/platform/index
     login-url: http://www.zzl.com/sso/index
     logout-url: http://www.zzl.com/sso/logout
     auth:
       way: Complex
       protocol: Rpc
-      item-type: Platform
+      item-type: BackendSystem
   # 服务架构
 #  session:
 #    authentication: sso
