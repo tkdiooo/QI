@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>support</artifactId>
+        <groupId>com.qi.support</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>support-resources</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- sfsctech-common-util support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-spring</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- jquery -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars/jquery-i18n-properties -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery-i18n-properties</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+        <!-- jquery-ui -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery-ui</artifactId>
+            <version>1.12.1</version>
+        </dependency>
+        <!-- jquery.cookie -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery.cookie</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        <!-- jQuery.Hotkeys -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jQuery.Hotkeys</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+        <!-- jquery.maskedinput -->
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>inputmask</artifactId>
+            <version>3.3.11</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- blueimp-file-upload -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>blueimp-file-upload</artifactId>
+            <version>9.16.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>blueimp-load-image</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>blueimp-canvas-to-blob</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- bootstrap -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.7</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- bootstrapValidator -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrapValidator</artifactId>
+            <version>0.5.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>jquery</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars.bower</groupId>
+                    <artifactId>bootstrap</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- vue -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vue</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <!-- vue-resource -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vue-resource</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <!-- ztree -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>ztree</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <!-- echarts -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>echarts</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+        <!-- datatables.net -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables.net</artifactId>
+            <version>1.10.16</version>
+        </dependency>
+        <!-- datatables.net-bs -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables.net-bs</artifactId>
+            <version>1.10.16</version>
+        </dependency>
+        <!-- datatables.net-buttons -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>datatables.net-buttons</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>Support-Resources</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.qi.support.resources.Runner</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                repackage
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

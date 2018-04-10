@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>backstage-management</artifactId>
+        <groupId>com.qi.backstage.management</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>management</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- Spring boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- spring-cloud-config-client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+        <!-- Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- common-exception support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-logback support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-logback</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-security support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-security</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-authorize-sso support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-authorize-sso</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-database support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-database</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- support-bootstrap support -->
+        <dependency>
+            <groupId>com.qi.support</groupId>
+            <artifactId>support-bootstrap</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!-- management-dao support -->
+        <dependency>
+            <groupId>com.qi.backstage.management</groupId>
+            <artifactId>management-dao</artifactId>
+            <version>${backstage.version}</version>
+        </dependency>
+        <!-- management-interface support -->
+        <dependency>
+            <groupId>com.qi.backstage.management</groupId>
+            <artifactId>management-interface</artifactId>
+            <version>${backstage.version}</version>
+        </dependency>
+        <!-- dictionary-util support -->
+        <dependency>
+            <groupId>com.qi.backstage.dictionary</groupId>
+            <artifactId>dictionary-util</artifactId>
+            <version>${dictionary.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>Backstage-Management</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.qi.backstage.management.Runner</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                repackage
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

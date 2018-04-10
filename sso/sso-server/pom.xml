@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>sso</artifactId>
+        <groupId>com.qi.sso</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>sso-server</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- Spring boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- spring-cloud-config-client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+        <!-- Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- common-cache support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-cache</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-exception support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-exception</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-logback support-->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-logback</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-authorize-interface support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-authorize-base</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- common-dubbox support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-dubbox</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>SSO-Server</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.qi.sso.server.Runner</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                repackage
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
