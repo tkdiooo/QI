@@ -63,7 +63,8 @@ dubbo:
     concurrency: 200
 #common setting
 website:
-  jwt:
-    subject: Single Sign-on
-    issuer: SSO-Server
-    expiration: 1800000
+  sso:
+    jwt:
+      subject: Single Sign-on
+      issuer: SSO-Server
+      expiration: 1800000

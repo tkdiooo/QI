@@ -80,6 +80,7 @@ website:
     welcome-file: /index
   # 单点登录
   sso:
+    domain: http://www.zzl.com
     login-url: http://www.zzl.com/sso/index
     logout-url: http://www.zzl.com/sso/logout
     auth:

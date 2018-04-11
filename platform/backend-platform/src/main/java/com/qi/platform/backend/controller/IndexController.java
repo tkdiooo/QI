@@ -34,6 +34,10 @@ public class IndexController {
 
     @GetMapping("{code}")
     public String index(@PathVariable(value = "code") String code, ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        // 后台首页
+        if ("index".equals(code)) {
+            return "main";
+        }
         // 获取系统信息
         SystemDto system = manageService.findSystemMenuBySystem(code);
         // 设置系统信息
