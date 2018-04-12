@@ -87,11 +87,12 @@
         var params = $(".form-horizontal").serializeJson();
         var opt = {
             callback: function (result) {
-                $(".form-horizontal").clearForm();
                 load_url(/*[[@{/menu/ordering}]]*/ "", $('.right-column'), {
                     parent: $('#parent').val(),
                     sysguid: [[${system.guid}]]
                 });
+                $(".form-horizontal").clearForm();
+                $('#guid').val('');
             }
         };
         ajax_action(/*[[@{/menu/save}]]*/ "", params, opt);

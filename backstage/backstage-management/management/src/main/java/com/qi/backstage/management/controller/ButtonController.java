@@ -67,9 +67,9 @@ public class ButtonController {
             // 列表面包屑设置
             list = BreadcrumbUtil.buildBreadcrumb(() -> {
                 // 获取按钮信息
-                BaseButton button1 = readService.getByGuid(button.getGuid());
-                Breadcrumb breadcrumb = new Breadcrumb(button1.getName() + "按钮", "/button/index", CommonConstants.ROOT_CLASS);
-                breadcrumb.addParams("guid", button1.getGuid());
+                BaseButton btn = readService.getByGuid(button.getGuid());
+                Breadcrumb breadcrumb = new Breadcrumb(btn.getName() + "按钮", "/button/index", CommonConstants.ROOT_CLASS);
+                breadcrumb.addParams("guid", btn.getGuid());
                 return breadcrumb;
             }, button.getGuid(), button.getParent());
             model.put("parent", button.getGuid());
@@ -83,7 +83,8 @@ public class ButtonController {
                 // 获取菜单信息
                 BaseMenu menu = menuReadService.getByGuid(button.getMenuguid());
                 Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/button/index", CommonConstants.ROOT_CLASS);
-                breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
+                // 设置上级节点Guid
+                breadcrumb.addParams("guid", menu.getGuid());
                 return breadcrumb;
             }, button.getMenuguid(), button.getParent());
             model.put("parent", CommonConstants.ROOT_GUID);

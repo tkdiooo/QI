@@ -107,13 +107,13 @@
                                     <span class="fa fa-check-square-o"></span>启用
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
-                                        th:onclick="'child(\'' + ${var.guid} + '\');'" th:if="${var.isleaf}"
+                                        th:onclick="'child(\'' + ${var.guid} + '\');'" th:if="${null == var.url}"
                                         th:data-original-title="查看子菜单" data-placement="right">
                                     <span class="fa fa-search"></span>查看
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm dt-btn"
                                         th:onclick="'button(\'' + ${var.guid} + '\',\'' + ${var.parent} + '\');'"
-                                        th:if="${!var.isleaf}"
+                                        th:if="${null != var.url}"
                                         th:data-original-title="查看菜单按钮" data-placement="right">
                                     <span class="fa fa-search"></span>查看
                                 </button>

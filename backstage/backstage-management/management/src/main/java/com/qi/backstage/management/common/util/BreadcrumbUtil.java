@@ -5,7 +5,6 @@ import com.sfsctech.base.exception.BizException;
 import com.sfsctech.cache.CacheFactory;
 import com.sfsctech.cache.redis.inf.IRedisService;
 import com.sfsctech.common.util.SpringContextUtil;
-import com.sfsctech.constants.CacheConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,7 @@ public class BreadcrumbUtil {
     private static CacheFactory<IRedisService<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
 
     public static List<Breadcrumb> buildBreadcrumb(BreadcrumbInf inf, String... keys) {
+        factory.getCacheClient().remove(keys[0]);
         List<Breadcrumb> list;
         // 获取当前节点缓存数据不为空
         if (null != (list = factory.getList(keys[0]))) {

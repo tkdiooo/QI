@@ -63,7 +63,7 @@ public class MenuController {
             list = BreadcrumbUtil.buildBreadcrumb(() -> {
                 BaseMenu innerMenu = readService.getByGuid(menuGuid);
                 Breadcrumb breadcrumb = new Breadcrumb(innerMenu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
-                breadcrumb.addParams("guid", innerMenu.getParent());
+                breadcrumb.addParams("guid", innerMenu.getGuid());
                 return breadcrumb;
             }, menu.getParent(), menu.getSysguid());
         }
