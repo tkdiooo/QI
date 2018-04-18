@@ -3,7 +3,7 @@ package com.qi.platform.backend.controller;
 import com.qi.backstage.management.model.dto.MenuDto;
 import com.qi.backstage.management.model.dto.SystemDto;
 import com.qi.platform.backend.rpc.consumer.ManageServiceConsumer;
-import com.sfsctech.authorize.sso.properties.SSOProperties;
+import com.sfsctech.authorize.base.properties.SSOProperties;
 import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;

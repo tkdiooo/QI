@@ -1,6 +1,6 @@
 package com.qi.platform.frontend.controller;
 
-import com.sfsctech.authorize.sso.properties.SSOProperties;
+import com.sfsctech.authorize.base.properties.SSOProperties;
 import com.sfsctech.base.session.SessionHolder;
 import com.sfsctech.constants.SSOConstants;
 import org.slf4j.Logger;

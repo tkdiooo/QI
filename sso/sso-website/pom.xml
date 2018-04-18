@@ -55,7 +55,13 @@
         <!-- common-authorize-sso support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-authorize-sso</artifactId>
+            <artifactId>common-authorize-base</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <!-- sfsctech-common-rpc support -->
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-dubbox</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

@@ -1,8 +1,8 @@
 package com.qi.sso.website.helper;
 
 import com.qi.sso.website.rpc.consumer.SSOService;
-import com.sfsctech.authorize.sso.properties.SSOProperties;
-import com.sfsctech.authorize.sso.util.JwtCookieUtil;
+import com.sfsctech.authorize.base.properties.SSOProperties;
+import com.sfsctech.authorize.base.util.JwtCookieUtil;
 import com.sfsctech.base.jwt.JwtToken;
 import com.sfsctech.common.cookie.CookieHelper;
 import com.sfsctech.common.security.EncrypterTool;
