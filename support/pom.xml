@@ -18,13 +18,11 @@
     <modules>
         <module>support-resources</module>
         <module>support-bootstrap</module>
+        <module>support-eureka</module>
     </modules>
 
     <properties>
         <sfsctech.common.version>1.1.0-SNAPSHOT</sfsctech.common.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.3.16.RELEASE</spring.version>
-        <java.version>1.8</java.version>
     </properties>
 
     <!--<dependencies>-->
