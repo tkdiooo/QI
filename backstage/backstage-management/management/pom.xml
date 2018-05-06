@@ -13,26 +13,31 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Spring boot -->
+        <!-- spring-cloud-starter-eureka -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-client</artifactId>
         </dependency>
-        <!-- Thymeleaf -->
+        <!-- Spring boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <!-- common-exception support -->
         <dependency>
@@ -55,7 +60,7 @@
         <!-- common-authorize-sso support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-authorize-sso</artifactId>
+            <artifactId>common-authorize-base</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- common-database support -->

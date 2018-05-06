@@ -13,15 +13,20 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Spring boot -->
+        <!-- spring-cloud-starter-eureka -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+        <!-- Spring boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!-- Thymeleaf -->
         <dependency>
@@ -56,12 +61,6 @@
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-authorize-base</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- sfsctech-common-rpc support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-dubbox</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

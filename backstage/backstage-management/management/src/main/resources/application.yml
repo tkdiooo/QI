@@ -1,7 +1,6 @@
 #server setting
 server:
   port: 8202
-  address: localhost
   context-path: /management
   tomcat:
     # 解析含有中文名的文件的url

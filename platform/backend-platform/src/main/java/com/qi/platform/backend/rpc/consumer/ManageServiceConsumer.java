@@ -1,6 +1,5 @@
 package com.qi.platform.backend.rpc.consumer;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.qi.backstage.management.inf.MenuService;
 import com.qi.backstage.management.inf.SystemService;
 import com.qi.backstage.management.model.dto.SystemDto;
@@ -29,10 +28,8 @@ public class ManageServiceConsumer {
 
     private final Logger logger = LoggerFactory.getLogger(ManageServiceConsumer.class);
 
-    @Reference
     private MenuService menuService;
 
-    @Reference
     private SystemService systemService;
 
     @Autowired

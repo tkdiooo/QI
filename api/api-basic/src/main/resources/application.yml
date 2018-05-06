@@ -1,0 +1,17 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:10002/eureka/
+server:
+  port: 8000
+spring:
+  application:
+    name: api-basic
+zuul:
+  routes:
+    api-a:
+      path: /platform/**
+      serviceId: backend-platform
+    api-b:
+      path: /api-b/**
+      serviceId: cloud-feign
