@@ -21,7 +21,7 @@
         <!-- sfsctech-common-mybatis support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-mybatis</artifactId>
+            <artifactId>common-data-mybatis</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- Management-Model support-->

@@ -21,7 +21,7 @@
         <!-- common-cache support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cache</artifactId>
+            <artifactId>common-core-cache</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- management-interface support -->

@@ -16,7 +16,7 @@
         <!-- sfsctech-common-rpc support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-rpc</artifactId>
+            <artifactId>common-core-rpc</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>
