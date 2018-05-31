@@ -1,17 +1,11 @@
 package com.qi.backstage.dictionary.service.read.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.qi.backstage.dictionary.common.constants.CommonConstants;
 import com.qi.backstage.dictionary.mapper.BaseDictionaryMapper;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
-import com.qi.backstage.dictionary.model.dto.DictionaryDto;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
-import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.common.util.BeanUtil;
-import com.sfsctech.common.util.ListUtil;
-import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

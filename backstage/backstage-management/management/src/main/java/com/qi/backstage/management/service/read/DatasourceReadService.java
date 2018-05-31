@@ -1,7 +1,7 @@
 package com.qi.backstage.management.service.read;
 
 import com.qi.backstage.management.model.domain.BaseDatasource;
-import com.sfsctech.base.model.PagingInfo;
+import com.sfsctech.core.base.domain.model.PagingInfo;
 
 /**
  * Class DatasourceReadService

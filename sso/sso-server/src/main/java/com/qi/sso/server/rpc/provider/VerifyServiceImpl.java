@@ -2,22 +2,22 @@ package com.qi.sso.server.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.qi.sso.server.util.VerifyUtil;
-import com.sfsctech.authorize.base.inf.VerifyService;
-import com.sfsctech.authorize.base.properties.JwtProperties;
-import com.sfsctech.authorize.base.util.CacheKeyUtil;
-import com.sfsctech.authorize.base.util.JwtUtil;
-import com.sfsctech.base.jwt.JwtToken;
-import com.sfsctech.base.session.UserAuthData;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.security.EncrypterTool;
-import com.sfsctech.common.util.HexUtil;
-import com.sfsctech.common.util.ListUtil;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.common.util.ThrowableUtil;
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.auth.sso.inf.VerifyService;
+import com.sfsctech.core.auth.sso.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
+import com.sfsctech.core.auth.sso.util.JwtUtil;
+import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.base.session.UserAuthData;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.support.common.security.EncrypterTool;
+import com.sfsctech.support.common.util.HexUtil;
+import com.sfsctech.support.common.util.ListUtil;
+import com.sfsctech.support.common.util.StringUtil;
+import com.sfsctech.support.common.util.ThrowableUtil;
 import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,13 +35,13 @@ public class VerifyServiceImpl implements VerifyService {
     private final Logger logger = LoggerFactory.getLogger(VerifyServiceImpl.class);
 
     @Autowired
-    private CacheFactory<IRedisService<String, Object>> factory;
+    private CacheFactory<RedisProxy<String, Object>> factory;
     @Autowired
     private JwtProperties jwtConfig;
 
     @Override
     public ActionResult<JwtToken> simpleVerify(JwtToken jt) {
-        ActionResult<JwtToken> result = new ActionResult<>(jt);
+        ActionResult<JwtToken> result = ActionResult.forDefault(jt);
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
@@ -63,7 +63,7 @@ public class VerifyServiceImpl implements VerifyService {
         // 从缓存中获取token信息
         String token = String.valueOf(factory.getCacheClient().get(salt_CacheKey + LabelConstants.POUND + salt));
         if (StringUtil.isBlank(token)) {
-            result.setMessage("用户校验失败 :用户登录超时，已无法找到缓存中的token信息！");
+            result.addMessages("用户校验失败 :用户登录超时，已无法找到缓存中的token信息！");
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);
@@ -71,7 +71,7 @@ public class VerifyServiceImpl implements VerifyService {
         }
 
         if (!token.equals(jt.getJwt())) {
-            result.setMessage("用户校验失败 :用户token信息不匹配！");
+            result.addMessages("用户校验失败 :用户token信息不匹配！");
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);
@@ -97,7 +97,7 @@ public class VerifyServiceImpl implements VerifyService {
 
     @Override
     public ActionResult<JwtToken> complexVerify(JwtToken jt) {
-        ActionResult<JwtToken> result = new ActionResult<>(jt);
+        ActionResult<JwtToken> result = ActionResult.forDefault(jt);
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
@@ -119,7 +119,7 @@ public class VerifyServiceImpl implements VerifyService {
         // 解密Jwt
         String token = EncrypterTool.decrypt(jt.getJwt(), salt);
         if (StringUtil.isBlank(token)) {
-            result.setMessage("用户校验失败 :JwtToken无法解密[" + jt.getJwt() + "]。");
+            result.addMessages("用户校验失败 :JwtToken无法解密[" + jt.getJwt() + "]。");
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);
@@ -140,7 +140,7 @@ public class VerifyServiceImpl implements VerifyService {
                 this.refreshJwt(claims, authData, salt_CacheKey, jt);
             }
         } catch (Exception e) {
-            result.setMessage(ThrowableUtil.getRootMessage(e));
+            result.addMessages(ThrowableUtil.getRootMessage(e));
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA), e);
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);

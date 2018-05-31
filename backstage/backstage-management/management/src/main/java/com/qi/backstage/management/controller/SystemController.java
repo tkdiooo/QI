@@ -9,9 +9,9 @@ import com.qi.backstage.management.service.write.SystemWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
-import com.sfsctech.constants.StatusConstants;
-import com.sfsctech.constants.UIConstants;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.base.constants.StatusConstants;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.constants.UIConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -52,7 +52,7 @@ public class SystemController {
 
     @GetMapping("add")
     public String add(ModelMap model) {
-        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
+        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getDescription());
         List<Map<String, Object>> options = DictUtil.System.options();
         model.put("defaultSel", options.get(0));
         model.put("options", options);
@@ -61,7 +61,7 @@ public class SystemController {
 
     @GetMapping("edit")
     public String edit(ModelMap model, String guid) {
-        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
+        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getDescription());
         List<Map<String, Object>> options = DictUtil.System.options();
         model.put("options", options);
         BaseSystem system = readService.getByGuid(guid);
@@ -82,20 +82,20 @@ public class SystemController {
     @PostMapping("save")
     public ActionResult<BaseSystem> save(BaseSystem system) {
         writeService.save(system);
-        return new ActionResult<>(system);
+        return ActionResult.forSuccess(system);
     }
 
     @ResponseBody
     @PostMapping("disable")
     public ActionResult<BaseSystem> disable(String guid) {
         writeService.changeStatus(guid, StatusConstants.Status.Disable);
-        return new ActionResult<>();
+        return ActionResult.forSuccess();
     }
 
     @ResponseBody
     @PostMapping("valid")
     public ActionResult<BaseSystem> valid(String guid) {
         writeService.changeStatus(guid, StatusConstants.Status.Valid);
-        return new ActionResult<>();
+        return ActionResult.forSuccess();
     }
 }

@@ -1,6 +1,6 @@
 package com.qi.backstage.dictionary.model.domain;
 
-import com.sfsctech.base.model.BaseDto;
+import com.sfsctech.core.base.domain.dto.BaseDto;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Pattern;

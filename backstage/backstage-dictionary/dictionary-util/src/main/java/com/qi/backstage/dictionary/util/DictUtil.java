@@ -1,14 +1,9 @@
 package com.qi.backstage.dictionary.util;
 
-import com.google.gson.reflect.TypeToken;
 import com.qi.backstage.dictionary.model.dto.DictionaryDto;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.util.SpringContextUtil;
-import com.sfsctech.constants.CacheConstants;
-import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.rpc.util.RpcUtil;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.spring.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
@@ -26,7 +21,7 @@ public class DictUtil {
     private static final Logger logger = LoggerFactory.getLogger(DictUtil.class);
 
     @SuppressWarnings({"unchecked"})
-    private static CacheFactory<IRedisService<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
+    private static CacheFactory<RedisProxy<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
 
     private static RestTemplate restTemplate = SpringContextUtil.getBean(RestTemplate.class);
 
@@ -34,12 +29,12 @@ public class DictUtil {
         List<DictionaryDto> options = factory.getList(cacheKey);
         if (null == options) {
             String responseContent = restTemplate.getForObject("http://www.zzl.com/dictionary/rest/" + number, String.class);
-            ActionResult<DictionaryDto> result = RpcUtil.parseActionResult(responseContent, RpcConstants.Status.Successful, new TypeToken<ActionResult<DictionaryDto>>() {
-            }.getType());
-            if (null != result && RpcUtil.logPrint(result, logger)) {
-                options = result.getDataSet();
-                factory.getCacheClient().putTimeOut(cacheKey, options, CacheConstants.MilliSecond.Minutes30.getContent());
-            }
+//            ActionResult<DictionaryDto> result = RpcUtil.parseActionResult(responseContent, RpcConstants.Status.Successful, new TypeToken<ActionResult<DictionaryDto>>() {
+//            }.getType());
+//            if (null != result && RpcUtil.logPrint(result, logger)) {
+//                options = result.getDataSet();
+//                factory.getCacheClient().putTimeOut(cacheKey, options, CacheConstants.MilliSecond.Minutes30.getContent());
+//            }
         }
         return options;
     }

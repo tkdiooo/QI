@@ -39,36 +39,36 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!-- sfsctech-common-mybatis support-->
+       <!-- &lt;!&ndash; sfsctech-common-mybatis support&ndash;&gt;
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-mybatis</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- common-exception support-->
+        &lt;!&ndash; common-exception support&ndash;&gt;
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-exception</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- common-logback support-->
+        &lt;!&ndash; common-logback support&ndash;&gt;
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-logback</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- common-security support-->
+        &lt;!&ndash; common-security support&ndash;&gt;
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-security</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- common-authorize-sso support -->
+        &lt;!&ndash; common-authorize-sso support &ndash;&gt;
         <dependency>
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-authorize-sso</artifactId>
             <version>${sfsctech.common.version}</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>

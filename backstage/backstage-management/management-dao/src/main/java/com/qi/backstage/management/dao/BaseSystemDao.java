@@ -2,7 +2,7 @@ package com.qi.backstage.management.dao;
 
 import com.qi.backstage.management.model.domain.BaseSystemExample;
 import com.qi.backstage.management.model.dto.SystemDto;
-import com.sfsctech.mybatis.dao.IBaseDao;
+import com.sfsctech.data.mybatis.dao.IBaseDao;
 
 /**
  * Class BaseSystemDao

@@ -1,11 +1,10 @@
 package com.qi.bootstrap.util;
 
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.common.util.BeanUtil;
-import com.sfsctech.common.util.NumberUtil;
-import com.sfsctech.common.util.SpringContextUtil;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.inf.IEnum;
+import com.sfsctech.core.base.enums.BaseEnum;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.spring.util.SpringContextUtil;
+import com.sfsctech.support.common.util.BeanUtil;
+import com.sfsctech.support.common.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +27,7 @@ public class BootstrapUtil {
      * 匹配下拉列表options
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public static <K, V> List<Map<String, Object>> matchOptions(String cacheKey, IEnum<K, V>... enums) {
+    public static <K, V> List<Map<String, Object>> matchOptions(String cacheKey, BaseEnum<K, V>... enums) {
         List<Map<String, Object>> options = null;
         if (StringUtil.isNotBlank(cacheKey)) {
             options = (List<Map<String, Object>>) factory.getCacheClient().get(cacheKey);
@@ -37,10 +36,10 @@ public class BootstrapUtil {
             return options;
         }
         options = new ArrayList<>();
-        for (IEnum<K, V> e : enums) {
+        for (BaseEnum<K, V> e : enums) {
             Map<String, Object> map = new HashMap<>();
             map.put("value", e.getCode());
-            map.put("text", e.getContent());
+            map.put("text", e.getDescription());
             if (StringUtil.isNumeric(e.getCode().toString())) {
                 map.put("class", OPTIONS_CLASS[Integer.valueOf(e.getCode().toString())]);
             }

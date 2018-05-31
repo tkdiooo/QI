@@ -21,14 +21,11 @@ server:
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
-#spring mvc setting
-spring:
+cache:
   redis:
-    protocol: Single
-    single:
-      host: 172.16.225.98
-      port: 6379
-      password: redis123
+    host: 172.16.225.98
+    port: 6379
+    password: redis123
     pool:
       max-active: 300
       max-wait: 10000

@@ -3,11 +3,11 @@ package com.qi.backstage.management.common.util;
 import com.qi.backstage.dictionary.model.dto.DictionaryDto;
 import com.qi.backstage.management.common.constants.CommonConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.util.ListUtil;
-import com.sfsctech.common.util.SpringContextUtil;
-import com.sfsctech.constants.CacheConstants;
+import com.sfsctech.core.base.constants.CacheConstants;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.spring.util.SpringContextUtil;
+import com.sfsctech.support.common.util.ListUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 public class DictUtil {
 
     @SuppressWarnings({"unchecked"})
-    private static CacheFactory<IRedisService<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
+    private static CacheFactory<RedisProxy<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
 
-    static List<Map<String, Object>> getOptions(String number, String OPTIONS_KEY, String DEFAULT_OPTIONS_KEY, String OPTIONS_DICT_KEY) {
+    private static List<Map<String, Object>> getOptions(String number, String OPTIONS_KEY, String DEFAULT_OPTIONS_KEY, String OPTIONS_DICT_KEY) {
         List<Map<String, Object>> options = factory.getList(OPTIONS_KEY);
         if (null == options) {
             List<DictionaryDto> list = com.qi.backstage.dictionary.util.DictUtil.findChildByNumber(number, OPTIONS_DICT_KEY);
@@ -37,7 +37,7 @@ public class DictUtil {
         return options;
     }
 
-    static Map<String, String> getTableCloumns(String number, String CLOUMNS_KEY, String OPTIONS_DICT_KEY) {
+    private static Map<String, String> getTableCloumns(String number, String CLOUMNS_KEY, String OPTIONS_DICT_KEY) {
         Map<String, String> cloumns = factory.get(CLOUMNS_KEY);
         if (null == cloumns) {
             List<DictionaryDto> list = com.qi.backstage.dictionary.util.DictUtil.findChildByNumber(number, OPTIONS_DICT_KEY);

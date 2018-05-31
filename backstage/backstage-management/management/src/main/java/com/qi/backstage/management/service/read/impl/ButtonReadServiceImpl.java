@@ -4,7 +4,7 @@ import com.qi.backstage.management.mapper.BaseButtonMapper;
 import com.qi.backstage.management.model.domain.BaseButton;
 import com.qi.backstage.management.model.domain.BaseButtonExample;
 import com.qi.backstage.management.service.read.ButtonReadService;
-import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

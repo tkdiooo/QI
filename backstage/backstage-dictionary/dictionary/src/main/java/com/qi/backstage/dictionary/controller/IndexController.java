@@ -2,20 +2,20 @@ package com.qi.backstage.dictionary.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qi.backstage.dictionary.common.constants.CommonConstants;
+import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
 import com.qi.backstage.dictionary.service.transactional.DictionaryTransactionalService;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
-import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.StatusConstants;
-import com.sfsctech.constants.UIConstants;
-import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.security.annotation.Verify;
+import com.sfsctech.core.base.constants.StatusConstants;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.security.annotation.Verify;
+import com.sfsctech.core.web.constants.UIConstants;
+import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -45,7 +45,7 @@ public class IndexController {
     private DictionaryTransactionalService transactionalService;
 
     @Autowired
-    private CacheFactory<IRedisService<String, Object>> factory;
+    private CacheFactory<RedisProxy<String, Object>> factory;
 
     @GetMapping("index")
     public String index() {
@@ -87,7 +87,7 @@ public class IndexController {
 
     @GetMapping("add")
     public String add(ModelMap model, String parent) {
-        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
+        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getDescription());
         // 不是跟节点的情况下，获取父节点编号
         if (!CommonConstants.ROOT_GUID.equals(parent)) {
             model.put("parent_number", parent);
@@ -99,7 +99,7 @@ public class IndexController {
 
     @GetMapping("edit")
     public String edit(ModelMap model, String number) {
-        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
+        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getDescription());
         BaseDictionary dictionary = readService.getByNumber(number);
         // 不是跟节点的情况下，获取父节点编号
         if (!CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
@@ -116,21 +116,21 @@ public class IndexController {
     @PostMapping("save")
     public ActionResult<BaseDictionary> save(@Verify BaseDictionary dictionary) {
         writeService.save(dictionary);
-        return new ActionResult<>(dictionary);
+        return ActionResult.forSuccess(dictionary);
     }
 
     @ResponseBody
     @PostMapping("disable")
     public ActionResult<BaseDictionary> disable(String number) {
         writeService.changeStatus(number, StatusConstants.Status.Disable);
-        return new ActionResult<>();
+        return ActionResult.forSuccess();
     }
 
     @ResponseBody
     @PostMapping("valid")
     public ActionResult<BaseDictionary> valid(String number) {
         writeService.changeStatus(number, StatusConstants.Status.Valid);
-        return new ActionResult<>();
+        return ActionResult.forSuccess();
     }
 
     @GetMapping("ordering")
@@ -144,7 +144,7 @@ public class IndexController {
     @PostMapping("sort")
     public ActionResult<String> sort(String sortable) {
         transactionalService.sort(sortable);
-        return new ActionResult<>();
+        return ActionResult.forSuccess();
     }
 
     @ResponseBody
@@ -155,7 +155,7 @@ public class IndexController {
         if (!CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
             dictionary.setNumber(dictionary.getNumber().substring(dictionary.getNumber().length() - 4));
         }
-        return new ActionResult<>(dictionary);
+        return ActionResult.forSuccess(dictionary);
     }
 
     @ResponseBody

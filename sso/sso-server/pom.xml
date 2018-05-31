@@ -34,29 +34,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- common-cache support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cache</artifactId>
+            <artifactId>common-core-auth-sso</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- common-exception support-->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-exception</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-logback support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-logback</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-authorize-interface support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-authorize-base</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>com.sfsctech.framework</groupId>
+            <artifactId>sfsctech-dubbo-starter-provider</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

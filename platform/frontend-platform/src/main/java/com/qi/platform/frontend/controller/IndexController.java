@@ -1,8 +1,8 @@
 package com.qi.platform.frontend.controller;
 
-import com.sfsctech.authorize.base.properties.SSOProperties;
-import com.sfsctech.base.session.SessionHolder;
-import com.sfsctech.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.properties.SSOProperties;
+import com.sfsctech.core.base.session.SessionHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,8 +3,8 @@ package com.qi.backstage.management.dao.impl;
 import com.qi.backstage.management.dao.BaseMenuDao;
 import com.qi.backstage.management.model.domain.BaseMenuExample;
 import com.qi.backstage.management.model.dto.MenuDto;
-import com.sfsctech.mybatis.annotation.Namespace;
-import com.sfsctech.mybatis.dao.impl.BaseDaoImpl;
+import com.sfsctech.data.mybatis.annotation.Namespace;
+import com.sfsctech.data.mybatis.dao.impl.BaseDaoImpl;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

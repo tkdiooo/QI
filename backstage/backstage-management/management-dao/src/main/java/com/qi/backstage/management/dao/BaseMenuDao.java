@@ -2,7 +2,7 @@ package com.qi.backstage.management.dao;
 
 import com.qi.backstage.management.model.domain.BaseMenuExample;
 import com.qi.backstage.management.model.dto.MenuDto;
-import com.sfsctech.mybatis.dao.IBaseDao;
+import com.sfsctech.data.mybatis.dao.IBaseDao;
 
 import java.util.List;
 

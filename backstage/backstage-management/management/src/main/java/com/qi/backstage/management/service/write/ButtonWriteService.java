@@ -1,7 +1,7 @@
 package com.qi.backstage.management.service.write;
 
 import com.qi.backstage.management.model.domain.BaseButton;
-import com.sfsctech.constants.StatusConstants;
+import com.sfsctech.core.base.constants.StatusConstants;
 
 /**
  * Class ButtonWriteService

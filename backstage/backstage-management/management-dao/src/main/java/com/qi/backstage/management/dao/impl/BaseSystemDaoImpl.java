@@ -3,9 +3,9 @@ package com.qi.backstage.management.dao.impl;
 import com.qi.backstage.management.dao.BaseSystemDao;
 import com.qi.backstage.management.model.domain.BaseSystemExample;
 import com.qi.backstage.management.model.dto.SystemDto;
-import com.sfsctech.constants.StatusConstants;
-import com.sfsctech.mybatis.annotation.Namespace;
-import com.sfsctech.mybatis.dao.impl.BaseDaoImpl;
+import com.sfsctech.core.base.constants.StatusConstants;
+import com.sfsctech.data.mybatis.annotation.Namespace;
+import com.sfsctech.data.mybatis.dao.impl.BaseDaoImpl;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

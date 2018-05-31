@@ -72,12 +72,11 @@ spring:
     static-path-pattern: /static/**
     view:
       suffix: .html
+cache:
   redis:
-    protocol: Single
-    single:
-      host: 172.16.225.98
-      port: 6379
-      password: redis123
+    host: 172.16.225.98
+    port: 6379
+    password: redis123
     pool:
       max-active: 300
       max-wait: 10000
@@ -125,7 +124,6 @@ website:
     logout-url: http://www.zzl.com/sso/logout
     auth:
       way: Simple
-      protocol: Rpc
       item-type: FrameService
   # 服务架构
   session:

@@ -15,13 +15,13 @@
         <!-- sfsctech-common-util support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-util</artifactId>
+            <artifactId>common-core-spring</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- sfsctech-common-cache support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cache</artifactId>
+            <artifactId>common-core-cache</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

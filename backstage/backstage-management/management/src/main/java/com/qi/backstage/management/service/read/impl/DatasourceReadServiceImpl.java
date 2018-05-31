@@ -6,9 +6,9 @@ import com.qi.backstage.management.mapper.BaseDatasourceMapper;
 import com.qi.backstage.management.model.domain.BaseDatasource;
 import com.qi.backstage.management.model.domain.BaseDatasourceExample;
 import com.qi.backstage.management.service.read.DatasourceReadService;
-import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.common.util.BeanUtil;
-import com.sfsctech.common.util.ListUtil;
+import com.sfsctech.core.base.domain.model.PagingInfo;
+import com.sfsctech.support.common.util.BeanUtil;
+import com.sfsctech.support.common.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

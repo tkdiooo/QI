@@ -1,7 +1,7 @@
 package com.qi.backstage.dictionary.service.write;
 
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
-import com.sfsctech.constants.StatusConstants;
+import com.sfsctech.core.base.constants.StatusConstants;
 
 /**
  * Class DictionaryWriteService

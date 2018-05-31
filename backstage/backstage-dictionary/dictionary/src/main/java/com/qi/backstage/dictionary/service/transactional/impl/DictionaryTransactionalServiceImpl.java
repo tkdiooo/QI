@@ -4,7 +4,7 @@ import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
 import com.qi.backstage.dictionary.service.transactional.DictionaryTransactionalService;
 import com.qi.backstage.dictionary.mapper.BaseDictionaryMapper;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
-import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.core.base.constants.LabelConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -3,15 +3,14 @@ package com.qi.platform.backend.rpc.consumer;
 import com.qi.backstage.management.inf.MenuService;
 import com.qi.backstage.management.inf.SystemService;
 import com.qi.backstage.management.model.dto.SystemDto;
-import com.sfsctech.base.exception.BizException;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.util.ListUtil;
-import com.sfsctech.constants.CacheConstants;
-import com.sfsctech.constants.CommonConstants;
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.rpc.util.RpcUtil;
+import com.sfsctech.core.base.constants.CacheConstants;
+import com.sfsctech.core.base.constants.CommonConstants;
+import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.exception.ex.BizException;
+import com.sfsctech.core.rpc.result.RpcResult;
+import com.sfsctech.support.common.util.ListUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class ManageServiceConsumer {
     private SystemService systemService;
 
     @Autowired
-    private CacheFactory<IRedisService<String, Object>> factory;
+    private CacheFactory<RedisProxy<String, Object>> factory;
 
     /**
      * 根据系统编号获取系统菜单
@@ -46,8 +45,8 @@ public class ManageServiceConsumer {
         factory.getCacheClient().remove(cache_key);
         SystemDto system = factory.get(cache_key);
         if (null == system) {
-            ActionResult<SystemDto> result = systemService.getByCode(sysCode);
-            if (RpcUtil.logPrint(result, logger)) {
+            RpcResult<SystemDto> result = systemService.getByCode(sysCode);
+            if (!result.isSuccess()) {
                 system = result.getResult();
                 factory.getCacheClient().putTimeOut(cache_key, system, CacheConstants.MilliSecond.Minutes30.getContent());
             } else {

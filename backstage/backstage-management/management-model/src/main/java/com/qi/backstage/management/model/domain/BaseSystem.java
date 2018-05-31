@@ -1,6 +1,6 @@
 package com.qi.backstage.management.model.domain;
 
-import com.sfsctech.base.model.BaseDto;
+import com.sfsctech.core.base.domain.dto.BaseDto;
 
 public class BaseSystem extends BaseDto {
     /**

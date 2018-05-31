@@ -1,6 +1,6 @@
 package com.qi.backstage.management.common.constants;
 
-import com.sfsctech.constants.inf.IEnum;
+import com.sfsctech.core.base.enums.BaseEnum;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 public class CommonConstants {
 
-    public enum SystemType implements IEnum<String, String> {
+    public enum SystemType implements BaseEnum<String, String> {
         /**
          * 已删除
          */
@@ -36,25 +36,25 @@ public class CommonConstants {
         }
 
         @Override
-        public String getContent() {
+        public String getDescription() {
             return value;
         }
 
         public static String getValueByKey(String key) {
-            return IEnum.findValue(values(), key);
+            return BaseEnum.findValue(values(), key);
         }
 
         public static String getKeyByValue(String value) {
-            return IEnum.findKey(values(), value);
+            return BaseEnum.findKey(values(), value);
         }
 
-        private static List<IEnum<String, String>> options = new ArrayList<>(Arrays.asList(values()));
+        private static List<BaseEnum<String, String>> options = new ArrayList<>(Arrays.asList(values()));
 
-        public static List<IEnum<String, String>> getOptions() {
+        public static List<BaseEnum<String, String>> getOptions() {
             return options;
         }
 
-        private static Map<String, String> columns = options.stream().collect(Collectors.toMap(IEnum::getCode, IEnum::getContent));
+        private static Map<String, String> columns = options.stream().collect(Collectors.toMap(BaseEnum::getCode, BaseEnum::getDescription));
 
         public static Map<String, String> getColumns() {
             return columns;

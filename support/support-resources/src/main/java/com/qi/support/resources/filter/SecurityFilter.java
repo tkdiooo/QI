@@ -1,6 +1,6 @@
 package com.qi.support.resources.filter;
 
-import com.sfsctech.common.util.HttpUtil;
+import com.sfsctech.support.common.util.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

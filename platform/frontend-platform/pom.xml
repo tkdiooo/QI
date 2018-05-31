@@ -13,11 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Spring boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -34,28 +29,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- common-exception support-->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-exception</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>com.sfsctech.framework</groupId>
+            <artifactId>sfsctech-dubbo-starter-consume</artifactId>
+            <version>1.0.0</version>
         </dependency>
-        <!-- common-logback support-->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-logback</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-security support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-security</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-authorize-sso support -->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-authorize-sso</artifactId>
+            <artifactId>common-dubbo-sso</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

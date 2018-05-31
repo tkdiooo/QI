@@ -1,20 +1,20 @@
 package com.qi.sso.server.rpc.provider;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.sfsctech.authorize.base.inf.LoginService;
-import com.sfsctech.authorize.base.properties.JwtProperties;
-import com.sfsctech.authorize.base.util.CacheKeyUtil;
-import com.sfsctech.authorize.base.util.JwtUtil;
-import com.sfsctech.base.jwt.JwtToken;
-import com.sfsctech.base.session.UserAuthData;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.security.EncrypterTool;
-import com.sfsctech.common.util.HexUtil;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.SSOConstants;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.inf.LoginService;
+import com.sfsctech.core.auth.sso.properties.JwtProperties;
+import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
+import com.sfsctech.core.auth.sso.util.JwtUtil;
+import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.base.session.UserAuthData;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.support.common.security.EncrypterTool;
+import com.sfsctech.support.common.util.HexUtil;
+import com.sfsctech.support.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +34,14 @@ public class LoginServiceImpl implements LoginService {
     private final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     @Autowired
-    private CacheFactory<IRedisService<String, Object>> factory;
+    private CacheFactory<RedisProxy<String, Object>> factory;
 
     @Autowired
     private JwtProperties jwtConfig;
 
     @Override
     public ActionResult<JwtToken> login(UserAuthData authData) {
-        ActionResult<JwtToken> result = new ActionResult<>();
+        ActionResult<JwtToken> result = ActionResult.forSuccess();
         JwtToken jwtToken = new JwtToken();
         // TODO 登录验证
 

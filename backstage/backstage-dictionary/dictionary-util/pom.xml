@@ -13,10 +13,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Spring boot -->
+        <!-- common-cache support -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-spring</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- common-cache support -->
         <dependency>

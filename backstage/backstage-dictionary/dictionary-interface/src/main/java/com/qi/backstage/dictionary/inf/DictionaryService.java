@@ -1,7 +1,9 @@
 package com.qi.backstage.dictionary.inf;
 
 import com.qi.backstage.dictionary.model.dto.DictionaryDto;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.rpc.result.RpcResult;
+
+import java.util.List;
 
 /**
  * Class DictionaryService
@@ -11,6 +13,6 @@ import com.sfsctech.rpc.result.ActionResult;
  */
 public interface DictionaryService {
 
-    ActionResult<DictionaryDto> findChildByNumber(String number);
+    RpcResult<List<DictionaryDto>> findChildByNumber(String number);
 
 }

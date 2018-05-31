@@ -5,11 +5,11 @@ import com.qi.backstage.dictionary.mapper.BaseDictionaryMapper;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.model.domain.BaseDictionaryExample;
 import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.util.Cn2SpellUtil;
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.StatusConstants;
+import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.constants.StatusConstants;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.support.common.util.Cn2SpellUtil;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class DictionaryWriteServiceImpl implements DictionaryWriteService {
     @Autowired
     private BaseDictionaryMapper mapper;
     @Autowired
-    private CacheFactory<IRedisService<String, Object>> factory;
+    private CacheFactory<RedisProxy<String, Object>> factory;
 
     @Override
     public void save(BaseDictionary model) {

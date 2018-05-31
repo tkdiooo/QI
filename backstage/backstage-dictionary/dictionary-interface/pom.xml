@@ -19,6 +19,11 @@
             <artifactId>dictionary-model</artifactId>
             <version>${dictionary.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-rpc</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

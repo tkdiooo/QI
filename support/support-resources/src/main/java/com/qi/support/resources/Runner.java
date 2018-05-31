@@ -1,7 +1,7 @@
 package com.qi.support.resources;
 
 import com.qi.support.resources.filter.SecurityFilter;
-import com.sfsctech.constants.LabelConstants;
+import com.sfsctech.core.base.constants.LabelConstants;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

@@ -7,9 +7,9 @@ import com.qi.backstage.management.service.write.SystemWriteService;
 import com.qi.backstage.management.mapper.BaseSystemMapper;
 import com.qi.backstage.management.model.domain.BaseSystem;
 import com.qi.backstage.management.model.domain.BaseSystemExample;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.common.uuid.UUIDUtil;
-import com.sfsctech.constants.StatusConstants;
+import com.sfsctech.core.base.constants.StatusConstants;
+import com.sfsctech.support.common.util.StringUtil;
+import com.sfsctech.support.common.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -16,7 +16,7 @@
         <!-- sfsctech-common-util support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-spring</artifactId>
+            <artifactId>common-core-spring</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- jquery -->

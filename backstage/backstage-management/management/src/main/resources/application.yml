@@ -63,6 +63,8 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       # 合并多个DruidDataSource的监控数据
       useGlobalDataSourceStat: true
+      remove-abandoned: true
+      remove-abandoned-timeout: 180
   thymeleaf:
     cache: false
     suffix: .html
@@ -71,12 +73,11 @@ spring:
     static-path-pattern: /static/**
     view:
       suffix: .html
+cache:
   redis:
-    protocol: Single
-    single:
-      host: 172.16.225.98
-      port: 6379
-      password: redis123
+    host: 172.16.225.98
+    port: 6379
+    password: redis123
     pool:
       max-active: 300
       max-wait: 10000
@@ -126,7 +127,6 @@ website:
     logout-url: http://www.zzl.com/sso/logout
     auth:
       way: Complex
-      protocol: Rpc
       item-type: FrameService
   # 服务架构
 #  session:

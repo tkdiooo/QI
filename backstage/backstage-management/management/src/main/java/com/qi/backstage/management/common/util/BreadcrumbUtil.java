@@ -1,10 +1,10 @@
 package com.qi.backstage.management.common.util;
 
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
-import com.sfsctech.base.exception.BizException;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.util.SpringContextUtil;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.exception.ex.BizException;
+import com.sfsctech.core.spring.util.SpringContextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class BreadcrumbUtil {
 
     @SuppressWarnings({"unchecked"})
-    private static CacheFactory<IRedisService<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
+    private static CacheFactory<RedisProxy<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
 
     public static List<Breadcrumb> buildBreadcrumb(BreadcrumbInf inf, String... keys) {
         factory.getCacheClient().remove(keys[0]);

@@ -12,12 +12,12 @@ import com.qi.backstage.management.service.write.ButtonWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
-import com.sfsctech.cache.CacheFactory;
-import com.sfsctech.cache.redis.inf.IRedisService;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.StatusConstants;
-import com.sfsctech.constants.UIConstants;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.base.constants.StatusConstants;
+import com.sfsctech.core.cache.factory.CacheFactory;
+import com.sfsctech.core.cache.redis.RedisProxy;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.constants.UIConstants;
+import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -53,7 +53,7 @@ public class ButtonController {
     private ButtonTransactionalService transactionalService;
 
     @Autowired
-    private CacheFactory<IRedisService<String, Object>> factory;
+    private CacheFactory<RedisProxy<String, Object>> factory;
 
     @GetMapping("index")
     public String index(ModelMap model, BaseButton button, String sysguid) {
@@ -103,7 +103,7 @@ public class ButtonController {
 
     @GetMapping("add")
     public String add(ModelMap model, BaseButton button, String sysguid) {
-        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
+        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getDescription());
         // 获取系统Guid
         model.put("system", sysguid);
         // 获取菜单信息
@@ -126,7 +126,7 @@ public class ButtonController {
 
     @GetMapping("edit")
     public String edit(ModelMap model, BaseButton button, String sysguid) {
-        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
+        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getDescription());
         // 获取系统信息
         model.put("system", sysguid);
         // 获取菜单信息
@@ -158,21 +158,21 @@ public class ButtonController {
     @PostMapping("save")
     public ActionResult<BaseButton> save(BaseButton button) {
         writeService.save(button);
-        return new ActionResult<>(button);
+        return ActionResult.forSuccess(button);
     }
 
     @ResponseBody
     @PostMapping("disable")
     public ActionResult<BaseButton> disable(String guid) {
         writeService.changeStatus(guid, StatusConstants.Status.Disable);
-        return new ActionResult<>();
+        return ActionResult.forSuccess();
     }
 
     @ResponseBody
     @PostMapping("valid")
     public ActionResult<BaseButton> valid(String guid) {
         writeService.changeStatus(guid, StatusConstants.Status.Valid);
-        return new ActionResult<>();
+        return ActionResult.forSuccess();
     }
 
     @GetMapping("ordering")
@@ -185,6 +185,6 @@ public class ButtonController {
     @ResponseBody
     @PostMapping("load")
     public ActionResult<BaseButton> load(String guid) {
-        return new ActionResult<>(readService.getByGuid(guid));
+        return ActionResult.forSuccess(readService.getByGuid(guid));
     }
 }

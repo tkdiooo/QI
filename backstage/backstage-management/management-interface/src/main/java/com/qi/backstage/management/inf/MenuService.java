@@ -1,7 +1,9 @@
 package com.qi.backstage.management.inf;
 
 import com.qi.backstage.management.model.dto.MenuDto;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.rpc.result.RpcResult;
+
+import java.util.List;
 
 /**
  * Class sdsd
@@ -11,6 +13,6 @@ import com.sfsctech.rpc.result.ActionResult;
  */
 public interface MenuService {
 
-    ActionResult<MenuDto> findBySystemCode(String sysCode);
+    RpcResult<List<MenuDto>> findBySystemCode(String sysCode);
 
 }

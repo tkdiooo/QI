@@ -1,13 +1,17 @@
 package com.qi.backstage.management.common.verify.util;
 
 import com.qi.backstage.management.common.verify.model.ConditionModel;
-import com.sfsctech.common.util.*;
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.PatternConstants;
-import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.database.model.TableModel;
-import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.spring.properties.WebsiteProperties;
+import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.constants.PatternConstants;
+import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.spring.util.SpringContextUtil;
+import com.sfsctech.core.web.properties.WebsiteProperties;
+import com.sfsctech.data.jdbc.model.TableModel;
+import com.sfsctech.support.common.util.FileUtil;
+import com.sfsctech.support.common.util.ListUtil;
+import com.sfsctech.support.common.util.StringUtil;
+import com.sfsctech.support.common.util.ThrowableUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -27,7 +31,7 @@ public class VerifyUtil {
     private static WebsiteProperties properties = SpringContextUtil.getBean(WebsiteProperties.class);
 
     public static ActionResult<String> BackendVerify(MultipartFile mf, List<ConditionModel> condition, Map<String, TableModel> tableModels) {
-        ActionResult<String> result = new ActionResult<>();
+        ActionResult<String> result = ActionResult.forSuccess();
         String fileName = mf.getOriginalFilename().toLowerCase();
         String suffix = FileUtil.getFileSuffixName(fileName);
         if (!".java".contains(suffix.toLowerCase())) {
@@ -88,7 +92,7 @@ public class VerifyUtil {
                     if (StringUtil.isNotBlank(c.getPattern())) {
                         im.add("import javax.validation.constraints.Pattern;");
                         PatternConstants.Pattern pattern = PatternConstants.Pattern.getPatternByKey(c.getPattern());
-                        sb.append(LabelConstants.FOUR_SPACES).append("@Pattern(regexp = \"").append(null != pattern ? pattern.getPattern() : c.getPattern()).append("\", message = \"数值必须是").append(null != pattern ? pattern.getContent() : c.getPattern()).append("\"")
+                        sb.append(LabelConstants.FOUR_SPACES).append("@Pattern(regexp = \"").append(null != pattern ? pattern.getPattern() : c.getPattern()).append("\", message = \"数值必须是").append(null != pattern ? pattern.getDescription() : c.getPattern()).append("\"")
                                 .append(")").append(LabelConstants.RETURN_NEW_LINE);
                     }
                     if (StringUtil.isNotBlank(c.getConstraint())) {
@@ -121,7 +125,7 @@ public class VerifyUtil {
     }
 
     public static ActionResult<String> FrontendVerify(List<ConditionModel> condition, Map<String, TableModel> tableModels) {
-        ActionResult<String> result = new ActionResult<>();
+        ActionResult<String> result = ActionResult.forSuccess();
         try {
             String fileName = "test.js";
             File targetFile = new File(properties.getSupport().getUploadPath().get("VerifyFilePath"));

@@ -1,7 +1,7 @@
 package com.qi.backstage.management.inf;
 
 import com.qi.backstage.management.model.dto.SystemDto;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.rpc.result.RpcResult;
 
 /**
  * Class SystemService
@@ -11,5 +11,5 @@ import com.sfsctech.rpc.result.ActionResult;
  */
 public interface SystemService {
 
-    ActionResult<SystemDto> getByCode(String code);
+    RpcResult<SystemDto> getByCode(String code);
 }

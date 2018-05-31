@@ -2,21 +2,22 @@ package com.qi.sso.website.controller;
 
 import com.qi.sso.website.helper.SSOHelper;
 import com.qi.sso.website.rpc.consumer.SSOService;
-import com.sfsctech.authorize.base.properties.SSOProperties;
-import com.sfsctech.authorize.base.util.JwtCookieUtil;
-import com.sfsctech.base.exception.VerifyException;
-import com.sfsctech.base.jwt.JwtToken;
-import com.sfsctech.base.result.ValidatorResult;
-import com.sfsctech.base.session.SessionHolder;
-import com.sfsctech.base.session.SessionInfo;
-import com.sfsctech.base.session.UserAuthData;
-import com.sfsctech.common.security.EncrypterTool;
-import com.sfsctech.common.util.JsonUtil;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.constants.I18NConstants;
-import com.sfsctech.constants.SSOConstants;
-import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.rpc.util.ValidatorUtil;
+import com.sfsctech.core.auth.sso.constants.SSOConstants;
+import com.sfsctech.core.auth.sso.properties.SSOProperties;
+import com.sfsctech.core.auth.sso.util.JwtCookieUtil;
+import com.sfsctech.core.base.domain.result.ValidatorResult;
+import com.sfsctech.core.base.json.FastJson;
+import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.base.session.SessionHolder;
+import com.sfsctech.core.base.session.SessionInfo;
+import com.sfsctech.core.base.session.UserAuthData;
+import com.sfsctech.core.exception.enums.VerifyExceptionTipsEnum;
+import com.sfsctech.core.exception.ex.VerifyException;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.spring.constants.I18NConstants;
+import com.sfsctech.core.spring.util.ValidatorUtil;
+import com.sfsctech.support.common.security.EncrypterTool;
+import com.sfsctech.support.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class SSOController {
         helper.init(request, response);
         String account = request.getParameter(SSOConstants.LOGIN_ACCOUNT);
         String password = request.getParameter("password");
-        ActionResult<String> result = new ActionResult<>();
+        ActionResult<String> result = ActionResult.forDefault();
         // 用户名或密码为空
         if (StringUtil.isBlank(account) || StringUtil.isBlank(password)) {
             result.setSuccess(false);
@@ -71,12 +72,12 @@ public class SSOController {
         ValidatorResult valid = ValidatorUtil.validate(authData);
         if (valid.hasErrors()) {
             logger.error("数据校验异常：" + valid.getMessages());
-            throw new VerifyException(I18NConstants.Tips.ExceptionValidator, valid);
+            throw new VerifyException(VerifyExceptionTipsEnum.ParameterWrong, valid);
         }
         authData.setSessionID(request.getSession().getId());
         // 验证登录信息，返回用户对象
         ActionResult<JwtToken> jwtResult = service.login(authData);
-        logger.info("用户：" + authData.getAccount() + "登录结果:" + JsonUtil.toJSONString(jwtResult));
+        logger.info("用户：" + authData.getAccount() + "登录结果:" + FastJson.toJSONString(jwtResult));
         // 登录失败
         if (!jwtResult.isSuccess()) {
             result.setSuccess(false);

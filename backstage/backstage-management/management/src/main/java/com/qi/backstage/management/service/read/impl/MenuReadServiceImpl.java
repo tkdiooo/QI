@@ -6,7 +6,7 @@ import com.qi.backstage.management.mapper.BaseMenuMapper;
 import com.qi.backstage.management.model.domain.BaseMenu;
 import com.qi.backstage.management.model.domain.BaseMenuExample;
 import com.qi.backstage.management.model.dto.MenuDto;
-import com.sfsctech.common.util.StringUtil;
+import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

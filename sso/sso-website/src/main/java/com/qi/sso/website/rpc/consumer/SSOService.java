@@ -1,11 +1,11 @@
 package com.qi.sso.website.rpc.consumer;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.sfsctech.authorize.base.inf.LoginService;
-import com.sfsctech.authorize.base.inf.VerifyService;
-import com.sfsctech.base.jwt.JwtToken;
-import com.sfsctech.base.session.UserAuthData;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.auth.sso.inf.LoginService;
+import com.sfsctech.core.auth.sso.inf.VerifyService;
+import com.sfsctech.core.base.jwt.JwtToken;
+import com.sfsctech.core.base.session.UserAuthData;
+import com.sfsctech.core.rpc.result.ActionResult;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 

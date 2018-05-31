@@ -1,7 +1,7 @@
 package com.qi.bootstrap.constants;
 
-import com.sfsctech.constants.StatusConstants;
-import com.sfsctech.constants.inf.IEnum;
+import com.sfsctech.core.base.constants.StatusConstants;
+import com.sfsctech.core.base.enums.BaseEnum;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ public class BootstrapConstants {
      * @author 张麒 2016年3月28日
      * @version Description：状态枚举
      */
-    public enum StatusColumns implements IEnum<Integer, String> {
+    public enum StatusColumns implements BaseEnum<Integer, String> {
 
         Danger(0, "<span class='label label-danger'>" + StatusConstants.Status.getValueByKey(0) + "</span>"),
 
@@ -47,25 +47,25 @@ public class BootstrapConstants {
         }
 
         @Override
-        public String getContent() {
+        public String getDescription() {
             return value;
         }
 
         public static String getValueByKey(Integer key) {
-            return IEnum.findValue(values(), key);
+            return BaseEnum.findValue(values(), key);
         }
 
         public static Integer getKeyByValue(String value) {
-            return IEnum.findKey(values(), value);
+            return BaseEnum.findKey(values(), value);
         }
 
-        private static List<IEnum<Integer, String>> options = new ArrayList<>(Arrays.asList(values()));
+        private static List<BaseEnum<Integer, String>> options = new ArrayList<>(Arrays.asList(values()));
 
-        public static List<IEnum<Integer, String>> getOptions() {
+        public static List<BaseEnum<Integer, String>> getOptions() {
             return options;
         }
 
-        private static Map<Integer, String> columns = options.stream().collect(Collectors.toMap(IEnum::getCode, IEnum::getContent));
+        private static Map<Integer, String> columns = options.stream().collect(Collectors.toMap(BaseEnum::getCode, BaseEnum::getDescription));
 
         public static Map<Integer, String> getColumns() {
             return columns;

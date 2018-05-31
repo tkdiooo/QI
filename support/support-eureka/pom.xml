@@ -30,7 +30,7 @@
         <!-- common-logback support -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-logback</artifactId>
+            <artifactId>common-core-logger</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
     </dependencies>

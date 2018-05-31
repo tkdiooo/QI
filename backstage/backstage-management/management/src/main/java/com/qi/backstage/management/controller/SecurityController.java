@@ -9,17 +9,17 @@ import com.qi.backstage.management.service.read.DatasourceReadService;
 import com.qi.backstage.management.service.write.DatasourceWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.util.BootstrapUtil;
-import com.sfsctech.base.model.PagingInfo;
-import com.sfsctech.common.util.FileUtil;
-import com.sfsctech.common.util.MapUtil;
-import com.sfsctech.constants.JDBCConstants;
-import com.sfsctech.constants.PatternConstants;
-import com.sfsctech.constants.UIConstants;
-import com.sfsctech.database.jdbc.JdbcService;
-import com.sfsctech.database.model.DBConfigModel;
-import com.sfsctech.database.model.TableModel;
-import com.sfsctech.rpc.result.ActionResult;
-import com.sfsctech.spring.properties.WebsiteProperties;
+import com.sfsctech.core.base.constants.PatternConstants;
+import com.sfsctech.core.base.domain.model.PagingInfo;
+import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.constants.UIConstants;
+import com.sfsctech.core.web.properties.WebsiteProperties;
+import com.sfsctech.data.jdbc.JdbcService;
+import com.sfsctech.data.jdbc.constants.JDBCConstants;
+import com.sfsctech.data.jdbc.model.DBConfigModel;
+import com.sfsctech.data.jdbc.model.TableModel;
+import com.sfsctech.support.common.util.FileUtil;
+import com.sfsctech.support.common.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -68,12 +68,12 @@ public class SecurityController {
     @ResponseBody
     @PostMapping("query")
     public ActionResult<PagingInfo<BaseDatasource>> getData(@RequestBody PagingInfo<BaseDatasource> pagingInfo) {
-        return new ActionResult<>(readService.findByPage(pagingInfo));
+        return ActionResult.forSuccess(readService.findByPage(pagingInfo));
     }
 
     @GetMapping("add")
     public String add(ModelMap model) {
-        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getContent());
+        model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getDescription());
         List<Map<String, Object>> options = BootstrapUtil.matchOptions("DATABASE_TYPE", JDBCConstants.Driver.MySQL, JDBCConstants.Driver.Oracle);
         model.put("defaultSel", options.get(0));
         model.put("options", options);
@@ -82,7 +82,7 @@ public class SecurityController {
 
     @GetMapping("edit")
     public String edit(ModelMap model, BaseDatasource datasource) {
-        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getContent());
+        model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getDescription());
         List<Map<String, Object>> options = BootstrapUtil.matchOptions("DATABASE_TYPE", JDBCConstants.Driver.MySQL, JDBCConstants.Driver.Oracle);
         datasource = readService.get(datasource.getId());
         model.put("model", datasource);
@@ -100,7 +100,7 @@ public class SecurityController {
     @PostMapping("save")
     public ActionResult<BaseDatasource> save(BaseDatasource datasource) {
         writeService.save(datasource);
-        return new ActionResult<>(datasource);
+        return ActionResult.forSuccess(datasource);
     }
 
     @GetMapping("verify")
@@ -113,9 +113,9 @@ public class SecurityController {
 
     @ResponseBody
     @PostMapping("loadTables")
-    public ActionResult<String> loadTables(BaseDatasource datasource, String database) {
+    public ActionResult<List<String>> loadTables(BaseDatasource datasource, String database) {
         datasource = readService.get(datasource.getId());
-        return new ActionResult<>(JdbcService.showTables(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword())));
+        return ActionResult.forSuccess(JdbcService.showTables(new DBConfigModel(datasource.getType(), datasource.getServerip(), datasource.getPort(), database, datasource.getUsername(), datasource.getPassword())));
     }
 
     @GetMapping("descTable")

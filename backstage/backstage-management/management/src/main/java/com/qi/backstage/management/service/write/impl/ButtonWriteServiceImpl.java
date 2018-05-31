@@ -4,9 +4,9 @@ import com.qi.backstage.management.mapper.BaseButtonMapper;
 import com.qi.backstage.management.model.domain.BaseButton;
 import com.qi.backstage.management.model.domain.BaseButtonExample;
 import com.qi.backstage.management.service.write.ButtonWriteService;
-import com.sfsctech.common.util.StringUtil;
-import com.sfsctech.common.uuid.UUIDUtil;
-import com.sfsctech.constants.StatusConstants;
+import com.sfsctech.core.base.constants.StatusConstants;
+import com.sfsctech.support.common.util.StringUtil;
+import com.sfsctech.support.common.util.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

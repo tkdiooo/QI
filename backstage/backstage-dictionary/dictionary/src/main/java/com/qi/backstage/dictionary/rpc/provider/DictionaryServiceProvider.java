@@ -5,14 +5,11 @@ import com.qi.backstage.dictionary.inf.DictionaryService;
 import com.qi.backstage.dictionary.model.domain.BaseDictionary;
 import com.qi.backstage.dictionary.model.dto.DictionaryDto;
 import com.qi.backstage.dictionary.service.read.DictionaryReadService;
-import com.sfsctech.common.util.BeanUtil;
-import com.sfsctech.common.util.JsonUtil;
-import com.sfsctech.common.util.ListUtil;
-import com.sfsctech.common.util.ThrowableUtil;
-import com.sfsctech.constants.I18NConstants;
-import com.sfsctech.constants.LabelConstants;
-import com.sfsctech.constants.RpcConstants;
-import com.sfsctech.rpc.result.ActionResult;
+import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.rpc.result.RpcResult;
+import com.sfsctech.support.common.util.BeanUtil;
+import com.sfsctech.support.common.util.ListUtil;
+import com.sfsctech.support.common.util.ThrowableUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +31,8 @@ public class DictionaryServiceProvider implements DictionaryService {
     private DictionaryReadService readService;
 
     @Override
-    public ActionResult<DictionaryDto> findChildByNumber(String number) {
-        ActionResult<DictionaryDto> result = new ActionResult<>();
+    public RpcResult<List<DictionaryDto>> findChildByNumber(String number) {
+        RpcResult<List<DictionaryDto>> result = new RpcResult<>();
         try {
             BaseDictionary model = new BaseDictionary();
             model.setParent(number);
@@ -43,17 +40,15 @@ public class DictionaryServiceProvider implements DictionaryService {
             if (ListUtil.isEmpty(list)) {
                 result.setSuccess(false);
                 result.setStatus(RpcConstants.Status.Failure);
-                result.setMessage(I18NConstants.Tips.EmptyCollection, "parent：" + number + "获取");
-                logger.warn(JsonUtil.toJSONString(result.getStatus()));
-                logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+                result.addMessages("parent：" + number + "获取集合为空");
+                logger.warn(result.toString());
             }
-            result.setDataSet(BeanUtil.copyListForCglib(list, DictionaryDto.class));
+            result.setResult(BeanUtil.copyListForCglib(list, DictionaryDto.class));
         } catch (Exception e) {
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.ServerError);
-            result.setMessage(ThrowableUtil.getRootMessage(e));
-            logger.warn(JsonUtil.toJSONString(result.getStatus()));
-            logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
+            result.addMessages(ThrowableUtil.getRootMessage(e));
+            logger.warn(result.toString());
         }
         return result;
     }
