@@ -61,7 +61,7 @@ public class SSOController {
         helper.init(request, response);
         String account = request.getParameter(SSOConstants.LOGIN_ACCOUNT);
         String password = request.getParameter("password");
-        ActionResult<String> result = ActionResult.forDefault();
+        ActionResult<String> result = ActionResult.forSuccess();
         // 用户名或密码为空
         if (StringUtil.isBlank(account) || StringUtil.isBlank(password)) {
             result.setSuccess(false);

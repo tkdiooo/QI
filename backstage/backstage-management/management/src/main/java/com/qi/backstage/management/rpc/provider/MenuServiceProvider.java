@@ -39,7 +39,7 @@ public class MenuServiceProvider implements MenuService {
             if (ListUtil.isEmpty(list)) {
                 result.setSuccess(false);
                 result.setStatus(RpcConstants.Status.Failure);
-                result.addMessages("系统编号：" + sysCode + "获取集合为空");
+                result.setMessage("系统编号：" + sysCode + "获取集合为空");
                 logger.warn(FastJson.toJSONString(result.getStatus()));
                 logger.warn(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             }
@@ -47,7 +47,7 @@ public class MenuServiceProvider implements MenuService {
         } catch (Exception e) {
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.ServerError);
-            result.addMessages(ThrowableUtil.getRootMessage(e));
+            result.setMessage(ThrowableUtil.getRootMessage(e));
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
         }
         return result;

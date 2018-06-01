@@ -41,7 +41,7 @@ public class VerifyServiceImpl implements VerifyService {
 
     @Override
     public ActionResult<JwtToken> simpleVerify(JwtToken jt) {
-        ActionResult<JwtToken> result = ActionResult.forDefault(jt);
+        ActionResult<JwtToken> result = ActionResult.forSuccess(jt);
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
@@ -63,7 +63,7 @@ public class VerifyServiceImpl implements VerifyService {
         // 从缓存中获取token信息
         String token = String.valueOf(factory.getCacheClient().get(salt_CacheKey + LabelConstants.POUND + salt));
         if (StringUtil.isBlank(token)) {
-            result.addMessages("用户校验失败 :用户登录超时，已无法找到缓存中的token信息！");
+            result.setMessage("用户校验失败 :用户登录超时，已无法找到缓存中的token信息！");
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);
@@ -71,7 +71,7 @@ public class VerifyServiceImpl implements VerifyService {
         }
 
         if (!token.equals(jt.getJwt())) {
-            result.addMessages("用户校验失败 :用户token信息不匹配！");
+            result.setMessage("用户校验失败 :用户token信息不匹配！");
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);
@@ -97,7 +97,7 @@ public class VerifyServiceImpl implements VerifyService {
 
     @Override
     public ActionResult<JwtToken> complexVerify(JwtToken jt) {
-        ActionResult<JwtToken> result = ActionResult.forDefault(jt);
+        ActionResult<JwtToken> result = ActionResult.forSuccess(jt);
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
@@ -119,7 +119,7 @@ public class VerifyServiceImpl implements VerifyService {
         // 解密Jwt
         String token = EncrypterTool.decrypt(jt.getJwt(), salt);
         if (StringUtil.isBlank(token)) {
-            result.addMessages("用户校验失败 :JwtToken无法解密[" + jt.getJwt() + "]。");
+            result.setMessage("用户校验失败 :JwtToken无法解密[" + jt.getJwt() + "]。");
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA));
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);
@@ -140,7 +140,7 @@ public class VerifyServiceImpl implements VerifyService {
                 this.refreshJwt(claims, authData, salt_CacheKey, jt);
             }
         } catch (Exception e) {
-            result.addMessages(ThrowableUtil.getRootMessage(e));
+            result.setMessage(ThrowableUtil.getRootMessage(e));
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA), e);
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.Failure);

@@ -1,8 +1,14 @@
 package com.qi.backstage.dictionary;
 
+import com.sfsctech.core.cache.config.CacheConfig;
+import com.sfsctech.core.logger.config.LogbackConfig;
+import com.sfsctech.core.security.config.SecurityConfig;
+import com.sfsctech.core.web.config.WebConfig;
+import com.sfsctech.data.mybatis.config.MyBatisConfig;
+import com.sfsctech.dubbo.sso.config.DubboSSOConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 
 /**
  * Class WebRunner
@@ -11,7 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @version Description:
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.qi.backstage.dictionary", "com.sfsctech.configurer"})
+@Import({WebConfig.class, SecurityConfig.class, MyBatisConfig.class, CacheConfig.class, DubboSSOConfig.class, LogbackConfig.class})
 public class Runner {
 
     public static void main(String[] args) {

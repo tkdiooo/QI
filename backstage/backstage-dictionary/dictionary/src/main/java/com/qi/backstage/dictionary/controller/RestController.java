@@ -2,6 +2,7 @@ package com.qi.backstage.dictionary.controller;
 
 import com.qi.backstage.dictionary.inf.DictionaryService;
 import com.qi.backstage.dictionary.model.dto.DictionaryDto;
+import com.qi.backstage.dictionary.rpc.consumer.DictionaryServiceConsumer;
 import com.sfsctech.core.rpc.result.ActionResult;
 import com.sfsctech.core.rpc.result.RpcResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,10 @@ import java.util.List;
 public class RestController {
 
     @Autowired
-    private DictionaryService readService;
+    private DictionaryServiceConsumer readService;
 
     @GetMapping("/rest/{number}")
     public ActionResult<List<DictionaryDto>> rest(@PathVariable(value = "number") String number) {
-        RpcResult<List<DictionaryDto>> result = readService.findChildByNumber(number);
-        return ActionResult.forSuccess(result.getResult());
+        return readService.findChildByNumber(number);
     }
 }

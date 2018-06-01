@@ -34,15 +34,36 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- common-core -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-auth-sso</artifactId>
+            <artifactId>common-core-cache</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sfsctech.framework</groupId>
-            <artifactId>sfsctech-dubbo-starter-consume</artifactId>
-            <version>1.0.0</version>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-dubbo-sso</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-logger</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-security</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-web</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-data-mybatis</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- support-bootstrap support -->
         <dependency>
