@@ -3,8 +3,6 @@ package com.qi.sso.website;
 import com.sfsctech.core.auth.sso.config.SSOConfig;
 import com.sfsctech.dubbo.starter.annotation.EnableDubboConsumeService;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 /**

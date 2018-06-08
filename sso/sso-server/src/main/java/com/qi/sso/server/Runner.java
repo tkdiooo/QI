@@ -1,15 +1,8 @@
 package com.qi.sso.server;
 
 import com.sfsctech.core.auth.sso.config.SSOConfig;
-import com.sfsctech.core.auth.sso.properties.JwtProperties;
-import com.sfsctech.core.auth.sso.properties.SSOProperties;
-import com.sfsctech.dubbo.starter.annotation.EnableDubboConsumeService;
 import com.sfsctech.dubbo.starter.annotation.EnableDubboProviderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -19,7 +12,6 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @EnableDubboProviderService
-@EnableDubboConsumeService
 @Import(SSOConfig.class)
 public class Runner {
 
