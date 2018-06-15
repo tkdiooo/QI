@@ -36,12 +36,12 @@
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-auth-sso</artifactId>
+            <artifactId>common-cloud-sso</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sfsctech.framework</groupId>
-            <artifactId>sfsctech-dubbo-starter-provider</artifactId>
+            <artifactId>sfsctech-cloud-starter-service</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

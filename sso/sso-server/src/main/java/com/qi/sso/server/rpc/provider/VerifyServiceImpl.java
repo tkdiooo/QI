@@ -1,18 +1,17 @@
 package com.qi.sso.server.rpc.provider;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.qi.sso.server.util.VerifyUtil;
-import com.sfsctech.core.auth.sso.inf.VerifyService;
+import com.sfsctech.cloud.sso.inf.VerifyService;
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
-import com.sfsctech.core.rpc.result.ActionResult;
 import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.util.HexUtil;
 import com.sfsctech.support.common.util.ListUtil;
@@ -22,6 +21,7 @@ import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Class VerifyServiceImpl
@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author 张麒 2017/10/12.
  * @version Description:
  */
-@Service(retries = -1)
+@Service
 public class VerifyServiceImpl implements VerifyService {
 
     private final Logger logger = LoggerFactory.getLogger(VerifyServiceImpl.class);
@@ -40,8 +40,8 @@ public class VerifyServiceImpl implements VerifyService {
     private JwtProperties jwtConfig;
 
     @Override
-    public ActionResult<JwtToken> simpleVerify(JwtToken jt) {
-        ActionResult<JwtToken> result = ActionResult.forSuccess(jt);
+    public RpcResult<JwtToken> simpleVerify(JwtToken jt) {
+        RpcResult<JwtToken> result = new RpcResult<>();
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
@@ -92,12 +92,13 @@ public class VerifyServiceImpl implements VerifyService {
 
             this.refreshJwt(claims, authData, salt_CacheKey, jt);
         }
+        result.setResult(jt);
         return result;
     }
 
     @Override
-    public ActionResult<JwtToken> complexVerify(JwtToken jt) {
-        ActionResult<JwtToken> result = ActionResult.forSuccess(jt);
+    public RpcResult<JwtToken> complexVerify(JwtToken jt) {
+        RpcResult<JwtToken> result = new RpcResult<>();
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
@@ -139,6 +140,7 @@ public class VerifyServiceImpl implements VerifyService {
             if (jwtConfig.getExpiration() > 0 && (jwtConfig.getExpiration() / 1000 / 2) <= loginedTimeStamp) {
                 this.refreshJwt(claims, authData, salt_CacheKey, jt);
             }
+            result.setResult(jt);
         } catch (Exception e) {
             result.setMessage(ThrowableUtil.getRootMessage(e));
             logger.error(ListUtil.toString(result.getMessages(), LabelConstants.COMMA), e);

@@ -1,23 +1,23 @@
 package com.qi.sso.server.rpc.provider;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import com.sfsctech.cloud.sso.inf.LoginService;
 import com.sfsctech.core.auth.sso.constants.SSOConstants;
-import com.sfsctech.core.auth.sso.inf.LoginService;
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
-import com.sfsctech.core.rpc.result.ActionResult;
 import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.util.HexUtil;
 import com.sfsctech.support.common.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ import java.util.Map;
  * @author 张麒 2017/10/8.
  * @version Description:
  */
-@Service(retries = -1)
+@Service
 public class LoginServiceImpl implements LoginService {
 
     private final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
@@ -40,8 +40,8 @@ public class LoginServiceImpl implements LoginService {
     private JwtProperties jwtConfig;
 
     @Override
-    public ActionResult<JwtToken> login(UserAuthData authData) {
-        ActionResult<JwtToken> result = ActionResult.forSuccess();
+    public RpcResult<JwtToken> login(UserAuthData authData) {
+        RpcResult<JwtToken> result = new RpcResult<>();
         JwtToken jwtToken = new JwtToken();
         // TODO 登录验证
 
