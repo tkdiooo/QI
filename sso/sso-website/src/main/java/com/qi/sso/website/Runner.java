@@ -1,7 +1,7 @@
 package com.qi.sso.website;
 
+import com.sfsctech.cloud.net.starter.EnableCloudController;
 import com.sfsctech.core.auth.sso.config.SSOConfig;
-import com.sfsctech.dubbo.starter.annotation.EnableDubboConsumeService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Import;
 
@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Import;
  * @author 张麒 2017/7/25.
  * @version Description:
  */
-@EnableDubboConsumeService
 @Import(SSOConfig.class)
+@EnableCloudController(packages = "com.sfsctech.cloud.sso.inf")
 public class Runner {
 
     public static void main(String[] args) {

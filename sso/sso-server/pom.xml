@@ -13,20 +13,10 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- spring-cloud-starter-eureka -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-        </dependency>
         <!-- spring-cloud-config-client -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-client</artifactId>
-        </dependency>
-        <!-- Spring boot -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!-- Test -->
         <dependency>
@@ -38,11 +28,6 @@
             <groupId>com.sfsctech.common</groupId>
             <artifactId>common-cloud-sso</artifactId>
             <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.framework</groupId>
-            <artifactId>sfsctech-cloud-starter-service</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

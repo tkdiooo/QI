@@ -1,11 +1,12 @@
 package com.qi.sso.website.rpc.consumer;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.sfsctech.core.auth.sso.inf.LoginService;
-import com.sfsctech.core.auth.sso.inf.VerifyService;
+import com.sfsctech.cloud.sso.inf.LoginService;
+import com.sfsctech.cloud.sso.inf.VerifyService;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import com.sfsctech.core.base.session.UserAuthData;
-import com.sfsctech.core.rpc.result.ActionResult;
+import com.sfsctech.core.web.domain.result.ActionResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +19,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class SSOService {
 
-    @Reference
+    @Autowired
     private LoginService loginService;
 
-    @Reference
+    @Autowired
     private VerifyService verifyService;
 
     public ActionResult<JwtToken> login(final UserAuthData authData) {
-        return loginService.login(authData);
+        RpcResult<JwtToken> result = loginService.login(authData);
+        return ActionResult.forSuccess(result.getResult());
     }
 
     public ActionResult<JwtToken> check(final JwtToken jt) {
-        return verifyService.complexVerify(jt);
+        RpcResult<JwtToken> result = verifyService.complexVerify(jt);
+        return ActionResult.forSuccess(result.getResult());
     }
 
     @Async

@@ -6,8 +6,8 @@ import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.auth.sso.util.JwtCookieUtil;
 import com.sfsctech.core.base.constants.LabelConstants;
 import com.sfsctech.core.base.jwt.JwtToken;
-import com.sfsctech.core.rpc.result.ActionResult;
-import com.sfsctech.core.web.cookie.CookieHelper;
+import com.sfsctech.core.web.domain.result.ActionResult;
+import com.sfsctech.core.web.tools.cookie.CookieHelper;
 import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.security.rsa.KeyPairModel;
 import com.sfsctech.support.common.security.rsa.RSA;
@@ -159,7 +159,7 @@ public class SSOHelper {
         model.put("Exponent", Exponent);
         // form_url处理
         String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
-        if (StringUtil.isBlank(form_url)) {
+        if (StringUtil.isBlank(form_url) && StringUtil.isNotBlank(properties.getHomePage())) {
             form_url = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, properties.getHomePage());
         }
         helper.setCookie(SSOConstants.PARAM_FROM_URL, form_url, NumberUtil.INTEGER_MINUS_ONE);
