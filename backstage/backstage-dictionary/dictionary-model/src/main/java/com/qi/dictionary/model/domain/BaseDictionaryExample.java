@@ -1,4 +1,4 @@
-package com.qi.backstage.dictionary.model.domain;
+package com.qi.dictionary.model.domain;
 
 import java.util.ArrayList;
 import java.util.List;

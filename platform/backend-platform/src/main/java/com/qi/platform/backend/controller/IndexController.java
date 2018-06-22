@@ -6,7 +6,7 @@ import com.qi.platform.backend.rpc.consumer.ManageServiceConsumer;
 import com.sfsctech.core.auth.sso.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;
 import com.sfsctech.core.base.session.SessionHolder;
-import com.sfsctech.core.web.cookie.CookieHelper;
+import com.sfsctech.core.web.tools.cookie.CookieHelper;
 import com.sfsctech.support.common.security.EncrypterTool;
 import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;

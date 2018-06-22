@@ -1,8 +1,7 @@
-package com.qi.platform.backend;
+package com.qi.dictionary.server;
 
-import com.sfsctech.dubbo.sso.config.DubboSSOConfig;
+import com.sfsctech.cloud.client.starter.EnableCloudService;
 import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.Import;
 
 /**
  * Class WebRunner
@@ -10,7 +9,7 @@ import org.springframework.context.annotation.Import;
  * @author 张麒 2017/7/25.
  * @version Description:
  */
-@Import(DubboSSOConfig.class)
+@EnableCloudService
 public class Runner {
 
     public static void main(String[] args) {

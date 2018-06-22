@@ -24,6 +24,7 @@
         <module>dictionary-model</module>
         <module>dictionary-dao</module>
         <module>dictionary-util</module>
+        <module>dictionary-server</module>
     </modules>
 
 </project>

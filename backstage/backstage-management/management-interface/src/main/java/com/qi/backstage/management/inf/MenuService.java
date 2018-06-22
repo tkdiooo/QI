@@ -1,7 +1,7 @@
 package com.qi.backstage.management.inf;
 
 import com.qi.backstage.management.model.dto.MenuDto;
-import com.sfsctech.core.rpc.result.RpcResult;
+import com.sfsctech.core.base.domain.result.RpcResult;
 
 import java.util.List;
 

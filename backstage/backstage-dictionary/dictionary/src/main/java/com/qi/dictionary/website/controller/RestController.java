@@ -1,10 +1,8 @@
-package com.qi.backstage.dictionary.controller;
+package com.qi.dictionary.website.controller;
 
-import com.qi.backstage.dictionary.inf.DictionaryService;
-import com.qi.backstage.dictionary.model.dto.DictionaryDto;
-import com.qi.backstage.dictionary.rpc.consumer.DictionaryServiceConsumer;
-import com.sfsctech.core.rpc.result.ActionResult;
-import com.sfsctech.core.rpc.result.RpcResult;
+import com.qi.dictionary.model.dto.DictionaryDto;
+import com.qi.dictionary.website.rpc.consumer.DictionaryServiceConsumer;
+import com.sfsctech.core.web.domain.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +23,7 @@ public class RestController {
 
     @GetMapping("/rest/{number}")
     public ActionResult<List<DictionaryDto>> rest(@PathVariable(value = "number") String number) {
-        return readService.findChildByNumber(number);
+//        readService.findChildByNumber(number);
+        return null;
     }
 }

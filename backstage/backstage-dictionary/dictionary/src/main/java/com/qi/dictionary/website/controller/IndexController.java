@@ -1,20 +1,18 @@
-package com.qi.backstage.dictionary.controller;
+package com.qi.dictionary.website.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qi.backstage.dictionary.common.constants.CommonConstants;
-import com.qi.backstage.dictionary.model.domain.BaseDictionary;
-import com.qi.backstage.dictionary.service.read.DictionaryReadService;
-import com.qi.backstage.dictionary.service.transactional.DictionaryTransactionalService;
-import com.qi.backstage.dictionary.service.write.DictionaryWriteService;
 import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
+import com.qi.dictionary.website.constants.CommonConstants;
+import com.qi.dictionary.model.domain.BaseDictionary;
+import com.qi.dictionary.website.rpc.consumer.DictionaryServiceConsumer;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
-import com.sfsctech.core.rpc.result.ActionResult;
 import com.sfsctech.core.security.annotation.Verify;
 import com.sfsctech.core.web.constants.UIConstants;
+import com.sfsctech.core.web.domain.result.ActionResult;
 import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,13 +34,7 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private DictionaryWriteService writeService;
-
-    @Autowired
-    private DictionaryReadService readService;
-
-    @Autowired
-    private DictionaryTransactionalService transactionalService;
+    private DictionaryServiceConsumer serviceConsumer;
 
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
@@ -69,7 +61,7 @@ public class IndexController {
                 list = new ArrayList<>();
                 list.add(breadcrumb);
             } else {
-                BaseDictionary dict = readService.getByNumber(dictionary.getParent());
+                BaseDictionary dict = serviceConsumer.getByNumber(dictionary.getParent());
                 Breadcrumb breadcrumb = new Breadcrumb(dict.getContent(), CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", dict.getNumber());
                 list = factory.getList(dict.getParent());
@@ -78,7 +70,7 @@ public class IndexController {
             factory.getCacheClient().put(dictionary.getParent(), list);
         }
         model.put("parent", dictionary.getParent());
-        model.put("data", readService.findAll(dictionary));
+        model.put("data", serviceConsumer.findChildByNumber(dictionary.getParent()));
         model.put("options", BootstrapUtil.matchOptions("dictionary_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
         model.put("breadcrumbs", list);
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
@@ -100,7 +92,7 @@ public class IndexController {
     @GetMapping("edit")
     public String edit(ModelMap model, String number) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getDescription());
-        BaseDictionary dictionary = readService.getByNumber(number);
+        BaseDictionary dictionary = serviceConsumer.getByNumber(number);
         // 不是跟节点的情况下，获取父节点编号
         if (!CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
             model.put("parent_number", dictionary.getParent());
@@ -134,9 +126,9 @@ public class IndexController {
     }
 
     @GetMapping("ordering")
-    public String ordering(ModelMap model, BaseDictionary dictionary) {
+    public String ordering(ModelMap model, String parent) {
         // 获取所有当前节点数据
-        model.put("data", readService.findAll(dictionary));
+        model.put("data", serviceConsumer.findChildByNumber(parent));
         return "dictionary/sort";
     }
 
@@ -150,7 +142,7 @@ public class IndexController {
     @ResponseBody
     @PostMapping("load")
     public ActionResult<BaseDictionary> load(String number) {
-        BaseDictionary dictionary = readService.getByNumber(number);
+        BaseDictionary dictionary = serviceConsumer.getByNumber(number);
         // 不是跟节点的情况下，获取父节点编号
         if (!CommonConstants.ROOT_GUID.equals(dictionary.getParent())) {
             dictionary.setNumber(dictionary.getNumber().substring(dictionary.getNumber().length() - 4));

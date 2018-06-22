@@ -1,4 +1,4 @@
-package com.qi.backstage.dictionary.common.constants;
+package com.qi.dictionary.website.constants;
 
 /**
  * Class CommonConstants

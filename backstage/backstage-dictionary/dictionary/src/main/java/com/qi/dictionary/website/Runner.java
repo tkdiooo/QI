@@ -1,4 +1,4 @@
-package com.qi.backstage.dictionary;
+package com.qi.dictionary.website;
 
 import com.sfsctech.core.cache.config.CacheConfig;
 import com.sfsctech.core.logger.config.LogbackConfig;
