@@ -29,35 +29,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-        <!-- common-core -->
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-cache</artifactId>
+            <artifactId>common-cloud-sso</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-dubbo-sso</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-logger</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-security</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-core-web</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-data-mybatis</artifactId>
+            <artifactId>common-cloud-net</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- support-bootstrap support -->

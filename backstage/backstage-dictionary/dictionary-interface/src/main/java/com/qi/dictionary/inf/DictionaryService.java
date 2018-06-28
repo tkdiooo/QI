@@ -1,7 +1,7 @@
 package com.qi.dictionary.inf;
 
 import com.qi.dictionary.model.dto.DictionaryDto;
-import com.sfsctech.cloud.client.annotation.CloudService;
+import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import org.springframework.web.bind.annotation.RequestMapping;
