@@ -15,14 +15,14 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>management</module>
+        <module>management-dao</module>
         <module>management-interface</module>
         <module>management-model</module>
-        <module>management-dao</module>
+        <module>management-rest</module>
     </modules>
 
     <properties>
-        <backstage.version>1.0.0-SNAPSHOT</backstage.version>
+        <management.version>1.0.0-SNAPSHOT</management.version>
         <dictionary.version>1.0.0-SNAPSHOT</dictionary.version>
     </properties>
 

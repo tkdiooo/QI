@@ -1,7 +1,7 @@
 package com.qi.platform.backend.controller;
 
-import com.qi.backstage.management.model.dto.MenuDto;
-import com.qi.backstage.management.model.dto.SystemDto;
+import com.qi.management.model.dto.MenuDto;
+import com.qi.management.model.dto.SystemDto;
 import com.qi.platform.backend.rpc.consumer.ManageServiceConsumer;
 import com.sfsctech.core.auth.sso.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.properties.SSOProperties;

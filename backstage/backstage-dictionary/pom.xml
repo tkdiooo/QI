@@ -19,12 +19,12 @@
     </properties>
 
     <modules>
-        <module>dictionary</module>
+        <module>dictionary-dao</module>
         <module>dictionary-interface</module>
         <module>dictionary-model</module>
-        <module>dictionary-dao</module>
-        <module>dictionary-util</module>
+        <module>dictionary-rest</module>
         <module>dictionary-server</module>
+        <module>dictionary-util</module>
     </modules>
 
 </project>

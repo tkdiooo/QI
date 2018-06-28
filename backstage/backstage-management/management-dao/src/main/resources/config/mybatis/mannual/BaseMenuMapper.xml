@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qi.backstage.management.mapper.BaseMenuMapper">
-    <resultMap id="ChildResultMap" type="com.qi.backstage.management.model.dto.MenuDto" extends="BaseResultMap">
+    <resultMap id="ChildResultMap" type="com.qi.management.model.dto.MenuDto" extends="BaseResultMap">
         <result column="Domain" jdbcType="VARCHAR" property="domain"/>
         <!-- 一对多 -->
-        <collection property="child" ofType="com.qi.backstage.management.model.dto.MenuDto">
+        <collection property="child" ofType="com.qi.management.model.dto.MenuDto">
             <id column="cID" jdbcType="BIGINT" property="id"/>
             <result column="cGuid" jdbcType="CHAR" property="guid"/>
             <result column="cParent" jdbcType="CHAR" property="parent"/>

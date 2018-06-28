@@ -4,7 +4,10 @@ import com.qi.dictionary.inf.DictionaryService;
 import com.qi.dictionary.model.domain.BaseDictionary;
 import com.qi.dictionary.model.dto.DictionaryDto;
 import com.qi.dictionary.server.service.read.DictionaryReadService;
+import com.qi.dictionary.server.service.transactional.DictionaryTransactionalService;
+import com.qi.dictionary.server.service.write.DictionaryWriteService;
 import com.sfsctech.core.base.constants.RpcConstants;
+import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.support.common.util.BeanUtil;
 import com.sfsctech.support.common.util.ListUtil;
@@ -29,6 +32,12 @@ public class DictionaryServiceProvider implements DictionaryService {
 
     @Autowired
     private DictionaryReadService readService;
+
+    @Autowired
+    private DictionaryWriteService writeService;
+
+    @Autowired
+    private DictionaryTransactionalService transactionalService;
 
     @Override
     public RpcResult<List<DictionaryDto>> findChildByNumber(String parent) {
@@ -63,6 +72,45 @@ public class DictionaryServiceProvider implements DictionaryService {
                 logger.warn(result.toString());
             }
             result.setResult(BeanUtil.copyBeanForCglib(model, DictionaryDto.class));
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setStatus(RpcConstants.Status.ServerError);
+            result.setMessage(ThrowableUtil.getRootMessage(e));
+            logger.warn(result.toString());
+        }
+        return result;
+    }
+
+    @Override
+    public RpcResult<DictionaryDto> save(DictionaryDto dictionary) {
+        RpcResult<DictionaryDto> result = new RpcResult<>();
+        try {
+            writeService.save(dictionary);
+            result.setResult(dictionary);
+        } catch (Exception e) {
+            result.setSuccess(false);
+            result.setStatus(RpcConstants.Status.ServerError);
+            result.setMessage(ThrowableUtil.getRootMessage(e));
+            logger.warn(result.toString());
+        }
+        return result;
+    }
+
+    @Override
+    public void changeStatus(String number, StatusConstants.Status status) {
+        writeService.changeStatus(number, status);
+    }
+
+    @Override
+    public void sort(String sortable) {
+        transactionalService.sort(sortable);
+    }
+
+    @Override
+    public RpcResult numberIsExist(DictionaryDto dictionary) {
+        RpcResult result = new RpcResult();
+        try {
+            result.setSuccess(readService.numberIsExist(dictionary));
         } catch (Exception e) {
             result.setSuccess(false);
             result.setStatus(RpcConstants.Status.ServerError);

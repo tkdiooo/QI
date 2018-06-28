@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.qi.backstage.management</groupId>
             <artifactId>management-model</artifactId>
-            <version>${backstage.version}</version>
+            <version>${management.version}</version>
         </dependency>
     </dependencies>
 
