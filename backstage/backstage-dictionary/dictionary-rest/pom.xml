@@ -51,16 +51,10 @@
             <artifactId>dictionary-interface</artifactId>
             <version>${dictionary.version}</version>
         </dependency>
-        <!-- dictionary-dao support -->
-        <dependency>
-            <groupId>com.qi.backstage.dictionary</groupId>
-            <artifactId>dictionary-dao</artifactId>
-            <version>${dictionary.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
-        <finalName>Dictionary-Rest</finalName>
+        <finalName>Dictionary-Controller</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

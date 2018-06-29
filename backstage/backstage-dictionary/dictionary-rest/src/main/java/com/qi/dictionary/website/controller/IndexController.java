@@ -6,7 +6,7 @@ import com.qi.bootstrap.constants.BootstrapConstants;
 import com.qi.bootstrap.util.BootstrapUtil;
 import com.qi.dictionary.website.constants.CommonConstants;
 import com.qi.dictionary.model.domain.BaseDictionary;
-import com.qi.dictionary.website.rpc.consumer.DictionaryServiceConsumer;
+import com.qi.dictionary.website.rpc.consumer.DictionaryConsumer;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -34,7 +34,7 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private DictionaryServiceConsumer serviceConsumer;
+    private DictionaryConsumer serviceConsumer;
 
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;

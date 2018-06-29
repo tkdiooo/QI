@@ -7,10 +7,8 @@ import com.qi.management.common.constants.CommonConstants;
 import com.qi.management.common.util.BreadcrumbUtil;
 import com.qi.management.model.domain.BaseMenu;
 import com.qi.management.model.domain.BaseSystem;
-import com.qi.management.service.read.MenuReadService;
+import com.qi.management.rpc.consumer.MenuConsumer;
 import com.qi.management.service.read.SystemReadService;
-import com.qi.management.service.transactional.MenuTransactionalService;
-import com.qi.management.service.write.MenuWriteService;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.web.constants.UIConstants;
 import com.sfsctech.core.web.domain.result.ActionResult;
@@ -41,13 +39,7 @@ public class MenuController {
     private SystemReadService systemReadService;
 
     @Autowired
-    private MenuReadService readService;
-
-    @Autowired
-    private MenuWriteService writeService;
-
-    @Autowired
-    private MenuTransactionalService transactionalService;
+    private MenuConsumer menuConsumer;
 
     @GetMapping("index")
     public String index(ModelMap model, BaseMenu menu) {
@@ -59,7 +51,7 @@ public class MenuController {
             // 列表面包屑设置
             String menuGuid = menu.getParent();
             list = BreadcrumbUtil.buildBreadcrumb(() -> {
-                BaseMenu innerMenu = readService.getByGuid(menuGuid);
+                BaseMenu innerMenu = menuConsumer.getByGuid(menuGuid);
                 Breadcrumb breadcrumb = new Breadcrumb(innerMenu.getName() + "菜单", "/menu/index", CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", innerMenu.getGuid());
                 return breadcrumb;
@@ -81,7 +73,7 @@ public class MenuController {
         model.put("header", list.get(list.size() - 1).getText());
         model.put("breadcrumbs", list);
         model.put("parent", menu.getParent());
-        model.put("data", readService.findAll(menu));
+        model.put("data", menuConsumer.findAll(menu));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("small", "菜单列表");
         model.put("options", BootstrapUtil.matchOptions("menu_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
@@ -98,7 +90,7 @@ public class MenuController {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
             defaultSel.put("value", CommonConstants.ROOT_GUID);
         } else {
-            menu = readService.getByGuid(menu.getParent());
+            menu = menuConsumer.getByGuid(menu.getParent());
             defaultSel.put("text", menu.getName());
             defaultSel.put("value", menu.getGuid());
             model.put("guid", menu.getGuid());
@@ -112,14 +104,14 @@ public class MenuController {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getDescription());
         // 获取系统信息
         model.put("system", systemReadService.getByGuid(menu.getSysguid()));
-        menu = readService.getByGuid(menu.getGuid());
+        menu = menuConsumer.getByGuid(menu.getGuid());
         model.put("model", menu);
         Map<String, Object> defaultSel = new HashMap<>();
         if (menu.getParent().equals(CommonConstants.ROOT_GUID)) {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
             defaultSel.put("value", CommonConstants.ROOT_GUID);
         } else {
-            BaseMenu parent = readService.getByGuid(menu.getParent());
+            BaseMenu parent = menuConsumer.getByGuid(menu.getParent());
             defaultSel.put("text", parent.getName());
             defaultSel.put("value", parent.getGuid());
             model.put("guid", menu.getGuid());
@@ -131,41 +123,40 @@ public class MenuController {
     @ResponseBody
     @PostMapping("save")
     public ActionResult<BaseMenu> save(BaseMenu menu) {
-        writeService.save(menu);
-        return ActionResult.forSuccess(menu);
+        return ActionResult.forSuccess(menuConsumer.save(menu));
     }
 
     @ResponseBody
     @PostMapping("disable")
     public ActionResult<BaseMenu> disable(String guid) {
-        writeService.changeStatus(guid, StatusConstants.Status.Disable);
+        menuConsumer.changeStatus(guid, StatusConstants.Status.Disable);
         return ActionResult.forSuccess();
     }
 
     @ResponseBody
     @PostMapping("valid")
     public ActionResult<BaseMenu> valid(String guid) {
-        writeService.changeStatus(guid, StatusConstants.Status.Valid);
+        menuConsumer.changeStatus(guid, StatusConstants.Status.Valid);
         return ActionResult.forSuccess();
     }
 
     @GetMapping("ordering")
     public String ordering(ModelMap model, BaseMenu menu) {
         // 获取所有当前节点数据
-        model.put("data", readService.findAll(menu));
+        model.put("data", menuConsumer.findAll(menu));
         return "common/sort";
     }
 
     @ResponseBody
     @PostMapping("sort")
     public ActionResult<String> sort(String sortable) {
-        transactionalService.sort(sortable);
+        menuConsumer.sort(sortable);
         return ActionResult.forSuccess();
     }
 
     @ResponseBody
     @PostMapping("load")
     public ActionResult<BaseMenu> load(String guid) {
-        return ActionResult.forSuccess(readService.getByGuid(guid));
+        return ActionResult.forSuccess(menuConsumer.getByGuid(guid));
     }
 }

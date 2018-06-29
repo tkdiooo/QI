@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>management-rest</artifactId>
+    <artifactId>management-server</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -24,32 +24,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Thymeleaf -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cloud-sso</artifactId>
+            <artifactId>common-cloud-client</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cloud-net</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- common-data-jdbc support-->
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-data-jdbc</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <!-- support-bootstrap support -->
-        <dependency>
-            <groupId>com.qi.support</groupId>
-            <artifactId>support-bootstrap</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>com.sfsctech.framework</groupId>
+            <artifactId>sfsctech-mybatis-starter</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <!-- management-interface support -->
         <dependency>
@@ -57,22 +40,22 @@
             <artifactId>management-interface</artifactId>
             <version>${management.version}</version>
         </dependency>
-        <!-- dictionary-util support -->
+        <!-- management-dao support -->
         <dependency>
-            <groupId>com.qi.backstage.dictionary</groupId>
-            <artifactId>dictionary-util</artifactId>
-            <version>${dictionary.version}</version>
+            <groupId>com.qi.backstage.management</groupId>
+            <artifactId>management-dao</artifactId>
+            <version>${management.version}</version>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>Backstage-Management</finalName>
+        <finalName>Management-Server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.qi.backstage.management.Runner</mainClass>
+                    <mainClass>com.qi.management.server.Runner</mainClass>
                 </configuration>
                 <executions>
                     <execution>

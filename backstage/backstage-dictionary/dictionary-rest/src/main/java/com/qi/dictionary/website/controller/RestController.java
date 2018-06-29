@@ -1,7 +1,7 @@
 package com.qi.dictionary.website.controller;
 
 import com.qi.dictionary.model.dto.DictionaryDto;
-import com.qi.dictionary.website.rpc.consumer.DictionaryServiceConsumer;
+import com.qi.dictionary.website.rpc.consumer.DictionaryConsumer;
 import com.sfsctech.core.web.domain.result.ActionResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import java.util.List;
 public class RestController {
 
     @Autowired
-    private DictionaryServiceConsumer readService;
+    private DictionaryConsumer readService;
 
     @GetMapping("/rest/{number}")
     public ActionResult<List<DictionaryDto>> rest(@PathVariable(value = "number") String number) {

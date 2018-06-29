@@ -1,6 +1,3 @@
-spring:
-  application:
-    name: sso-server
 #server setting
 server:
   port: 8102
@@ -22,6 +19,10 @@ server:
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
+#spring setting
+spring:
+  application:
+    name: sso-server
 eureka:
   client:
     serviceUrl:

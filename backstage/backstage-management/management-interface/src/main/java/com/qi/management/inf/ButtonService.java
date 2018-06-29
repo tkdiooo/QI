@@ -1,7 +1,7 @@
 package com.qi.management.inf;
 
-import com.qi.management.model.domain.BaseMenu;
-import com.qi.management.model.dto.MenuDto;
+import com.qi.management.model.domain.BaseButton;
+import com.qi.management.model.dto.ButtonDto;
 import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
@@ -11,31 +11,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Class sdsd
+ * Class ButtonService
  *
- * @author 张麒 2017/10/23.
+ * @author 张麒 2018-6-29.
  * @version Description:
  */
 @RestController
 @CloudService("management-server")
-public interface MenuService {
-
-    @RequestMapping("findBySystemCode")
-    RpcResult<List<MenuDto>> findBySystemCode(String sysCode);
+public interface ButtonService {
 
     @RequestMapping("findAll")
-    RpcResult<List<MenuDto>> findAll(MenuDto model);
+    RpcResult<List<ButtonDto>> findAll(ButtonDto model);
 
     @RequestMapping("getByGuid")
-    RpcResult<MenuDto> getByGuid(String guid);
+    RpcResult<ButtonDto> getByGuid(String guid);
 
     @RequestMapping("save")
-    RpcResult<MenuDto> save(MenuDto model);
+    RpcResult<ButtonDto> save(ButtonDto model);
 
     @RequestMapping("changeStatus")
     void changeStatus(String guid, StatusConstants.Status status);
-
-    @RequestMapping("sort")
-    void sort(String sortable);
-
 }

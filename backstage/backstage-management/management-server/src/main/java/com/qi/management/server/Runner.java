@@ -1,4 +1,4 @@
-package com.qi.dictionary.server;
+package com.qi.management.server;
 
 import com.sfsctech.cloud.client.starter.EnableCloudService;
 import com.sfsctech.starter.annotation.EnableMybatis;

@@ -8,10 +8,8 @@ import com.qi.management.common.util.BreadcrumbUtil;
 import com.qi.management.common.util.DictUtil;
 import com.qi.management.model.domain.BaseButton;
 import com.qi.management.model.domain.BaseMenu;
-import com.qi.management.service.read.ButtonReadService;
-import com.qi.management.service.read.MenuReadService;
-import com.qi.management.service.transactional.ButtonTransactionalService;
-import com.qi.management.service.write.ButtonWriteService;
+import com.qi.management.rpc.consumer.ButtonConsumer;
+import com.qi.management.rpc.consumer.MenuConsumer;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
@@ -41,16 +39,10 @@ import java.util.Map;
 public class ButtonController {
 
     @Autowired
-    private MenuReadService menuReadService;
+    private MenuConsumer menuConsumer;
 
     @Autowired
-    private ButtonReadService readService;
-
-    @Autowired
-    private ButtonWriteService writeService;
-
-    @Autowired
-    private ButtonTransactionalService transactionalService;
+    private ButtonConsumer buttonConsumer;
 
     @Autowired
     private CacheFactory<RedisProxy<String, Object>> factory;
@@ -67,7 +59,7 @@ public class ButtonController {
             // 列表面包屑设置
             list = BreadcrumbUtil.buildBreadcrumb(() -> {
                 // 获取按钮信息
-                BaseButton btn = readService.getByGuid(button.getGuid());
+                BaseButton btn = buttonConsumer.getByGuid(button.getGuid());
                 Breadcrumb breadcrumb = new Breadcrumb(btn.getName() + "按钮", "/button/index", CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", btn.getGuid());
                 return breadcrumb;
@@ -81,7 +73,7 @@ public class ButtonController {
             // 根据系统Guid获取面包屑
             list = BreadcrumbUtil.buildBreadcrumb(() -> {
                 // 获取菜单信息
-                BaseMenu menu = menuReadService.getByGuid(button.getMenuguid());
+                BaseMenu menu = menuConsumer.getByGuid(button.getMenuguid());
                 Breadcrumb breadcrumb = new Breadcrumb(menu.getName() + "菜单", "/button/index", CommonConstants.ROOT_CLASS);
                 // 设置上级节点Guid
                 breadcrumb.addParams("guid", menu.getGuid());
@@ -93,7 +85,7 @@ public class ButtonController {
         }
         model.put("header", list.get(list.size() - 1).getText());
         model.put("breadcrumbs", list);
-        model.put("data", readService.findAll(button));
+        model.put("data", buttonConsumer.findAll(button));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("type", DictUtil.Button.cloumns());
         model.put("small", "按钮列表");
@@ -107,13 +99,13 @@ public class ButtonController {
         // 获取系统Guid
         model.put("system", sysguid);
         // 获取菜单信息
-        model.put("menu", menuReadService.getByGuid(button.getMenuguid()));
+        model.put("menu", menuConsumer.getByGuid(button.getMenuguid()));
         Map<String, Object> defaultSel = new HashMap<>();
         if (CommonConstants.ROOT_GUID.equals(button.getParent())) {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
             defaultSel.put("value", CommonConstants.ROOT_GUID);
         } else {
-            button = readService.getByGuid(button.getParent());
+            button = buttonConsumer.getByGuid(button.getParent());
             defaultSel.put("text", button.getName());
             defaultSel.put("value", button.getGuid());
         }
@@ -130,14 +122,14 @@ public class ButtonController {
         // 获取系统信息
         model.put("system", sysguid);
         // 获取菜单信息
-        model.put("menu", menuReadService.getByGuid(button.getMenuguid()));
-        button = readService.getByGuid(button.getGuid());
+        model.put("menu", menuConsumer.getByGuid(button.getMenuguid()));
+        button = buttonConsumer.getByGuid(button.getGuid());
         Map<String, Object> defaultSel = new HashMap<>();
         if (CommonConstants.ROOT_GUID.equals(button.getParent())) {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
             defaultSel.put("value", CommonConstants.ROOT_GUID);
         } else {
-            BaseButton parent = readService.getByGuid(button.getParent());
+            BaseButton parent = buttonConsumer.getByGuid(button.getParent());
             defaultSel.put("text", parent.getName());
             defaultSel.put("value", parent.getGuid());
         }
@@ -157,34 +149,33 @@ public class ButtonController {
     @ResponseBody
     @PostMapping("save")
     public ActionResult<BaseButton> save(BaseButton button) {
-        writeService.save(button);
-        return ActionResult.forSuccess(button);
+        return ActionResult.forSuccess(buttonConsumer.save(button));
     }
 
     @ResponseBody
     @PostMapping("disable")
     public ActionResult<BaseButton> disable(String guid) {
-        writeService.changeStatus(guid, StatusConstants.Status.Disable);
+        buttonConsumer.changeStatus(guid, StatusConstants.Status.Disable);
         return ActionResult.forSuccess();
     }
 
     @ResponseBody
     @PostMapping("valid")
     public ActionResult<BaseButton> valid(String guid) {
-        writeService.changeStatus(guid, StatusConstants.Status.Valid);
+        buttonConsumer.changeStatus(guid, StatusConstants.Status.Valid);
         return ActionResult.forSuccess();
     }
 
     @GetMapping("ordering")
     public String ordering(ModelMap model, BaseButton button) {
         // 获取所有当前节点数据
-        model.put("data", readService.findAll(button));
+        model.put("data", buttonConsumer.findAll(button));
         return "common/sort";
     }
 
     @ResponseBody
     @PostMapping("load")
     public ActionResult<BaseButton> load(String guid) {
-        return ActionResult.forSuccess(readService.getByGuid(guid));
+        return ActionResult.forSuccess(buttonConsumer.getByGuid(guid));
     }
 }

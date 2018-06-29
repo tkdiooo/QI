@@ -34,12 +34,6 @@
             <artifactId>sfsctech-mybatis-starter</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <!-- support-bootstrap support -->
-        <dependency>
-            <groupId>com.qi.support</groupId>
-            <artifactId>support-bootstrap</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
         <!-- dictionary-interface support -->
         <dependency>
             <groupId>com.qi.backstage.dictionary</groupId>
@@ -75,6 +69,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>

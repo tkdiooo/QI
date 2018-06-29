@@ -19,6 +19,7 @@
         <module>management-interface</module>
         <module>management-model</module>
         <module>management-rest</module>
+        <module>management-server</module>
     </modules>
 
     <properties>

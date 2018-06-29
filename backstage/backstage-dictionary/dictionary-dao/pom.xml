@@ -33,7 +33,7 @@
     </dependencies>
 
     <build>
-        <finalName>Backstage-Management</finalName>
+        <finalName>Dictionary-Dao</finalName>
         <plugins>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
