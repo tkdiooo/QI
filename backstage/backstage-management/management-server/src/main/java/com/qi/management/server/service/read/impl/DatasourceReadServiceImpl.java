@@ -33,7 +33,7 @@ public class DatasourceReadServiceImpl implements DatasourceReadService {
         }
         PageInfo<BaseDatasource> page = new PageInfo<>(mapper.selectByExample(example));
         pagingInfo.setRecordsTotal(page.getTotal());
-        page.getList().forEach(dictionary -> pagingInfo.getData().add(BeanUtil.copyBeanForCglib(dictionary, BaseDatasource.class)));
+        pagingInfo.setData(page.getList());
         return pagingInfo;
     }
 

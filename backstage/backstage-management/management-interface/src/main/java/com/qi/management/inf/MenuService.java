@@ -1,6 +1,5 @@
 package com.qi.management.inf;
 
-import com.qi.management.model.domain.BaseMenu;
 import com.qi.management.model.dto.MenuDto;
 import com.sfsctech.cloud.base.annotation.CloudService;
 import com.sfsctech.core.base.constants.StatusConstants;
@@ -17,6 +16,7 @@ import java.util.List;
  * @version Description:
  */
 @RestController
+@RequestMapping("menu-service")
 @CloudService("management-server")
 public interface MenuService {
 

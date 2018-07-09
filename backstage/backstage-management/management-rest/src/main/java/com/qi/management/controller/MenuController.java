@@ -8,7 +8,7 @@ import com.qi.management.common.util.BreadcrumbUtil;
 import com.qi.management.model.domain.BaseMenu;
 import com.qi.management.model.domain.BaseSystem;
 import com.qi.management.rpc.consumer.MenuConsumer;
-import com.qi.management.service.read.SystemReadService;
+import com.qi.management.rpc.consumer.SystemConsumer;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.web.constants.UIConstants;
 import com.sfsctech.core.web.domain.result.ActionResult;
@@ -36,7 +36,7 @@ import java.util.Map;
 public class MenuController {
 
     @Autowired
-    private SystemReadService systemReadService;
+    private SystemConsumer systemConsumer;
 
     @Autowired
     private MenuConsumer menuConsumer;
@@ -64,7 +64,7 @@ public class MenuController {
             // 根据系统Guid获取面包屑
             list = BreadcrumbUtil.buildBreadcrumb(() -> {
                 // 获取系统信息
-                BaseSystem system = systemReadService.getByGuid(sysGuid);
+                BaseSystem system = systemConsumer.getByGuid(sysGuid);
                 Breadcrumb breadcrumb = new Breadcrumb(system.getNamecn(), "/menu/index", CommonConstants.ROOT_CLASS);
                 breadcrumb.addParams("guid", CommonConstants.ROOT_GUID);
                 return breadcrumb;
@@ -84,7 +84,7 @@ public class MenuController {
     public String add(ModelMap model, BaseMenu menu) {
         model.put(UIConstants.Operation.Added.getCode(), UIConstants.Operation.Added.getDescription());
         // 获取系统信息
-        model.put("system", systemReadService.getByGuid(menu.getSysguid()));
+        model.put("system", systemConsumer.getByGuid(menu.getSysguid()));
         Map<String, Object> defaultSel = new HashMap<>();
         if (CommonConstants.ROOT_GUID.equals(menu.getParent())) {
             defaultSel.put("text", CommonConstants.ROOT_NAME);
@@ -103,7 +103,7 @@ public class MenuController {
     public String edit(ModelMap model, BaseMenu menu) {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getDescription());
         // 获取系统信息
-        model.put("system", systemReadService.getByGuid(menu.getSysguid()));
+        model.put("system", systemConsumer.getByGuid(menu.getSysguid()));
         menu = menuConsumer.getByGuid(menu.getGuid());
         model.put("model", menu);
         Map<String, Object> defaultSel = new HashMap<>();

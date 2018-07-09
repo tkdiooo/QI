@@ -18,11 +18,10 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        <!-- sfsctech-common-mybatis support-->
         <dependency>
-            <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-data-mybatis</artifactId>
-            <version>${sfsctech.common.version}</version>
+            <groupId>com.sfsctech.framework</groupId>
+            <artifactId>sfsctech-mybatis-starter</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <!-- Backstage-Model support-->
         <dependency>

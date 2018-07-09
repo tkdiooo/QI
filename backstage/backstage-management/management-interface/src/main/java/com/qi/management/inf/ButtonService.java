@@ -17,6 +17,7 @@ import java.util.List;
  * @version Description:
  */
 @RestController
+@RequestMapping("button-service")
 @CloudService("management-server")
 public interface ButtonService {
 

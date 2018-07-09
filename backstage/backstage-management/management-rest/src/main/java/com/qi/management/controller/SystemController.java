@@ -7,8 +7,7 @@ import com.qi.management.common.constants.CommonConstants;
 import com.qi.management.common.util.BreadcrumbUtil;
 import com.qi.management.common.util.DictUtil;
 import com.qi.management.model.domain.BaseSystem;
-import com.qi.management.service.read.SystemReadService;
-import com.qi.management.service.write.SystemWriteService;
+import com.qi.management.rpc.consumer.SystemConsumer;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.web.constants.UIConstants;
 import com.sfsctech.core.web.domain.result.ActionResult;
@@ -34,16 +33,13 @@ import java.util.Map;
 public class SystemController {
 
     @Autowired
-    private SystemReadService readService;
-
-    @Autowired
-    private SystemWriteService writeService;
+    private SystemConsumer systemConsumer;
 
     @GetMapping("index")
     public String index(ModelMap model, BaseSystem system) {
         // 列表面包屑设置
         model.put("breadcrumbs", BreadcrumbUtil.buildBreadcrumb(() -> new Breadcrumb(CommonConstants.ROOT_NAME, "/system/index", CommonConstants.ROOT_CLASS), CommonConstants.CACHE_SYSTEM_ROOT));
-        model.put("data", readService.findAll(system));
+        model.put("data", systemConsumer.findAll(system));
         model.put("status", BootstrapConstants.StatusColumns.getColumns());
         model.put("options", BootstrapUtil.matchOptions("system_index_options", StatusConstants.Status.Valid, StatusConstants.Status.Disable));
         model.put("type", DictUtil.System.cloumns());
@@ -64,7 +60,7 @@ public class SystemController {
         model.put(UIConstants.Operation.Editor.getCode(), UIConstants.Operation.Editor.getDescription());
         List<Map<String, Object>> options = DictUtil.System.options();
         model.put("options", options);
-        BaseSystem system = readService.getByGuid(guid);
+        BaseSystem system = systemConsumer.getByGuid(guid);
         model.put("model", system);
         for (Map<String, Object> option : options) {
             if (option.get("value").equals(system.getType())) {
@@ -81,21 +77,20 @@ public class SystemController {
     @ResponseBody
     @PostMapping("save")
     public ActionResult<BaseSystem> save(BaseSystem system) {
-        writeService.save(system);
-        return ActionResult.forSuccess(system);
+        return ActionResult.forSuccess(systemConsumer.save(system));
     }
 
     @ResponseBody
     @PostMapping("disable")
     public ActionResult<BaseSystem> disable(String guid) {
-        writeService.changeStatus(guid, StatusConstants.Status.Disable);
+        systemConsumer.changeStatus(guid, StatusConstants.Status.Disable);
         return ActionResult.forSuccess();
     }
 
     @ResponseBody
     @PostMapping("valid")
     public ActionResult<BaseSystem> valid(String guid) {
-        writeService.changeStatus(guid, StatusConstants.Status.Valid);
+        systemConsumer.changeStatus(guid, StatusConstants.Status.Valid);
         return ActionResult.forSuccess();
     }
 }
