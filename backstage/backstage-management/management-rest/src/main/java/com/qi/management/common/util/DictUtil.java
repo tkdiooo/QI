@@ -1,9 +1,11 @@
 package com.qi.management.common.util;
 
 import com.qi.bootstrap.util.BootstrapUtil;
+import com.qi.dictionary.inf.DictionaryService;
 import com.qi.dictionary.model.dto.DictionaryDto;
 import com.qi.management.common.constants.CommonConstants;
 import com.sfsctech.core.base.constants.CacheConstants;
+import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.spring.util.SpringContextUtil;
@@ -24,10 +26,12 @@ public class DictUtil {
     @SuppressWarnings({"unchecked"})
     private static CacheFactory<RedisProxy<String, Object>> factory = SpringContextUtil.getBean(CacheFactory.class);
 
+    private static DictionaryService dictionaryService = SpringContextUtil.getBean(DictionaryService.class);
+
     private static List<Map<String, Object>> getOptions(String number, String OPTIONS_KEY, String DEFAULT_OPTIONS_KEY, String OPTIONS_DICT_KEY) {
         List<Map<String, Object>> options = factory.getList(OPTIONS_KEY);
         if (null == options) {
-            List<DictionaryDto> list = com.qi.dictionary.util.DictUtil.findChildByNumber(number, OPTIONS_DICT_KEY);
+            List<DictionaryDto> list = findDictionaryChild(number, OPTIONS_DICT_KEY);
             if (null != list) {
                 options = BootstrapUtil.matchOptions(OPTIONS_KEY, list, "number", "content");
             } else {
@@ -40,7 +44,7 @@ public class DictUtil {
     private static Map<String, String> getTableCloumns(String number, String CLOUMNS_KEY, String OPTIONS_DICT_KEY) {
         Map<String, String> cloumns = factory.get(CLOUMNS_KEY);
         if (null == cloumns) {
-            List<DictionaryDto> list = com.qi.dictionary.util.DictUtil.findChildByNumber(number, OPTIONS_DICT_KEY);
+            List<DictionaryDto> list = findDictionaryChild(number, OPTIONS_DICT_KEY);
             if (ListUtil.isNotEmpty(list)) {
                 cloumns = list.stream().collect(Collectors.toMap(DictionaryDto::getNumber, DictionaryDto::getContent));
                 factory.getCacheClient().putTimeOut(CLOUMNS_KEY, cloumns, CacheConstants.MilliSecond.Minutes30.getContent());
@@ -83,6 +87,18 @@ public class DictUtil {
         public static Map<String, String> cloumns() {
             return DictUtil.getTableCloumns(DICT_NUMNER_SYSTEM_TYPE, SYSTEM_TYPE_TABLE, SYSTEM_TYPE_DICT);
         }
+    }
+
+    private static List<DictionaryDto> findDictionaryChild(String number, String cache_key) {
+        List<DictionaryDto> list;
+        if ((list = factory.getList(cache_key)) == null) {
+            DictionaryDto dto = new DictionaryDto();
+            dto.setNumber(number);
+            RpcResult<List<DictionaryDto>> result = dictionaryService.findChildByNumber(dto);
+            list = result.getResult();
+            factory.getCacheClient().putTimeOut(cache_key, list, CacheConstants.MilliSecond.Minutes30.getContent());
+        }
+        return list;
     }
 
 }

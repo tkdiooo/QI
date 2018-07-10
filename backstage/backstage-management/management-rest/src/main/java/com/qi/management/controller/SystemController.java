@@ -7,7 +7,7 @@ import com.qi.management.common.constants.CommonConstants;
 import com.qi.management.common.util.BreadcrumbUtil;
 import com.qi.management.common.util.DictUtil;
 import com.qi.management.model.domain.BaseSystem;
-import com.qi.management.rpc.consumer.SystemConsumer;
+import com.qi.management.rpc.SystemConsumer;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.web.constants.UIConstants;
 import com.sfsctech.core.web.domain.result.ActionResult;

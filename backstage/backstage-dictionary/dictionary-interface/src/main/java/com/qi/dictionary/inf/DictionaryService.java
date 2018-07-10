@@ -2,8 +2,8 @@ package com.qi.dictionary.inf;
 
 import com.qi.dictionary.model.dto.DictionaryDto;
 import com.sfsctech.cloud.base.annotation.CloudService;
-import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,21 +20,21 @@ import java.util.List;
 public interface DictionaryService {
 
     @RequestMapping("findChildByNumber")
-    RpcResult<List<DictionaryDto>> findChildByNumber(String parent);
+    RpcResult<List<DictionaryDto>> findChildByNumber(@RequestBody DictionaryDto dictionary);
 
     @RequestMapping("getByNumber")
-    RpcResult<DictionaryDto> getByNumber(String number);
+    RpcResult<DictionaryDto> getByNumber(@RequestBody DictionaryDto dictionary);
 
     @RequestMapping("save")
-    RpcResult<DictionaryDto> save(DictionaryDto dictionary);
+    RpcResult<DictionaryDto> save(@RequestBody DictionaryDto dictionary);
 
     @RequestMapping("changeStatus")
-    void changeStatus(String number, StatusConstants.Status status);
+    void changeStatus(@RequestBody DictionaryDto dictionary);
 
     @RequestMapping("sort")
-    void sort(String sortable);
+    void sort(@RequestBody DictionaryDto dictionary);
 
     @RequestMapping("numberIsExist")
-    RpcResult numberIsExist(DictionaryDto dictionary);
+    RpcResult numberIsExist(@RequestBody DictionaryDto dictionary);
 
 }

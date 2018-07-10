@@ -18,7 +18,7 @@ import java.util.Map;
  * @version Description:
  */
 @Repository
-@Namespace("com.qi.backstage.management.mapper.BaseMenuMapper")
+@Namespace("com.qi.management.mapper.BaseMenuMapper")
 public class BaseMenuDaoImpl extends BaseDaoImpl<MenuDto, Long, BaseMenuExample> implements BaseMenuDao {
 
     @Override

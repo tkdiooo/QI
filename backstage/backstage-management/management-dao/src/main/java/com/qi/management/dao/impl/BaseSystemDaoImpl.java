@@ -18,7 +18,7 @@ import java.util.Map;
  * @version Description:
  */
 @Repository
-@Namespace("com.qi.backstage.management.mapper.BaseSystemMapper")
+@Namespace("com.qi.management.mapper.BaseSystemMapper")
 public class BaseSystemDaoImpl extends BaseDaoImpl<SystemDto, Long, BaseSystemExample> implements BaseSystemDao {
 
     @Override

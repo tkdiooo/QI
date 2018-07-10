@@ -1,10 +1,9 @@
 package com.qi.management.inf;
 
-import com.qi.management.model.domain.BaseButton;
 import com.qi.management.model.dto.ButtonDto;
 import com.sfsctech.cloud.base.annotation.CloudService;
-import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.base.domain.result.RpcResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,14 +21,14 @@ import java.util.List;
 public interface ButtonService {
 
     @RequestMapping("findAll")
-    RpcResult<List<ButtonDto>> findAll(ButtonDto model);
+    RpcResult<List<ButtonDto>> findAll(@RequestBody ButtonDto model);
 
     @RequestMapping("getByGuid")
-    RpcResult<ButtonDto> getByGuid(String guid);
+    RpcResult<ButtonDto> getByGuid(@RequestBody ButtonDto model);
 
     @RequestMapping("save")
-    RpcResult<ButtonDto> save(ButtonDto model);
+    RpcResult<ButtonDto> save(@RequestBody ButtonDto model);
 
     @RequestMapping("changeStatus")
-    void changeStatus(String guid, StatusConstants.Status status);
+    void changeStatus(@RequestBody ButtonDto model);
 }

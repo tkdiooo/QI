@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class LoginServiceImpl implements LoginService {
     private JwtProperties jwtConfig;
 
     @Override
-    public RpcResult<JwtToken> login(UserAuthData authData) {
+    public RpcResult<JwtToken> login(@RequestBody UserAuthData authData) {
         RpcResult<JwtToken> result = new RpcResult<>();
         JwtToken jwtToken = new JwtToken();
         // TODO 登录验证
@@ -72,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void logout(JwtToken jt) {
+    public void logout(@RequestBody JwtToken jt) {
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {

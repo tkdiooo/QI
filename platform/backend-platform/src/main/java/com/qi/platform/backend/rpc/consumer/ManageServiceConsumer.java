@@ -1,7 +1,5 @@
 package com.qi.platform.backend.rpc.consumer;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.qi.management.inf.MenuService;
 import com.qi.management.inf.SystemService;
 import com.qi.management.model.dto.SystemDto;
 import com.sfsctech.core.base.constants.CacheConstants;
@@ -28,10 +26,7 @@ public class ManageServiceConsumer {
 
     private final Logger logger = LoggerFactory.getLogger(ManageServiceConsumer.class);
 
-    @Reference
-    private MenuService menuService;
-
-    @Reference
+    @Autowired
     private SystemService systemService;
 
     @Autowired
@@ -48,7 +43,9 @@ public class ManageServiceConsumer {
         factory.getCacheClient().remove(cache_key);
         SystemDto system = factory.get(cache_key);
         if (null == system) {
-            RpcResult<SystemDto> result = systemService.getByCode(sysCode);
+            system = new SystemDto();
+            system.setCode(sysCode);
+            RpcResult<SystemDto> result = systemService.getByCode(system);
             if (!result.isSuccess()) {
                 system = result.getResult();
                 factory.getCacheClient().putTimeOut(cache_key, system, CacheConstants.MilliSecond.Minutes30.getContent());

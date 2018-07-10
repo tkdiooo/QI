@@ -60,7 +60,7 @@
         <!-- dictionary-util support -->
         <dependency>
             <groupId>com.qi.backstage.dictionary</groupId>
-            <artifactId>dictionary-util</artifactId>
+            <artifactId>dictionary-interface</artifactId>
             <version>${dictionary.version}</version>
         </dependency>
     </dependencies>
@@ -72,7 +72,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.qi.backstage.management.Runner</mainClass>
+                    <mainClass>com.qi.management.Runner</mainClass>
                 </configuration>
                 <executions>
                     <execution>

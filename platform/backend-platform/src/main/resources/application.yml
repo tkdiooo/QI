@@ -31,7 +31,7 @@ server:
 #spring mvc setting
 spring:
   application:
-    name: backend-platform
+    name: platform-backend
   thymeleaf:
     cache: false
     suffix: .html
@@ -40,6 +40,10 @@ spring:
     static-path-pattern: /static/**
     view:
       suffix: .html
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:10002/eureka/
 cache:
   redis:
     host: 172.16.225.98
@@ -50,26 +54,6 @@ cache:
       max-wait: 10000
       max-idle: 100
       min-idle: 50
-dubbo:
-  application:
-    #服务消费名称信息
-    name: backend-platform
-    #日志适配
-    logger: slf4j
-  registry:
-    #zookeeper注册中心服务地址
-    address: zookeeper://172.16.225.98:2181
-    #注册中心不存在时，是否报错
-    check: false
-    #是否向此注册中心注册服务，如果设为false，将只订阅，不注册
-    register: true
-    #是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
-    subscribe: true
-    #注册中心请求超时时间(毫秒)
-    timeout: 2000
-  rpc:
-    service-package: com.qi.platform.backend.rpc
-    concurrency: 40
 #common setting
 website:
   # 网站支持
@@ -85,10 +69,6 @@ website:
     auth:
       way: Complex
       item-type: BackendSystem
-  security:
-    cross-domain:
-      - url: http://www.zzl.com/platforma
-        access-control-allow-methods: GET
   # 服务架构
 #  session:
 #    authentication: sso

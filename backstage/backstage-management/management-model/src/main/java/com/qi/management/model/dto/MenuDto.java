@@ -20,6 +20,8 @@ public class MenuDto extends BaseMenu {
 
     private List<MenuDto> child;
 
+    private String sortable;
+
     public boolean getChoose() {
         return choose;
     }
@@ -42,5 +44,13 @@ public class MenuDto extends BaseMenu {
 
     public void setChild(List<MenuDto> child) {
         this.child = child;
+    }
+
+    public String getSortable() {
+        return sortable;
+    }
+
+    public void setSortable(String sortable) {
+        this.sortable = sortable;
     }
 }

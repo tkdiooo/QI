@@ -13,4 +13,13 @@ public class DictionaryDto extends BaseDictionary {
 
     private static final long serialVersionUID = -7182086807817270077L;
 
+    private String sortable;
+
+    public String getSortable() {
+        return sortable;
+    }
+
+    public void setSortable(String sortable) {
+        this.sortable = sortable;
+    }
 }

@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Class VerifyServiceImpl
@@ -40,7 +41,7 @@ public class VerifyServiceImpl implements VerifyService {
     private JwtProperties jwtConfig;
 
     @Override
-    public RpcResult<JwtToken> simpleVerify(JwtToken jt) {
+    public RpcResult<JwtToken> simpleVerify(@RequestBody JwtToken jt) {
         RpcResult<JwtToken> result = new RpcResult<>();
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
@@ -97,7 +98,7 @@ public class VerifyServiceImpl implements VerifyService {
     }
 
     @Override
-    public RpcResult<JwtToken> complexVerify(JwtToken jt) {
+    public RpcResult<JwtToken> complexVerify(@RequestBody JwtToken jt) {
         RpcResult<JwtToken> result = new RpcResult<>();
         // 解密salt_CacheKey
         String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());

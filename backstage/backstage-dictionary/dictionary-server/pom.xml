@@ -50,7 +50,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.qi.dictionary.server.Runner</mainClass>
+                    <mainClass>com.qi.dictionary.Runner</mainClass>
                 </configuration>
                 <executions>
                     <execution>
