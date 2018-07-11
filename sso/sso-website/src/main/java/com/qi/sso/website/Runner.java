@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Import(SSOConfig.class)
-@EnableCloudController(packages = "com.sfsctech.cloud.sso.inf")
+@EnableCloudController(packages = "com.sfsctech.cloud.base.inf")
 public class Runner {
 
     public static void main(String[] args) {

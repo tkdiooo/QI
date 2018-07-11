@@ -31,11 +31,6 @@
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cloud-sso</artifactId>
-            <version>${sfsctech.common.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sfsctech.common</groupId>
             <artifactId>common-cloud-net</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>

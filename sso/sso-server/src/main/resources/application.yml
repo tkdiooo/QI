@@ -42,5 +42,5 @@ website:
   sso:
     jwt:
       subject: Single Sign-on
-      issuer: SSO-Server
+      issuer: QI-SSO
       expiration: 1800000

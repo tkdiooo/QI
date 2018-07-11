@@ -9,9 +9,12 @@ spring:
     name: api-basic
 zuul:
   routes:
-    api-a:
+    platform:
       path: /platform/**
-      serviceId: backend-platform
-    api-b:
-      path: /api-b/**
-      serviceId: cloud-feign
+      serviceId: platform-backend
+    dictionary:
+      path: /dictionary/**
+      serviceId: dictionary-controller
+    dictionary:
+      path: /management/**
+      serviceId: management-controller

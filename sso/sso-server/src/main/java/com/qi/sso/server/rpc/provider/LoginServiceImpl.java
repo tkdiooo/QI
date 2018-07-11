@@ -1,6 +1,6 @@
 package com.qi.sso.server.rpc.provider;
 
-import com.sfsctech.cloud.sso.inf.LoginService;
+import com.sfsctech.cloud.base.inf.LoginService;
 import com.sfsctech.core.auth.sso.constants.SSOConstants;
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.util.CacheKeyUtil;

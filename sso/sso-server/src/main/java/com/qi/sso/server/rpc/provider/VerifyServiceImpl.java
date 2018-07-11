@@ -1,7 +1,7 @@
 package com.qi.sso.server.rpc.provider;
 
 import com.qi.sso.server.util.VerifyUtil;
-import com.sfsctech.cloud.sso.inf.VerifyService;
+import com.sfsctech.cloud.base.inf.VerifyService;
 import com.sfsctech.core.auth.sso.properties.JwtProperties;
 import com.sfsctech.core.auth.sso.util.CacheKeyUtil;
 import com.sfsctech.core.auth.sso.util.JwtUtil;

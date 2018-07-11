@@ -1,7 +1,7 @@
 package com.qi.sso.website.rpc.consumer;
 
-import com.sfsctech.cloud.sso.inf.LoginService;
-import com.sfsctech.cloud.sso.inf.VerifyService;
+import com.sfsctech.cloud.base.inf.LoginService;
+import com.sfsctech.cloud.base.inf.VerifyService;
 import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.base.jwt.JwtToken;
 import com.sfsctech.core.base.session.UserAuthData;

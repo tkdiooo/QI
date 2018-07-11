@@ -40,13 +40,12 @@ public class ManageServiceConsumer {
      */
     public SystemDto findSystemMenuBySystem(String sysCode) {
         String cache_key = sysCode + LabelConstants.DOUBLE_POUND;
-        factory.getCacheClient().remove(cache_key);
         SystemDto system = factory.get(cache_key);
         if (null == system) {
             system = new SystemDto();
             system.setCode(sysCode);
             RpcResult<SystemDto> result = systemService.getByCode(system);
-            if (!result.isSuccess()) {
+            if (result.isSuccess()) {
                 system = result.getResult();
                 factory.getCacheClient().putTimeOut(cache_key, system, CacheConstants.MilliSecond.Minutes30.getContent());
             } else {

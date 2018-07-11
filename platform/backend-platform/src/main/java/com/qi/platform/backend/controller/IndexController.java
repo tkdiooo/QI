@@ -63,7 +63,7 @@ public class IndexController {
             }
         }
         // 用户session信息
-        model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
+//        model.put(SSOConstants.CONST_UAMS_ASSERTION, SessionHolder.getSessionInfo().getUserAuthData());
         return "index";
     }
 
