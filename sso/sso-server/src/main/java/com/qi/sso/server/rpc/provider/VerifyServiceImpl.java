@@ -88,7 +88,7 @@ public class VerifyServiceImpl implements VerifyService {
             // 获取jwt Claims
             Claims claims = JwtUtil.parseJWT(token);
             // 获取authData
-            UserAuthData authData = CacheKeyUtil.getUserAuthData(claims);
+            UserAuthData authData = CacheKeyUtil.getUserAuthData(claims, UserAuthData.class);
             // TODO 处理登录用户权限等功能
 
             this.refreshJwt(claims, authData, salt_CacheKey, jt);
@@ -132,7 +132,7 @@ public class VerifyServiceImpl implements VerifyService {
             // 获取jwt Claims
             Claims claims = JwtUtil.parseJWT(token);
             // 获取authData
-            UserAuthData authData = CacheKeyUtil.getUserAuthData(claims);
+            UserAuthData authData = CacheKeyUtil.getUserAuthData(claims, UserAuthData.class);
             // TODO 处理登录用户权限等功能
 
             // 获取jwt存在时间(秒)
