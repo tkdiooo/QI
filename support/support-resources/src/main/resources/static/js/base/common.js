@@ -632,7 +632,7 @@ function matchAjaxTable(opt, destorys) {
         //行被创建回调
         createdRow: function (row, data, dataIndex) {
             // 构建列字段上操作按钮
-            if (settings.columnsButtons) {
+                if (settings.columnsButtons) {
                 $.each(settings.columnsButtons, function (i, value) {
                     $(row).find('td:last').append('<button type="button" class="' + value.class + '" onclick="' + value.action + '(\'' + data.id + '\');" data-original-title="' + value.text + '" data-placement="right">' + value.icon + value.text + '</button>');
                 });

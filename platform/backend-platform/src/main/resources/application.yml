@@ -68,7 +68,7 @@ website:
     logout-url: http://www.zzl.com/sso/logout
     auth:
       way: Complex
-      item-type: BackendSystem
+      app-type: Backend
   # 服务架构
 #  session:
 #    authentication: sso

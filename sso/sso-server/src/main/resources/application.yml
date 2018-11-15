@@ -44,3 +44,5 @@ website:
       subject: Single Sign-on
       issuer: QI-SSO
       expiration: 1800000
+logging:
+  path: D:\opt\logs
