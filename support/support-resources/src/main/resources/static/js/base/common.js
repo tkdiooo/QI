@@ -251,11 +251,13 @@ function ajax_upload(url, data, opt) {
         fileElementId: plugin.settings.fileElementId, //文件选择框的id属性
         dataType: plugin.settings.dataType,
         beforeSend: function () {
+            console.info('beforeSend')
             if (plugin.settings.waiting) {
-                showWaiting();
+                // showWaiting();
             }
         },
         success: function (data, textStatus, request) {
+            console.info(data)
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
@@ -275,6 +277,7 @@ function ajax_upload(url, data, opt) {
             }
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
+            console.info(XMLHttpRequest.responseText)
             if (plugin.settings.waiting) {
                 closeWaiting();
             }

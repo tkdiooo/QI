@@ -160,7 +160,7 @@ public class SSOHelper {
         // form_url处理
         String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
         if (StringUtil.isBlank(form_url) && StringUtil.isNotBlank(properties.getHomePage())) {
-            form_url = EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, properties.getHomePage());
+            form_url = EncrypterTool.encrypt(EncrypterTool.Security.Des3CBCHex, properties.getHomePage());
         }
         helper.setCookie(SSOConstants.PARAM_FROM_URL, form_url, NumberUtil.INTEGER_MINUS_ONE);
         // remember_login_account处理
@@ -192,12 +192,12 @@ public class SSOHelper {
 
     public void setPortalUrl(ActionResult<String> result) {
         String form_url = helper.getCookieValue(SSOConstants.PARAM_FROM_URL);
-        if (StringUtil.isNotBlank(form_url) && !(form_url = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECB, form_url)).equals(properties.getLoginUrl())) {
+        if (StringUtil.isNotBlank(form_url) && !(form_url = EncrypterTool.decrypt(EncrypterTool.Security.Des3CBCHex, form_url)).equals(properties.getLoginUrl())) {
             helper.clearCookie(SSOConstants.PARAM_FROM_URL);
             if (form_url.contains(SSOConstants.PARAM_FROM_URL)) {
                 String[] urls = form_url.split(LabelConstants.BACK_SLASH + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL);
                 result.addAttach(SSOConstants.PARAM_FROM_URL, urls[0]);
-                helper.setCookie(SSOConstants.PARAM_FROM_URL, EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, urls[1]), NumberUtil.INTEGER_MINUS_ONE);
+                helper.setCookie(SSOConstants.PARAM_FROM_URL, EncrypterTool.encrypt(EncrypterTool.Security.Des3CBCHex, urls[1]), NumberUtil.INTEGER_MINUS_ONE);
             } else {
                 result.addAttach(SSOConstants.PARAM_FROM_URL, form_url);
             }
