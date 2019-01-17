@@ -48,7 +48,7 @@ public class IndexController {
         // 获取重定向URL
         String form_url = helper.getCookieValue(SSOConstants.PARAM_FROM_URL);
         // 重定向URL不等于空，并且不是登录页面URL
-        if (StringUtil.isNotBlank(form_url) && !(form_url = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECB, form_url)).equals(properties.getLoginUrl())) {
+        if (StringUtil.isNotBlank(form_url) && !(form_url = EncrypterTool.decrypt(EncrypterTool.Security.Des3CBCHex, form_url)).equals(properties.getLoginUrl())) {
             helper.clearCookie(SSOConstants.PARAM_FROM_URL);
             model.put("url", form_url);
             // 菜单列表选中效果

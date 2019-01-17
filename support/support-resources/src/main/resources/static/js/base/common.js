@@ -251,11 +251,13 @@ function ajax_upload(url, data, opt) {
         fileElementId: plugin.settings.fileElementId, //文件选择框的id属性
         dataType: plugin.settings.dataType,
         beforeSend: function () {
+            console.info('beforeSend')
             if (plugin.settings.waiting) {
-                showWaiting();
+                // showWaiting();
             }
         },
         success: function (data, textStatus, request) {
+            console.info(data)
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
@@ -275,6 +277,7 @@ function ajax_upload(url, data, opt) {
             }
         },
         error: function (XMLHttpRequest, ajaxOptions, thrownError) {
+            console.info(XMLHttpRequest.responseText)
             if (plugin.settings.waiting) {
                 closeWaiting();
             }
@@ -632,7 +635,7 @@ function matchAjaxTable(opt, destorys) {
         //行被创建回调
         createdRow: function (row, data, dataIndex) {
             // 构建列字段上操作按钮
-            if (settings.columnsButtons) {
+                if (settings.columnsButtons) {
                 $.each(settings.columnsButtons, function (i, value) {
                     $(row).find('td:last').append('<button type="button" class="' + value.class + '" onclick="' + value.action + '(\'' + data.id + '\');" data-original-title="' + value.text + '" data-placement="right">' + value.icon + value.text + '</button>');
                 });

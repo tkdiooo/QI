@@ -82,3 +82,5 @@ website:
       enabled: true
       intercept-exclude-path:  /logout
       verify-exclude-path: /index
+logging:
+  path: D:\opt\logs
