@@ -1,7 +1,6 @@
 #server setting
 server:
   port: 8103
-  context-path: /dictionary
   tomcat:
     # 解析含有中文名的文件的url
     uri-encoding: utf-8
@@ -17,22 +16,55 @@ server:
     connector: org.apache.coyote.http11.Http11NioProtocol
     # tomcat优化
     optimize: true
-  session:
-    cookie:
-      domain: www.zzl.com
-      # 只能在服务端设置
-      http-only: true
-      # 只能在 HTTPS 连接中被传递
-#      secure: true
-      max-age: 1800
-      path: /
+  servlet:
+    context-path: /dictionary
+    session:
+      cookie:
+        domain: www.zzl.com
+        # 只能在服务端设置
+        http-only: true
+        # 只能在 HTTPS 连接中被传递
+        #      secure: true
+        max-age: 1800s
+        path: /
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
+eureka:
+  client:
+    # 向注册中心注册
+    fetch-registry: true
+    # 服务清单的缓存更新时间，默认30秒一次
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://${eureka.instance.ip-address}:10002/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 5      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 10  # 没有心跳的淘汰时间，10秒，即服务续约到期时间（缺省为90s）
+    hostname: ${eureka.instance.ip-address}
+    instance-id: ${eureka.instance.ip-address}:${server.port}
+    prefer-ip-address: true
+    ip-address: localhost
+    metadata-map:
+      management:
+        context-path: ${server.servlet.context-path}/actuator
+    health-check-url-path: ${server.servlet.context-path}/actuator/health
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
 #spring setting
 spring:
   application:
-    name: dictionary-controller
+    name: dictionary-rest
+  boot:
+    admin:
+      client:
+        url: "http://${eureka.instance.ip-address}:10001"
   thymeleaf:
     cache: false
     suffix: .html
@@ -41,20 +73,16 @@ spring:
     static-path-pattern: /static/**
     view:
       suffix: .html
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:10002/eureka/
-cache:
   redis:
-    host: 172.16.225.98
+    host: 192.168.3.21
     port: 6379
     password: redis123
-    pool:
-      max-active: 300
-      max-wait: 10000
-      max-idle: 100
-      min-idle: 50
+    jedis:
+      pool:
+        max-active: 300
+        max-wait: 10s
+        max-idle: 100
+        min-idle: 50
 #common setting
 website:
   # 网站支持
@@ -70,10 +98,10 @@ website:
     logout-url: http://www.zzl.com/sso/logout
     auth:
       way: Simple
-      item-type: FrameService
+      app-type: Backend
   # 服务架构
   session:
-    exclude-path: /rest/**
+    exclude-path: /rest/**, /actuator/**
 #    authentication: sso
 #    exclude-path: /index, /login
 #  security:

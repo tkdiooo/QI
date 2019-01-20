@@ -143,7 +143,7 @@ public class SecurityController {
 
     @RequestMapping("downloadVerify")
     public ResponseEntity<byte[]> downloadVerify(String fileName) throws IOException {
-        File file = new File(properties.getSupport().getUploadPath().get("VerifyFilePath") + fileName);
+        File file = new File(properties.getSupport().getCustomConfig().get("VerifyFilePath") + fileName);
         if (file.exists()) {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentDispositionFormData("attachment", fileName);

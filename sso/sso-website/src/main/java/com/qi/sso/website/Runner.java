@@ -1,6 +1,6 @@
 package com.qi.sso.website;
 
-import com.sfsctech.cloud.net.starter.EnableCloudController;
+import com.sfsctech.cloud.net.starter.EnableCloudServer;
 import com.sfsctech.core.auth.sso.config.SSOConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Import;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
  * @version Description:
  */
 @Import(SSOConfig.class)
-@EnableCloudController(packages = "com.sfsctech.cloud.base.inf")
+@EnableCloudServer(packages = "com.sfsctech.cloud.base.inf")
 public class Runner {
 
     public static void main(String[] args) {

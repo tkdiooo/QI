@@ -1,6 +1,6 @@
 package com.qi.management;
 
-import com.sfsctech.cloud.net.starter.EnableCloudController;
+import com.sfsctech.cloud.net.starter.EnableCloudServer;
 import org.springframework.boot.SpringApplication;
 
 /**
@@ -9,7 +9,7 @@ import org.springframework.boot.SpringApplication;
  * @author 张麒 2017/7/25.
  * @version Description:
  */
-@EnableCloudController(packages = {"com.qi.*.inf", "com.sfsctech.cloud.base.inf"})
+@EnableCloudServer(packages = {"com.qi.*.inf", "com.sfsctech.cloud.base.inf"})
 public class Runner {
 
     public static void main(String[] args) {

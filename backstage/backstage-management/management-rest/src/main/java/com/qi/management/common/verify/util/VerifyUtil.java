@@ -41,7 +41,7 @@ public class VerifyUtil {
             return result;
         }
         try {
-            File targetFile = new File(properties.getSupport().getUploadPath().get("VerifyFilePath"));
+            File targetFile = new File(properties.getSupport().getCustomConfig().get("VerifyFilePath"));
             if (targetFile.exists() || (!targetFile.exists() && targetFile.mkdirs())) {
                 targetFile = new File(targetFile.getPath() + LabelConstants.SLASH + fileName);
                 mf.transferTo(targetFile);
@@ -128,7 +128,7 @@ public class VerifyUtil {
         ActionResult<String> result = ActionResult.forSuccess();
         try {
             String fileName = "test.js";
-            File targetFile = new File(properties.getSupport().getUploadPath().get("VerifyFilePath"));
+            File targetFile = new File(properties.getSupport().getCustomConfig().get("VerifyFilePath"));
             if (targetFile.exists() || (!targetFile.exists() && targetFile.mkdirs())) {
                 targetFile = new File(targetFile.getPath() + LabelConstants.SLASH + fileName);
             }

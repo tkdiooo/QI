@@ -1,7 +1,6 @@
 # Server Settings (ServerProperties)
 server:
   port: 8080
-  address: localhost
   tomcat:
     # 解析含有中文名的文件的url
     uri-encoding: utf-8

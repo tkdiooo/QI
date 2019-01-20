@@ -29,6 +29,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-core-auth-sso</artifactId>
+            <version>${sfsctech.common.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

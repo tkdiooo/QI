@@ -13,11 +13,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- spring-cloud-config-client -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-client</artifactId>
-        </dependency>
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -26,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>com.sfsctech.common</groupId>
-            <artifactId>common-cloud-client</artifactId>
+            <artifactId>common-cloud-net</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- dictionary-interface support -->
