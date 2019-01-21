@@ -1,8 +1,5 @@
 package com.qi.management.controller;
 
-import com.qi.bootstrap.breadcrumb.Breadcrumb;
-import com.qi.bootstrap.constants.BootstrapConstants;
-import com.qi.bootstrap.util.BootstrapUtil;
 import com.qi.management.common.constants.CommonConstants;
 import com.qi.management.common.util.BreadcrumbUtil;
 import com.qi.management.model.domain.BaseMenu;
@@ -12,6 +9,9 @@ import com.qi.management.rpc.SystemConsumer;
 import com.sfsctech.core.base.constants.StatusConstants;
 import com.sfsctech.core.web.constants.UIConstants;
 import com.sfsctech.core.web.domain.result.ActionResult;
+import com.sfsctech.support.bootstrap.breadcrumb.Breadcrumb;
+import com.sfsctech.support.bootstrap.constants.BootstrapConstants;
+import com.sfsctech.support.bootstrap.util.BootstrapUtil;
 import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -55,7 +55,7 @@ spring:
   hikari-datasource:
     master:
       driver-class-name: com.mysql.jdbc.Driver
-      jdbc-url: jdbc:mysql://192.168.3.21:3306/qi_base?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/qi_base?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
       username: root
       password: 123456
       minimum-idle: 10
@@ -64,21 +64,21 @@ spring:
       pool-name: DatebookHikariCP
       connection-test-query: SELECT 1
   redis:
-    host: 192.168.3.21
-    port: 6379
-    password: redis123
+#    host: 192.168.3.21
+#    port: 6379
+    password: 3936796F7636592D2D4D552E
     jedis:
       pool:
         max-active: 300
         max-wait: 10s
         max-idle: 100
         min-idle: 50
-#    cluster:
-#      max-redirects: 3
-#      nodes:
-#      - 192.168.131.139:6379
-#      - 192.168.131.140:6379
-#      - 192.168.131.141:6379
-#      - 192.168.131.142:6379
-#      - 192.168.131.143:6379
-#      - 192.168.131.144:6379
+    cluster:
+      max-redirects: 3
+      nodes:
+      - 172.16.229.204:6001
+      - 172.16.229.204:6002
+      - 172.16.229.204:6003
+      - 172.16.229.204:6004
+      - 172.16.229.204:6005
+      - 172.16.229.204:6006

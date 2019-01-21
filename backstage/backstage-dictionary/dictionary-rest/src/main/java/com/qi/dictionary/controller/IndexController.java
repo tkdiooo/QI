@@ -1,10 +1,8 @@
 package com.qi.dictionary.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qi.bootstrap.breadcrumb.Breadcrumb;
-import com.qi.bootstrap.constants.BootstrapConstants;
-import com.qi.bootstrap.util.BootstrapUtil;
 import com.qi.dictionary.constants.CommonConstants;
+import com.qi.dictionary.model.dto.DictionaryDto;
 import com.qi.dictionary.rpc.DictionaryConsumer;
 import com.qi.dictionary.model.domain.BaseDictionary;
 import com.sfsctech.core.base.constants.StatusConstants;
@@ -13,11 +11,15 @@ import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.security.annotation.Verify;
 import com.sfsctech.core.web.constants.UIConstants;
 import com.sfsctech.core.web.domain.result.ActionResult;
+import com.sfsctech.support.bootstrap.breadcrumb.Breadcrumb;
+import com.sfsctech.support.bootstrap.constants.BootstrapConstants;
+import com.sfsctech.support.bootstrap.util.BootstrapUtil;
 import com.sfsctech.support.common.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -155,5 +157,11 @@ public class IndexController {
         JSONObject json = new JSONObject();
         json.put("valid", serviceConsumer.numberIsExist(dictionary));
         return json;
+    }
+
+    @ResponseBody
+    @GetMapping("/rest/{number}")
+    public ActionResult<List<DictionaryDto>> rest(@PathVariable(value = "number") String number) {
+        return ActionResult.forSuccess(serviceConsumer.findChildByNumber(number));
     }
 }

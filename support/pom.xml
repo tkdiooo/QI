@@ -17,7 +17,6 @@
 
     <modules>
         <module>support-resources</module>
-        <module>support-bootstrap</module>
         <module>support-eureka</module>
         <module>support-admin</module>
     </modules>

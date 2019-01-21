@@ -24,7 +24,6 @@
         <module>dictionary-model</module>
         <module>dictionary-rest</module>
         <module>dictionary-server</module>
-        <module>dictionary-util</module>
     </modules>
 
 </project>

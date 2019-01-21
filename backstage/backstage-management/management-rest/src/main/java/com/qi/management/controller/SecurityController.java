@@ -1,7 +1,5 @@
 package com.qi.management.controller;
 
-import com.qi.bootstrap.breadcrumb.Breadcrumb;
-import com.qi.bootstrap.util.BootstrapUtil;
 import com.qi.management.common.verify.util.VerifyUtil;
 import com.qi.management.rpc.DatasourceConsumer;
 import com.qi.management.common.constants.CommonConstants;
@@ -17,6 +15,8 @@ import com.sfsctech.data.jdbc.JdbcService;
 import com.sfsctech.data.jdbc.constants.JDBCConstants;
 import com.sfsctech.data.jdbc.model.DBConfigModel;
 import com.sfsctech.data.jdbc.model.TableModel;
+import com.sfsctech.support.bootstrap.breadcrumb.Breadcrumb;
+import com.sfsctech.support.bootstrap.util.BootstrapUtil;
 import com.sfsctech.support.common.util.FileUtil;
 import com.sfsctech.support.common.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;

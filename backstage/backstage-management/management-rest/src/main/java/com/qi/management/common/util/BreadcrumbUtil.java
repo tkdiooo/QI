@@ -1,10 +1,10 @@
 package com.qi.management.common.util;
 
-import com.qi.bootstrap.breadcrumb.Breadcrumb;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.exception.ex.BizException;
 import com.sfsctech.core.spring.util.SpringContextUtil;
+import com.sfsctech.support.bootstrap.breadcrumb.Breadcrumb;
 
 import java.util.ArrayList;
 import java.util.List;

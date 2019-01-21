@@ -19,24 +19,54 @@ server:
 #  context-parameters:
 #    logback-config-location: http://localhost:8888/logback/framework/thymeleaf
 #    logback-expose-webapp-root: true
+eureka:
+  client:
+    # 向注册中心注册
+    fetch-registry: true
+    # 服务清单的缓存更新时间，默认30秒一次
+    registry-fetch-interval-seconds: 5
+    service-url:
+      defaultZone: http://${eureka.instance.ip-address}:10002/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 5      # 心跳时间，即服务续约间隔时间（缺省为30s）
+    lease-expiration-duration-in-seconds: 10  # 没有心跳的淘汰时间，10秒，即服务续约到期时间（缺省为90s）
+    hostname: ${eureka.instance.ip-address}
+    instance-id: ${eureka.instance.ip-address}:${server.port}
+    prefer-ip-address: true
+    ip-address: localhost
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
 #spring setting
 spring:
   application:
     name: sso-server
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:10002/eureka/
-cache:
+  boot:
+    admin:
+      client:
+        url: "http://${eureka.instance.ip-address}:10001"
   redis:
-    host: 172.16.225.98
-    port: 6379
-    password: redis123
-    pool:
-      max-active: 300
-      max-wait: 10000
-      max-idle: 100
-      min-idle: 50
+    password: 3936796F7636592D2D4D552E
+    jedis:
+      pool:
+        max-active: 300
+        max-wait: 10s
+        max-idle: 100
+        min-idle: 50
+    cluster:
+      max-redirects: 3
+      nodes:
+        - 172.16.229.204:6001
+        - 172.16.229.204:6002
+        - 172.16.229.204:6003
+        - 172.16.229.204:6004
+        - 172.16.229.204:6005
+        - 172.16.229.204:6006
 #common setting
 website:
   sso:
@@ -44,5 +74,3 @@ website:
       subject: Single Sign-on
       issuer: QI-SSO
       expiration: 1800000
-logging:
-  path: D:\opt\logs

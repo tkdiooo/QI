@@ -66,7 +66,7 @@ public class LoginServiceImpl implements LoginService {
         factory.getCacheClient().putTimeOut(salt_CacheKey + LabelConstants.POUND + salt, token, jwtConfig.getExpiration().intValue());
 
         jwtToken.setJwt(token);
-        jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3, salt_CacheKey));
+        jwtToken.setSalt_CacheKey(EncrypterTool.encrypt(EncrypterTool.Security.Des3ECBHex, salt_CacheKey));
         result.setResult(jwtToken);
 
         return result;
@@ -75,7 +75,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public void logout(@RequestBody JwtToken jt) {
         // 解密salt_CacheKey
-        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3, jt.getSalt_CacheKey());
+        String salt_CacheKey = EncrypterTool.decrypt(EncrypterTool.Security.Des3ECBHex, jt.getSalt_CacheKey());
         if (StringUtil.isBlank(salt_CacheKey)) {
             logger.error("用户注销错误：[" + jt.getSalt_CacheKey() + "] 无法解密出salt_CacheKey。");
         }

@@ -17,7 +17,6 @@ server:
     # tomcat优化
     optimize: true
   servlet:
-    context-path: /dictionary
     session:
       cookie:
         domain: www.zzl.com
@@ -45,10 +44,6 @@ eureka:
     instance-id: ${eureka.instance.ip-address}:${server.port}
     prefer-ip-address: true
     ip-address: localhost
-    metadata-map:
-      management:
-        context-path: ${server.servlet.context-path}/actuator
-    health-check-url-path: ${server.servlet.context-path}/actuator/health
 management:
   endpoints:
     web:
@@ -74,15 +69,24 @@ spring:
     view:
       suffix: .html
   redis:
-    host: 192.168.3.21
-    port: 6379
-    password: redis123
+    #    host: 192.168.3.21
+    #    port: 6379
+    password: 3936796F7636592D2D4D552E
     jedis:
       pool:
         max-active: 300
         max-wait: 10s
         max-idle: 100
         min-idle: 50
+    cluster:
+      max-redirects: 3
+      nodes:
+        - 172.16.229.204:6001
+        - 172.16.229.204:6002
+        - 172.16.229.204:6003
+        - 172.16.229.204:6004
+        - 172.16.229.204:6005
+        - 172.16.229.204:6006
 #common setting
 website:
   # 网站支持
@@ -101,7 +105,7 @@ website:
       app-type: Backend
   # 服务架构
   session:
-    exclude-path: /rest/**, /actuator/**
+    exclude-path: /rest/**
 #    authentication: sso
 #    exclude-path: /index, /login
 #  security:

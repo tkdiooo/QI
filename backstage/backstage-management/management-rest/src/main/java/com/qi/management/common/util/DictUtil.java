@@ -1,6 +1,5 @@
 package com.qi.management.common.util;
 
-import com.qi.bootstrap.util.BootstrapUtil;
 import com.qi.dictionary.inf.DictionaryService;
 import com.qi.dictionary.model.dto.DictionaryDto;
 import com.qi.management.common.constants.CommonConstants;
@@ -9,6 +8,7 @@ import com.sfsctech.core.base.domain.result.RpcResult;
 import com.sfsctech.core.cache.factory.CacheFactory;
 import com.sfsctech.core.cache.redis.RedisProxy;
 import com.sfsctech.core.spring.util.SpringContextUtil;
+import com.sfsctech.support.bootstrap.util.BootstrapUtil;
 import com.sfsctech.support.common.util.ListUtil;
 
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.qi.management.common.util;
 
-import com.qi.bootstrap.breadcrumb.Breadcrumb;
+
+import com.sfsctech.support.bootstrap.breadcrumb.Breadcrumb;
 
 /**
  * Class BreadcrumbInf

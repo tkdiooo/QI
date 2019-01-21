@@ -29,11 +29,10 @@
             <artifactId>common-cloud-sso</artifactId>
             <version>${sfsctech.common.version}</version>
         </dependency>
-        <!-- support-bootstrap support -->
         <dependency>
-            <groupId>com.qi.support</groupId>
-            <artifactId>support-bootstrap</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>com.sfsctech.common</groupId>
+            <artifactId>common-support-bootstrap</artifactId>
+            <version>${sfsctech.common.version}</version>
         </dependency>
         <!-- dictionary-interface support -->
         <dependency>
