@@ -109,6 +109,6 @@ website:
     exclude-path: /sso/**
   security:
     csrf:
-      enabled: true
+      enabled: false
       intercept-exclude-path:  /sso/logout
       verify-exclude-path: /sso/index

@@ -57,6 +57,13 @@ public class SSOController {
         return "index";
     }
 
+    @GetMapping("test")
+    public String test(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        helper.init(request, response);
+        helper.loginBefore(model);
+        return "index";
+    }
+
     @PostMapping("login")
     @ResponseBody
     public ActionResult<String> login(HttpServletRequest request, HttpServletResponse response) {

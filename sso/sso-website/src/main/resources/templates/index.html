@@ -55,7 +55,7 @@
         looking to <a href="#" target="_blank">create an account</a> ?
     </div>
 </div>
-<input type="hidden" id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+<input type="hidden" id="_csrf" th:name="${_csrf} ? ${_csrf.parameterName}" th:value="${_csrf} ? ${_csrf.token}"/>
 <div th:include="common/layout :: script"></div>
 <script th:inline="javascript">
     (function () {
